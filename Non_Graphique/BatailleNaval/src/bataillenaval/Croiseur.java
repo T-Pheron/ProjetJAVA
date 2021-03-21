@@ -114,9 +114,10 @@ public class Croiseur extends Flotte{
 
             switch (choix){
                 case 1: break;           //On continue l'attaque
-                case 2: return 2;           //On relance le tour
+                case 2: sc.close(); return 2;           //On relance le tour
             }
         }
+        sc.close();
 
         //Ici nous affichons un semblant de chargement des données pour le tir ainsi que le résultat, c'est a dire si celui-ci a touché un navire ou pas
         System.out.print("Ajustement des coordonnées");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);System.out.println(Menu.VERT+"OK"+Menu.RESET);
@@ -146,8 +147,7 @@ public class Croiseur extends Flotte{
             System.out.println("Bon c'est un échec, tkt c'est rien c'est la rue");TimeUnit.SECONDS.sleep(4);           //On affiche un message comme quoi il n'a rien touché
             Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici
             return 1;           //On a la justification que tout c'est bien passe
-        }
-        sc.close();        
+        }  
     }
     
     
@@ -233,6 +233,15 @@ public class Croiseur extends Flotte{
                     if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][0]==xTire+1){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
                         Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire+1,yTire,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
+                    }
+                }
+                int count=0;
+                for (int i=0; i<Jeu.flotteJoueur1.get(pListeAdv).taille; i++){
+                    if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]==0){
+                       count+=1; 
+                    }
+                    if(count==Jeu.flotteJoueur1.get(pListeAdv).taille){
+                        System.out.println("Bien joué ca gasson t'as coulé le"+);
                     }
                 }
                 System.out.println("\n"+Menu.VERT+"EH BIM TOUCHE ! \nCroquette !"+Menu.RESET);           //On affiche un message disant que le joueur a bien touché un navire

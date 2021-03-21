@@ -69,7 +69,7 @@ public class Menu {
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
             System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-            Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+            sc.next();            //On met à la poubelle la saisie de l'utilisateur
         }
         
         while ((choix<1)||(choix>4)){           //On blinde en vérifiant que la saisie fait partie des choix possibles
@@ -79,7 +79,7 @@ public class Menu {
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                sc.next();            //On met à la poubelle la saisie de l'utilisateur
             }
         }
         
@@ -90,9 +90,9 @@ public class Menu {
                 System.out.println("Voici vos grilles au début de la partie");
                 jeu.lancementJeu();             //On appel la méthode qui permet de lancer une nouvelle partie
                 break;
-            case 2:break;
-            case 3:break;
-            case 4: break;
+            case 2: sc.close(); break;
+            case 3: sc.close(); break;
+            case 4: sc.close(); break;
             default : System.out.println(ROUGE + "Erreur_menuPrincipal!"+ RESET); break;            //En cas d'erreur, on affiche un message
         }
     }
@@ -123,7 +123,7 @@ public class Menu {
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
             System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-            Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+            sc.next();            //On met à la poubelle la saisie de l'utilisateur
         }
         
         while ((choix<1)||(choix>2)){               //On blinde en vérifiant que la saisie fait partie des choix
@@ -133,14 +133,14 @@ public class Menu {
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                sc.next();            //On met à la poubelle la saisie de l'utilisateur
             }
         }
         switch (choix){
-            case 1:return 1;                //Si le choix est 1 alors on retourne 1 (Cela signifie que le joueur souhaite effectuer un tir)
-            case 2: return 2;               //Si le choix est 2 alors on retounr 2 (Cela signifie que le joueur souhaite déplacer son navire)
+            case 1: sc.close(); return 1;                //Si le choix est 1 alors on retourne 1 (Cela signifie que le joueur souhaite effectuer un tir)
+            case 2: sc.close(); return 2;               //Si le choix est 2 alors on retounr 2 (Cela signifie que le joueur souhaite déplacer son navire)
             
-            default: System.out.println("Erreur_menuJoueur!"); return 0;           //En cas d'erreur, on affiche un message
+            default: System.out.println("Erreur_menuJoueur!"); sc.close(); return 0;           //En cas d'erreur, on affiche un message
         }
     }
     
@@ -184,7 +184,7 @@ public class Menu {
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
             System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-            Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+            sc.next();            //On met à la poubelle la saisie de l'utilisateur
         }
         
         while ((choix<1)||(choix>2)){           //On blinde en vérifiant que la saisie fait partie des choix
@@ -194,14 +194,14 @@ public class Menu {
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                sc.next();            //On met à la poubelle la saisie de l'utilisateur
             }
         }
         
         switch (choix){
-            case 1:           //premiere categorie d'aide
-            case 2:           //deuxieme categorie d'aide
-            case 3:           //troisieme categorie d'aide 
+            case 1: sc.close();           //premiere categorie d'aide
+            case 2: sc.close();          //deuxieme categorie d'aide
+            case 3: sc.close();          //troisieme categorie d'aide 
 
         }    
     }
@@ -238,7 +238,6 @@ public class Menu {
      * @throws java.lang.InterruptedException
      */
     public int menuTirer (List<Flotte> flotte, int numero_joueur) throws InterruptedException{
-        int choix=0;           //Variable qui permet de stocker le choix du joueur
         Scanner sc = new Scanner(System.in);           //Variable qui permet de récuperer la saisie du clavier
         
         
@@ -255,7 +254,7 @@ public class Menu {
         }
         catch(InputMismatchException e){            //Si ce n'est pas un caractère
             System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-            Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+            sc.next();            //On met à la poubelle la saisie de l'utilisateur
         }   
         lRef=Menu.convertirMinuscules(lRef);           //On convertir sa saisie en majuscule
 
@@ -267,7 +266,7 @@ public class Menu {
             }
             catch(InputMismatchException e){            //Si ce n'est pas un caractère
                 System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 lRef='A';
             }
             lRef=Menu.convertirMinuscules(lRef);           //On convertir sa saisie en majuscule
@@ -281,7 +280,7 @@ public class Menu {
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                sc.next();            //On met à la poubelle la saisie de l'utilisateur
             }
             if (lRef=='C') maxNavire=2;            //On affecte à la variable maxNavire le numéro maximal de navire de ce type que contient la liste en fonction de la lettre de référence du navire
             if (lRef=='D') maxNavire=3;
@@ -296,17 +295,19 @@ public class Menu {
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             }
         }
 
         int pListe=Flotte.nPlateauToPListe(lRef, nPlateau);           //On trouve la position du navire dans la liste à l'aide de son numéro plateau et sa lettre de reférence 
         if (flotte.get(pListe).etat==true){           //On vérifie que le bateau n'est pas coulé 
+            sc.close();
             return flotte.get(pListe).tir();            //On appelle la methode tir coresspondant au navire selectionné
         }
         else {
             System.out.println(ROUGE + "Erreur!"+RESET +"\nCe navire à déjà été coulé et ne peut plus effectuer de tire");           //Sinon, on affiche un message d'erreur
+            sc.close();
             return 2;           //On relance le tour du joueur
         }
     }

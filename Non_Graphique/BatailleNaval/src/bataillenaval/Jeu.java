@@ -243,7 +243,7 @@ public class Jeu {
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un caractère
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                    Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             lRef=Menu.convertirMinuscules(lRef);            //On convertir la saisie en majuscule
         
@@ -255,7 +255,7 @@ public class Jeu {
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un caractère
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                    Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
                 lRef=Menu.convertirMinuscules(lRef);            //On convertie la saisie en majuscule
             }
@@ -269,7 +269,7 @@ public class Jeu {
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
                 
                 if (lRef=='C') nMaxNavire=2;            //On déduit le nombre maximal de navire en fonction de la letrre de référence
@@ -285,7 +285,7 @@ public class Jeu {
                     }
                     catch(InputMismatchException e){            //Si ce n'est pas un entier
                         System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                        Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                        sc.next();            //On met à la poubelle la saisie de l'utilisateur
                     }
                 }
             }
@@ -302,7 +302,7 @@ public class Jeu {
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                         System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                        Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                        sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
                 
                 switch(choix){
@@ -325,7 +325,7 @@ public class Jeu {
                     }
                     catch(InputMismatchException e){            //Si ce n'est pas un entier
                         System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                        Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                        sc.next();            //On met à la poubelle la saisie de l'utilisateur
                     }
                 
                     switch(choix){
@@ -448,8 +448,10 @@ public class Jeu {
         
         if (possibilite[0]==90 && possibilite[1]==90 && possibilite[2]==90 && possibilite[3]==90){          //On vérifie qu'il y un moyen de déplacer le navire, pour éviter que le joueur ne trouve pas un moyen de quitter la boucle
             System.out.println("Ce navire de ne peut pas être déplacé. \n");           //Si c'est le cas on affiche un message d'erreur
+            sc.close();         //On ferme ce qui nous permet des recherche de saisie
             return 2;           //On retourne 2, ce qui signifie qu'on doit relancer le tour du joueur
         }
+        
         
         /*Saisie du nouvelle emplcament****************************************/
         Scanner sc1 = new Scanner(System.in);           //Varible qui permet de récuperer la saisie de l'utilisateur
@@ -505,7 +507,7 @@ public class Jeu {
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un caractère
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                    Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             saisieChar = Menu.convertirMinuscules(saisieChar);          //On convertie cette saisie en majuscule
             
@@ -516,7 +518,7 @@ public class Jeu {
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un caractère
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                    Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
                 saisieChar = Menu.convertirMinuscules(saisieChar);          //On convertie cette saisie en majuscule
             }
@@ -531,7 +533,7 @@ public class Jeu {
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                sc.next();            //On met à la poubelle la saisie de l'utilisateur
             }
             while(saisieChar<65||saisieChar>79){
                 System.out.println(ROUGE+"Erreur!"+RESET+ "\nLa saisie ne fait pas partie des choix. Veuillez resaisir :");
@@ -540,10 +542,13 @@ public class Jeu {
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             }
         }
+        sc.close();         //On ferme ce qui nous permet des recherche de saisie
+        sc1.close();         //On ferme ce qui nous permet des recherche de saisie
+
         
         if (flotte.get(pListe).direction==0){
             if (verifEntier==true){
