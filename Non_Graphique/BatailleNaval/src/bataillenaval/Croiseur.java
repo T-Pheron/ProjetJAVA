@@ -42,7 +42,6 @@ public class Croiseur extends Flotte{
         }
         catch(InputMismatchException e){            //Si ce n'est pas un caractère
             System.out.println(Menu.ROUGE +"Erreur! "+ Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-            Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
             sc.next();            //On met à la poubelle la saisie de l'utilisateur
             xTireChar='@';          //On remet la variable par defaut 
         }
@@ -56,7 +55,6 @@ public class Croiseur extends Flotte{
             }
             catch(InputMismatchException e){            //Si ce n'est pas un caractère
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 xTireChar='@';          //On remet la variable par defaut 
             }
@@ -69,7 +67,6 @@ public class Croiseur extends Flotte{
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
             System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-            Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
             sc.next();            //On met à la poubelle la saisie de l'utilisateur
             yTire=-1;           //On remet la variable par defaut 
         }
@@ -83,7 +80,6 @@ public class Croiseur extends Flotte{
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 yTire=-1;           //On remet la variable par defaut 
             }
@@ -102,7 +98,6 @@ public class Croiseur extends Flotte{
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 sc.next();            //On met à la poubelle la saisie de l'utilisateur
             }
             
@@ -113,7 +108,6 @@ public class Croiseur extends Flotte{
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
                     sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             }
@@ -153,7 +147,6 @@ public class Croiseur extends Flotte{
             Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici
             return 1;           //On a la justification que tout c'est bien passe
         }
-                
         sc.close();        
     }
     
