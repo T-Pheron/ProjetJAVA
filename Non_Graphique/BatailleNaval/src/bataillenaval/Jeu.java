@@ -449,7 +449,6 @@ public class Jeu {
         
         if (possibilite[0]==90 && possibilite[1]==90 && possibilite[2]==90 && possibilite[3]==90){          //On vérifie qu'il y un moyen de déplacer le navire, pour éviter que le joueur ne trouve pas un moyen de quitter la boucle
             System.out.println("Ce navire de ne peut pas être déplacé. \n");           //Si c'est le cas on affiche un message d'erreur
-            sc.close();         //On ferme ce qui nous permet des recherche de saisie
             return 2;           //On retourne 2, ce qui signifie qu'on doit relancer le tour du joueur
         }
         
@@ -483,7 +482,7 @@ public class Jeu {
         while(verif==false){            //On blinde, si la saisie ne fait pas partie des choix possibles
             System.out.println(B_JAUNE + "Echec !"+RESET+"\nLa saisie ne fait pas parti des choix possibles");          //On affiche un message d'échec
             System.out.println("Veuillez resaisir la ligne ou la colonne où vous voulez déplacer le navire");           //On à l'utilisateur de ressaisir
-            saisie = sc.nextLine();         //On stocke la saisie de l'utilisateur
+            saisie = sc1.nextLine();         //On stocke la saisie de l'utilisateur
             
             if (saisie.equals("A") || saisie.equals("B") || saisie.equals("C") || saisie.equals("D") || saisie.equals("E")|| saisie.equals("F") || saisie.equals("G") || saisie.equals("H") || saisie.equals("I") || saisie.equals("J") || saisie.equals("K") || saisie.equals("L") || saisie.equals("M") || saisie.equals("N") || saisie.equals("O")) {            //On vérif que la saisie est une majuscule qui fait partie des choix
                 verif = true;           //Si c'est le cas on met verif sur true
@@ -499,7 +498,7 @@ public class Jeu {
                 verifEntier=true;           //On dis que la saisie est un entier
                 saisieInt = Integer.parseInt(saisie);           //Et on stocke la saisie dans saisieInt, en la convertisant en entier
             }
-        }
+        };
         
         if (verifEntier==true && (saisieInt-1) == flotte.get(pListe).coordonnees[0][1]){            //Si l'utilisateur n'a pas saisie un nouvelle emplacement mais la ligne où se situe le navire
             System.out.println("Veuillez saisir la colonne de la case où vous voulez placer le navire");            //On lui demande de saisir la colonne
@@ -547,8 +546,6 @@ public class Jeu {
                 }
             }
         }
-        sc.close();         //On ferme ce qui nous permet des recherche de saisie
-        sc1.close();         //On ferme ce qui nous permet des recherche de saisie
 
         
         if (flotte.get(pListe).direction==0){

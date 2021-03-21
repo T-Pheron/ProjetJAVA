@@ -132,7 +132,7 @@ public class IA {
                 
                 System.out.println("C'est bon. Je choisis un " + Jeu.flotteJoueur1.get(Flotte.nPlateauToPListe(lRef, nPlateau)).nom + " pour tirer sur les coordonnées :");         //On affiche qui dit qu'on a trouvé des coordonées de tir
                 System.out.println( B_BLEU_AR +BLANC+(char) (xTir + 65) + " " + (yTir+1) +RESET+RESET_AR +"\n");TimeUnit.SECONDS.sleep(2);          //On affiche de message avec les coordonnées de tir
-                System.out.print(ROUGE +"Attention !   Je TIRE!!"+RESET); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.println("."); TimeUnit.SECONDS.sleep(1);
+                System.out.print(ROUGE +"Attention ! \nJe TIRE!!"+RESET); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.println("."); TimeUnit.SECONDS.sleep(1);
                 
                 
                 /*Effectuer le tir*********************************************/

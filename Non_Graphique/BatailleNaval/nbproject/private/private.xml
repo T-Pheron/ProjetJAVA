@@ -3,11 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Théric%20PHERON/OneDrive%20-%20Groupe%20INSEEC%20(POCE)/Projet%20de%20JAVA/ProjetJAVA/Non_Graphique/BatailleNaval/src/bataillenaval/Destroyer.java</file>
             <file>file:/C:/Users/Théric%20PHERON/OneDrive%20-%20Groupe%20INSEEC%20(POCE)/Projet%20de%20JAVA/ProjetJAVA/Non_Graphique/BatailleNaval/src/bataillenaval/Croiseur.java</file>
             <file>file:/C:/Users/Théric%20PHERON/OneDrive%20-%20Groupe%20INSEEC%20(POCE)/Projet%20de%20JAVA/ProjetJAVA/Non_Graphique/BatailleNaval/src/bataillenaval/Jeu.java</file>
-            <file>file:/C:/Users/Théric%20PHERON/OneDrive%20-%20Groupe%20INSEEC%20(POCE)/Projet%20de%20JAVA/ProjetJAVA/Non_Graphique/BatailleNaval/src/bataillenaval/BatailleNaval.java</file>
+            <file>file:/C:/Users/Théric%20PHERON/OneDrive%20-%20Groupe%20INSEEC%20(POCE)/Projet%20de%20JAVA/ProjetJAVA/Non_Graphique/BatailleNaval/src/bataillenaval/Plateau.java</file>
+            <file>file:/C:/Users/Théric%20PHERON/OneDrive%20-%20Groupe%20INSEEC%20(POCE)/Projet%20de%20JAVA/ProjetJAVA/Non_Graphique/BatailleNaval/src/bataillenaval/Destroyer.java</file>
+            <file>file:/C:/Users/Théric%20PHERON/OneDrive%20-%20Groupe%20INSEEC%20(POCE)/Projet%20de%20JAVA/ProjetJAVA/Non_Graphique/BatailleNaval/src/bataillenaval/IA.java</file>
             <file>file:/C:/Users/Théric%20PHERON/OneDrive%20-%20Groupe%20INSEEC%20(POCE)/Projet%20de%20JAVA/ProjetJAVA/Non_Graphique/BatailleNaval/src/bataillenaval/Cuirasse.java</file>
+            <file>file:/C:/Users/Théric%20PHERON/OneDrive%20-%20Groupe%20INSEEC%20(POCE)/Projet%20de%20JAVA/ProjetJAVA/Non_Graphique/BatailleNaval/src/bataillenaval/Menu.java</file>
+            <file>file:/C:/Users/Théric%20PHERON/OneDrive%20-%20Groupe%20INSEEC%20(POCE)/Projet%20de%20JAVA/ProjetJAVA/Non_Graphique/BatailleNaval/src/bataillenaval/SousMarin.java</file>
+            <file>file:/C:/Users/Théric%20PHERON/OneDrive%20-%20Groupe%20INSEEC%20(POCE)/Projet%20de%20JAVA/ProjetJAVA/Non_Graphique/BatailleNaval/src/bataillenaval/BatailleNaval.java</file>
+            <file>file:/C:/Users/Théric%20PHERON/OneDrive%20-%20Groupe%20INSEEC%20(POCE)/Projet%20de%20JAVA/ProjetJAVA/Non_Graphique/BatailleNaval/src/bataillenaval/Sauvegarde.java</file>
         </group>
     </open-files>
 </project-private>

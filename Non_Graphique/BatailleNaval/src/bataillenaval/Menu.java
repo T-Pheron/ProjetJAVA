@@ -89,10 +89,11 @@ public class Menu {
                 System.out.println("Bienvenue dans le jeu de la "+ CYAN +"Bataille Navale"+ RESET);           //On affiche un message de bienvenue
                 System.out.println("Voici vos grilles au début de la partie");
                 jeu.lancementJeu();             //On appel la méthode qui permet de lancer une nouvelle partie
+                
                 break;
-            case 2: sc.close(); break;
-            case 3: sc.close(); break;
-            case 4: sc.close(); break;
+            case 2: break;
+            case 3: break;
+            case 4: break;
             default : System.out.println(ROUGE + "Erreur_menuPrincipal!"+ RESET); break;            //En cas d'erreur, on affiche un message
         }
     }
@@ -137,10 +138,10 @@ public class Menu {
             }
         }
         switch (choix){
-            case 1: sc.close(); return 1;                //Si le choix est 1 alors on retourne 1 (Cela signifie que le joueur souhaite effectuer un tir)
-            case 2: sc.close(); return 2;               //Si le choix est 2 alors on retounr 2 (Cela signifie que le joueur souhaite déplacer son navire)
+            case 1: return 1;                //Si le choix est 1 alors on retourne 1 (Cela signifie que le joueur souhaite effectuer un tir)
+            case 2: return 2;               //Si le choix est 2 alors on retounr 2 (Cela signifie que le joueur souhaite déplacer son navire)
             
-            default: System.out.println("Erreur_menuJoueur!"); sc.close(); return 0;           //En cas d'erreur, on affiche un message
+            default: System.out.println("Erreur_menuJoueur!"); return 0;           //En cas d'erreur, on affiche un message
         }
     }
     
@@ -199,9 +200,9 @@ public class Menu {
         }
         
         switch (choix){
-            case 1: sc.close();           //premiere categorie d'aide
-            case 2: sc.close();          //deuxieme categorie d'aide
-            case 3: sc.close();          //troisieme categorie d'aide 
+            case 1:           //premiere categorie d'aide
+            case 2:          //deuxieme categorie d'aide
+            case 3:          //troisieme categorie d'aide 
 
         }    
     }
@@ -238,7 +239,8 @@ public class Menu {
      * @throws java.lang.InterruptedException
      */
     public int menuTirer (List<Flotte> flotte, int numero_joueur) throws InterruptedException{
-        Scanner sc = new Scanner(System.in);           //Variable qui permet de récuperer la saisie du clavier
+        
+        Scanner sc1 = new Scanner(System.in);           //Variable qui permet de récuperer la saisie du clavier
         
         
         System.out.println(GRIS_AR +NOIR+ "               MENU TIRE              "+RESET+ RESET_AR);           //On afficher le titre du menu
@@ -249,12 +251,12 @@ public class Menu {
 
         System.out.println("Veuillez entrer la lettre du navire avec lequel vous voulez tirer :");           //On demande à l'utilisateur de saisir la lettre du navire
         try{
-            lRef= sc.next().charAt(0);          //On stock la saisie de l'utilisateur
+            lRef= sc1.next().charAt(0);          //On stock la saisie de l'utilisateur
             lRef=Menu.convertirMinuscules(lRef);           //On convertir sa saisie en majuscule
         }
         catch(InputMismatchException e){            //Si ce n'est pas un caractère
             System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-            sc.next();            //On met à la poubelle la saisie de l'utilisateur
+            sc1.next();            //On met à la poubelle la saisie de l'utilisateur
         }   
         lRef=Menu.convertirMinuscules(lRef);           //On convertir sa saisie en majuscule
 
@@ -262,11 +264,11 @@ public class Menu {
             System.out.println(ROUGE + "Erreur !"+RESET);           //Sinon on affiche un message d'erreur
             System.out.println("Veuillez entrer la lettre du navire avec lequel vous voulez tirer :");           //On lui demande de ressaisir
             try{
-                lRef= sc.next().charAt(0);          //On stock la saisie de l'utilisateur
+                lRef= sc1.next().charAt(0);          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un caractère
                 System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                sc1.next();            //On met à la poubelle la saisie de l'utilisateur
                 lRef='A';
             }
             lRef=Menu.convertirMinuscules(lRef);           //On convertir sa saisie en majuscule
@@ -276,11 +278,11 @@ public class Menu {
         else {
             System.out.println("Veuillez entrer le numero du navire avec lequel vous voulez tirer :");           //Sinon, on demande à l'utilisateur de rentrer le numéro affiché sur le plateau du bateau qu'il souhaite utiliser pour tirer
             try{
-                nPlateau = sc.nextInt();          //On stock la saisie de l'utilisateur
+                nPlateau = sc1.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                sc1.next();            //On met à la poubelle la saisie de l'utilisateur
             }
             if (lRef=='C') maxNavire=2;            //On affecte à la variable maxNavire le numéro maximal de navire de ce type que contient la liste en fonction de la lettre de référence du navire
             if (lRef=='D') maxNavire=3;
@@ -291,23 +293,21 @@ public class Menu {
                 System.out.println(ROUGE + "Erreur! "+RESET +"Ce numéro ne fait pas parti des choix.");           //Sinon, on affiche un message d'erreur
                 System.out.println("Veuillez entrer le numero du navire avec lequel vous voulez tirer : :");           //Et on demande la ressaisie
                 try{
-                    nPlateau = sc.nextInt();          //On stock la saisie de l'utilisateur
+                    nPlateau = sc1.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    sc1.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             }
         }
 
         int pListe=Flotte.nPlateauToPListe(lRef, nPlateau);           //On trouve la position du navire dans la liste à l'aide de son numéro plateau et sa lettre de reférence 
         if (flotte.get(pListe).etat==true){           //On vérifie que le bateau n'est pas coulé 
-            sc.close();
             return flotte.get(pListe).tir();            //On appelle la methode tir coresspondant au navire selectionné
         }
         else {
             System.out.println(ROUGE + "Erreur!"+RESET +"\nCe navire à déjà été coulé et ne peut plus effectuer de tire");           //Sinon, on affiche un message d'erreur
-            sc.close();
             return 2;           //On relance le tour du joueur
         }
     }

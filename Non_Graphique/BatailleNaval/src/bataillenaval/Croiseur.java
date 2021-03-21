@@ -114,10 +114,9 @@ public class Croiseur extends Flotte{
 
             switch (choix){
                 case 1: break;           //On continue l'attaque
-                case 2: sc.close(); return 2;           //On relance le tour
+                case 2: return 2;           //On relance le tour
             }
         }
-        sc.close();
 
         //Ici nous affichons un semblant de chargement des données pour le tir ainsi que le résultat, c'est a dire si celui-ci a touché un navire ou pas
         System.out.print("Ajustement des coordonnées");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);System.out.println(Menu.VERT+"OK"+Menu.RESET);

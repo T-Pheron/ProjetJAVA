@@ -121,10 +121,9 @@ public class SousMarin extends Flotte {
 
             switch (choix){
                 case 1: break;           //On continue l'attaque
-                case 2: sc.close(); return 2;           //On relance le tour
+                case 2: return 2;           //On relance le tour
             }
         }
-        sc.close();
 
         //Ici nous affichons un semblant de chargement des données pour le tir ainsi que le résultat, c'est a dire si celui-ci a touché un navire ou pas
         System.out.print("Ajustement des coordonnées");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);System.out.println(Menu.VERT+"OK"+Menu.RESET);
@@ -137,7 +136,7 @@ public class SousMarin extends Flotte {
         }
         else{
             System.out.println("Bon c 'est un échec, tkt c'est rien c'est la rue");TimeUnit.SECONDS.sleep(4);           //On affiche un message comme quoi il n'a rien touché
-            Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici
+            Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici  
             return 1;           //On a la justification que tout c'est bien passe
         }
     }

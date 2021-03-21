@@ -37,12 +37,11 @@ public class Destroyer extends Flotte {
         
         if (premierTire==true){
             char xTireFuseeChar='@';         //On declare la variable par defaut avec un @
-            Scanner sc = new Scanner(System.in);            //On declare une variable de type Scanner
-            int yTireFusee=-1;           //On declare la variable par defaut avec un -1
-            
+            int yTireFusee;
+            Scanner sc = new Scanner(System.in);//On declare une variable de type Scanner
+            yTireFusee= -1;          //On declare la variable par defaut avec un -1
             System.out.println("Il s'agit du premier tir de ce destroyer");
             System.out.println("La munition tiré est donc une fusée éclairante");
-
             /*Récupération des coordonées***********************************************/
             //Coordonées x
             System.out.println("Où voulez vous la vous tirer ?");           //On demande à l'utilisateur de saisir les coordonnées du tire
@@ -56,7 +55,6 @@ public class Destroyer extends Flotte {
                 xTireFuseeChar='@';          //On remet la variable par defaut 
             }
             xTireFuseeChar=Menu.convertirMinuscules(xTireFuseeChar);           //On convertir sa saisie en majuscule
-                        
             while ((xTireFuseeChar<'A')||(xTireFuseeChar>'O')){           //On blinde, en vérifiant que sa saisie fait partie des choix possible
                 System.out.println(Menu.ROUGE + "Erreur!"+Menu.RESET);           //Sinon on affiche un message d'erreur
                 System.out.println("Veuillez entrer la lettre de la colonne d'où vous voulez tirer :");           //On lui demande de ressaisir
@@ -66,13 +64,12 @@ public class Destroyer extends Flotte {
                 catch(InputMismatchException e){            //Si ce n'est pas un caractère
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
                     sc.next();            //On met à la poubelle la saisie de l'utilisateur
-                    xTireFuseeChar='@';          //On remet la variable par defaut 
+                    xTireFuseeChar='@';          //On remet la variable par defaut
                 }
                 xTireFuseeChar=Menu.convertirMinuscules(xTireFuseeChar);           //On convertir sa saisie en majuscule
             }
-
             //Coordonées y
-            System.out.println("Veuillez rentrer la ligne :");         //On lui demande de saisir 
+            System.out.println("Veuillez rentrer la ligne :");         //On lui demande de saisir
             try{
                 yTireFusee = sc.nextInt();          //On stock la saisie de l'utilisateur
             }
@@ -81,8 +78,6 @@ public class Destroyer extends Flotte {
                 sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 yTireFusee=-1;           //On remet la variable par defaut 
             }
-
-
             while ((yTireFusee<0)||(yTireFusee>16)){          //On blinde, en vérifiant que la saisie fait partie des choix
                 System.out.println(Menu.ROUGE + "Erreur!"+ Menu.RESET +"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur
                 System.out.println("Veuillez entrer le numero de la ligne a laquelle vous voulez tirer : :");           //Et on demande la ressaisie
@@ -92,11 +87,10 @@ public class Destroyer extends Flotte {
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
                     sc.next();            //On met à la poubelle la saisie de l'utilisateur
-                    yTireFusee=-1;           //On remet la variable par defaut 
+                    yTireFusee=-1;           //On remet la variable par defaut
                 }
-                
+
             }
-            sc.close();
             
             yTireFusee--;            //On retire 1 au yTire
             int xTireFusee = (int) (xTireFuseeChar - 65);             //On convertie la saisie en un entier
@@ -218,10 +212,9 @@ public class Destroyer extends Flotte {
 
                 switch (choix){
                     case 1: break;           //On continue l'attaque
-                    case 2: sc.close(); return 2;           //On relance le tour
+                    case 2: return 2;           //On relance le tour
                 }
             }
-            sc.close();
 
             //Ici nous affichons un semblant de chargement des données pour le tir ainsi que le résultat, c'est a dire si celui-ci a touché un navire ou pas
             System.out.print("Ajustement des coordonnées");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);System.out.println(Menu.VERT+"OK"+Menu.RESET);
