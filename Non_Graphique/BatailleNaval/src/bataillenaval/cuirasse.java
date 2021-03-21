@@ -209,6 +209,10 @@ public class Cuirasse extends Flotte{
                         Jeu.plateauDeJeu.modification(xTire+2,yTire,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
                 }
+                if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                    System.out.println("\nCHEE PRENDS CA CHACAL j'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
+                }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
             else{           //Si le navire est à la vertical
@@ -233,6 +237,10 @@ public class Cuirasse extends Flotte{
                         Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire,yTire+2,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
+                }
+                if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                    System.out.println("\nCHEE PRENDS CA CHACAL j'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
                 }
@@ -267,6 +275,11 @@ public class Cuirasse extends Flotte{
                 }
                 System.out.println("\n"+Menu.VERT+"EH BIM TOUCHE ! \nCroquette !"+Menu.RESET);           //On affiche un message disant que le joueur a bien touché un navire
                 TimeUnit.SECONDS.sleep(3);
+
+                if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                    System.out.println("\nBien joué ca gasson ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);   
+                }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
             else{           //Si le navire est à la vertical
@@ -294,6 +307,11 @@ public class Cuirasse extends Flotte{
                 }
                 System.out.println("\n"+Menu.VERT+"EH BIM TOUCHE ! \nCroquette !"+Menu.RESET);           //On affiche un message disant que le joueur a bien touché un navire
                 TimeUnit.SECONDS.sleep(3);
+
+                if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                    System.out.println("\nBien joué ca gasson ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);   
+                }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
         

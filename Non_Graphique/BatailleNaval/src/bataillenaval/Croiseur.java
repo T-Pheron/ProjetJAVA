@@ -195,7 +195,8 @@ public class Croiseur extends Flotte{
                     }
                 }
                 if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                System.out.println("CHEE PRENDS CA CHACAL j'ai coulé ton "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    System.out.println("CHEE PRENDS CA CHACAL j'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
@@ -215,7 +216,8 @@ public class Croiseur extends Flotte{
                     }
                 }
                 if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                System.out.println("CHEE PRENDS CA CHACAL j'ai coulé ton "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    System.out.println("CHEE PRENDS CA CHACAL j'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
                 }
@@ -244,7 +246,8 @@ public class Croiseur extends Flotte{
                 TimeUnit.SECONDS.sleep(3);
 
                 if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("Bien joué ca gasson ! T'as en plus coulé le"+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    System.out.println("Bien joué ca gasson ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
@@ -268,8 +271,9 @@ public class Croiseur extends Flotte{
                 TimeUnit.SECONDS.sleep(3);
 
                 if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                System.out.println("Bien joué ca gasson ! T'as en plus coulé le"+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
-            }
+                    System.out.println("Bien joué ca gasson ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
+                }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
         

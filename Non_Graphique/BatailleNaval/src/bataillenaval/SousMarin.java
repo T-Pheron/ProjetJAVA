@@ -174,19 +174,27 @@ public class SousMarin extends Flotte {
                 
                 for (int i=0; i<Jeu.flotteJoueur0.get(pListeAdv).taille; i++){          //On parcourt tout le navire
                     if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][0]==xTire){          //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
-                        Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;           //On met que cette case du navire a été touchée
-                        return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
+                        Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;           //On met que cette case du navire a été touché
                     }
                 }
+                if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                    System.out.println("CHEE PRENDS CA CHACAL j'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
+                }
+                return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
             else{           //Si le navire est à la vertical
                 
                 for (int i=0; i<Jeu.flotteJoueur0.get(pListeAdv).taille; i++){           //On parcourt tout le navire
                     if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][1]==yTire){           //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
-                        Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;           //On met que cette case du navire a été touchée
-                        return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
+                        Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;           //On met que cette case du navire a été touché
                     }
                 }
+                if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                    System.out.println("CHEE PRENDS CA CHACAL j'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
+                }
+                return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
         }
 
@@ -201,8 +209,12 @@ public class SousMarin extends Flotte {
                         Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         System.out.println("\n"+Menu.VERT+"EH BIM TOUCHE ! \nCroquette !"+Menu.RESET);           //On affiche un message disant que le joueur a bien touché un navire
                         TimeUnit.SECONDS.sleep(3);
-                        return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
                     }
+                    if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                        System.out.println("Bien joué ca gasson ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                        TimeUnit.SECONDS.sleep(3);          //On patient pendant 3 seconde avant de continuer
+                    }
+                    return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
                 }
             }
             else{           //Si le navire est à la vertical
@@ -212,10 +224,15 @@ public class SousMarin extends Flotte {
                     if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][1]==yTire){          //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
                         Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         System.out.println("\n"+Menu.VERT+"EH BIM TOUCHE ! \nCroquette !"+Menu.RESET);           //On affiche un message disant que le joueur a bien touché un navire
-                        TimeUnit.SECONDS.sleep(3);
-                        return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
+                        TimeUnit.SECONDS.sleep(3);          //On patient pendant 3 seconde avant de continuer
+                        
                     }
                 }
+                if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                    System.out.println("Bien joué ca gasson ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
+                }
+                return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
         }
         return 0;           //On retourne 0 si il y a un problème 

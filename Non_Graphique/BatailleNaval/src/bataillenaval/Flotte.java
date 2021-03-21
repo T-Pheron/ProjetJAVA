@@ -8,10 +8,10 @@ public abstract class Flotte {
     public String nom;              //Variable qui permet de stocker le nom du navire
     public int [][] coordonnees;        //Variable qui stock les coordonnées du navire
     public int direction;               //Variable qui stock la direction du bateau. 0 s'il est à la horizontale 1 s'il est à la vertical.
-    public int taille = 0;              //Variable qui stock la taille du bateau
-    public int puissance = 0;           //Variable qui stock la puissance de tir du navire
-    public char lRef = 'A';             //Variable qui stock la lettre de référence du bateau
-    public int nRef = 0;            //Variable qui stock le numéro de référence du bateau
+    public int taille;                  //Variable qui stock la taille du bateau
+    public int puissance;           //Variable qui stock la puissance de tir du navire
+    public char lRef;               //Variable qui stock la lettre de référence du bateau
+    public int nRef;                //Variable qui stock le numéro de référence du bateau
     
     /**
      * Constructeur des variable de type stock.
@@ -85,8 +85,8 @@ public abstract class Flotte {
      * @return True si le bateau n'est pas coulé, false sinon
      */
     public boolean navireVivant(){
-        for (int j=0; j<taille; j++){           //On parcour tous les états des coordonées
-            if (coordonnees[j][3] == 1) return true;            //S'il y a au moins un état qui est à 1 on renvoie true
+        for (int j=0; j<taille-1; j++){           //On parcour tous les états des coordonées
+            if (coordonnees[j][2] == 1) return true;            //S'il y a au moins un état qui est à 1 on renvoie true
         }
         return false;           //Sinon on renvoit false
     }
