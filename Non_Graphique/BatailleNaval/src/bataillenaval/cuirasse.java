@@ -41,48 +41,35 @@ public class Cuirasse extends Flotte{
     public int tir() throws InterruptedException{
         
         char xTireChar='@';         //On declare la variable par defaut avec un @
-        Scanner sc = new Scanner(System.in);            //On declare une variable de type Scanner
-        int yTire=-1;           //On declare la variable par defaut avec un -1
-        System.out.println("Où voulez vous tirer ?");           //On demande à l'utilisateur de saisir les coordonnées du tire
-        System.out.println("Veuillez rentrer la colonne :");           //On demande à l'utilisateur de rentrer la colonne
-        try{
-            xTireChar= sc.next().charAt(0);          //On stock la saisie de l'utilisateur
-        }
-        catch(InputMismatchException e){            //Si ce n'est pas un caractère
-            System.out.println(Menu.ROUGE +"Erreur! "+ Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-            sc.next();            //On met à la poubelle la saisie de l'utilisateur
-            xTireChar='@';          //On remet la variable par defaut 
-        }
-        xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
-                    
-        while ((xTireChar<'A')||(xTireChar>'O')){           //On blinde, en vérifiant que sa saisie fait partie des choix possible
-            System.out.println(Menu.ROUGE + "Erreur !"+Menu.RESET);           //Sinon on affiche un message d'erreur
-            System.out.println("Veuillez entrer la lettre de la colonne d'où vous voulez tirer :");           //On lui demande de ressaisir
+        int yTire;
+        int xTire;
+        try(Scanner sc = new Scanner(System.in)) {//On declare une variable de type Scanner
+            yTire= -1;          //On declare la variable par defaut avec un -1
+            System.out.println("Où voulez vous tirer ?");           //On demande à l'utilisateur de saisir les coordonnées du tire
+            System.out.println("Veuillez rentrer la colonne :");           //On demande à l'utilisateur de rentrer la colonne
             try{
                 xTireChar= sc.next().charAt(0);          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un caractère
-                System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
+                System.out.println(Menu.ROUGE +"Erreur! "+ Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
                 sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 xTireChar='@';          //On remet la variable par defaut 
             }
             xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
-        }
-
-        System.out.println("Veuillez rentrer la ligne :");         //On lui demande de saisir 
-        try{
-            yTire = sc.nextInt();          //On stock la saisie de l'utilisateur
-        }
-        catch(InputMismatchException e){            //Si ce n'est pas un entier
-            System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-            sc.next();            //On met à la poubelle la saisie de l'utilisateur
-            yTire=-1;           //On remet la variable par defaut 
-        }
-
-
-        while ((yTire<0)||(yTire>16)){          //On blinde, en vérifiant que la saisie fait partie des choix
-            System.out.println(Menu.ROUGE + "Erreur!"+ Menu.RESET +"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur
-            System.out.println("Veuillez entrer le numero de la ligne a laquelle vous voulez tirer :");           //Et on demande la ressaisie
+            while ((xTireChar<'A')||(xTireChar>'O')){           //On blinde, en vérifiant que sa saisie fait partie des choix possible
+                System.out.println(Menu.ROUGE + "Erreur !"+Menu.RESET);           //Sinon on affiche un message d'erreur
+                System.out.println("Veuillez entrer la lettre de la colonne d'où vous voulez tirer :");           //On lui demande de ressaisir
+                try{
+                    xTireChar= sc.next().charAt(0);          //On stock la saisie de l'utilisateur
+                }
+                catch(InputMismatchException e){            //Si ce n'est pas un caractère
+                    System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
+                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    xTireChar='@';          //On remet la variable par defaut
+                }
+                xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
+            }
+            System.out.println("Veuillez rentrer la ligne :");         //On lui demande de saisir
             try{
                 yTire = sc.nextInt();          //On stock la saisie de l'utilisateur
             }
@@ -91,26 +78,26 @@ public class Cuirasse extends Flotte{
                 sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 yTire=-1;           //On remet la variable par defaut 
             }
-            
-        }
-        yTire--;            //On retire 1 au yTire
-
-        /*Confirmation du tir sur une case qui a déjà été touchée****************************/
-        int xTire = (int) (xTireChar - 65);             //On convertie la saisie en un entier
-        if ( Jeu.plateauDeJeu.get(xTire,yTire,1,0) == (Object) "1"){            //Si la case choisie a deja ete touche
-            int choix=0;            //On declare une variable qui stock le choix du joueur 
-            System.out.println("Voulez vous vraiment tirer sur cette case ? Elle à deja été bombardée");            //On lui demande si il veut vraiment tirer sur cette case
-            System.out.println("1.OUI \n2.NON");           //On affiche les choix du joueur 
-            try{
-                choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+            while ((yTire<0)||(yTire>16)){          //On blinde, en vérifiant que la saisie fait partie des choix
+                System.out.println(Menu.ROUGE + "Erreur!"+ Menu.RESET +"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur
+                System.out.println("Veuillez entrer le numero de la ligne a laquelle vous voulez tirer :");           //Et on demande la ressaisie
+                try{
+                    yTire = sc.nextInt();          //On stock la saisie de l'utilisateur
+                }
+                catch(InputMismatchException e){            //Si ce n'est pas un entier
+                    System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    yTire=-1;           //On remet la variable par defaut
+                }
+                
             }
-            catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
-            }
-            
-            while ((choix<1)||(choix>2)){           //On blinde en vérifiant que la saisie fait partie des choix
-                System.out.println(Menu.ROUGE+"Erreur! "+ Menu.RESET +"Veuillez saisir à nouveau votre choix");           //Sinon, on affiche un message d'erreur et demande la ressaisie
+            yTire--;            //On retire 1 au yTire
+            /*Confirmation du tir sur une case qui a déjà été touchée****************************/
+            xTire = (int) (xTireChar - 65); //On convertie la saisie en un entier
+            if ( Jeu.plateauDeJeu.get(xTire,yTire,1,0) == (Object) "1"){            //Si la case choisie a deja ete touche
+                int choix=0;            //On declare une variable qui stock le choix du joueur
+                System.out.println("Voulez vous vraiment tirer sur cette case ? Elle à deja été bombardée");            //On lui demande si il veut vraiment tirer sur cette case
+                System.out.println("1.OUI \n2.NON");           //On affiche les choix du joueur
                 try{
                     choix = sc.nextInt();          //On stock la saisie de l'utilisateur
                 }
@@ -118,14 +105,24 @@ public class Cuirasse extends Flotte{
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
                     sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
+                
+                while ((choix<1)||(choix>2)){           //On blinde en vérifiant que la saisie fait partie des choix
+                    System.out.println(Menu.ROUGE+"Erreur! "+ Menu.RESET +"Veuillez saisir à nouveau votre choix");           //Sinon, on affiche un message d'erreur et demande la ressaisie
+                    try{
+                        choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+                    }
+                    catch(InputMismatchException e){            //Si ce n'est pas un entier
+                        System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                        sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    }
+                }
+                
+                switch (choix){
+                    case 1: break;           //On continue l'attaque
+                    case 2: sc.close(); return 2;           //On relance le tour
+                }
             }
-
-            switch (choix){
-                case 1: break;           //On continue l'attaque
-                case 2: sc.close(); return 2;           //On relance le tour
-            }
-        }
-        sc.close();
+        } //On declare la variable par defaut avec un -1
 
         //Ici nous affichons un semblant de chargement des données pour le tir ainsi que le résultat, c'est a dire si celui-ci a touché un navire ou pas
         System.out.print("Ajustement des coordonnées");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);System.out.println(Menu.VERT+"OK"+Menu.RESET);
