@@ -3,6 +3,8 @@ package bataillenaval;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import Destroyer;
+
 
 
 public class Jeu {

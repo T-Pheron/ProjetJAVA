@@ -195,6 +195,9 @@ public class Croiseur extends Flotte{
                         Jeu.plateauDeJeu.modification(xTire+1,yTire,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
                 }
+                if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                System.out.println("CHEE PRENDS CA CHACAL j'ai coulé ton "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
             else{           //Si le navire est à la vertical
@@ -211,6 +214,9 @@ public class Croiseur extends Flotte{
                         Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire,yTire+1,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
+                }
+                if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                System.out.println("CHEE PRENDS CA CHACAL j'ai coulé ton "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
                 }
@@ -233,20 +239,17 @@ public class Croiseur extends Flotte{
                     if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][0]==xTire+1){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
                         Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire+1,yTire,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
-                }
-                int count=0;
-                for (int i=0; i<Jeu.flotteJoueur1.get(pListeAdv).taille; i++){
-                    if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]==0){
-                       count+=1; 
-                    }
-                    if(count==Jeu.flotteJoueur1.get(pListeAdv).taille){
-                        System.out.println("Bien joué ca gasson t'as coulé le"+);
-                    }
+                    }  
                 }
                 System.out.println("\n"+Menu.VERT+"EH BIM TOUCHE ! \nCroquette !"+Menu.RESET);           //On affiche un message disant que le joueur a bien touché un navire
                 TimeUnit.SECONDS.sleep(3);
+
+                if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                    System.out.println("Bien joué ca gasson ! T'as en plus coulé le"+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
+
+                Jeu.flotteJoueur1.get(pListeAdv).navireVivant()
             }
             else{           //Si le navire est à la vertical
 
@@ -263,8 +266,13 @@ public class Croiseur extends Flotte{
                         Jeu.plateauDeJeu.modification(xTire,yTire+1,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
                 }
+                
                 System.out.println("\n"+Menu.VERT+"EH BIM TOUCHE ! \nCroquette !"+Menu.RESET);           //On affiche un message disant que le joueur a bien touché un navire
                 TimeUnit.SECONDS.sleep(3);
+
+                if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                System.out.println("Bien joué ca gasson ! T'as en plus coulé le"+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+            }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
         

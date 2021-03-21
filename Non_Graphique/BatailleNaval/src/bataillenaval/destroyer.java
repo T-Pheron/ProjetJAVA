@@ -1,13 +1,14 @@
-package bataillenaval;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+import bataillenaval.Flotte;
+import bataillenaval.Menu;
+
 
 public class Destroyer extends Flotte {
     
-    boolean premierTire = true;
+    public boolean premierTire = true;
 
     public Destroyer(){
         etat = true;
