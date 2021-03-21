@@ -248,8 +248,6 @@ public class Croiseur extends Flotte{
                     System.out.println("Bien joué ca gasson ! T'as en plus coulé le"+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
-
-                Jeu.flotteJoueur1.get(pListeAdv).navireVivant()
             }
             else{           //Si le navire est à la vertical
 

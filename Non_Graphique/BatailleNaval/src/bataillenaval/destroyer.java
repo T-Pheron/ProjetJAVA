@@ -1,9 +1,9 @@
+package bataillenaval;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-import bataillenaval.Flotte;
-import bataillenaval.Menu;
 
 
 public class Destroyer extends Flotte {
@@ -52,7 +52,7 @@ public class Destroyer extends Flotte {
             }
             catch(InputMismatchException e){            //Si ce n'est pas un caractère
                 System.out.println(Menu.ROUGE +"Erreur! "+ Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 xTireFuseeChar='@';          //On remet la variable par defaut 
             }
             xTireFuseeChar=Menu.convertirMinuscules(xTireFuseeChar);           //On convertir sa saisie en majuscule
@@ -65,7 +65,7 @@ public class Destroyer extends Flotte {
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un caractère
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                    Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
                     xTireFuseeChar='@';          //On remet la variable par defaut 
                 }
                 xTireFuseeChar=Menu.convertirMinuscules(xTireFuseeChar);           //On convertir sa saisie en majuscule
@@ -78,7 +78,7 @@ public class Destroyer extends Flotte {
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 yTireFusee=-1;           //On remet la variable par defaut 
             }
 
@@ -91,11 +91,12 @@ public class Destroyer extends Flotte {
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
                     yTireFusee=-1;           //On remet la variable par defaut 
                 }
                 
             }
+            sc.close();
             
             yTireFusee--;            //On retire 1 au yTire
             int xTireFusee = (int) (xTireFuseeChar - 65);             //On convertie la saisie en un entier
@@ -145,7 +146,7 @@ public class Destroyer extends Flotte {
             }
             catch(InputMismatchException e){            //Si ce n'est pas un caractère
                 System.out.println(Menu.ROUGE +"Erreur! "+ Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 xTireChar='@';          //On remet la variable par defaut 
             }
             xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
@@ -158,7 +159,7 @@ public class Destroyer extends Flotte {
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un caractère
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                    Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
                     xTireChar='@';          //On remet la variable par defaut 
                 }
                 xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
@@ -170,7 +171,7 @@ public class Destroyer extends Flotte {
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 yTire=-1;           //On remet la variable par defaut 
             }
 
@@ -183,7 +184,7 @@ public class Destroyer extends Flotte {
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
                     yTire=-1;           //On remet la variable par defaut 
                 }
                 
@@ -201,7 +202,7 @@ public class Destroyer extends Flotte {
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
                 
                 while ((choix<1)||(choix>2)){           //On blinde en vérifiant que la saisie fait partie des choix
@@ -211,15 +212,16 @@ public class Destroyer extends Flotte {
                     }
                     catch(InputMismatchException e){            //Si ce n'est pas un entier
                         System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                        Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                        sc.next();            //On met à la poubelle la saisie de l'utilisateur
                     }
                 }
 
                 switch (choix){
                     case 1: break;           //On continue l'attaque
-                    case 2: return 2;           //On relance le tour
+                    case 2: sc.close(); return 2;           //On relance le tour
                 }
             }
+            sc.close();
 
             //Ici nous affichons un semblant de chargement des données pour le tir ainsi que le résultat, c'est a dire si celui-ci a touché un navire ou pas
             System.out.print("Ajustement des coordonnées");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);System.out.println(Menu.VERT+"OK"+Menu.RESET);
