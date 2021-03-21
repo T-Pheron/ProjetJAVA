@@ -4,32 +4,24 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+public class Croiseur extends Flotte{
 
-public class Cuirasse extends Flotte{
+
     
-    
-    public Cuirasse(){
-        etat = true;
-        nom = "cuirassé";
-        taille = 7;
+    public Croiseur(){
+        etat =true;
+        nom = "croiseur";
+        taille = 5;
         coordonnees = new int [taille][3];
-        puissance = 9;
-        lRef = 'U';
-        nRef =1;
+        puissance = 4;
+        lRef = 'C';
+        nRef =9;
     }
     
-    
-    /**
-     * Méthode qui permet de donner un numéro de référence unique à un cuirasse.
-     * D'après la position dans la liste Cuirasse à un numéro de référence unique
-     * qui est 1.
-     * @param pListe 
-     */
     @Override
     public void nRef (int pListe){
-        nRef += pListe;         //Pour cela on addition juste le nRef avec la position dans le liste
+        nRef += pListe;
     }
-    
     
      /**
      * Méthode à un navire d'effectuer un tir.
@@ -162,7 +154,7 @@ public class Cuirasse extends Flotte{
     /**
      * Méthode qui permet de donner les dégats sur le navire adverse.
      * La méthode permet de mettre le tir sur la grille de tir du joueur, et de mettre les dégats sur le navire adverse.
-     * Le cuirasse ne peut pas couler un sous-marin. Il fait néanmoins plus de dégats que le destroyer et le croiseur.
+     * Le croiseur ne peut pas couler un sous-marin. Il fait néanmoins plus de dégats que le destroyer.
      * @param xTire Variable qui stock la colonne de la position du tire
      * @param yTire Variable qui stock la ligne de la position du tire
      * @param numeroJoueur Variable qui stock le numero du joueur, soit le joueur humain, soit l'IA
@@ -198,17 +190,9 @@ public class Cuirasse extends Flotte{
                         Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire-1,yTire,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
-                    if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][0]==xTire-2){          //Si la coordonnée de la case du navire correspond à la colonne-1 de coordonnee du tire 
-                        Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire-2,yTire,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
                     if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][0]==xTire+1){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
                         Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire+1,yTire,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
-                    if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][0]==xTire+2){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
-                        Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire+2,yTire,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
@@ -223,17 +207,9 @@ public class Cuirasse extends Flotte{
                         Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire,yTire-1,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
-                    if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][1]==yTire-2){          //Si la coordonnée de la case du navire correspond à la colonne-1 de coordonnee du tire 
-                        Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire,yTire-2,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
                     if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][1]==yTire+1){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
                         Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire,yTire+1,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
-                    if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][1]==yTire+2){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
-                        Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire,yTire+2,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
@@ -254,17 +230,9 @@ public class Cuirasse extends Flotte{
                         Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire-1,yTire,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
-                    if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][0]==xTire-2){          //Si la coordonnée de la case du navire correspond à la colonne-1 de coordonnee du tire 
-                        Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire-2,yTire,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
                     if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][0]==xTire+1){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
                         Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire+1,yTire,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
-                    if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][0]==xTire+2){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
-                        Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire+2,yTire,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
                 }
                 System.out.println("\n"+Menu.VERT+"EH BIM TOUCHE ! \nCroquette !"+Menu.RESET);           //On affiche un message disant que le joueur a bien touché un navire
@@ -281,17 +249,9 @@ public class Cuirasse extends Flotte{
                         Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire,yTire-1,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
-                    if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][1]==yTire-2){          //Si la coordonnée de la case du navire correspond à la colonne-1 de coordonnee du tire 
-                        Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire,yTire-2,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
                     if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][1]==yTire+1){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
                         Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire,yTire+1,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
-                    if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][1]==yTire+2){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
-                        Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire,yTire+2,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
                 }
                 System.out.println("\n"+Menu.VERT+"EH BIM TOUCHE ! \nCroquette !"+Menu.RESET);           //On affiche un message disant que le joueur a bien touché un navire
@@ -303,3 +263,4 @@ public class Cuirasse extends Flotte{
         return 0;           //On retourne 0 si il y a un problème 
     }
 }
+
