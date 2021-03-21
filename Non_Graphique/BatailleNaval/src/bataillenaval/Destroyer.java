@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 public class Destroyer extends Flotte {
     
     public boolean premierTire = true;
+    private Scanner scDestroyer = new Scanner(System.in);
 
     public Destroyer(){
         etat = true;
@@ -38,7 +39,6 @@ public class Destroyer extends Flotte {
         if (premierTire==true){
             char xTireFuseeChar='@';         //On declare la variable par defaut avec un @
             int yTireFusee;
-            Scanner sc = new Scanner(System.in);//On declare une variable de type Scanner
             yTireFusee= -1;          //On declare la variable par defaut avec un -1
             System.out.println("Il s'agit du premier tir de ce destroyer");
             System.out.println("La munition tiré est donc une fusée éclairante");
@@ -47,11 +47,11 @@ public class Destroyer extends Flotte {
             System.out.println("Où voulez vous la vous tirer ?");           //On demande à l'utilisateur de saisir les coordonnées du tire
             System.out.println("Veuillez rentrer la colonne :");           //On demande à l'utilisateur de rentrer la colonne
             try{
-                xTireFuseeChar= sc.next().charAt(0);          //On stock la saisie de l'utilisateur
+                xTireFuseeChar= scDestroyer.next().charAt(0);          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un caractère
                 System.out.println(Menu.ROUGE +"Erreur! "+ Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                 xTireFuseeChar='@';          //On remet la variable par defaut 
             }
             xTireFuseeChar=Menu.convertirMinuscules(xTireFuseeChar);           //On convertir sa saisie en majuscule
@@ -59,11 +59,11 @@ public class Destroyer extends Flotte {
                 System.out.println(Menu.ROUGE + "Erreur!"+Menu.RESET);           //Sinon on affiche un message d'erreur
                 System.out.println("Veuillez entrer la lettre de la colonne d'où vous voulez tirer :");           //On lui demande de ressaisir
                 try{
-                    xTireFuseeChar= sc.next().charAt(0);          //On stock la saisie de l'utilisateur
+                    xTireFuseeChar= scDestroyer.next().charAt(0);          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un caractère
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                     xTireFuseeChar='@';          //On remet la variable par defaut
                 }
                 xTireFuseeChar=Menu.convertirMinuscules(xTireFuseeChar);           //On convertir sa saisie en majuscule
@@ -71,22 +71,22 @@ public class Destroyer extends Flotte {
             //Coordonées y
             System.out.println("Veuillez rentrer la ligne :");         //On lui demande de saisir
             try{
-                yTireFusee = sc.nextInt();          //On stock la saisie de l'utilisateur
+                yTireFusee = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                 yTireFusee=-1;           //On remet la variable par defaut 
             }
             while ((yTireFusee<0)||(yTireFusee>16)){          //On blinde, en vérifiant que la saisie fait partie des choix
                 System.out.println(Menu.ROUGE + "Erreur!"+ Menu.RESET +"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur
                 System.out.println("Veuillez entrer le numero de la ligne a laquelle vous voulez tirer : :");           //Et on demande la ressaisie
                 try{
-                    yTireFusee = sc.nextInt();          //On stock la saisie de l'utilisateur
+                    yTireFusee = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                     yTireFusee=-1;           //On remet la variable par defaut
                 }
 
@@ -131,16 +131,15 @@ public class Destroyer extends Flotte {
         /*Si c'est pas le premier tir du bateau***********************************************/
         else {
             char xTireChar='@';         //On declare la variable par defaut avec un @
-            Scanner sc = new Scanner(System.in);            //On declare une variable de type Scanner
             int yTire=-1;           //On declare la variable par defaut avec un -1
             System.out.println("Où voulez vous tirer ?");           //On demande à l'utilisateur de saisir les coordonnées du tire
             System.out.println("Veuillez rentrer la colonne :");           //On demande à l'utilisateur de rentrer la colonne
             try{
-                xTireChar= sc.next().charAt(0);          //On stock la saisie de l'utilisateur
+                xTireChar= scDestroyer.next().charAt(0);          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un caractère
                 System.out.println(Menu.ROUGE +"Erreur! "+ Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                 xTireChar='@';          //On remet la variable par defaut 
             }
             xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
@@ -149,11 +148,11 @@ public class Destroyer extends Flotte {
                 System.out.println(Menu.ROUGE + "Erreur !"+Menu.RESET);           //Sinon on affiche un message d'erreur
                 System.out.println("Veuillez entrer la lettre de la colonne d'où vous voulez tirer :");           //On lui demande de ressaisir
                 try{
-                    xTireChar= sc.next().charAt(0);          //On stock la saisie de l'utilisateur
+                    xTireChar= scDestroyer.next().charAt(0);          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un caractère
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                     xTireChar='@';          //On remet la variable par defaut 
                 }
                 xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
@@ -161,11 +160,11 @@ public class Destroyer extends Flotte {
 
             System.out.println("Veuillez rentrer la ligne :");         //On lui demande de saisir 
             try{
-                yTire = sc.nextInt();          //On stock la saisie de l'utilisateur
+                yTire = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                 yTire=-1;           //On remet la variable par defaut 
             }
 
@@ -174,11 +173,11 @@ public class Destroyer extends Flotte {
                 System.out.println(Menu.ROUGE + "Erreur!"+ Menu.RESET +"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur
                 System.out.println("Veuillez entrer le numero de la ligne a laquelle vous voulez tirer :");           //Et on demande la ressaisie
                 try{
-                    yTire = sc.nextInt();          //On stock la saisie de l'utilisateur
+                    yTire = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                     yTire=-1;           //On remet la variable par defaut 
                 }
                 
@@ -192,21 +191,21 @@ public class Destroyer extends Flotte {
                 System.out.println("Voulez vous vraiment tirer sur cette case ? Elle à deja été bombardée");            //On lui demande si il veut vraiment tirer sur cette case
                 System.out.println("1.OUI \n2.NON");           //On affiche les choix du joueur 
                 try{
-                    choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+                    choix = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
                 
                 while ((choix<1)||(choix>2)){           //On blinde en vérifiant que la saisie fait partie des choix
                     System.out.println(Menu.ROUGE+"Erreur! "+ Menu.RESET +"Veuillez saisir à nouveau votre choix :");           //Sinon, on affiche un message d'erreur et demande la ressaisie
                     try{
-                        choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+                        choix = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
                     }
                     catch(InputMismatchException e){            //Si ce n'est pas un entier
                         System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                        sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                        scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                     }
                 }
 

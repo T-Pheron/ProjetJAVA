@@ -6,6 +6,9 @@ import java.util.concurrent.TimeUnit;
     
 public class SousMarin extends Flotte {
     
+    private Scanner scSousMarin = new Scanner(System.in);
+
+
     /**
      * 
      */
@@ -41,16 +44,15 @@ public class SousMarin extends Flotte {
     public int tir()throws InterruptedException{
         
         char xTireChar='@';         //On declare la variable par defaut avec un @
-        Scanner sc = new Scanner(System.in);            //On declare une variable de type Scanner
         int yTire=-1;           //On declare la variable par defaut avec un -1
         System.out.println("Où voulez vous tirer ?");           //On demande à l'utilisateur de saisir les coordonnées du tire
         System.out.println("Rentrer la colonne");           //On demande à l'utilisateur de rentrer la colonne
         try{
-            xTireChar= sc.next().charAt(0);          //On stock la saisie de l'utilisateur
+            xTireChar= scSousMarin.next().charAt(0);          //On stock la saisie de l'utilisateur
         }
         catch(InputMismatchException e){            //Si ce n'est pas un caractère
             System.out.println(Menu.ROUGE +"Erreur! "+ Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-            sc.next();            //On met à la poubelle la saisie de l'utilisateur
+            scSousMarin.next();            //On met à la poubelle la saisie de l'utilisateur
             xTireChar='@';          //On remet la variable par defaut 
         }
         xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
@@ -59,11 +61,11 @@ public class SousMarin extends Flotte {
             System.out.println(Menu.ROUGE + "Erreur !"+Menu.RESET);           //Sinon on affiche un message d'erreur
             System.out.println("Veuillez entrer la lettre de la colonne d'où vous voulez tirer :");           //On lui demande de ressaisir
             try{
-                xTireChar= sc.next().charAt(0);          //On stock la saisie de l'utilisateur
+                xTireChar= scSousMarin.next().charAt(0);          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un caractère
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                scSousMarin.next();            //On met à la poubelle la saisie de l'utilisateur
                 xTireChar='@';          //On remet la variable par defaut 
             }
             xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
@@ -71,11 +73,11 @@ public class SousMarin extends Flotte {
 
         System.out.println("Rentrer la ligne");         //On lui demande de saisir 
         try{
-            yTire = sc.nextInt();          //On stock la saisie de l'utilisateur
+            yTire = scSousMarin.nextInt();          //On stock la saisie de l'utilisateur
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
             System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-            sc.next();            //On met à la poubelle la saisie de l'utilisateur
+            scSousMarin.next();            //On met à la poubelle la saisie de l'utilisateur
             yTire=-1;           //On remet la variable par defaut 
         }
 
@@ -84,11 +86,11 @@ public class SousMarin extends Flotte {
             System.out.println(Menu.ROUGE + "Erreur_tire_navire!"+ Menu.RESET +"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur
             System.out.println("Veuillez entrer le numero de la ligne a laquelle vous voulez tirer : :");           //Et on demande la ressaisie
             try{
-                yTire = sc.nextInt();          //On stock la saisie de l'utilisateur
+                yTire = scSousMarin.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                scSousMarin.next();            //On met à la poubelle la saisie de l'utilisateur
                 yTire=-1;           //On remet la variable par defaut 
             }
             
@@ -101,21 +103,21 @@ public class SousMarin extends Flotte {
             System.out.println("Voulez vous vraiment tirer sur cette case ? Elle à deja été bombardée");            //On lui demande si il veut vraiment tirer sur cette case
             System.out.println("1.OUI \n2.NON");           //On affiche les choix du joueur 
             try{
-                choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+                choix = scSousMarin.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                scSousMarin.next();            //On met à la poubelle la saisie de l'utilisateur
             }
             
             while ((choix<1)||(choix>2)){           //On blinde en vérifiant que la saisie fait partie des choix
                 System.out.println(Menu.ROUGE+"Erreur! "+ Menu.RESET +"Veuillez saisir à nouveau votre choix :");           //Sinon, on affiche un message d'erreur et demande la ressaisie
                 try{
-                    choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+                    choix = scSousMarin.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    scSousMarin.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             }
 
@@ -203,19 +205,23 @@ public class SousMarin extends Flotte {
             Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"2");//On modifie le plateau et on met qu'on a tire et touche quelqu'un a ces coordonnes la
             if (Jeu.flotteJoueur1.get(pListeAdv).direction==0){         //Si le navire est à l'horizontale
                 
-                for (int i=0; i<Jeu.flotteJoueur1.get(pListeAdv).taille; i++){          //On parcourt tout le navire
+                for (int j=0; j<Jeu.flotteJoueur1.get(pListeAdv).taille;){          //On parcourt tout le navire
 
-                    if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][0]==xTire){          //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
-                        Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
+                    if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[j][0]==xTire){          //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
+                        Jeu.flotteJoueur1.get(pListeAdv).coordonnees[j][2]=0;            //On met que cette case du navire a été touchée
                         System.out.println("\n"+Menu.VERT+"EH BIM TOUCHE ! \nCroquette !"+Menu.RESET);           //On affiche un message disant que le joueur a bien touché un navire
                         TimeUnit.SECONDS.sleep(3);
                     }
-                    if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                        System.out.println("Bien joué ca gasson ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
-                        TimeUnit.SECONDS.sleep(3);          //On patient pendant 3 seconde avant de continuer
-                    }
-                    return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
+                    j++;
+                }    
+                
+                if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                    System.out.println("Bien joué ca gasson ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);          //On patient pendant 3 seconde avant de continuer
                 }
+                
+                return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
+                
             }
             else{           //Si le navire est à la vertical
                 

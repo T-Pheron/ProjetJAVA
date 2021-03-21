@@ -57,6 +57,8 @@ public class Jeu {
     public final String VOILETAR = "\u001B[45m";
     public final String CYANAR = "\u001B[46m";
     public final String GRISAR = "\u001B[47m";
+    private Scanner scJeu = new Scanner(System.in);
+    private Scanner scJeuLine = new Scanner(System.in);
     
     
      
@@ -234,17 +236,15 @@ public class Jeu {
         String saisie;          //Variable qui stocke la saisie de l'utilisateur
         char lRef='A';              //Varieble qui stocke la lettre de référence du navire
         boolean sortieChoixNavire = false;          //Variable qui permet de savoir si on doit sorti de la boucle de choix du navire
-        Scanner sc = new Scanner(System.in);            //Variable qui permet de récuperer la saisie de l'utilisateur
-
         /*Sélection du navire à bouger*****************************************/
         do{
             System.out.println("Veuillez entrer la lettre du navire que vous voulez bouger :");      //On demande à l'utilisateur de choisir la lettre du navire
             try{
-                    lRef= sc.next().charAt(0);          //On stock la saisie de l'utilisateur
+                    lRef= scJeu.next().charAt(0);          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un caractère
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             lRef=Menu.convertirMinuscules(lRef);            //On convertir la saisie en majuscule
         
@@ -252,11 +252,11 @@ public class Jeu {
                 System.out.println(ROUGE +"Erreur!"+RESET +"\nCette lettre ne fait pas parti des choix.");          //Sinon, on affiche un message d'erreur
                 System.out.println("Veuillez entrer la lette du navire que vous voulez bouger :");          //On demande à l'utilisateur de resaisir
                 try{
-                    lRef= sc.next().charAt(0);          //On stock la saisie de l'utilisateur
+                    lRef= scJeu.next().charAt(0);          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un caractère
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
                 lRef=Menu.convertirMinuscules(lRef);            //On convertie la saisie en majuscule
             }
@@ -266,11 +266,11 @@ public class Jeu {
             else{           //Si c'est pas la cas
                 System.out.println("Veuillez entrer le numero du navire que vous voulez bouger :");         //On demande le numéro plateau du navire
                 try{
-                        nPlateau = sc.nextInt();          //On stock la saisie de l'utilisateur
+                        nPlateau = scJeu.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
                 
                 if (lRef=='C') nMaxNavire=2;            //On déduit le nombre maximal de navire en fonction de la letrre de référence
@@ -282,11 +282,11 @@ public class Jeu {
                     System.out.println(ROUGE + "Erreur!"+RESET+"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur 
                     System.out.println("Veuillez entrer le numero du navire que vous voulez bouger :");             //On demande à l'utilisateur de ressaisir
                     try{
-                        nPlateau = sc.nextInt();          //On stock la saisie de l'utilisateur
+                        nPlateau = scJeu.nextInt();          //On stock la saisie de l'utilisateur
                     }
                     catch(InputMismatchException e){            //Si ce n'est pas un entier
                         System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                        sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                        scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                     }
                 }
             }
@@ -299,11 +299,11 @@ public class Jeu {
                 System.out.println("1.OUI   2.NON");
                 choix = 0;
                 try{
-                        choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+                        choix = scJeu.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                         System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                        sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                        scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
                 
                 switch(choix){
@@ -322,11 +322,11 @@ public class Jeu {
                     System.out.println("Voulez vous tentez de déplacer un autre navire ?");         //On demande à l'utilisateur ce qu'il souhaite faire
                     System.out.println("1.OUI   2.NON");
                     try{
-                        choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+                        choix = scJeu.nextInt();          //On stock la saisie de l'utilisateur
                     }
                     catch(InputMismatchException e){            //Si ce n'est pas un entier
                         System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                        sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                        scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                     }
                 
                     switch(choix){
@@ -453,11 +453,8 @@ public class Jeu {
         }
         
         
-        /*Saisie du nouvelle emplcament****************************************/
-        Scanner sc1 = new Scanner(System.in);           //Varible qui permet de récuperer la saisie de l'utilisateur
-        
         System.out.println("Entrer la colonne ou la ligne du nouvelle emplacement du navire");          //On demande à l'utilisateur de saisie le nouvelle emplacement
-        saisie = sc1.nextLine();            //On récupère ça saisie qui peut etre de n'importe quelle type
+        saisie = scJeuLine.nextLine();            //On récupère ça saisie qui peut etre de n'importe quelle type
         char saisieChar='Z';                //Variable qui permet de stocker la saisie si elle est un charactère
         int saisieInt=0;                    //Variable qui permet de stocker la saisie si elle est un entier
         
@@ -482,7 +479,7 @@ public class Jeu {
         while(verif==false){            //On blinde, si la saisie ne fait pas partie des choix possibles
             System.out.println(B_JAUNE + "Echec !"+RESET+"\nLa saisie ne fait pas parti des choix possibles");          //On affiche un message d'échec
             System.out.println("Veuillez resaisir la ligne ou la colonne où vous voulez déplacer le navire");           //On à l'utilisateur de ressaisir
-            saisie = sc1.nextLine();         //On stocke la saisie de l'utilisateur
+            saisie = scJeuLine.nextLine();         //On stocke la saisie de l'utilisateur
             
             if (saisie.equals("A") || saisie.equals("B") || saisie.equals("C") || saisie.equals("D") || saisie.equals("E")|| saisie.equals("F") || saisie.equals("G") || saisie.equals("H") || saisie.equals("I") || saisie.equals("J") || saisie.equals("K") || saisie.equals("L") || saisie.equals("M") || saisie.equals("N") || saisie.equals("O")) {            //On vérif que la saisie est une majuscule qui fait partie des choix
                 verif = true;           //Si c'est le cas on met verif sur true
@@ -503,22 +500,22 @@ public class Jeu {
         if (verifEntier==true && (saisieInt-1) == flotte.get(pListe).coordonnees[0][1]){            //Si l'utilisateur n'a pas saisie un nouvelle emplacement mais la ligne où se situe le navire
             System.out.println("Veuillez saisir la colonne de la case où vous voulez placer le navire");            //On lui demande de saisir la colonne
             try{
-                    saisieChar = sc.next().charAt(0);          //On stock la saisie de l'utilisateur
+                    saisieChar = scJeu.next().charAt(0);          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un caractère
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             saisieChar = Menu.convertirMinuscules(saisieChar);          //On convertie cette saisie en majuscule
             
             while(saisieChar<'A'||saisieChar>'O'){          //Si la saisie ne fait pas partie des choix
                 System.out.println(ROUGE+"Erreur!"+RESET+ "\nLa saisie ne fait pas partie des choix. Veuillez resaisir :");         //On demande à l'utilisateur de ressaisir
                 try{
-                    saisieChar = sc.next().charAt(0);          //On stock la saisie de l'utilisateur
+                    saisieChar = scJeu.next().charAt(0);          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un caractère
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
                 saisieChar = Menu.convertirMinuscules(saisieChar);          //On convertie cette saisie en majuscule
             }
@@ -529,20 +526,20 @@ public class Jeu {
             System.out.println("Veuillez saisir le numéro de la case où vous voulez placer le navire");
             verifEntier=true;
             try{
-                saisieInt = sc.nextInt();          //On stock la saisie de l'utilisateur
+                saisieInt = scJeu.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
             }
             while(saisieChar<65||saisieChar>79){
                 System.out.println(ROUGE+"Erreur!"+RESET+ "\nLa saisie ne fait pas partie des choix. Veuillez resaisir :");
                 try{
-                    saisieInt = sc.nextInt();          //On stock la saisie de l'utilisateur
+                    saisieInt = scJeu.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             }
         }

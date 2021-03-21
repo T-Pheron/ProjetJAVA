@@ -8,6 +8,9 @@ public class Croiseur extends Flotte{
 
 
     
+    private Scanner scCroiseur = new Scanner(System.in);
+
+
     public Croiseur(){
         etat =true;
         nom = "croiseur";
@@ -33,16 +36,15 @@ public class Croiseur extends Flotte{
     public int tir() throws InterruptedException{
         
         char xTireChar='@';         //On declare la variable par defaut avec un @
-        Scanner sc = new Scanner(System.in);            //On declare une variable de type Scanner
         int yTire=-1;           //On declare la variable par defaut avec un -1
         System.out.println("Où voulez vous tirer ?");           //On demande à l'utilisateur de saisir les coordonnées du tire
         System.out.println("Veuillez rentrer la colonne :");           //On demande à l'utilisateur de rentrer la colonne
         try{
-            xTireChar= sc.next().charAt(0);          //On stock la saisie de l'utilisateur
+            xTireChar= scCroiseur.next().charAt(0);          //On stock la saisie de l'utilisateur
         }
         catch(InputMismatchException e){            //Si ce n'est pas un caractère
             System.out.println(Menu.ROUGE +"Erreur! "+ Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-            sc.next();            //On met à la poubelle la saisie de l'utilisateur
+            scCroiseur.next();            //On met à la poubelle la saisie de l'utilisateur
             xTireChar='@';          //On remet la variable par defaut 
         }
         xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
@@ -51,11 +53,11 @@ public class Croiseur extends Flotte{
             System.out.println(Menu.ROUGE + "Erreur !"+Menu.RESET);           //Sinon on affiche un message d'erreur
             System.out.println("Veuillez entrer la lettre de la colonne d'où vous voulez tirer :");           //On lui demande de ressaisir
             try{
-                xTireChar= sc.next().charAt(0);          //On stock la saisie de l'utilisateur
+                xTireChar= scCroiseur.next().charAt(0);          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un caractère
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                scCroiseur.next();            //On met à la poubelle la saisie de l'utilisateur
                 xTireChar='@';          //On remet la variable par defaut 
             }
             xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
@@ -63,11 +65,11 @@ public class Croiseur extends Flotte{
 
         System.out.println("Veuillez rentrer la ligne :");         //On lui demande de saisir 
         try{
-            yTire = sc.nextInt();          //On stock la saisie de l'utilisateur
+            yTire = scCroiseur.nextInt();          //On stock la saisie de l'utilisateur
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
             System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-            sc.next();            //On met à la poubelle la saisie de l'utilisateur
+            scCroiseur.next();            //On met à la poubelle la saisie de l'utilisateur
             yTire=-1;           //On remet la variable par defaut 
         }
 
@@ -76,11 +78,11 @@ public class Croiseur extends Flotte{
             System.out.println(Menu.ROUGE + "Erreur!"+ Menu.RESET +"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur
             System.out.println("Veuillez entrer le numero de la ligne a laquelle vous voulez tirer :");           //Et on demande la ressaisie
             try{
-                yTire = sc.nextInt();          //On stock la saisie de l'utilisateur
+                yTire = scCroiseur.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                scCroiseur.next();            //On met à la poubelle la saisie de l'utilisateur
                 yTire=-1;           //On remet la variable par defaut 
             }
             
@@ -94,21 +96,21 @@ public class Croiseur extends Flotte{
             System.out.println("Voulez vous vraiment tirer sur cette case ? Elle à deja été bombardée");            //On lui demande si il veut vraiment tirer sur cette case
             System.out.println("1.OUI \n2.NON");           //On affiche les choix du joueur 
             try{
-                choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+                choix = scCroiseur.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                scCroiseur.next();            //On met à la poubelle la saisie de l'utilisateur
             }
             
             while ((choix<1)||(choix>2)){           //On blinde en vérifiant que la saisie fait partie des choix
                 System.out.println(Menu.ROUGE+"Erreur! "+ Menu.RESET +"Veuillez saisir à nouveau votre choix");           //Sinon, on affiche un message d'erreur et demande la ressaisie
                 try{
-                    choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+                    choix = scCroiseur.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    scCroiseur.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             }
 

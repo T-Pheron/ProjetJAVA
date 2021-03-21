@@ -41,6 +41,9 @@ public class Menu {
     public static final String VOILET_AR = "\u001B[45m";
     public static final String CYAN_AR = "\u001B[46m";
     public static final String GRIS_AR = "\u001B[47m";
+    
+    //**************************************************************************
+    private Scanner scMenu = new Scanner(System.in);
      
     
     
@@ -53,7 +56,6 @@ public class Menu {
     */
     public void menuPrincipal() throws InterruptedException{
         int choix=0;              //Variable qui permet de stocker le choix du joueur
-        Scanner sc = new Scanner(System.in);                //Variable qui permet de récuperer la saisie du clavier
         Jeu jeu = new Jeu();                //On initialise une variable de type Jeu 
 
         
@@ -65,21 +67,21 @@ public class Menu {
         
         System.out.println("Veuillez saisir votre choix :");           //On demande à l'utilisateur de saisir son choix
         try{
-            choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+            choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
             System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-            sc.next();            //On met à la poubelle la saisie de l'utilisateur
+            scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
         }
         
         while ((choix<1)||(choix>4)){           //On blinde en vérifiant que la saisie fait partie des choix possibles
             System.out.println(ROUGE +"Erreur! "+ RESET+ "Veuillez saisir à nouveau votre choix :");           //Sinon, on affiche un message d'erreur et demande à nouveau la saisie
             try{
-                choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+                choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
             }
         }
         
@@ -109,9 +111,6 @@ public class Menu {
      */
     public int menuJoueur(){
         int choix=0;           //Variable qui permet de stocker le choix du joueur
-        Scanner sc = new Scanner(System.in);           //Variable qui permet de récuperer la saisie du clavier
-        
-        
         System.out.println("");
         System.out.println(GRIS_AR +NOIR+ "               MENU JOUEUR              "+RESET+ RESET_AR);           //On afficher le titre du menu
         System.out.println("Que voulez vous faire ?");
@@ -120,21 +119,21 @@ public class Menu {
         
         System.out.println("Veuillez saisir votre choix");           //On demande à l'utilisateur de saisir son choix
         try{
-            choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+            choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
             System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-            sc.next();            //On met à la poubelle la saisie de l'utilisateur
+            scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
         }
         
         while ((choix<1)||(choix>2)){               //On blinde en vérifiant que la saisie fait partie des choix
             System.out.println(ROUGE+"Erreur! "+ RESET +"Veuillez saisir à nouveau votre choix");           //Sinon, on affiche un message d'erreur et demande la ressaisie
             try{
-                choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+                choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
             }
         }
         switch (choix){
@@ -173,29 +172,26 @@ public class Menu {
      */
     public void menuAide(){
         int choix=0;           //Variable qui permet de stocker le choix du joueur
-        Scanner sc = new Scanner(System.in);           //Variable qui permet de récuperer la saisie du clavier
-        
-        
         System.out.println(GRIS_AR +NOIR+ "               MENU AIDE              "+RESET+ RESET_AR);           //On afficher le titre du menu
         System.out.println("1.premiere categorie d'aide \2. deuxieme categorie d'aide \n3. troisieme categorie d'aide ");           //On affiche les choix possibles
         
         System.out.println("Veuillez saisir votre choix");           //On demande à l'utilisateur de saisir son choix
         try{
-            choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+            choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
             System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-            sc.next();            //On met à la poubelle la saisie de l'utilisateur
+            scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
         }
         
         while ((choix<1)||(choix>2)){           //On blinde en vérifiant que la saisie fait partie des choix
             System.out.println(ROUGE+"Erreur! "+ RESET +"Veuillez saisir à nouveau votre choix");           //Sinon, on affiche un message d'erreur et demande la ressaisie
             try{
-                choix = sc.nextInt();          //On stock la saisie de l'utilisateur
+                choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
             }
         }
         
@@ -240,9 +236,6 @@ public class Menu {
      */
     public int menuTirer (List<Flotte> flotte, int numero_joueur) throws InterruptedException{
         
-        Scanner sc1 = new Scanner(System.in);           //Variable qui permet de récuperer la saisie du clavier
-        
-        
         System.out.println(GRIS_AR +NOIR+ "               MENU TIRE              "+RESET+ RESET_AR);           //On afficher le titre du menu
         
         char lRef='A';            //On iniatilise une variable de type char qui permet de stocker la lettre de référence du navire choix
@@ -251,12 +244,12 @@ public class Menu {
 
         System.out.println("Veuillez entrer la lettre du navire avec lequel vous voulez tirer :");           //On demande à l'utilisateur de saisir la lettre du navire
         try{
-            lRef= sc1.next().charAt(0);          //On stock la saisie de l'utilisateur
+            lRef= scMenu.next().charAt(0);          //On stock la saisie de l'utilisateur
             lRef=Menu.convertirMinuscules(lRef);           //On convertir sa saisie en majuscule
         }
         catch(InputMismatchException e){            //Si ce n'est pas un caractère
             System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-            sc1.next();            //On met à la poubelle la saisie de l'utilisateur
+            scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
         }   
         lRef=Menu.convertirMinuscules(lRef);           //On convertir sa saisie en majuscule
 
@@ -264,11 +257,11 @@ public class Menu {
             System.out.println(ROUGE + "Erreur !"+RESET);           //Sinon on affiche un message d'erreur
             System.out.println("Veuillez entrer la lettre du navire avec lequel vous voulez tirer :");           //On lui demande de ressaisir
             try{
-                lRef= sc1.next().charAt(0);          //On stock la saisie de l'utilisateur
+                lRef= scMenu.next().charAt(0);          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un caractère
                 System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                sc1.next();            //On met à la poubelle la saisie de l'utilisateur
+                scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
                 lRef='A';
             }
             lRef=Menu.convertirMinuscules(lRef);           //On convertir sa saisie en majuscule
@@ -278,11 +271,11 @@ public class Menu {
         else {
             System.out.println("Veuillez entrer le numero du navire avec lequel vous voulez tirer :");           //Sinon, on demande à l'utilisateur de rentrer le numéro affiché sur le plateau du bateau qu'il souhaite utiliser pour tirer
             try{
-                nPlateau = sc1.nextInt();          //On stock la saisie de l'utilisateur
+                nPlateau = scMenu.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                sc1.next();            //On met à la poubelle la saisie de l'utilisateur
+                scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
             }
             if (lRef=='C') maxNavire=2;            //On affecte à la variable maxNavire le numéro maximal de navire de ce type que contient la liste en fonction de la lettre de référence du navire
             if (lRef=='D') maxNavire=3;
@@ -293,11 +286,11 @@ public class Menu {
                 System.out.println(ROUGE + "Erreur! "+RESET +"Ce numéro ne fait pas parti des choix.");           //Sinon, on affiche un message d'erreur
                 System.out.println("Veuillez entrer le numero du navire avec lequel vous voulez tirer : :");           //Et on demande la ressaisie
                 try{
-                    nPlateau = sc1.nextInt();          //On stock la saisie de l'utilisateur
+                    nPlateau = scMenu.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    sc1.next();            //On met à la poubelle la saisie de l'utilisateur
+                    scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             }
         }
