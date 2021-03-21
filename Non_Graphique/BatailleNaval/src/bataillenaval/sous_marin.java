@@ -2,8 +2,7 @@ package bataillenaval;
 
 
 public class sous_marin extends Flotte {
-    
-    public Flotte sous_marin;
+
     
     public sous_marin(){
         etat =true;
@@ -12,14 +11,15 @@ public class sous_marin extends Flotte {
         puissance = 1;
         l_ref = 'S';
         n_ref =24;
-        sous_marin = new Flotte();
     }
     
     public void ref_bateau (int nombre_ref){
         n_ref += nombre_ref;
     }
     
-    public void tir(){
+    @Override
+    public int tir(){
+        return 0;
         
     }
     

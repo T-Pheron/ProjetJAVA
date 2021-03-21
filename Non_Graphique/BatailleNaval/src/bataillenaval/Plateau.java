@@ -3,36 +3,36 @@ package bataillenaval;
 
 public class Plateau {
     
-    /*Le plateau de jeu
-    Il y a 4 chouches pour la plateau de jeu de 15x15
-    Les couches d'indices 0 et 1 sont réservé au joueur humain (joueur 0)
-        - Couche 0 : Elle est utiliser pour stocker l'emplacement de ses bateaux:
-            La case d'indice 0 est pour la lettre qui identifie le bateau (Legende : lettre dans la classe Flottes)
-            La case d'indice 1 est pour stocker le numéro du bateau (Unique pour chaque bateau)
-        
-        - Couche 1 : Elle sert à stocker les endroit où on a tiré:
-            La case d'indice 0 est utilisé pour stocker un numéro
-                0 On a jamais tirer sur cette case
-                1 On a déjà tirer sur cette case mais on a rien touché
-                2 On a déjà tirer sur cette case et on a touché un bateau
-    
-    Les couches d'indices 2 et 3 sont réservé à l'IA (joueur 1)
-        - Couche 2 : Correspond à la couche 0 pour l'IA
-        - Couche 3 : Correspond à la couche 1 pour l'IA
-    */
     public Object [][][][] plateaudejeu = new Object[15][15][4][2];
     
     
+    /**Constructeur du plateau de jeu.
+    Il y a 4 étages pour le plateau de jeu de 15x15.<br>
+    Les étages d'indices 0 et 1 sont réservées au joueur humain (joueur 0)<br>
+        - Etage 0 : Elle est utilisée pour stocker l'emplacement de ses navires:<br>
+            [y][x][numeroEtage][0] est utilisé pour la lettre qui identifie le navire (Legende : lettre dans la classe Flottes)<br>
+            [y][x][numeroEtage][1] est utilisé pour stocker le numéro du navire afficher sur le plateau<br><br>
+        
+        - Etage 1 : Elle sert à stocker les endroit où on a tiré:<br>
+            [y][x][numeroEtage][0] est utilisé pour stocker un numéro qui correspond au tir du joueur<br>
+                0 On a jamais tiré sur cette case<br>
+                1 On a déjà tiré sur cette case mais on a rien touché<br>
+                2 On a déjà tiré sur cette case et on a touché un bateau<br><br>
+    
+    Les étages d'indice 2 et 3 sont réservés à l'IA (joueur 1)<br>
+        - Etage 2 : Correspond à l'étage 0 pour l'IA<br>
+        - Etage 3 : Correspond à l'étage 1 pour l'IA
+    */
     public Plateau(){
-        for (int i=0; i<15; i++){//On fait des boucles pour parcourir tout les étages tu plateau de jeu
+        for (int i=0; i<15; i++){//On fait des boucles pour parcourir tous les étages du plateau de jeu
            for (int j=0; j<15; j++){
                for (int k=0; k<4; k++){
-                    if (k==0 || k==2){
+                    if (k==0 || k==2){//On différencie les étages où sont les navires et ceux avec les endroits où on lieu les tirs
                         for (int l=0; l<2; l++){
-                            plateaudejeu[i][j][k][l]="_";//On met toutes les cases où on place les bateaus à la valeur par defaut
+                            plateaudejeu[i][j][k][l]="_";//On met toutes les cases où on place les navires à la valeur par defaut
                         }
                     }
-                    else {
+                    else {//On différencie les étages où sont les navires et ceux avec les endroits où on lieu les tirs
                         for (int l=0; l<2; l++){
                             plateaudejeu[i][j][k][l]="0";//On met les cases pour visualiser les cases touchées à la valeur par défaut
                         }
@@ -42,30 +42,61 @@ public class Plateau {
         }
     }
     
-    public Object get(int x, int y, int numero_etage, int numeros_case){
-        return plateaudejeu[y][x][numero_etage][numeros_case];
+    
+    //**************************************************************************
+    /**
+     * Méthode pour connaître la valeur d'un élément dans le tableau.
+     * Cela permet renvoyer la valeur d'une position donnée dans le plateau de jeu sans la modifier.
+     * @param x La valeur de l'axe en x du plateau de jeu
+     * @param y La valeur de l'axe en y du plateau de jeu
+     * @param numeroEtage Le numéro de l'étage dans le plateau de jeu
+     * @param numeroCase Le numéro de la case dans le plateau de jeu
+     * @return Retourne la valeur présent à la position donnée
+     */
+    public Object get(int x, int y, int numeroEtage, int numeroCase){
+        return plateaudejeu[y][x][numeroEtage][numeroCase];//On retourne la valeur à la position donné
     }
     
-    public void modification (int x, int y, int numero_etage, int numeros_case, Object object){
-        plateaudejeu[y][x][numero_etage][numeros_case] = object;
+    
+    //**************************************************************************
+    /**Méthode qui modifie l'élément qui est à la position rentrer du plateau de jeu avec l'élement donné.
+     * Permet de modifie un élément à une position du plateau de jeu avec un autre élément
+     * @param x La valeur de l'axe x du plateau de jeu
+     * @param y La valeur de l'axe y du plateau de jeu
+     * @param numeroEtage Le numéro de l'étage dans la plateau de jeu
+     * @param numeroCase Le numéro de la case dans le plateau de jeu
+     * @param object L'élement qu'on soit metrre à la place
+     */
+    public void modification (int x, int y, int numeroEtage, int numeroCase, Object object){
+        plateaudejeu[y][x][numeroEtage][numeroCase] = object;//On donne à la position donnée la valeur donnée en paramètre
     }
     
-    public void echange (int x1, int y1, int x2, int y2, int numero_etage){
+    
+    //**************************************************************************
+    /**Méthode qui permet d'échanger 2 positions dans le plateau de jeu
+     * 
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @param numeroEtage 
+     */
+    public void echange (int x1, int y1, int x2, int y2, int numeroEtage){
 
-            Object stock1 = plateaudejeu[y1][x1][numero_etage][0];
-            Object stock2 = plateaudejeu[y1][x1][numero_etage][1];
+            Object stock1 = plateaudejeu[y1][x1][numeroEtage][0];
+            Object stock2 = plateaudejeu[y1][x1][numeroEtage][1];
             
-            if (numero_etage == 0 || numero_etage == 2) {
-                plateaudejeu[y1][x1][numero_etage][0]="_";
-                plateaudejeu[y1][x1][numero_etage][1]="_";
+            if (numeroEtage == 0 || numeroEtage == 2) {
+                plateaudejeu[y1][x1][numeroEtage][0]="_";
+                plateaudejeu[y1][x1][numeroEtage][1]="_";
             }
             else{
-                plateaudejeu[y1][x1][numero_etage][0]="0";
-                plateaudejeu[y1][x1][numero_etage][1]="0";
+                plateaudejeu[y1][x1][numeroEtage][0]="0";
+                plateaudejeu[y1][x1][numeroEtage][1]="0";
             }
             
-            plateaudejeu[y2][x2][numero_etage][0]=stock1;
-            plateaudejeu[y2][x2][numero_etage][1]=stock2;
+            plateaudejeu[y2][x2][numeroEtage][0]=stock1;
+            plateaudejeu[y2][x2][numeroEtage][1]=stock2;
     }
     
     
@@ -121,6 +152,27 @@ public class Plateau {
             
                 for (int j=0; j<15; j++){
                
+                    if (numero_joueur==0){
+                        if (plateaudejeu[i][j][3][0]=="1"){
+                            System.out.print(CYANAR + ROUGE + "XX" + RESETAR + RESET +"|");
+                            continue;
+                        }
+                        if (plateaudejeu[i][j][3][0]=="2"){
+                            System.out.print(ROUGEAR + BLANC + "XX" + RESETAR + RESET +"|");
+                            continue;
+                        }
+                    }
+                    else {
+                        if (plateaudejeu[i][j][1][0]=="1"){
+                            System.out.print(CYANAR + ROUGE + "XX" + RESETAR + RESET +"|");
+                            continue;
+                        }
+                        if (plateaudejeu[i][j][1][0]=="2"){
+                            System.out.print(ROUGEAR + BLANC + "XX" + RESETAR + RESET +"|");
+                            continue;
+                        }
+                    }
+                    
                     if (plateaudejeu[i][j][numero_etage][0]=="_"){
                         System.out.print("__|");
                     }
@@ -158,10 +210,16 @@ public class Plateau {
                         System.out.print("__|");
                     }
                     if (plateaudejeu[i][j][numero_etage][0]=="1"){
-                        System.out.print(CYANAR + "XX" + RESET+ "|");
+                        System.out.print(CYANAR + "XX" + RESETAR+ "|");
                     }
                     if (plateaudejeu[i][j][numero_etage][0]=="2"){
-                        System.out.print(ROUGEAR + "XX" + RESET +"|");
+                        System.out.print(ROUGEAR + "XX" + RESETAR +"|");
+                    }
+                    if (plateaudejeu[i][j][numero_etage][0]=="3"){
+                        System.out.print(JAUNEAR + "__" + RESETAR +"|");
+                    }
+                    if (plateaudejeu[i][j][numero_etage][0]=="4"){
+                        System.out.print(JAUNEAR + "--" + RESETAR +"|");
                     }
                 } 
                 System.out.println();

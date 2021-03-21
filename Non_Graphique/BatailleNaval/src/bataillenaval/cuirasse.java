@@ -3,11 +3,9 @@ package bataillenaval;
 
 public class cuirasse extends Flotte{
     
-    public Flotte cuirrasse;
     
     public cuirasse(){
         etat = true;
-        cuirrasse = new Flotte();
         coordonnees = new int [taille][3];
         taille = 7;
         puissance = 9;
@@ -19,8 +17,14 @@ public class cuirasse extends Flotte{
         n_ref += nombre_ref;
     }
     
-    public void tir(){
+    
+    @Override
+    public int tir(){
         
+            
+            
+            return 0;
+            
     }
     
     public void impact(int colonne, int ligne){

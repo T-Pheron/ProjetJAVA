@@ -2,8 +2,7 @@ package bataillenaval;
 
 
 public class croisseur extends Flotte{
-    
-    public Flotte croisseur;
+
 
     
     public croisseur(){
@@ -13,15 +12,15 @@ public class croisseur extends Flotte{
         puissance = 4;
         l_ref = 'C';
         n_ref =9;
-        croisseur = new Flotte();
     }
     
     public void ref_bateau (int nombre_ref){
         n_ref += nombre_ref;
     }
     
-    public void tir(){
-        
+    @Override
+    public int tir(){
+        return 0;
     }
     
     public void impact(int colonne, int ligne){

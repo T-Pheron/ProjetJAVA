@@ -1,7 +1,7 @@
 package bataillenaval;
 
 
-public class Flotte {
+public abstract class Flotte {
     
     public boolean etat = false;
     public int [][] coordonnees;
@@ -14,6 +14,8 @@ public class Flotte {
     public Flotte(){
         
     }
+    
+    public abstract int tir();
     
     public static int n_ref_plateau(char l_ref, int i){
         
@@ -34,12 +36,19 @@ public class Flotte {
     }
     
     
-    public static int n_ref_liste(char l_ref, int n_ref){
+    public static int nPlateauToPListe(char lRef, int nPlateau){
         
-        if (l_ref=='U') return n_ref-1;
-        if (l_ref=='C') return n_ref;
-        if (l_ref=='D') return n_ref+2;
-        if (l_ref=='S') return n_ref+5;
+        if (lRef=='U') return nPlateau-1;
+        if (lRef=='C') return nPlateau;
+        if (lRef=='D') return nPlateau+2;
+        if (lRef=='S') return nPlateau+5;
         return -1;
+    }
+    
+    public boolean bateau_vivant(){
+        for (int j=0; j<taille; j++){
+            if (coordonnees[j][3] == 1) return true;
+        }
+        return false;
     }
 }

@@ -1,14 +1,16 @@
 package bataillenaval;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 
 
 public class Jeu {
     
-    static Plateau plateau_de_jeu = new Plateau();
-    public List <Flotte> flotte_joueur0 ;
-    public List <Flotte> flotte_joueur1 ;
+    public static Plateau plateau_de_jeu = new Plateau();
+    public static List <Flotte> flotte_joueur0 ;
+    public static List <Flotte> flotte_joueur1 ;
     
     public Jeu(){
         
@@ -40,17 +42,59 @@ public class Jeu {
     
     
     
-    public void initialiser_jeu(){
+    public void initialiser_jeu() throws InterruptedException{
         flotte_joueur0 = nouvelle_flotte();
         flotte_joueur1 = nouvelle_flotte();
         
         placement_flotte(flotte_joueur0, 0);
         placement_flotte(flotte_joueur1, 1);
         
-        plateau_de_jeu.afficher(1, 0);
+        Menu menu_joueur = new Menu();
+        Menu menu = new Menu();
+        boolean tour=true;
+        int numero_joueur=0;
         
-        int ok= bouger_navire(flotte_joueur1,1 );
-        plateau_de_jeu.afficher(1, 0);
+        
+        while (tour==true){
+            
+            if (numero_joueur==0){
+                System.out.println("");
+                plateau_de_jeu.afficher(numero_joueur, 1);
+                System.out.println("");
+                plateau_de_jeu.afficher(numero_joueur, 0);
+            }
+            
+            int retour_menu=0;
+            retour_menu = menu_joueur.menuJoueur();
+            switch (retour_menu) {
+                case 1:
+                    if (numero_joueur==0) retour_menu = menu.menuTirer (flotte_joueur0,numero_joueur);
+                    if (numero_joueur==1) retour_menu = menu.menuTirer (flotte_joueur1,numero_joueur);
+                    break;
+                case 2:
+                    if (numero_joueur==0) retour_menu = bouger_navire (flotte_joueur0,numero_joueur);
+                    if (numero_joueur==1) retour_menu = bouger_navire (flotte_joueur1,numero_joueur);
+                    break;
+                default:
+                    System.out.println(ROUGE + "Erreur!"+RESET+ "Problème d'appelle du menu_joueur");
+                    break;
+            }
+            
+            
+            
+            if (retour_menu==2) {
+                System.out.println("On relance votre tour");
+                System.out.print(".");TimeUnit.SECONDS.sleep(3);System.out.print(".");TimeUnit.SECONDS.sleep(3);System.out.print(".");TimeUnit.SECONDS.sleep(3);
+                numero_joueur--;
+            }
+            if (retour_menu==3) numero_joueur--;
+            if (victoire()==true) tour=false;
+            if (numero_joueur == 1) numero_joueur=0;
+            else numero_joueur ++;
+        }
+        
+        
+        
     }
     
     public List<Flotte> nouvelle_flotte(){
@@ -93,7 +137,6 @@ public class Jeu {
         int numero_etage = Plateau.numero_etage(numero_joueur,0);
         int [][] coordonnees = new int [flotte.get(i).taille][3];
         
-        int n_ref = flotte.get(i).n_ref;
         char l_ref = flotte.get(i).l_ref;
         
         if (direction ==0){
@@ -119,7 +162,7 @@ public class Jeu {
         flotte.get(i).direction=direction;
     }
     
-    public int bouger_navire(List<Flotte> flotte,int numero_joueur){
+    public int bouger_navire(List<Flotte> flotte,int numero_joueur) throws InterruptedException{
         
         int n_ref, max_bateau=0;
         Object choix=0;
@@ -140,23 +183,26 @@ public class Jeu {
                 l_ref=Menu.convertirMinuscules(l_ref);
             }
             
+            if (l_ref=='U') n_ref=1;
             
-            System.out.println("Veuillez entrer le numero du bateau que vous voulez bouger :");
-            n_ref= sc.nextInt();
-        
-            if (l_ref=='U') max_bateau=1;
-            if (l_ref=='C') max_bateau=2;
-            if (l_ref=='D') max_bateau=3;
-            if (l_ref=='S') max_bateau=4;
-        
-        
-            while (n_ref<1||n_ref>max_bateau){
-                System.out.println("Erreur_bouger_navire! Ce numéro ne fait pas parti des choix.");
+            else{
                 System.out.println("Veuillez entrer le numero du bateau que vous voulez bouger :");
                 n_ref= sc.nextInt();
-                }
+
+
+                if (l_ref=='C') max_bateau=2;
+                if (l_ref=='D') max_bateau=3;
+                if (l_ref=='S') max_bateau=4;
+
+
+                while (n_ref<1||n_ref>max_bateau){
+                    System.out.println("Erreur_bouger_navire! Ce numéro ne fait pas parti des choix.");
+                    System.out.println("Veuillez entrer le numero du bateau que vous voulez bouger :");
+                    n_ref= sc.nextInt();
+                    }
+            }
             
-            n_ref=Flotte.n_ref_liste(l_ref, n_ref);
+            n_ref=Flotte.nPlateauToPListe(l_ref, n_ref);
             
             if (flotte.get(n_ref).etat==false){
                 System.out.println("Ce bateau a déjà été coulé!");
@@ -309,7 +355,7 @@ public class Jeu {
         
         Scanner sc1 = new Scanner(System.in);
         
-        System.out.println("Entrer la lettre de la colonne ou le numéro de ligne du nouvelle emplacement du bateau");
+        System.out.println("Entrer la colonne ou la ligne du nouvelle emplacement du bateau");
         saisie = sc1.nextLine();
         char saisieChar='Z';
         int saisieInt=0;
@@ -332,7 +378,7 @@ public class Jeu {
         
         while(verif==false){
             System.out.println(ROUGE + "Erreur !"+RESET+"\nLa saisie ne fait pas partie des choix possible");
-            System.out.println("Veuillez resaisir le chiffre de la ligne ou la lettre de la colonne où vous voulez déplacer le bateau");
+            System.out.println("Veuillez resaisir lla ligne ou la colonne où vous voulez déplacer le bateau");
             saisie = sc.nextLine();
             
             if (saisie.equals("A") || saisie.equals("B") || saisie.equals("C") || saisie.equals("D") || saisie.equals("E")|| saisie.equals("F") || saisie.equals("G") || saisie.equals("H") || saisie.equals("I") || saisie.equals("J") || saisie.equals("K") || saisie.equals("L") || saisie.equals("M") || saisie.equals("N") || saisie.equals("O")) {
@@ -350,6 +396,28 @@ public class Jeu {
             }
         }
         
+        if (verifEntier==true && (saisieInt-1) == flotte.get(n_ref).coordonnees[0][1]){
+            System.out.println("Veuillez saisir la colone de la case où vous voulez placer le bateau");
+            verifEntier=false;
+            saisieChar = sc1.nextLine().charAt(0);
+            saisieChar = Menu.convertirMinuscules(saisieChar);
+            while(saisieChar<'A'||saisieChar>'O'){
+                System.out.println(ROUGE+"Erreur!"+RESET+ "\nLa saisie ne fait pas partie des choix. Veuillez resaisir :");
+                saisieChar = sc1.nextLine().charAt(0);
+                saisieChar = Menu.convertirMinuscules(saisieChar);
+            }
+        }
+        
+        if (verifEntier==false && saisieChar == (char) (flotte.get(n_ref).coordonnees[0][0] - 64)){
+            System.out.println("Veuillez saisir le numéro de la case où vous voulez placer le bateau");
+            verifEntier=true;
+            saisieInt = sc1.nextInt();
+            while(saisieChar<65||saisieChar>79){
+                System.out.println(ROUGE+"Erreur!"+RESET+ "\nLa saisie ne fait pas partie des choix. Veuillez resaisir :");
+                saisieInt = sc1.nextInt();
+            }
+        }
+        
         
         if (flotte.get(n_ref).direction==0){
             if (verifEntier==true){
@@ -359,16 +427,23 @@ public class Jeu {
                         plateau_de_jeu.echange(flotte.get(n_ref).coordonnees[i][0], flotte.get(n_ref).coordonnees[i][1], flotte.get(n_ref).coordonnees[i][0] , flotte.get(n_ref).coordonnees[i][1]+ 1, Plateau.numero_etage(numero_joueur, 0));
                         flotte.get(n_ref).coordonnees[i][0] ++;
                     }
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
+                    plateau_de_jeu.afficher(numero_joueur, 0);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
                 }
                 else if (saisieInt==posibilite[2]){
                     for (int i=0; i<flotte.get(n_ref).taille;i++){
                         plateau_de_jeu.echange(flotte.get(n_ref).coordonnees[i][0], flotte.get(n_ref).coordonnees[i][1], flotte.get(n_ref).coordonnees[i][0], flotte.get(n_ref).coordonnees[i][1] - 1, Plateau.numero_etage(numero_joueur, 0));
                         flotte.get(n_ref).coordonnees[i][2] --;
                     }
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
+                    plateau_de_jeu.afficher(numero_joueur, 0);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
                 }
                 else {
                     System.out.println(ROUGE +"Erreur!"+RESET +"\nCe déplacement n'est pas possible");
-                    System.out.println("On relance votre tour");
                 }
             }
             else {
@@ -378,16 +453,23 @@ public class Jeu {
                         plateau_de_jeu.echange(flotte.get(n_ref).coordonnees[i][0], flotte.get(n_ref).coordonnees[i][1], flotte.get(n_ref).coordonnees[i][0] + 1, flotte.get(n_ref).coordonnees[i][1], Plateau.numero_etage(numero_joueur, 0));
                         flotte.get(n_ref).coordonnees[i][0] ++;
                     }
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
+                    plateau_de_jeu.afficher(numero_joueur, 0);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
                 }
                 else if (saisieChar ==(char) (posibilite[0])+65){
                     for (int i=0; i<flotte.get(n_ref).taille;i++){
                         plateau_de_jeu.echange(flotte.get(n_ref).coordonnees[i][0], flotte.get(n_ref).coordonnees[i][1], flotte.get(n_ref).coordonnees[i][0] - 1, flotte.get(n_ref).coordonnees[i][1], Plateau.numero_etage(numero_joueur, 0));
                         flotte.get(n_ref).coordonnees[i][0] --;
                     }
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
+                    plateau_de_jeu.afficher(numero_joueur, 0);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
                 }
                 else {
                     System.out.println(ROUGE +"Erreur!"+RESET +"\nCe déplacement n'est pas possible");
-                    System.out.println("On relance votre tour");
                 }
             }
         }
@@ -401,16 +483,23 @@ public class Jeu {
                         plateau_de_jeu.echange(flotte.get(n_ref).coordonnees[i][0], flotte.get(n_ref).coordonnees[i][1] , flotte.get(n_ref).coordonnees[i][0], flotte.get(n_ref).coordonnees[i][1]+1, Plateau.numero_etage(numero_joueur, 0));
                         flotte.get(n_ref).coordonnees[i][0] ++;
                     }
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
+                    plateau_de_jeu.afficher(numero_joueur, 0);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
                 }
                 else if (saisieInt==posibilite[2]){
                     for (int i=0; i<flotte.get(n_ref).taille;i++){
                         plateau_de_jeu.echange(flotte.get(n_ref).coordonnees[i][0], flotte.get(n_ref).coordonnees[i][1], flotte.get(n_ref).coordonnees[i][0], flotte.get(n_ref).coordonnees[i][1]- 1, Plateau.numero_etage(numero_joueur, 0));
                         flotte.get(n_ref).coordonnees[i][2] --;
                     }
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
+                    plateau_de_jeu.afficher(numero_joueur, 0);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
                 }
                 else {
                     System.out.println(ROUGE +"Erreur!"+RESET +"\nCe déplacement n'est pas possible");
-                    System.out.println("On relance votre tour");
                 }
             }
             else {
@@ -420,16 +509,23 @@ public class Jeu {
                         plateau_de_jeu.echange(flotte.get(n_ref).coordonnees[i][0], flotte.get(n_ref).coordonnees[i][1], flotte.get(n_ref).coordonnees[i][0]+1 , flotte.get(n_ref).coordonnees[i][1], Plateau.numero_etage(numero_joueur, 0));
                         flotte.get(n_ref).coordonnees[i][0] ++;
                     }
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
+                    plateau_de_jeu.afficher(numero_joueur, 0);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
                 }
                 else if (saisieChar ==(char) (posibilite[0])+65){
                     for (int i=0; i<flotte.get(n_ref).taille;i++){
                         plateau_de_jeu.echange(flotte.get(n_ref).coordonnees[i][0], flotte.get(n_ref).coordonnees[i][1], flotte.get(n_ref).coordonnees[i][0]-1, flotte.get(n_ref).coordonnees[i][1], Plateau.numero_etage(numero_joueur, 0));
                         flotte.get(n_ref).coordonnees[i][0] --;
                     }
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
+                    plateau_de_jeu.afficher(numero_joueur, 0);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
                 }
                 else {
                     System.out.println(ROUGE +"Erreur!"+RESET +"\nCe déplacement n'est pas possible");
-                    System.out.println("On relance votre tour");
                 }
             }
         }
@@ -437,27 +533,24 @@ public class Jeu {
     }
 
 
-    public void victoire(){
+    public boolean victoire(){
         for (int i=0; i<10; i++){
             boolean etat0 = flotte_joueur0.get(i).etat;
-            if (etat0=true){
-                break;
-            }
-            if (i==9){
+            if (etat0==true) break;
+            if (i==9 && etat0!=true){
                 System.out.println(ROUGE+"VICTOIRE DE L'ORDI !!\nT'ES NUL PD"+RESET);
-
+                return true;
             }
         }
         for (int i=0; i<10; i++){
             boolean etat1 = flotte_joueur1.get(i).etat;
-            if (etat1=true){
-                break;
-            }
-            if (i==9){
+            if (etat1==true) break;
+            if (i==9 && etat1!=true){
                 System.out.println(ROUGE+"VICTOIRE JOUEUR !!\n BIEN JOUE CA GASSON"+RESET);
-
+                return true;
             }
         }
-        
+        return false;
     }
+    
 }

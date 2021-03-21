@@ -3,11 +3,9 @@ package bataillenaval;
 
 public class destroyer extends Flotte {
     
-    public Flotte destroyer;
     
     public destroyer(){
         etat = true;
-        destroyer = new Flotte();
         coordonnees = new int [taille][3];
         taille = 3;
         puissance = 1;
@@ -19,7 +17,9 @@ public class destroyer extends Flotte {
         n_ref += nombre_ref;
     }
     
-    public void tir(){
+    @Override
+    public int tir(){
+        return 0;
         
     }
     
