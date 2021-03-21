@@ -43,6 +43,7 @@ public class Croiseur extends Flotte{
         catch(InputMismatchException e){            //Si ce n'est pas un caractère
             System.out.println(Menu.ROUGE +"Erreur! "+ Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
             Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+            sc.next();            //On met à la poubelle la saisie de l'utilisateur
             xTireChar='@';          //On remet la variable par defaut 
         }
         xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
@@ -56,6 +57,7 @@ public class Croiseur extends Flotte{
             catch(InputMismatchException e){            //Si ce n'est pas un caractère
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
                 Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 xTireChar='@';          //On remet la variable par defaut 
             }
             xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
@@ -68,6 +70,7 @@ public class Croiseur extends Flotte{
         catch(InputMismatchException e){            //Si ce n'est pas un entier
             System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
             Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+            sc.next();            //On met à la poubelle la saisie de l'utilisateur
             yTire=-1;           //On remet la variable par defaut 
         }
 
@@ -81,6 +84,7 @@ public class Croiseur extends Flotte{
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
                 Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 yTire=-1;           //On remet la variable par defaut 
             }
             
@@ -99,6 +103,7 @@ public class Croiseur extends Flotte{
             catch(InputMismatchException e){            //Si ce n'est pas un entier
                 System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
                 Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                sc.next();            //On met à la poubelle la saisie de l'utilisateur
             }
             
             while ((choix<1)||(choix>2)){           //On blinde en vérifiant que la saisie fait partie des choix
@@ -109,6 +114,7 @@ public class Croiseur extends Flotte{
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
                     System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
                     Object poubelle = sc.next();            //On met à la poubelle la saisie de l'utilisateur
+                    sc.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             }
 
@@ -148,6 +154,7 @@ public class Croiseur extends Flotte{
             return 1;           //On a la justification que tout c'est bien passe
         }
                 
+        sc.close();        
     }
     
     
