@@ -223,7 +223,7 @@ public class Destroyer extends Flotte {
 
             /*Vérification qu'il y a un impacte********************************************/
             if (Jeu.plateauDeJeu.get(xTire,yTire,2,0) == (Object) 'S'){
-                Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"5");
+                if (Jeu.plateauDeJeu.get(xTire,yTire,1,0) != (Object) "2") Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"5");
 
                 int nPlateauAdv;            //Le numéro du plateau du bateau adverse
                 int pListeAdv;              //La position dans la liste des navires de l'adversaire      
@@ -231,7 +231,7 @@ public class Destroyer extends Flotte {
                 nPlateauAdv = (int) Jeu.plateauDeJeu.get(xTire,yTire,2,1);         //On récupère le numéro de plateau de l'adversaire aux coordonnées où le joueur veut tirer
                 pListeAdv=nPlateauToPListe('S', nPlateauAdv);           //On en deduit la position dans la liste du navire de l'adversaire
 
-                Jeu.flotteJoueur1.get(pListeAdv).coordonnees[0][2]=2;
+                Jeu.flotteJoueur1.get(pListeAdv).coordonnees[0][2]=2;           //On met la coordonées sur 2 pour signifie, ce qui signifie que le sous-marin a été touché sans être coulé (il ne peux plus être déplacé)
 
                 System.out.println("Nous avons détecté une structure mais n'avons pas pu la détruire");TimeUnit.SECONDS.sleep(4);           //Affichage d'un message disant qu'on est tombé sur un sous-marin
            

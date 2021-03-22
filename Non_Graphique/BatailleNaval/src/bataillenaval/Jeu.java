@@ -115,7 +115,7 @@ public class Jeu {
                 System.out.println();
                 plateauDeJeu.afficher(numeroJoueur, 1);
                 
-                ia.jouer(1);            //On lance la méthode qui permet à l'IA de jouer
+                ia.jouer(2);            //On lance la méthode qui permet à l'IA de jouer
             }
             
             if (retourMenu==2) {            //Si le menu retourne 2 à la fin de la boucle
