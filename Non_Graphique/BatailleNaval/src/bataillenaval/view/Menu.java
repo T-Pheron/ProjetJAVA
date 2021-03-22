@@ -3,6 +3,9 @@ package bataillenaval.view;
 
 import bataillenaval.controller.Jeu;
 import java.util.*;
+
+import javax.swing.table.DefaultTableCellRenderer;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -181,7 +184,7 @@ public class Menu {
     public int menuAide(){
         int choix=0;           //Variable qui permet de stocker le choix du joueur
         System.out.println(GRIS_AR +NOIR+ "               MENU AIDE              "+RESET+ RESET_AR);           //On afficher le titre du menu
-        System.out.println("1.Pour débuter \n2. La phase de tir \n3. Flotte et fonctionnalité \n4. Légende des symboles  \n5. Pour gagner et quelques astuces \n6. Retour");           //On affiche les choix possibles
+        System.out.println("1. Pour débuter \n2. La phase de tir \n3. Flotte et fonctionnalité \n4. Légende des symboles  \n5. Pour gagner et quelques astuces \n6. Retour");           //On affiche les choix possibles
         
         System.out.println("Veuillez saisir votre choix");           //On demande à l'utilisateur de saisir son choix
         try{
@@ -212,9 +215,9 @@ public class Menu {
                     System.out.println(line);
                 }   
             }catch(IOException e){
-                System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier.Veuillez agréer PD");
-            }        //premiere categorie d'aide
-            return 2;
+                    System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier.Veuillez agréer PD");
+            }
+            break;
                         
             case 2:     try(InputStream iS = new FileInputStream("dossier_aide/fichierFaseTir.txt");
             InputStreamReader iSR = new InputStreamReader(iS);
@@ -226,7 +229,7 @@ public class Menu {
             }catch(IOException e){
                 System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier.Veuillez agréer PD");
             }       //deuxieme categorie d'aide
-            return 2;
+            break;
 
             case 3:     try(InputStream iS = new FileInputStream("dossier_aide/fichierNavFct.txt");
             InputStreamReader iSR = new InputStreamReader(iS);
@@ -237,10 +240,10 @@ public class Menu {
                 }   
             }catch(IOException e){
                 System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier.Veuillez agréer PD");
-            }     //troisieme categorie d'aide 
-            return 2;
+            }     //troisieme categorie d'aide
+            break;
 
-           case 4:   try(InputStream iS = new FileInputStream("dossier_aide/fichierSybPlato.txt");
+           case 4:   try(InputStream iS = new FileInputStream("dossier_aide/fichierSyblPlato.txt");
             InputStreamReader iSR = new InputStreamReader(iS);
             BufferedReader bR = new BufferedReader (iSR)){
                 String line;
@@ -250,7 +253,7 @@ public class Menu {
             }catch(IOException e){
                 System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier.Veuillez agréer PD");
             }        //premiere categorie d'aide
-            return 2;
+           break;
                         
             case 5:     try(InputStream iS = new FileInputStream("dossier_aide/fichierGagne.txt");
             InputStreamReader iSR = new InputStreamReader(iS);
@@ -262,11 +265,40 @@ public class Menu {
             }catch(IOException e){
                 System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier.Veuillez agréer PD");
             }       //deuxieme categorie d'aide
-            return 2;
+            break;
 
             case 6:   return 1;
+            default : System.out.println(ROUGE +"Erreur_menuAide! "+RESET);
+                break;
         }
-        return 0;
+
+
+        
+        /*Sortie du MenuAide*********************************************/
+        choix=0;           //Variable qui permet de stocker le choix du joueur
+        System.out.println("\nVoulez vous d'autre rubrique du menu aide ?\n1. Oui \n2. Non");           //On affiche les choix possibles
+        
+        System.out.println("Veuillez saisir votre choix");           //On demande à l'utilisateur de saisir son choix
+        try{
+            choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
+        }
+        catch(InputMismatchException e){            //Si ce n'est pas un entier
+            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+            scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
+        }
+        
+        while ((choix<1)||(choix>2)){           //On blinde en vérifiant que la saisie fait partie des choix
+            System.out.println(ROUGE+"Erreur! "+ RESET +"Veuillez saisir à nouveau votre choix");           //Sinon, on affiche un message d'erreur et demande la ressaisie
+            try{
+                choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
+            }
+            catch(InputMismatchException e){            //Si ce n'est pas un entier
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
+            }
+        }
+        if(choix==1) menuAide();
+            return 1;
     }
     
     
