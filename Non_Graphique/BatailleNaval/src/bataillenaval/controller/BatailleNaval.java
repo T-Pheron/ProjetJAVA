@@ -1,4 +1,6 @@
-package bataillenaval;
+package bataillenaval.controller;
+
+import bataillenaval.view.Menu;
 
 
 public class BatailleNaval {

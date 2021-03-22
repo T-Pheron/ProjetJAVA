@@ -1,4 +1,4 @@
-package bataillenaval;
+package bataillenaval.model;
 
 
 
@@ -91,4 +91,50 @@ public abstract class Flotte {
         etat=false;
         return false;           //Sinon on renvoit false
     }
+    
+    
+    
+    //**************************************************************************
+    /*Variables utilisées pour modifier les couleurs du texte*/
+    /*Elles doivent être placées devant le texte qui doit être mis en couleur avec un +*/
+    
+    public static final String RESET = "\u001B[0m";                //Permet de remettre la couleur par défaut de la console. On la met à la fin de chaque changement de couleur pour remetre la valeur par défaut
+    public static final String NOIR = "\u001B[30m";
+    public static final String ROUGE = "\u001B[31m";
+    public static final String VERT = "\u001B[32m";
+    public static final String JAUNE = "\u001B[33m";
+    public static final String BLEU = "\u001B[34m";
+    public static final String VOILET = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
+    public static final String BLANC = "\u001B[37m";
+    
+    public static final String B_NOIR = "\u001B[30;1m";            
+    public static final String B_ROUGE = "\u001B[31;1m";
+    public static final String B_VERT = "\u001B[32;1m";
+    public static final String B_JAUNE = "\u001B[33;1m";
+    public static final String B_BLEU = "\u001B[34;1m";
+    public static final String B_VOILET = "\u001B[35;1m";
+    public static final String B_CYAN = "\u001B[36;1m";
+    public static final String B_BLANC = "\u001B[37;1m";
+    
+    //**************************************************************************
+    /*Variables utilisées pour modifier les couleurs de l'arriere plan*/
+    /*Elles doivent être placées devant le texte qui doit avoir une arrière plan en couleur avec un +*/
+    
+    public static final String RESET_AR = "\u001B[40m";                //Permet de remettre la couleur par défaut de la console. On la met à la fin de chaque changement de couleur pour remetre la valeur par défaut
+    public static final String ROUGE_AR = "\u001B[41m";
+    public static final String VERT_AR = "\u001B[42m";
+    public static final String JAUNE_AR = "\u001B[43m";
+    public static final String BLEU_AR = "\u001B[44m";
+    public static final String VOILET_AR = "\u001B[45m";
+    public static final String CYAN_AR = "\u001B[46m";
+    public static final String GRIS_AR = "\u001B[47m";
+    
+    public static final String B_ROUGE_AR = "\u001B[41;1m";
+    public static final String B_VERT_AR = "\u001B[42;1m";
+    public static final String B_JAUNE_AR = "\u001B[43;1m";
+    public static final String B_BLEU_AR = "\u001B[44;1m";
+    public static final String B_VOILET_AR = "\u001B[45;1m";
+    public static final String B_CYAN_AR = "\u001B[46;1m";
+    public static final String B_GRIS_AR = "\u001B[47;1m";
 }

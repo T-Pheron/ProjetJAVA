@@ -1,12 +1,14 @@
-package bataillenaval;
+package bataillenaval.model;
 
+import bataillenaval.controller.Jeu;
+import bataillenaval.view.Menu;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
     
 public class SousMarin extends Flotte {
     
-    private Scanner scSousMarin = new Scanner(System.in);
+    private final Scanner scSousMarin = new Scanner(System.in);
 
 
     /**
@@ -55,7 +57,7 @@ public class SousMarin extends Flotte {
             scSousMarin.next();            //On met à la poubelle la saisie de l'utilisateur
             xTireChar='@';          //On remet la variable par defaut 
         }
-        xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
+        xTireChar=Jeu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
                     
         while ((xTireChar<'A')||(xTireChar>'O')){           //On blinde, en vérifiant que sa saisie fait partie des choix possible
             System.out.println(Menu.ROUGE + "Erreur !"+Menu.RESET);           //Sinon on affiche un message d'erreur
@@ -68,7 +70,7 @@ public class SousMarin extends Flotte {
                 scSousMarin.next();            //On met à la poubelle la saisie de l'utilisateur
                 xTireChar='@';          //On remet la variable par defaut 
             }
-            xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
+            xTireChar=Jeu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
         }
 
         System.out.println("Rentrer la ligne");         //On lui demande de saisir 
