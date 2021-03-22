@@ -1,4 +1,4 @@
-package bataillenaval;
+package bataillenaval.controller;
 
 
 public class Sauvegarde {

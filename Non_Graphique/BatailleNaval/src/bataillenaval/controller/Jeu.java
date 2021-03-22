@@ -1,5 +1,13 @@
-package bataillenaval;
+package bataillenaval.controller;
 
+import bataillenaval.view.Menu;
+import bataillenaval.model.Plateau;
+import bataillenaval.model.SousMarin;
+import bataillenaval.model.Croiseur;
+import bataillenaval.model.Destroyer;
+import bataillenaval.model.Cuirasse;
+import bataillenaval.model.Flotte;
+import bataillenaval.view.Affichage;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -90,15 +98,25 @@ public class Jeu {
             
             if (numeroJoueur==0){            //Si le joueur est le joueur humain on affiche sa grille et son
                 System.out.println();
-                plateauDeJeu.afficher(numeroJoueur, 1);            //On affiche la grille des tirs du joueur
+                Affichage.afficher(numeroJoueur, 1, Jeu.plateauDeJeu);            //On affiche la grille des tirs du joueur
                 System.out.println();
-                plateauDeJeu.afficher(numeroJoueur, 0);            //On affiche la grille des navires du joueur
+                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);            //On affiche la grille des navires du joueur
             
                 retourMenu = menu.menuJoueur();            //On lance le menu joueur et stocke ce qu'il retourne
             
                 switch (retourMenu) {
                     case 1:            //Si le retour du menu est 1
-                        if (numeroJoueur==0) retourMenu = menu.menuTirer (flotteJoueur0,numeroJoueur);            //On lance le menu pour tirer
+                        Object[] referencesNavire = new Object [2];         //On créé un tableau pour stocker les références du navire
+                        if (numeroJoueur==0) referencesNavire = menu.menuTirer ();            //On lance le menu pour tirer et on récupère les informations du navire sélectionné
+                        if (retourMenu==1) {
+                            int pListe=Flotte.nPlateauToPListe((char) referencesNavire[0], (int) referencesNavire[1]);           //On trouve la position du navire dans la liste à l'aide de son numéro plateau et sa lettre de reférence
+                            if (flotteJoueur0.get(pListe).etat==true) retourMenu= flotteJoueur0.get(pListe).tir();          //On vérifie que le bateau n'est pas coulé 
+                            else {
+                                System.out.println(ROUGE + "Erreur!"+RESET +"\nCe navire à déjà été coulé et ne peut plus effectuer de tire");TimeUnit.SECONDS.sleep(3);           //Sinon, on affiche un message d'erreur
+                                retourMenu = 2;           //On relance le tour du joueur
+                            }
+                        }
+                        
                         break;
                     case 2:
                         if (numeroJoueur==0) retourMenu = bougerNavire (flotteJoueur0,numeroJoueur);            //On appel la méthode qui permet de bouger un navire
@@ -111,9 +129,9 @@ public class Jeu {
             }
             
             if(numeroJoueur==1){
-                plateauDeJeu.afficher(numeroJoueur, 0);         //TEST
+                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);         //TEST
                 System.out.println();
-                plateauDeJeu.afficher(numeroJoueur, 1);
+                Affichage.afficher(numeroJoueur, 1, Jeu.plateauDeJeu);
                 
                 ia.jouer(2);            //On lance la méthode qui permet à l'IA de jouer
             }
@@ -246,8 +264,8 @@ public class Jeu {
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
                     scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
-            lRef=Menu.convertirMinuscules(lRef);            //On convertir la saisie en majuscule
-        
+            lRef=convertirMinuscules(lRef);            //On convertir la saisie en majuscule
+       
             while (lRef!='U'&&lRef!='C'&&lRef!='D'&&lRef!='S'){         //On blinde, en vérifiant que la saisie fait bien parti des choix possibles
                 System.out.println(ROUGE +"Erreur!"+RESET +"\nCette lettre ne fait pas parti des choix.");          //Sinon, on affiche un message d'erreur
                 System.out.println("Veuillez entrer la lette du navire que vous voulez bouger :");          //On demande à l'utilisateur de resaisir
@@ -258,7 +276,7 @@ public class Jeu {
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
                     scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
-                lRef=Menu.convertirMinuscules(lRef);            //On convertie la saisie en majuscule
+                lRef=convertirMinuscules(lRef);            //On convertie la saisie en majuscule
             }
             
             if (lRef=='U') nPlateau=1;          //Si le bateau choisie est un cuirassé, il n'est pas nécésaire de demander le numéro plateau car il existe qu'un seule
@@ -468,7 +486,7 @@ public class Jeu {
         if (saisie.equals("a") || saisie.equals("b") || saisie.equals("c") || saisie.equals("d") || saisie.equals("e")|| saisie.equals("f") || saisie.equals("g") || saisie.equals("h") || saisie.equals("i") || saisie.equals("j") || saisie.equals("k") || saisie.equals("l") || saisie.equals("m") || saisie.equals("n") || saisie.equals("o")) {                //On vérif que la saisie est une minuscule qui fait partie des choix
             verif = true;           //Si c'est le cas on met verif sur true
             saisieChar = saisie.charAt(0);          //On stock la saisie dans saisieChar en la convertisant en charactère
-            saisieChar = Menu.convertirMinuscules(saisieChar);          //Et on convertie la saisie en majuscule
+            saisieChar = convertirMinuscules(saisieChar);          //Et on convertie la saisie en majuscule
         }
         if (saisie.equals("1") || saisie.equals("2") || saisie.equals("3") || saisie.equals("4") || saisie.equals("5")|| saisie.equals("6") || saisie.equals("7") || saisie.equals("8") || saisie.equals("9") || saisie.equals("10") || saisie.equals("11") || saisie.equals("12") || saisie.equals("13") || saisie.equals("14") || saisie.equals("15")){           //On vérif que la saisie est un chiffre qui fait partie des choix
             verif = true;           //Si c'est le cas on met verif sur true
@@ -488,7 +506,7 @@ public class Jeu {
             if (saisie.equals("a") || saisie.equals("b") || saisie.equals("c") || saisie.equals("d") || saisie.equals("e")|| saisie.equals("f") || saisie.equals("g") || saisie.equals("h") || saisie.equals("i") || saisie.equals("j") || saisie.equals("k") || saisie.equals("l") || saisie.equals("m") || saisie.equals("n") || saisie.equals("o")) {            //On vérif que la saisie est une minuscule qui fait partie des choix
                 verif = true;           //Si c'est le cas on met verif sur true
                 saisieChar = saisie.charAt(0);          //On stock la saisie dans saisieChar en la convertisant en charactère
-                saisieChar = Menu.convertirMinuscules(saisieChar);
+                saisieChar = convertirMinuscules(saisieChar);
             }
             if (saisie.equals("1") || saisie.equals("2") || saisie.equals("3") || saisie.equals("4") || saisie.equals("5")|| saisie.equals("6") || saisie.equals("7") || saisie.equals("8") || saisie.equals("9") || saisie.equals("10") || saisie.equals("11") || saisie.equals("12") || saisie.equals("13") || saisie.equals("14") || saisie.equals("15")){       //On vérif que la saisie est un chiffre qui fait partie des choix
                 verif = true;           //Si c'est le cas on met verif sur true
@@ -506,7 +524,7 @@ public class Jeu {
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
                     scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
-            saisieChar = Menu.convertirMinuscules(saisieChar);          //On convertie cette saisie en majuscule
+            saisieChar = convertirMinuscules(saisieChar);          //On convertie cette saisie en majuscule
             
             while(saisieChar<'A'||saisieChar>'O'){          //Si la saisie ne fait pas partie des choix
                 System.out.println(ROUGE+"Erreur!"+RESET+ "\nLa saisie ne fait pas partie des choix. Veuillez resaisir :");         //On demande à l'utilisateur de ressaisir
@@ -517,7 +535,7 @@ public class Jeu {
                     System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
                     scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
-                saisieChar = Menu.convertirMinuscules(saisieChar);          //On convertie cette saisie en majuscule
+                saisieChar = convertirMinuscules(saisieChar);          //On convertie cette saisie en majuscule
             }
             verifEntier=false;          //On met la vérification d'un entier sur false
         }
@@ -554,7 +572,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][1] ++;
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    plateauDeJeu.afficher(numeroJoueur, 0);
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                     TimeUnit.SECONDS.sleep(5);
                     return 1;
                 }
@@ -564,7 +582,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][1] --;
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    plateauDeJeu.afficher(numeroJoueur, 0);
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                     TimeUnit.SECONDS.sleep(5);
                     return 1;
                 }
@@ -580,7 +598,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][0] ++;
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    plateauDeJeu.afficher(numeroJoueur, 0);
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                     TimeUnit.SECONDS.sleep(5);
                     return 1;
                 }
@@ -590,7 +608,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][0] --;
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    plateauDeJeu.afficher(numeroJoueur, 0);
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                     TimeUnit.SECONDS.sleep(5);
                     return 1;
                 }
@@ -610,7 +628,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][1] ++;
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    plateauDeJeu.afficher(numeroJoueur, 0);
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                     TimeUnit.SECONDS.sleep(5);
                     return 1;
                 }
@@ -620,7 +638,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][1] --;
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    plateauDeJeu.afficher(numeroJoueur, 0);
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                     TimeUnit.SECONDS.sleep(5);
                     return 1;
                 }
@@ -636,7 +654,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][0] ++;
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    plateauDeJeu.afficher(numeroJoueur, 0);
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                     TimeUnit.SECONDS.sleep(5);
                     return 1;
                 }
@@ -646,7 +664,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][0] --;
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    plateauDeJeu.afficher(numeroJoueur, 0);
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                     TimeUnit.SECONDS.sleep(5);
                     return 1;
                 }
@@ -677,6 +695,21 @@ public class Jeu {
             }
         }
         return false;
+    }
+    
+    //**************************************************************************
+    /**
+     * Converti les minuscules en majuscule.
+     * Cette méthode recois une lettre en majuscule ou en misnucule et la transforme
+     * si nécésaire en lettre majuscule.
+     * @param lettre La lettre à convertir
+     * @return La lettre en majuscule
+     */
+    public static char convertirMinuscules(char lettre){
+        if (lettre<65||lettre>90){                  //On vérifie que la lettre est une lettre minuscule
+            return lettre -= 'a'-'A';                   //Si c'est le cas on la convertie en majuscule en lui retirant la différence qu'il y a entre les minuscules et les majucules
+        }
+        return lettre;              //On retourne la lettre en majuscule
     }
     
 }

@@ -1,38 +1,31 @@
-package bataillenaval;
+package bataillenaval.model;
 
+import bataillenaval.controller.Jeu;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+public class Croiseur extends Flotte{
 
-public class Cuirasse extends Flotte{
+
     
-    
-    private Scanner scCuirasse = new Scanner(System.in);
+    private final Scanner scCroiseur = new Scanner(System.in);
 
 
-    public Cuirasse(){
-        etat = true;
-        nom = "cuirassé";
-        taille = 7;
+    public Croiseur(){
+        etat =true;
+        nom = "croiseur";
+        taille = 5;
         coordonnees = new int [taille][3];
-        puissance = 9;
-        lRef = 'U';
-        nRef =1;
+        puissance = 4;
+        lRef = 'C';
+        nRef =9;
     }
     
-    
-    /**
-     * Méthode qui permet de donner un numéro de référence unique à un cuirasse.
-     * D'après la position dans la liste Cuirasse à un numéro de référence unique
-     * qui est 1.
-     * @param pListe 
-     */
     @Override
     public void nRef (int pListe){
-        nRef += pListe;         //Pour cela on addition juste le nRef avec la position dans le liste
+        nRef += pListe;
     }
-    
     
      /**
      * Méthode à un navire d'effectuer un tir.
@@ -44,79 +37,81 @@ public class Cuirasse extends Flotte{
     public int tir() throws InterruptedException{
         
         char xTireChar='@';         //On declare la variable par defaut avec un @
-        int yTire;
-        int xTire;
-        yTire= -1;          //On declare la variable par defaut avec un -1
+        int yTire=-1;           //On declare la variable par defaut avec un -1
         System.out.println("Où voulez vous tirer ?");           //On demande à l'utilisateur de saisir les coordonnées du tire
         System.out.println("Veuillez rentrer la colonne :");           //On demande à l'utilisateur de rentrer la colonne
         try{
-            xTireChar= scCuirasse.next().charAt(0);          //On stock la saisie de l'utilisateur
+            xTireChar= scCroiseur.next().charAt(0);          //On stock la saisie de l'utilisateur
         }
         catch(InputMismatchException e){            //Si ce n'est pas un caractère
-            System.out.println(Menu.ROUGE +"Erreur! "+ Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-            scCuirasse.next();            //On met à la poubelle la saisie de l'utilisateur
+            System.out.println(ROUGE +"Erreur! "+ RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
+            scCroiseur.next();            //On met à la poubelle la saisie de l'utilisateur
             xTireChar='@';          //On remet la variable par defaut 
         }
-        xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
+        xTireChar=Jeu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
+                    
         while ((xTireChar<'A')||(xTireChar>'O')){           //On blinde, en vérifiant que sa saisie fait partie des choix possible
-            System.out.println(Menu.ROUGE + "Erreur !"+Menu.RESET);           //Sinon on affiche un message d'erreur
+            System.out.println(ROUGE + "Erreur !"+RESET);           //Sinon on affiche un message d'erreur
             System.out.println("Veuillez entrer la lettre de la colonne d'où vous voulez tirer :");           //On lui demande de ressaisir
             try{
-                xTireChar= scCuirasse.next().charAt(0);          //On stock la saisie de l'utilisateur
+                xTireChar= scCroiseur.next().charAt(0);          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un caractère
-                System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                scCuirasse.next();            //On met à la poubelle la saisie de l'utilisateur
-                xTireChar='@';          //On remet la variable par defaut
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
+                scCroiseur.next();            //On met à la poubelle la saisie de l'utilisateur
+                xTireChar='@';          //On remet la variable par defaut 
             }
-            xTireChar=Menu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
+            xTireChar=Jeu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
         }
-        System.out.println("Veuillez rentrer la ligne :");         //On lui demande de saisir
+
+        System.out.println("Veuillez rentrer la ligne :");         //On lui demande de saisir 
         try{
-            yTire = scCuirasse.nextInt();          //On stock la saisie de l'utilisateur
+            yTire = scCroiseur.nextInt();          //On stock la saisie de l'utilisateur
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
-            System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-            scCuirasse.next();            //On met à la poubelle la saisie de l'utilisateur
+            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+            scCroiseur.next();            //On met à la poubelle la saisie de l'utilisateur
             yTire=-1;           //On remet la variable par defaut 
         }
+
+
         while ((yTire<0)||(yTire>16)){          //On blinde, en vérifiant que la saisie fait partie des choix
-            System.out.println(Menu.ROUGE + "Erreur!"+ Menu.RESET +"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur
+            System.out.println(ROUGE + "Erreur!"+ RESET +"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur
             System.out.println("Veuillez entrer le numero de la ligne a laquelle vous voulez tirer :");           //Et on demande la ressaisie
             try{
-                yTire = scCuirasse.nextInt();          //On stock la saisie de l'utilisateur
+                yTire = scCroiseur.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                scCuirasse.next();            //On met à la poubelle la saisie de l'utilisateur
-                yTire=-1;           //On remet la variable par defaut
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                scCroiseur.next();            //On met à la poubelle la saisie de l'utilisateur
+                yTire=-1;           //On remet la variable par defaut 
             }
-
+            
         }
-        
         yTire--;            //On retire 1 au yTire
+
         /*Confirmation du tir sur une case qui a déjà été touchée****************************/
-        xTire = (int) (xTireChar - 65); //On convertie la saisie en un entier
+        int xTire = (int) (xTireChar - 65);             //On convertie la saisie en un entier
         if ( Jeu.plateauDeJeu.get(xTire,yTire,1,0) == (Object) "1"){            //Si la case choisie a deja ete touche
-            int choix=0;            //On declare une variable qui stock le choix du joueur
+            int choix=0;            //On declare une variable qui stock le choix du joueur 
             System.out.println("Voulez vous vraiment tirer sur cette case ? Elle à deja été bombardée");            //On lui demande si il veut vraiment tirer sur cette case
-            System.out.println("1.OUI \n2.NON");           //On affiche les choix du joueur
+            System.out.println("1.OUI \n2.NON");           //On affiche les choix du joueur 
             try{
-                choix = scCuirasse.nextInt();          //On stock la saisie de l'utilisateur
+                choix = scCroiseur.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                scCuirasse.next();            //On met à la poubelle la saisie de l'utilisateur
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                scCroiseur.next();            //On met à la poubelle la saisie de l'utilisateur
             }
-
+            
             while ((choix<1)||(choix>2)){           //On blinde en vérifiant que la saisie fait partie des choix
-                System.out.println(Menu.ROUGE+"Erreur! "+ Menu.RESET +"Veuillez saisir à nouveau votre choix");           //Sinon, on affiche un message d'erreur et demande la ressaisie
+                System.out.println(ROUGE+"Erreur! "+ RESET +"Veuillez saisir à nouveau votre choix");           //Sinon, on affiche un message d'erreur et demande la ressaisie
                 try{
-                    choix = scCuirasse.nextInt();          //On stock la saisie de l'utilisateur
+                    choix = scCroiseur.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
-                    System.out.println(Menu.ROUGE +"Erreur! "+Menu.RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    scCuirasse.next();            //On met à la poubelle la saisie de l'utilisateur
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    scCroiseur.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             }
 
@@ -127,9 +122,9 @@ public class Cuirasse extends Flotte{
         }
 
         //Ici nous affichons un semblant de chargement des données pour le tir ainsi que le résultat, c'est a dire si celui-ci a touché un navire ou pas
-        System.out.print("Ajustement des coordonnées");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);System.out.println(Menu.VERT+"OK"+Menu.RESET);
-        System.out.print("Armement de l'obus");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);System.out.println(Menu.VERT+"OK"+Menu.RESET);
-        TimeUnit.SECONDS.sleep(2);System.out.println(Menu.ROUGE_AR+Menu.BLANC+"FEU!!"+Menu.RESET+Menu.RESET_AR);TimeUnit.SECONDS.sleep(2);
+        System.out.print("Ajustement des coordonnées");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);System.out.println(VERT+"OK"+RESET);
+        System.out.print("Armement de l'obus");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);System.out.println(VERT+"OK"+RESET);
+        TimeUnit.SECONDS.sleep(2);System.out.println(ROUGE_AR+BLANC+"FEU!!"+RESET+RESET_AR);TimeUnit.SECONDS.sleep(2);
         
 
         /*Vérification qu'il y a un impacte********************************************/
@@ -154,15 +149,14 @@ public class Cuirasse extends Flotte{
             System.out.println("Bon c'est un échec, tkt c'est rien c'est la rue");TimeUnit.SECONDS.sleep(4);           //On affiche un message comme quoi il n'a rien touché
             Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici
             return 1;           //On a la justification que tout c'est bien passe
-        }
-                
+        }  
     }
     
     
     /**
      * Méthode qui permet de donner les dégats sur le navire adverse.
      * La méthode permet de mettre le tir sur la grille de tir du joueur, et de mettre les dégats sur le navire adverse.
-     * Le cuirasse ne peut pas couler un sous-marin. Il fait néanmoins plus de dégats que le destroyer et le croiseur.
+     * Le croiseur ne peut pas couler un sous-marin. Il fait néanmoins plus de dégats que le destroyer.
      * @param xTire Variable qui stock la colonne de la position du tire
      * @param yTire Variable qui stock la ligne de la position du tire
      * @param numeroJoueur Variable qui stock le numero du joueur, soit le joueur humain, soit l'IA
@@ -198,22 +192,14 @@ public class Cuirasse extends Flotte{
                         Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire-1,yTire,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
-                    if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][0]==xTire-2){          //Si la coordonnée de la case du navire correspond à la colonne-1 de coordonnee du tire 
-                        Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire-2,yTire,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
                     if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][0]==xTire+1){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
                         Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire+1,yTire,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
-                    if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][0]==xTire+2){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
-                        Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire+2,yTire,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
                 }
                 if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("\nCHEE PRENDS CA CHACAL j'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
-                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
+                    System.out.println("CHEE PRENDS CA CHACAL j'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
@@ -227,22 +213,14 @@ public class Cuirasse extends Flotte{
                         Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire,yTire-1,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
-                    if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][1]==yTire-2){          //Si la coordonnée de la case du navire correspond à la colonne-1 de coordonnee du tire 
-                        Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire,yTire-2,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
                     if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][1]==yTire+1){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
                         Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire,yTire+1,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
-                    if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][1]==yTire+2){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
-                        Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire,yTire+2,3,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
                 }
                 if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("\nCHEE PRENDS CA CHACAL j'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
-                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
+                    System.out.println("CHEE PRENDS CA CHACAL j'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
                 }
@@ -262,25 +240,17 @@ public class Cuirasse extends Flotte{
                         Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire-1,yTire,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
-                    if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][0]==xTire-2){          //Si la coordonnée de la case du navire correspond à la colonne-1 de coordonnee du tire 
-                        Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire-2,yTire,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
                     if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][0]==xTire+1){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
                         Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire+1,yTire,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
-                    if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][0]==xTire+2){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
-                        Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire+2,yTire,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
+                    }  
                 }
-                System.out.println("\n"+Menu.VERT+"EH BIM TOUCHE ! \nCroquette !"+Menu.RESET);           //On affiche un message disant que le joueur a bien touché un navire
+                System.out.println("\n"+VERT+"EH BIM TOUCHE ! \nCroquette !"+RESET);           //On affiche un message disant que le joueur a bien touché un navire
                 TimeUnit.SECONDS.sleep(3);
 
                 if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("\nBien joué ca gasson ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
-                    TimeUnit.SECONDS.sleep(3);   
+                    System.out.println("Bien joué ca gasson ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
@@ -294,25 +264,18 @@ public class Cuirasse extends Flotte{
                         Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire,yTire-1,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
-                    if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][1]==yTire-2){          //Si la coordonnée de la case du navire correspond à la colonne-1 de coordonnee du tire 
-                        Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire,yTire-2,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
                     if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][1]==yTire+1){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
                         Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         Jeu.plateauDeJeu.modification(xTire,yTire+1,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
-                    if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][1]==yTire+2){          //Si la coordonnée de la case du navire correspond à la colonne+1 de coordonnee du tire 
-                        Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        Jeu.plateauDeJeu.modification(xTire,yTire+2,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-                    }
                 }
-                System.out.println("\n"+Menu.VERT+"EH BIM TOUCHE ! \nCroquette !"+Menu.RESET);           //On affiche un message disant que le joueur a bien touché un navire
+                
+                System.out.println("\n"+VERT+"EH BIM TOUCHE ! \nCroquette !"+RESET);           //On affiche un message disant que le joueur a bien touché un navire
                 TimeUnit.SECONDS.sleep(3);
 
                 if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("\nBien joué ca gasson ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
-                    TimeUnit.SECONDS.sleep(3);   
+                    System.out.println("Bien joué ca gasson ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
@@ -321,3 +284,4 @@ public class Cuirasse extends Flotte{
         return 0;           //On retourne 0 si il y a un problème 
     }
 }
+

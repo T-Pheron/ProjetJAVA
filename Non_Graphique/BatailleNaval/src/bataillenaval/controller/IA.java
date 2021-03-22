@@ -1,5 +1,8 @@
-package bataillenaval;
+package bataillenaval.controller;
 
+import bataillenaval.model.Plateau;
+import bataillenaval.model.Flotte;
+import bataillenaval.view.Affichage;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -555,7 +558,7 @@ public class IA {
                     Jeu.flotteJoueur1.get(pListe).coordonnees[i][1] ++;
                 }
                 System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Jeu.plateauDeJeu.afficher(numeroJoueur, 0);
+                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                 TimeUnit.SECONDS.sleep(5);
                 return 1;
             }
@@ -565,7 +568,7 @@ public class IA {
                     Jeu.flotteJoueur1.get(pListe).coordonnees[i][1] --;
                 }
                 System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Jeu.plateauDeJeu.afficher(numeroJoueur, 0);
+                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                 TimeUnit.SECONDS.sleep(5);
                 return 1;
             }
@@ -576,7 +579,7 @@ public class IA {
                     Jeu.flotteJoueur1.get(pListe).coordonnees[i][0] ++;
                 }
                 System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Jeu.plateauDeJeu.afficher(numeroJoueur, 0);
+                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                 TimeUnit.SECONDS.sleep(5);
                 return 1;
             }
@@ -586,7 +589,7 @@ public class IA {
                     Jeu.flotteJoueur1.get(pListe).coordonnees[i][0] --;
                 }
                 System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Jeu.plateauDeJeu.afficher(numeroJoueur, 0);
+                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                 TimeUnit.SECONDS.sleep(5);
                 return 1;
             }
@@ -605,7 +608,7 @@ public class IA {
                     Jeu.flotteJoueur1.get(pListe).coordonnees[i][1] ++;
                 }
                 System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Jeu.plateauDeJeu.afficher(numeroJoueur, 0);
+                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                 TimeUnit.SECONDS.sleep(5);
                 return 1;
             }
@@ -615,7 +618,7 @@ public class IA {
                     Jeu.flotteJoueur1.get(pListe).coordonnees[i][1] --;
                 }
                 System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Jeu.plateauDeJeu.afficher(numeroJoueur, 0);
+                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                 TimeUnit.SECONDS.sleep(5);
                 return 1;
             }
@@ -626,7 +629,7 @@ public class IA {
                     Jeu.flotteJoueur1.get(pListe).coordonnees[i][0] ++;
                 }
                 System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Jeu.plateauDeJeu.afficher(numeroJoueur, 0);
+                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                 TimeUnit.SECONDS.sleep(5);
                 return 1;
             }
@@ -636,7 +639,7 @@ public class IA {
                     Jeu.flotteJoueur1.get(pListe).coordonnees[i][0] --;
                 }
                 System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Jeu.plateauDeJeu.afficher(numeroJoueur, 0);
+                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
                 TimeUnit.SECONDS.sleep(5);
                 return 1;
             }

@@ -1,6 +1,7 @@
-package bataillenaval;
+package bataillenaval.view;
 
 
+import bataillenaval.controller.Jeu;
 import java.util.*;
 
 
@@ -204,54 +205,35 @@ public class Menu {
     }
     
     
-    //**************************************************************************
-    /**
-     * Converti les minuscules en majuscule.
-     * Cette méthode recois une lettre en majuscule ou en misnucule et la transforme
-     * si nécésaire en lettre majuscule.
-     * @param lettre La lettre à convertir
-     * @return La lettre en majuscule
-     */
-    public static char convertirMinuscules(char lettre){
-        if (lettre<65||lettre>90){                  //On vérifie que la lettre est une lettre minuscule
-            return lettre -= 'a'-'A';                   //Si c'est le cas on la convertie en majuscule en lui retirant la différence qu'il y a entre les minuscules et les majucules
-        }
-        return lettre;              //On retourne la lettre en majuscule
-    }
+
 
     
     //**************************************************************************
     /**
      * Menu pour le choix du navire qui va tirer.
      * Ce menu est utilisé pour savoir quel navire la joueur souhaite utiliser pour
-     * effectuer son tire. Il vérifie que le navire est dans la capacité de tirer.
-     * Il retourne : <br>
-     * 1 si le tir a bien eu lieu<br>
-     * 2 en cas d'une opération qui nécésite la relance du tour du joueur<br>
-     * 0 en cas d'erreur majeur
-     * @param flotte La flotte du joueur qui tire
-     * @param numero_joueur Le numéro du joueur qui tire
+     * effectuer son tire..
+     * Il retourne les références du navire rentré.
      * @return Les instrcutions pour la boucle du jeu
      * @throws java.lang.InterruptedException
      */
-    public int menuTirer (List<Flotte> flotte, int numero_joueur) throws InterruptedException{
+    public Object[] menuTirer () throws InterruptedException{
         
         System.out.println(GRIS_AR +NOIR+ "               MENU TIRE              "+RESET+ RESET_AR);           //On afficher le titre du menu
-        
-        char lRef='A';            //On iniatilise une variable de type char qui permet de stocker la lettre de référence du navire choix
-        int nPlateau=0;            //Variable qui permet de stocker la numéro de plateau du navire choisie par l'utilisateur
+        char lRef ='A';
+        int nPlateau =0;
         int maxNavire=0;           //Variable qui permet de stocker le maximun de bateau d'une catégorie de navire que contient la flotte
 
         System.out.println("Veuillez entrer la lettre du navire avec lequel vous voulez tirer :");           //On demande à l'utilisateur de saisir la lettre du navire
         try{
             lRef= scMenu.next().charAt(0);          //On stock la saisie de l'utilisateur
-            lRef=Menu.convertirMinuscules(lRef);           //On convertir sa saisie en majuscule
+            lRef=Jeu.convertirMinuscules(lRef);           //On convertir sa saisie en majuscule
         }
         catch(InputMismatchException e){            //Si ce n'est pas un caractère
             System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
             scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
         }   
-        lRef=Menu.convertirMinuscules(lRef);           //On convertir sa saisie en majuscule
+        lRef=Jeu.convertirMinuscules(lRef);           //On convertir sa saisie en majuscule
 
         while (lRef!='U'&&lRef!='C'&&lRef!='D'&&lRef!='S'){           //On blinde, en vérifiant que sa saisie fait partie des choix possible
             System.out.println(ROUGE + "Erreur !"+RESET);           //Sinon on affiche un message d'erreur
@@ -264,7 +246,7 @@ public class Menu {
                 scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
                 lRef='A';
             }
-            lRef=Menu.convertirMinuscules(lRef);           //On convertir sa saisie en majuscule
+            lRef=Jeu.convertirMinuscules(lRef);           //On convertir sa saisie en majuscule
         }
 
         if (lRef=='U') nPlateau=1;           //Si le choix du bateaue est cuirasse, le choix du numéro du bateau n'est pas nécésaire
@@ -294,15 +276,10 @@ public class Menu {
                 }
             }
         }
-
-        int pListe=Flotte.nPlateauToPListe(lRef, nPlateau);           //On trouve la position du navire dans la liste à l'aide de son numéro plateau et sa lettre de reférence 
-        if (flotte.get(pListe).etat==true){           //On vérifie que le bateau n'est pas coulé 
-            return flotte.get(pListe).tir();            //On appelle la methode tir coresspondant au navire selectionné
-        }
-        else {
-            System.out.println(ROUGE + "Erreur!"+RESET +"\nCe navire à déjà été coulé et ne peut plus effectuer de tire");           //Sinon, on affiche un message d'erreur
-            return 2;           //On relance le tour du joueur
-        }
+        Object[] referencesNavire = new Object[2];
+        referencesNavire[0]=lRef;
+        referencesNavire[1]=nPlateau;
+        return referencesNavire;
     }
 }
 
