@@ -4,7 +4,6 @@ package bataillenaval.view;
 import bataillenaval.controller.Jeu;
 import java.util.*;
 
-import javax.swing.table.DefaultTableCellRenderer;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
