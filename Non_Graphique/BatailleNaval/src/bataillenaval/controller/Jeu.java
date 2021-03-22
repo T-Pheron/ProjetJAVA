@@ -90,6 +90,11 @@ public class Jeu {
         IA ia = new IA();           //On initialise une varaible pour lancer l'IA
         boolean tourSuivant = true;             //Variable qui permet de savoir si on passe au tour suivant
         int numeroJoueur=0;                 //Variable qui permet de connaître à quelle joueur c'est la tour
+        int niveauIA=0;
+
+
+        /*Choix du niveau de l'IA**********************************************/
+        niveauIA = menu.choixNiveauIA();
         
         /*Boucle de jeu********************************************************/
         while (tourSuivant==true){            //On vérifie qu'on doit passer au tour suivant
@@ -133,7 +138,7 @@ public class Jeu {
                 System.out.println();
                 Affichage.afficher(numeroJoueur, 1, Jeu.plateauDeJeu);
                 
-                ia.jouer(2);            //On lance la méthode qui permet à l'IA de jouer
+                ia.jouer(niveauIA);            //On lance la méthode qui permet à l'IA de jouer
             }
             
             if (retourMenu==2) {            //Si le menu retourne 2 à la fin de la boucle
@@ -678,21 +683,47 @@ public class Jeu {
 
 
     public boolean victoire(){
+        boolean etat0;
+        boolean etat0SousMarin=false;
         for (int i=0; i<10; i++){
-            boolean etat0 = flotteJoueur0.get(i).etat;
+            etat0 = flotteJoueur0.get(i).etat;
             if (etat0==true) break;
             if (i==9 && etat0!=true){
-                System.out.println(ROUGE+"VICTOIRE DE L'ORDI !!\nT'ES NUL PD"+RESET);
+                System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!\nT'ES NUL"+RESET);
                 return true;
+            }
+
+            if(i>6){
+                if (etat0SousMarin==false) etat0SousMarin=flotteJoueur0.get(i).etat;
             }
         }
+
+        if (etat0SousMarin==false){
+            System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);
+            System.out.println("Vous n'avez plus de sous-marin");
+            System.out.println("L'ordinateur gagne par fofait de votre part");
+            return true;
+        }
+
+        boolean etat1SousMarin=false;
+        boolean etat1;
         for (int i=0; i<10; i++){
-            boolean etat1 = flotteJoueur1.get(i).etat;
+            etat1 = flotteJoueur1.get(i).etat;
             if (etat1==true) break;
             if (i==9 && etat1!=true){
-                System.out.println(ROUGE+"VICTOIRE JOUEUR !!\n BIEN JOUE CA GASSON"+RESET);
+                System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!\n BIEN JOUE CA GASSON"+RESET);
                 return true;
             }
+            if(i>6){
+                if (etat1SousMarin==false) etat0SousMarin=flotteJoueur0.get(i).etat;
+            }
+        }
+
+        if (etat1SousMarin==false){
+            System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);
+            System.out.println("Vous avez détruit tout les sous-marin de l'ordinateur");
+            System.out.println("Vous gagnez par forfait");
+            return true;
         }
         return false;
     }
