@@ -72,12 +72,12 @@ public class Affichage {
             System.out.println(GRIS_AR + BLANC +"          Voici la grille de vos navires        "+RESET_AR +RESET);
             System.out.println(B_JAUNE_AR + BLANC +"  | A| B| C| D| E| F| G| H| I| J| K| L| M| N| O|"+RESET_AR +RESET);             //On affiche les repères pour l'utilisateur
         
-            for (int i=0; i<15; i++){           //On fait une boucle pour parcourir toutes les lignes da la grille
+            for (int j=0; j<15; j++){           //On fait une boucle pour parcourir toutes les lignes da la grille
             
-                if (i<9) System.out.print(B_JAUNE_AR +BLANC +" "+(i+1)+"|"+RESET_AR +RESET);            //A chaque début de ligne on affiche le repère pour l'utilisateur
-                else System.out.print(B_JAUNE_AR +BLANC +(i+1)+"|"+RESET_AR +RESET);            //Si le nombre est supérieur à 9 on retire un espace pour évité de décaler
+                if (j<9) System.out.print(B_JAUNE_AR +BLANC +" "+(j+1)+"|"+RESET_AR +RESET);            //A chaque début de ligne on affiche le repère pour l'utilisateur
+                else System.out.print(B_JAUNE_AR +BLANC +(j+1)+"|"+RESET_AR +RESET);            //Si le nombre est supérieur à 9 on retire un espace pour évité de décaler
             
-                for (int j=0; j<15; j++){               //On fait une boucle pour parcourir toutes les colonnes de la grille
+                for (int i=0; i<15; i++){               //On fait une boucle pour parcourir toutes les colonnes de la grille
                     
                     //***************************
                     /*On utilise cette partie pour pouvoir afficher les tires que l'adversaire a effectué sur le plateau de jeu du joueur*/
