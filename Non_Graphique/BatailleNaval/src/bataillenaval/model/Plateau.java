@@ -1,6 +1,5 @@
 package bataillenaval.model;
 
-import bataillenaval.view.Affichage;
 
 
 public class Plateau {
