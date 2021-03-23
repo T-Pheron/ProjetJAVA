@@ -108,8 +108,9 @@ public class Destroyer extends Flotte {
             //On parcourt le carré d'une surface de 4*4 en affichant s'il y a des navires ou si y'a rien
             for (int i=0; i<4-surplusX ; i++){
                 for (int j=0; j<4-surplusY; j++){
-                    if (Jeu.plateauDeJeu.get(xTireFusee+i,yTireFusee+j,2,0)!=(Object)"_") Jeu.plateauDeJeu.modification(xTireFusee+i,yTireFusee+j,1,0,"4");         //Affiche sur la grille de tir du joueur les navires qui ont été touché par la fusée éclairante
-                    
+                    if (Jeu.plateauDeJeu.get(xTireFusee+i,yTireFusee+j,2,0)!=(Object)"_" && Jeu.plateauDeJeu.get(xTireFusee+i,yTireFusee+j,1,0)!=(Object)"2" && Jeu.plateauDeJeu.get(xTireFusee+i,yTireFusee+j,1,0)!=(Object)"5") {
+                        Jeu.plateauDeJeu.modification(xTireFusee+i,yTireFusee+j,1,0,"4");         //Affiche sur la grille de tir du joueur les navires qui ont été touché par la fusée éclairante
+                    }
                     else Jeu.plateauDeJeu.modification(xTireFusee+i,yTireFusee+j,1,0,"3");          //Affiche sur la grille de tir du joueur là ou la fusée éclairante a touché
                 }
             }
