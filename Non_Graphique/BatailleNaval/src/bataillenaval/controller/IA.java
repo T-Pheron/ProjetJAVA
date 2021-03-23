@@ -726,11 +726,8 @@ public class IA {
         
         for (int i=0; i<20; i++){           //On parcour toutes les coordonées
             
-            System.out.println("Voivi les save : "+saveCoord[i]);
             if (saveCoord[i]==true) {
-                System.out.println("Voivi i : "+i);
                 emplacementSave=true;           //Si un emplacment est actif on met la variable sur true 
-                System.out.println("et l'emplacement : "+emplacementSave);
                 break;          //Et on quitte la boucle 
             }
         }
