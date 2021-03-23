@@ -683,7 +683,7 @@ public class IA {
                     
                 }
                 if (yTire+2<15){        //Si le tir 2 case en haut est possible
-                    if (Jeu.plateauDeJeu.get(xTire-2, yTire+2, 3, 0) != (Object) "1" && Jeu.plateauDeJeu.get(xTire, yTire+2, 3, 0) != (Object) "2"){
+                    if (Jeu.plateauDeJeu.get(xTire, yTire+2, 3, 0) != (Object) "1" && Jeu.plateauDeJeu.get(xTire, yTire+2, 3, 0) != (Object) "2"){
                         saveCoord[3]=true;          //On est met l'emplacement sauvegarde sur true
                         stockSaveCoord[3][0]=xTire;         //On stock les informations de tir
                         stockSaveCoord[3][1]=yTire+2;
@@ -817,7 +817,7 @@ public class IA {
                         saveCoord[i]=false;
                         
 
-                        if (Jeu.plateauDeJeu.get(xTire, yTire, 3, 0) != (Object) "1" && Jeu.plateauDeJeu.get(xTire, yTire, 3, 0) != (Object) "2"){
+                        if (Jeu.plateauDeJeu.get(xTire, yTire, 3, 0) != (Object) "1" && Jeu.plateauDeJeu.get(xTire, yTire, 3, 0) != (Object) "2" && Jeu.plateauDeJeu.get(xTire, yTire, 3, 0) != (Object) "3"){
                             emplacementSave=true;
                             i=20;
                         }
@@ -916,7 +916,7 @@ public class IA {
 
             /*Impacte sur un navire adverse************************************************/
             else {          //Si les coordonées de tir coorespondent à un navire
-                System.out.println("Et  c'est touché!!");TimeUnit.SECONDS.sleep(2);
+                System.out.println("Et c'est touché!!");TimeUnit.SECONDS.sleep(2);
                 Jeu.flotteJoueur1.get(pListe).impact(xTire, yTire, 1);           //On appel la méthode qui permet de rentrer les différentes informations lors d'un impacte
                 TimeUnit.SECONDS.sleep(3);
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
@@ -964,7 +964,7 @@ public class IA {
                     
                 }
                 if (yTire+2<15){        //Si le tir 2 case en haut est possible
-                    if (Jeu.plateauDeJeu.get(xTire-2, yTire+2, 3, 0) != (Object) "1" && Jeu.plateauDeJeu.get(xTire, yTire+2, 3, 0) != (Object) "2"){
+                    if (Jeu.plateauDeJeu.get(xTire, yTire+2, 3, 0) != (Object) "1" && Jeu.plateauDeJeu.get(xTire, yTire+2, 3, 0) != (Object) "2"){
                         saveCoord[19]=true;          //On est met l'emplacement sauvegarde sur true
                         stockSaveCoord[19][0]=xTire;         //On stock les informations de tir
                         stockSaveCoord[19][1]=yTire+2;
