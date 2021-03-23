@@ -477,20 +477,11 @@ public class IA {
                     xTire = (int) (Math.random() * 15);          //On stock un nombre aléatoire compris entre 0 et 14 dans x
                     yTire = (int) (Math.random() * 15);          //On stock un nombre aléatoire compris entre 0 et 14 dans y
 
-                    int alea = (int) (Math.random() * 4);           //On génère un nombre aléatoir pour savoir quel navire qui va tirer
-                    if (alea==0) lRef='U';          //D'après le nombre aléatoire, on choix un type de navire
-                    if (alea==1) lRef='C';
-                    if (alea==2) lRef='D';
-                    if (alea==3) lRef='S';
-
-                    if (lRef=='U') nPlateau = 1;
-                    else{
-                        int nMaxNavire=0;           //Variable utilisé pour stocker le nombre maximal de navire dans une catégorie de navire
-                        if (lRef=='C') nMaxNavire=2;            //On déduit le nombre maximal de navire en fonction de la letrre de référence
-                        if (lRef=='D') nMaxNavire=3;
-                        if (lRef=='S') nMaxNavire=4;
-
-                        nPlateau = 1+ (int) (Math.random() * (nMaxNavire));         //On génère aléatoirement un numéros de navire
+                    for (int i=0; i<10;i++){
+                        if (Jeu.flotteJoueur1.get(i).etat==true) {
+                            pListe=i;            //On prend les coordonnées du bateau le plus puissant non coulé
+                            i=10;
+                        }
                     }
                     
                     Object retourPlateau = Jeu.plateauDeJeu.get(xTire, yTire, 3, 0);          //On récupère les informations du point ou on veut tirer
@@ -499,7 +490,7 @@ public class IA {
                     else if (retourPlateau == (Object) "5") {           //Si les coordonnées son celle d'un sous marin qui a été touché sans être coulé
                         lRef = 'S';         //On choix un sous marin pour tirer
                         int tourSousMarin =0;           //On initialise un compteur de tour
-                        while (Jeu.flotteJoueur1.get(Flotte.nPlateauToPListe(lRef, nPlateau)).etat == false && tourSousMarin!=5){           //Tant que l'état du navire n'est pas true on cherche un autre sous marin. On vérifie aussi qu'on a pas parcourue tous les sous-marins
+                        while (Jeu.flotteJoueur1.get(pListe).etat == false && tourSousMarin!=5){           //Tant que l'état du navire n'est pas true on cherche un autre sous marin. On vérifie aussi qu'on a pas parcourue tous les sous-marins
                             nPlateau ++;            //On prend le sous-marin suivant
                             tourSousMarin++;            //On ajoute 1 au compteur
                             if (nPlateau==5) nPlateau=0;            //Si le numéros de plateau du navire arrive à 5, on le remet à 0 pour être sûr de parcourir tous les sous-marins
@@ -511,11 +502,10 @@ public class IA {
                         choixCoordonneesTir = true;         //On autorise la sortie de la boucle, si on a trouvé un sous marin
                     }
                     
-                    if (Jeu.flotteJoueur1.get(Flotte.nPlateauToPListe(lRef, nPlateau)).etat == false) choixCoordonneesTir=false;             //on vérifie que le navire choisie n'est pas coulé
+                    if (Jeu.flotteJoueur1.get(pListe).etat == false) choixCoordonneesTir=false;             //on vérifie que le navire choisie n'est pas coulé
                     
                 }while(choixCoordonneesTir == false);           //On vérifie que la condition de sortie de la boucle est validée
             
-                pListe=Flotte.nPlateauToPListe(lRef, nPlateau);
             }
             
             
@@ -845,20 +835,11 @@ public class IA {
                     xTire = (int) (Math.random() * 15);          //On stock un nombre aléatoire compris entre 0 et 14 dans x
                     yTire = (int) (Math.random() * 15);          //On stock un nombre aléatoire compris entre 0 et 14 dans y
 
-                    int alea = (int) (Math.random() * 4);           //On génère un nombre aléatoir pour savoir quel navire qui va tirer
-                    if (alea==0) lRef='U';          //D'après le nombre aléatoire, on choix un type de navire
-                    if (alea==1) lRef='C';
-                    if (alea==2) lRef='D';
-                    if (alea==3) lRef='S';
-
-                    if (lRef=='U') nPlateau = 1;
-                    else{
-                        int nMaxNavire=0;           //Variable utilisé pour stocker le nombre maximal de navire dans une catégorie de navire
-                        if (lRef=='C') nMaxNavire=2;            //On déduit le nombre maximal de navire en fonction de la letrre de référence
-                        if (lRef=='D') nMaxNavire=3;
-                        if (lRef=='S') nMaxNavire=4;
-
-                        nPlateau = 1+ (int) (Math.random() * (nMaxNavire));         //On génère aléatoirement un numéros de navire
+                    for (int i=0; i<10;i++){
+                        if (Jeu.flotteJoueur1.get(i).etat==true) {
+                            pListe=i;            //On prend les coordonnées du bateau le plus puissant non coulé
+                            i=10;
+                        }
                     }
                     
                     Object retourPlateau = Jeu.plateauDeJeu.get(xTire, yTire, 3, 0);          //On récupère les informations du point où on veut tirer
@@ -867,7 +848,7 @@ public class IA {
                     else if (retourPlateau == (Object) "5") {           //Si les coordonnées son celle d'un sous marin qui a été touché sans être coulé
                         lRef = 'S';         //On choix un sous marin pour tirer
                         int tourSousMarin =0;           //On initialise un compteur de tour
-                        while (Jeu.flotteJoueur1.get(Flotte.nPlateauToPListe(lRef, nPlateau)).etat == false && tourSousMarin!=5){           //Tant que l'état du navire n'est pas true on cherche un autre sous marin. On vérifie aussi qu'on a pas parcourue tous les sous-marins
+                        while (Jeu.flotteJoueur1.get(pListe).etat == false && tourSousMarin!=5){           //Tant que l'état du navire n'est pas true on cherche un autre sous marin. On vérifie aussi qu'on a pas parcourue tous les sous-marins
                             nPlateau ++;            //On prend le sous-marin suivant
                             tourSousMarin++;            //On ajoute 1 au compteur
                             if (nPlateau==5) nPlateau=0;            //Si le numéros de plateau du navire arrive à 5, on le remet à 0 pour être sûr de parcourir tous les sous-marins
@@ -879,11 +860,10 @@ public class IA {
                         choixCoordonneesTir = true;         //On autorise la sortie de la boucle, si on a trouvé un sous marin
                     }
                     
-                    if (Jeu.flotteJoueur1.get(Flotte.nPlateauToPListe(lRef, nPlateau)).etat == false) choixCoordonneesTir=false;             //on vérifie que le navire choisie n'est pas coulé
+                    if (Jeu.flotteJoueur1.get(pListe).etat == false) choixCoordonneesTir=false;             //on vérifie que le navire choisie n'est pas coulé
                     
                 }while(choixCoordonneesTir == false);           //On vérifie que la condition de sortie de la boucle est validée
             
-                pListe=Flotte.nPlateauToPListe(lRef, nPlateau);
             }
 
 
