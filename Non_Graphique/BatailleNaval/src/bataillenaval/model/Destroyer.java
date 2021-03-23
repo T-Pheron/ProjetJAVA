@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 public class Destroyer extends Flotte {
     
-    public boolean premierTire = true;
     private final Scanner scDestroyer = new Scanner(System.in);
 
     public Destroyer(){

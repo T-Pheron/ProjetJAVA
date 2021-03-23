@@ -12,6 +12,7 @@ public abstract class Flotte {
     public int puissance;           //Variable qui stock la puissance de tir du navire
     public char lRef;               //Variable qui stock la lettre de référence du bateau
     public int nRef;                //Variable qui stock le numéro de référence du bateau
+    public boolean premierTire = true;      //Variable utilisé pour savoir si c'est le premier tir d'un bateau
     
     /**
      * Constructeur des variable de type stock.

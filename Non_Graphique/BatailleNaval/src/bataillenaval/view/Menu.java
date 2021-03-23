@@ -3,8 +3,8 @@ package bataillenaval.view;
 
 import bataillenaval.controller.Jeu;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
-import javax.swing.table.DefaultTableCellRenderer;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -97,8 +97,7 @@ public class Menu {
         switch (choix){
             case 1:            //Si le choix est 1
                 System.out.println(""); 
-                System.out.println("Bienvenue dans le jeu de la "+ CYAN +"Bataille Navale"+ RESET);           //On affiche un message de bienvenue
-                System.out.println("Voici vos grilles au début de la partie");
+                System.out.println("Bienvenue dans le jeu de la "+ CYAN +"Bataille Navale"+ RESET+"\n");           //On affiche un message de bienvenue
                 jeu.lancementJeu();             //On appel la méthode qui permet de lancer une nouvelle partie
                 
                 break;
@@ -377,6 +376,65 @@ public class Menu {
         referencesNavire[0]=lRef;
         referencesNavire[1]=nPlateau;
         return referencesNavire;
+    }
+
+
+
+
+    public int choixNiveauIA() throws InterruptedException{
+        int niveauIA=0;
+
+        System.out.println("Veuillez choisir le niveau de l'ordinateur que vous souhaitez :"
+                        +"\n1.Facile"
+                        +"\n2.Moyen"
+                        +"\n3.Difficile");           //Sinon, on demande à l'utilisateur de rentrer le numéro affiché sur le plateau du bateau qu'il souhaite utiliser pour tirer
+        
+        System.out.println("Saisisez votre choix :");
+        
+        try{
+            niveauIA = scMenu.nextInt();          //On stock la saisie de l'utilisateur
+        }
+        catch(InputMismatchException e){            //Si ce n'est pas un entier
+            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+            scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
+        }
+
+
+        while (niveauIA<1||niveauIA>3){           //On blinde, en vérifiant que la saisie fait partie des choix
+            System.out.println(ROUGE + "Erreur! "+RESET +"Ce numéro ne fait pas parti des choix.");           //Sinon, on affiche un message d'erreur
+            System.out.println("Veuillez entrer le niveau de l'ordinateur que vous souhaitez :");           //Et on demande la ressaisie
+            try{
+                niveauIA = scMenu.nextInt();          //On stock la saisie de l'utilisateur
+            }
+            catch(InputMismatchException e){            //Si ce n'est pas un entier
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
+            }
+        }
+        
+        System.out.println();
+
+        switch(niveauIA){
+            case 1:
+                System.out.println("Vous avez choisie le niveau Facile.");TimeUnit.SECONDS.sleep(2);
+                System.out.println("Tu as peur ?");TimeUnit.SECONDS.sleep(1);
+                System.out.println("On peut commencer. Bonne chance !");TimeUnit.SECONDS.sleep(3);
+                break;
+            case 2:
+                System.out.println("Vous avez choisie le niveau Moyen.");TimeUnit.SECONDS.sleep(2);
+                System.out.println("Ok ok");TimeUnit.SECONDS.sleep(1);
+                System.out.println("On peut commencer. Bonne chance !");TimeUnit.SECONDS.sleep(3);
+                break;
+            case 3:
+                System.out.println("Vous avez choisie le niveau Difficile.");TimeUnit.SECONDS.sleep(2);
+                System.out.println("Bienn! On est joueur");TimeUnit.SECONDS.sleep(1);
+                System.out.println("On peut commencer. Bonne chance !");TimeUnit.SECONDS.sleep(3);
+                break;
+            default:
+        }
+        
+        return niveauIA;
+
     }
 }
 
