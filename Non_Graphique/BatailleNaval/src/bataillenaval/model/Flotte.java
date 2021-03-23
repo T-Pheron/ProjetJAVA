@@ -86,7 +86,7 @@ public abstract class Flotte {
      * @return True si le bateau n'est pas coulé, false sinon
      */
     public boolean navireVivant(){
-        for (int j=0; j<taille-1; j++){           //On parcour tous les états des coordonées
+        for (int j=0; j<taille; j++){           //On parcour tous les états des coordonées
             if (coordonnees[j][2] == 1) return true;            //S'il y a au moins un état qui est à 1 on renvoie true
         }
         etat=false;

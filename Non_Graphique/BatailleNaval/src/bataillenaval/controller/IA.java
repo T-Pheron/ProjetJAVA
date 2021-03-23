@@ -542,6 +542,7 @@ public class IA {
                 xTire=stockSaveCoord[0][0];         //On attribue à chaque élément utilisé pour un tir les éléments sauvegardés
                 yTire=stockSaveCoord[0][1];
                 pListe=stockSaveCoord[0][2];
+                lRef=Jeu.flotteJoueur1.get(pListe).lRef;
                 saveCoord[0]=false;
             }
             else if (saveCoord[1]==true){
@@ -558,6 +559,7 @@ public class IA {
                 xTire=stockSaveCoord[1][0];         //On attribue à chaque élément utilisé pour un tir les éléments sauvegardés
                 yTire=stockSaveCoord[1][1];
                 pListe=stockSaveCoord[1][2];
+                lRef=Jeu.flotteJoueur1.get(pListe).lRef;
                 saveCoord[1]=false;
             }
             else if (saveCoord[2]==true){
@@ -574,6 +576,7 @@ public class IA {
                 xTire=stockSaveCoord[2][0];         //On attribue à chaque élément utilisé pour un tir les éléments sauvegardés
                 yTire=stockSaveCoord[2][1];
                 pListe=stockSaveCoord[2][2];
+                lRef=Jeu.flotteJoueur1.get(pListe).lRef;
                 saveCoord[2]=false;
             }
             else if (saveCoord[3]==true){
@@ -590,6 +593,7 @@ public class IA {
                 xTire=stockSaveCoord[3][0];         //On attribue à chaque élément utilisé pour un tir les éléments sauvegardés
                 yTire=stockSaveCoord[3][1];
                 pListe=stockSaveCoord[3][2];
+                lRef=Jeu.flotteJoueur1.get(pListe).lRef;
                 saveCoord[3]=false;
             }
 
@@ -634,7 +638,7 @@ public class IA {
                     return 1;           //On retourne 1 pour que le programme confirme la victoire du joueur
                 }
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
-                System.out.println("J'ai touché un objet non identifié.");
+                System.out.println("J'ai touché un objet non identifié");
                 System.out.println("Je retient...");TimeUnit.SECONDS.sleep(5);
 
             }
@@ -727,7 +731,6 @@ public class IA {
         for (int i=0; i<20; i++){           //On parcour toutes les coordonées
             if (saveCoord[i]==true) {
                 emplacementSave=true;           //Si un emplacment est actif on met la variable sur true
-                System.out.println("On a un emplacement");
                 i=20;          //Et on quitte la boucle 
             }
         }
@@ -736,7 +739,7 @@ public class IA {
         if (emplacementSave==false && nombreDeTirDestroyer <3){
             for (int i=3; i<6;i++)
             {
-                if (Jeu.flotteJoueur1.get(i).premierTire==true){
+                if (Jeu.flotteJoueur1.get(i).premierTire==true && Jeu.flotteJoueur1.get(i).etat==true){
 
                     System.out.println("J'effetue un tir avec mon destroyer");
                     System.out.println("Veuillez patienter le temps du recueil des données");
@@ -793,6 +796,48 @@ public class IA {
             
             System.out.println("Veuillez patienter le temps que j'effectue mon tir");
             System.out.print("Je choisis les coordonnées, 4 sec!");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".\n");
+            
+            /*Récupération des coordonées enregistrée*****************/
+            if (emplacementSave==true){
+                
+                for (int i=0; i<20;i++){
+                    if (saveCoord[i]==true){            //Si il y a des coordonées de tir sauvegar dans la mémoir 1
+
+                        if (Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).etat !=true && Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).lRef!= 'S') {            //On vérifie que le bateau sélecctionner pour le tir est toujours à flot et quelle est différente d'un sous-marin 
+                            for (int j=0; j<10;j++){            //Si le navire est coulé on sélectionner un nouveau navire qui n'est pas coulé
+                                if (Jeu.flotteJoueur1.get(j).etat==true) {
+                                    stockSaveCoord[i][2]=j;            //On prend les coordonnées du bateau le plus puissant non coulé
+                                    j =10;
+                                }
+                            }
+                        }
+                        else if (Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).etat!=true && Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).lRef== 'S'){
+                            for (int k=6; k<10;k++){
+                                if (Jeu.flotteJoueur1.get(k).navireVivant()==true) {
+                                    stockSaveCoord[0][2]=k;          //On sélectionne un sous-marin
+                                    k =10;
+                                }
+                            }      //Si le navire sélectionné pour le tir été un sous-marin on prend le suivant si c'est possible
+                        }
+                        
+                        xTire=stockSaveCoord[i][0];         //On attribue à chaque élément utilisé pour un tir les éléments sauvegardés
+                        yTire=stockSaveCoord[i][1];
+                        pListe=stockSaveCoord[i][2];
+                        lRef=Jeu.flotteJoueur1.get(pListe).lRef;
+                        saveCoord[i]=false;
+                        
+
+                        if (Jeu.plateauDeJeu.get(xTire, yTire, 3, 0) != (Object) "1" && Jeu.plateauDeJeu.get(xTire, yTire, 3, 0) != (Object) "2"){
+                            emplacementSave=true;
+                            i=20;
+                        }
+                        else{
+                            emplacementSave=false;
+                        }
+                    }
+                }
+            }
+
 
             /*Génération des coordonées de tir et choix navire*********/
             if (emplacementSave==false ){          //On vérifie qu'il y a pas des emplacements de tir déjà enregistré
@@ -818,7 +863,7 @@ public class IA {
                     
                     Object retourPlateau = Jeu.plateauDeJeu.get(xTire, yTire, 3, 0);          //On récupère les informations du point où on veut tirer
                     if(retourPlateau == (Object) "0") choixCoordonneesTir = true;           //Si le point n'a jamais été touché on autorise la sortie de la boucle de choix de coordonnées de tir
-                    else if (retourPlateau == (Object) "1" || retourPlateau == (Object) "2") choixCoordonneesTir = false;           //Si le point à déja été touché on ne quitte pas la boucle pour avoir de nouvelle coordonnées
+                    else if (retourPlateau == (Object) "1" || retourPlateau == (Object) "2" || retourPlateau == (Object) "3") choixCoordonneesTir = false;           //Si le point à déja été touché on ne quitte pas la boucle pour avoir de nouvelle coordonnées
                     else if (retourPlateau == (Object) "5") {           //Si les coordonnées son celle d'un sous marin qui a été touché sans être coulé
                         lRef = 'S';         //On choix un sous marin pour tirer
                         int tourSousMarin =0;           //On initialise un compteur de tour
@@ -840,39 +885,6 @@ public class IA {
             
                 pListe=Flotte.nPlateauToPListe(lRef, nPlateau);
             }
-            else {
-                /*Récupération des coordonées enregistrée**********/
-                for (int i=0; i<20;i++){
-                    if (saveCoord[i]==true){            //Si il y a des coordonées de tir sauvegar dans la mémoir 1
-
-                        if (Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).etat !=true && Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).lRef!= 'S') {            //On vérifie que le bateau sélecctionner pour le tir est toujours à flot et quelle est différente d'un sous-marin 
-                            for (int j=0; j<10;j++){            //Si le navire est coulé on sélectionner un nouveau navire qui n'est pas coulé
-                                if (Jeu.flotteJoueur1.get(j).etat==true) {
-                                    stockSaveCoord[i][2]=j;            //On prend les coordonnées du bateau le plus puissant non coulé
-                                    i =20;
-                                }
-                            }
-                        }
-                        else if (Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).etat!=true && Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).lRef== 'S'){
-                            for (int k=6; k<10;k++){
-                                if (Jeu.flotteJoueur1.get(k).navireVivant()==true) {
-                                    stockSaveCoord[0][2]=k;          //On sélectionne un sous-marin
-                                    i =20;
-                                }
-                            }      //Si le navire sélectionné pour le tir été un sous-marin on prend le suivant si c'est possible
-                        }
-                        
-                        xTire=stockSaveCoord[i][0];         //On attribue à chaque élément utilisé pour un tir les éléments sauvegardés
-                        yTire=stockSaveCoord[i][1];
-                        pListe=stockSaveCoord[i][2];
-                        saveCoord[i]=false;
-                    }
-                }
-            }
-            
-            
-            
-
 
 
             if (nombreDeTir == (15*15+4)){            //Si on n'a parcouru tout le plateau
@@ -907,8 +919,8 @@ public class IA {
                 stockSaveCoord[0][1]=yTire;
                 stockSaveCoord[0][2]=0;
                 for (int i=6; i<10;i++){
-                    if (Jeu.flotteJoueur1.get(i).etat==true) {
-                        stockSaveCoord[0][2]=i;          //On sélectionne un sous-marin
+                    if (Jeu.flotteJoueur1.get(i).navireVivant()==true) {
+                        stockSaveCoord[0][2]=6;          //On sélectionne un sous-marin
                         i=10;
                     }
                 }

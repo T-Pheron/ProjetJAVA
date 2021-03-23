@@ -713,7 +713,7 @@ public class Jeu {
             etat1 = flotteJoueur1.get(i).etat;
             if (etat1==true) break;
             if (i==9 && etat1!=true){
-                System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!\n BIEN JOUE CA GASSON"+RESET);
+                System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!\nBIEN JOUÉ CA GASSON"+RESET);
                 return true;
             }
         }
