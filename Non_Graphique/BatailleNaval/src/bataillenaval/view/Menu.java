@@ -175,6 +175,7 @@ public class Menu {
     }
     
     
+    
     //**************************************************************************
     /**
      * Menu qui permet de naviguer dans l'aide du jeu.
@@ -185,7 +186,6 @@ public class Menu {
         int choix=0;           //Variable qui permet de stocker le choix du joueur
         System.out.println(GRIS_AR +NOIR+ "               MENU AIDE              "+RESET+ RESET_AR);           //On afficher le titre du menu
         System.out.println("1. Pour débuter \n2. La phase de tir \n3. Flotte et fonctionnalité \n4. Légende des symboles  \n5. Pour gagner et quelques astuces \n6. Retour");           //On affiche les choix possibles
-        
         System.out.println("Veuillez saisir votre choix");           //On demande à l'utilisateur de saisir son choix
         try{
             choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
@@ -207,68 +207,68 @@ public class Menu {
         }
         
         switch (choix){
-            case 1:   try(InputStream iS = new FileInputStream("dossier_aide/fichierDebut.txt");
-            InputStreamReader iSR = new InputStreamReader(iS);
-            BufferedReader bR = new BufferedReader (iSR)){
-                String line;
-                while((line = bR.readLine())!=null){
-                    System.out.println(line);
+            case 1:   try(InputStream iS = new FileInputStream("dossier_aide/fichierDebut.txt");            //On lui demande d'aller dans le fichier fichierDebut qui se trouve dans le dossier dossier_aide
+            InputStreamReader iSR = new InputStreamReader(iS);          //On déclare une variable de type InputStreamReader
+            BufferedReader bR = new BufferedReader (iSR)){          //On déclare une variable de type BufferedReader
+                String line;            //On initialise une chaine de caractere
+                while((line = bR.readLine())!=null){            //Tant que la ligne n'est pas vide
+                    System.out.println(line);           //On affiche la ligne
                 }   
-            }catch(IOException e){
-                    System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier.Veuillez agréer PD");
+            }catch(IOException e){          //Si il n'arrive pas a ouvrir le fichier
+                    System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier");            //On affiche un message d'erreur
             }
             break;
                         
-            case 2:     try(InputStream iS = new FileInputStream("dossier_aide/fichierFaseTir.txt");
-            InputStreamReader iSR = new InputStreamReader(iS);
-            BufferedReader bR = new BufferedReader (iSR)){
-                String line;
-                while((line = bR.readLine())!=null){
-                    System.out.println(line);
+            case 2:     try(InputStream iS = new FileInputStream("dossier_aide/fichierFaseTir.txt");            //On lui demande d'aller dans le fichier fichierFaseTir qui se trouve dans le dossier dossier_aide
+            InputStreamReader iSR = new InputStreamReader(iS);          //On déclare une variable de type InputStreamReader
+            BufferedReader bR = new BufferedReader (iSR)){          //On déclare une variable de type BufferedReader
+                String line;            //On initialise une chaine de caractere
+                while((line = bR.readLine())!=null){            //Tant que la ligne n'est pas vide
+                    System.out.println(line);           //On affiche la ligne
                 }   
-            }catch(IOException e){
-                System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier.Veuillez agréer PD");
-            }       //deuxieme categorie d'aide
+            }catch(IOException e){          //Si il n'arrive pas a ouvrir le fichier
+                System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier");           //On affiche un message d'erreur
+            }
             break;
 
-            case 3:     try(InputStream iS = new FileInputStream("dossier_aide/fichierNavFct.txt");
-            InputStreamReader iSR = new InputStreamReader(iS);
-            BufferedReader bR = new BufferedReader (iSR)){
-                String line;
-                while((line = bR.readLine())!=null){
-                    System.out.println(line);
+            case 3:     try(InputStream iS = new FileInputStream("dossier_aide/fichierNavFct.txt");         //On lui demande d'aller dans le fichier fichierNavFct qui se trouve dans le dossier dossier_aide
+            InputStreamReader iSR = new InputStreamReader(iS);          //On déclare une variable de type InputStreamReader
+            BufferedReader bR = new BufferedReader (iSR)){          //On déclare une variable de type BufferedReader
+                String line;            //On initialise une chaine de caractere
+                while((line = bR.readLine())!=null){            //Tant que la ligne n'est pas vide
+                    System.out.println(line);           //On affiche la ligne
                 }   
-            }catch(IOException e){
-                System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier.Veuillez agréer PD");
-            }     //troisieme categorie d'aide
+            }catch(IOException e){          //Si il n'arrive pas a ouvrir le fichier
+                System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier");           //On affiche un message d'erreur
+            }
             break;
 
-           case 4:   try(InputStream iS = new FileInputStream("dossier_aide/fichierSyblPlato.txt");
-            InputStreamReader iSR = new InputStreamReader(iS);
-            BufferedReader bR = new BufferedReader (iSR)){
-                String line;
-                while((line = bR.readLine())!=null){
-                    System.out.println(line);
+           case 4:   try(InputStream iS = new FileInputStream("dossier_aide/fichierSyblPlato.txt");         //On lui demande d'aller dans le fichier fichierSyblPlato qui se trouve dans le dossier dossier_aide
+            InputStreamReader iSR = new InputStreamReader(iS);          //On déclare une variable de type InputStreamReader
+            BufferedReader bR = new BufferedReader (iSR)){          //On déclare une variable de type BufferedReader
+                String line;            //On initialise une chaine de caractere
+                while((line = bR.readLine())!=null){            //Tant que la ligne n'est pas vide
+                    System.out.println(line);           //On affiche la ligne
                 }   
-            }catch(IOException e){
-                System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier.Veuillez agréer PD");
-            }        //premiere categorie d'aide
+            }catch(IOException e){          //Si il n'arrive pas a ouvrir le fichier
+                System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier");           //On affiche un message d'erreur
+            }
            break;
                         
-            case 5:     try(InputStream iS = new FileInputStream("dossier_aide/fichierGagne.txt");
-            InputStreamReader iSR = new InputStreamReader(iS);
-            BufferedReader bR = new BufferedReader (iSR)){
-                String line;
-                while((line = bR.readLine())!=null){
-                    System.out.println(line);
+            case 5:     try(InputStream iS = new FileInputStream("dossier_aide/fichierGagne.txt");          //On lui demande d'aller dans le fichier fichierGagne qui se trouve dans le dossier dossier_aide
+            InputStreamReader iSR = new InputStreamReader(iS);          //On déclare une variable de type InputStreamReader
+            BufferedReader bR = new BufferedReader (iSR)){          //On déclare une variable de type BufferedReader
+                String line;            //On initialise une chaine de caractere
+                while((line = bR.readLine())!=null){            //Tant que la ligne n'est pas vide
+                    System.out.println(line);           //On affiche la ligne
                 }   
-            }catch(IOException e){
-                System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier.Veuillez agréer PD");
-            }       //deuxieme categorie d'aide
+            }catch(IOException e){          //Si il n'arrive pas a ouvrir le fichier
+                System.out.println(ROUGE +"Erreur_menuAide! "+RESET+"Impossible d'ouvrir le fichier");           //On affiche un message d'erreur
+            }
             break;
 
             case 6:   return 1;
-            default : System.out.println(ROUGE +"Erreur_menuAide! "+RESET);
+            default : System.out.println(ROUGE +"Erreur_menuAide! "+RESET);         //Message renvoyé en cas de probleme majeur
                 break;
         }
 
@@ -297,8 +297,8 @@ public class Menu {
                 scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
             }
         }
-        if(choix==1) menuAide();
-            return 1;
+        if(choix==1) menuAide();            //On retourne dans le menu aide
+            return 1;           //On retourne dans le menu principal
     }
     
     
