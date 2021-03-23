@@ -45,9 +45,9 @@ public class Cuirasse extends Flotte{
     public int tir() throws InterruptedException{
         
         char xTireChar='@';         //On declare la variable par defaut avec un @
-        int yTire;
+        int yTire =-1;          //On declare la variable par defaut avec un -1
         int xTire;
-        yTire= -1;          //On declare la variable par defaut avec un -1
+        
         System.out.println("Où voulez vous tirer ?");           //On demande à l'utilisateur de saisir les coordonnées du tire
         System.out.println("Veuillez rentrer la colonne :");           //On demande à l'utilisateur de rentrer la colonne
         try{
@@ -96,8 +96,9 @@ public class Cuirasse extends Flotte{
         }
         
         yTire--;            //On retire 1 au yTire
-        /*Confirmation du tir sur une case qui a déjà été touchée****************************/
         xTire = (int) (xTireChar - 65); //On convertie la saisie en un entier
+        
+        /*Confirmation du tir sur une case qui a déjà été touchée****************************/
         if ( Jeu.plateauDeJeu.get(xTire,yTire,1,0) == (Object) "1"){            //Si la case choisie a deja ete touche
             int choix=0;            //On declare une variable qui stock le choix du joueur
             System.out.println("Voulez vous vraiment tirer sur cette case ? Elle à deja été bombardée");            //On lui demande si il veut vraiment tirer sur cette case

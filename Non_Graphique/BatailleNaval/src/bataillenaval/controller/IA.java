@@ -11,16 +11,16 @@ import java.util.concurrent.TimeUnit;
  */
 public class IA {
     
-    int nombreDeTir = 0;
-    boolean[] saveCoord = new boolean [4];
-    int [][] stockSaveCoord =new int[20][3];
+    private int nombreDeTir = 0;
+    private  boolean[] saveCoord = new boolean [20];
+    private int [][] stockSaveCoord = new int[20][3];
 
-    int xTire=0;           //Variable utilisée pour stocker la valeur de l'axe x lors du tir
-    int yTire=0;           //Variable utilisée pour stocker la valeur de l'axe y lors du tir
-    int nPlateau=1;       //Variable utilisée pour stocker le numéro plateau du navire qui tir
-    char lRef='U';          //Variable utilisée pour stocker la lettre de référence du navire qui tir
-    int pListe=0;           //Variable utilisée pour stocker la position 
-    boolean choixCoordonneesTir=true;           //Variable utilisé pour savoir si on peut sortir de la boucle de choix des coordonées
+    private int xTire=0;           //Variable utilisée pour stocker la valeur de l'axe x lors du tir
+    private int yTire=0;           //Variable utilisée pour stocker la valeur de l'axe y lors du tir
+    private int nPlateau=1;       //Variable utilisée pour stocker le numéro plateau du navire qui tir
+    private char lRef='U';          //Variable utilisée pour stocker la lettre de référence du navire qui tir
+    private int pListe=0;           //Variable utilisée pour stocker la position 
+    private boolean choixCoordonneesTir=true;           //Variable utilisé pour savoir si on peut sortir de la boucle de choix des coordonées
 
 
     public IA (){
@@ -78,12 +78,15 @@ public class IA {
      * La méthode affectue le tour de l'IA. D'après le niveau de dificulté choisie par l'utilisateur,
      * elle va mettre en place différent stratégie pour toucher et couler les navires du joueur humain
      * @param niveauIA Le niveau de l'IA choisie
+     * @return 1 Si tout c'est bien passé
      * @throws InterruptedException 
      */
     public int jouer (int niveauIA) throws InterruptedException{
         
         System.out.println("\n\n"+GRIS_AR+BLANC+"                    Tour de l'IA                    "+RESET+RESET_AR);
 
+        if (nombreDeTir==0) initialiseStockage();
+        
         switch(niveauIA){
             
             /*Niveau 1 de l'IA*************************************************/
@@ -123,32 +126,47 @@ public class IA {
     }
 
     //**************************************************************************
+    public void initialiseStockage(){
+        for (int i=0; i<20; i++){
+            saveCoord[i]=false;
+            stockSaveCoord[i][0]=0;
+            stockSaveCoord[i][1]=0;
+            stockSaveCoord[i][2]=0;
+        }
+    }
     
+    
+    
+    
+    
+    
+    
+    //**************************************************************************
     public int bougerNavireIA() throws InterruptedException{
         
-        int pListe;         //Variable qui stocke la position du navire dans la liste
+        int pListeBougerNavire;         //Variable qui stocke la position du navire dans la liste
         int numeroJoueur=1;
         
         /*Sélection du navire à bouger*****************************************/
             do {
-                pListe = (int) (Math.random()*11);
-            }while (Jeu.flotteJoueur1.get(pListe).etat==false);
+                pListeBougerNavire = (int) (Math.random()*11);
+            }while (Jeu.flotteJoueur1.get(pListeBougerNavire).etat==false);
             
         /*Trouver toutes les posibilités de placement du navire****************/
         int  [] possibilite = new int[4];            //Tableau utilisé pour stocker les 4 posibilitées de placement du navire 
         
-        if (Jeu.flotteJoueur1.get(pListe).direction == 0){         //Si la direction du navire est horizontale
+        if (Jeu.flotteJoueur1.get(pListeBougerNavire).direction == 0){         //Si la direction du navire est horizontale
             
-            int xCord = Jeu.flotteJoueur1.get(pListe).coordonnees[0][0];           //On récupère la valeur du premier x dans les coordonées du navire
+            int xCord = Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0];           //On récupère la valeur du premier x dans les coordonées du navire
             if (xCord==0) possibilite[0]=90;         //Si x est égale à 0, un déplacement vers la gauche n'est pas possible. On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
             else possibilite[0]= xCord - 1;          //Sinon, on stock la coordonnées x de la case de gauche dans le tableau possibilité
             
-            xCord = Jeu.flotteJoueur1.get(pListe).coordonnees[Jeu.flotteJoueur1.get(pListe).taille - 1][0];           //On récupère la valeur du dernier x dans les coordonées du navire
+            xCord = Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[Jeu.flotteJoueur1.get(pListeBougerNavire).taille - 1][0];           //On récupère la valeur du dernier x dans les coordonées du navire
             if (xCord==14) possibilite[1]=90;           //Si x est égale à 14, un déplacement vers la gauche n'est pas possible. On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
             else possibilite[1]= xCord + 1;             //Sinon, on stock la coordonnées x de la case de droite dans le tableau possibilité
             
             
-            int yCord = Jeu.flotteJoueur1.get(pListe).coordonnees[0][1];           //On récupère la valeur du premier y dans les coordonées du navire
+            int yCord = Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1];           //On récupère la valeur du premier y dans les coordonées du navire
             switch (yCord) {
                 case 0:             //Si y est égale à 0 un déplacement vers le haut n'est pas possible
                     possibilite[2]= 90;         //On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
@@ -165,18 +183,18 @@ public class IA {
             }
         }
         
-        if (Jeu.flotteJoueur1.get(pListe).direction == 1){         //Si la direction du navire est vertical
+        if (Jeu.flotteJoueur1.get(pListeBougerNavire).direction == 1){         //Si la direction du navire est vertical
             
-            int yCord = Jeu.flotteJoueur1.get(pListe).coordonnees[0][1];           //On récupère la valeur du premier y dans les coordonées du navire
+            int yCord = Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1];           //On récupère la valeur du premier y dans les coordonées du navire
             if (yCord==0) possibilite[2]= 90;           //Si y est égale à 0, un déplacement vers le haut n'est pas possible. On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
             else possibilite[2]= yCord - 1 ;            //Sinon, on stock la coordonnées y de la case au dessus dans le tableau possibilité
             
-            yCord = Jeu.flotteJoueur1.get(pListe).coordonnees[Jeu.flotteJoueur1.get(pListe).taille - 1][1];
+            yCord = Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[Jeu.flotteJoueur1.get(pListeBougerNavire).taille - 1][1];
             if (yCord ==14) possibilite[3]= 90;         //Si y est égale à 0, un déplacement vers le bas n'est pas possible. On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
             else possibilite[3]= yCord + 1;             //Sinon, on stock la coordonnées y de la case en dessous dans le tableau possibilité
             
             
-            int xCord = Jeu.flotteJoueur1.get(pListe).coordonnees[0][0];           //On récupère la valeur du premier x dans les coordonées du navire
+            int xCord = Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0];           //On récupère la valeur du premier x dans les coordonées du navire
             switch (xCord) {
                 case 0:             //Si x est égale à 0 un déplacement vers la gauche n'est pas possible
                     possibilite[0]= 90;          //On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
@@ -194,48 +212,48 @@ public class IA {
         }
         
         /*Vérifier que le navire va pas chevocher un autre navire**************/
-        if (Jeu.flotteJoueur1.get(pListe).direction==0){               //Si le navire est à l'horizontale
+        if (Jeu.flotteJoueur1.get(pListeBougerNavire).direction==0){               //Si le navire est à l'horizontale
             if (possibilite[0]!= 90){           //On vérifie que la possibilité est possible
-                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[0], Jeu.flotteJoueur1.get(pListe).coordonnees[0][1], 0, Jeu.flotteJoueur1.get(pListe).taille, pListe, Jeu.flotteJoueur1.get(pListe).lRef)==false){          //On vérifie que le placement ne chevoche pas un autre navire
+                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[0], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1], 0, Jeu.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, Jeu.flotteJoueur1.get(pListeBougerNavire).lRef)==false){          //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[0]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
             if (possibilite[1]!= 90){
-                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[1]- Jeu.flotteJoueur1.get(pListe).taille +1 , Jeu.flotteJoueur1.get(pListe).coordonnees[0][1], 0, Jeu.flotteJoueur1.get(pListe).taille, pListe, Jeu.flotteJoueur1.get(pListe).lRef)==false){            //On vérifie que le placement ne chevoche pas un autre navire
+                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[1]- Jeu.flotteJoueur1.get(pListeBougerNavire).taille +1 , Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1], 0, Jeu.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, Jeu.flotteJoueur1.get(pListeBougerNavire).lRef)==false){            //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[1]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
             if (possibilite[2]!= 90){
-                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, Jeu.flotteJoueur1.get(pListe).coordonnees[0][0], possibilite[2], 0, Jeu.flotteJoueur1.get(pListe).taille, pListe, Jeu.flotteJoueur1.get(pListe).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0], possibilite[2], 0, Jeu.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, Jeu.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[2]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
             if (possibilite[3]!= 90){
-                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, Jeu.flotteJoueur1.get(pListe).coordonnees[0][0], possibilite[3], 0, Jeu.flotteJoueur1.get(pListe).taille, pListe, Jeu.flotteJoueur1.get(pListe).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0], possibilite[3], 0, Jeu.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, Jeu.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[3]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
         }
         
-        if (Jeu.flotteJoueur1.get(pListe).direction==1){           //Si le navire est à la vertical
+        if (Jeu.flotteJoueur1.get(pListeBougerNavire).direction==1){           //Si le navire est à la vertical
             if (possibilite[0] != 90){          //On vérifie que la possibilité est possible
-                if(Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[0], Jeu.flotteJoueur1.get(pListe).coordonnees[0][1], 1, Jeu.flotteJoueur1.get(pListe).taille, pListe, Jeu.flotteJoueur1.get(pListe).lRef)==false){            //On vérifie que le placement ne chevoche pas un autre navire
+                if(Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[0], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1], 1, Jeu.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, Jeu.flotteJoueur1.get(pListeBougerNavire).lRef)==false){            //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[0]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
             if (possibilite[1] != 90){          //On vérifie que la possibilité est possible
-                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[1], Jeu.flotteJoueur1.get(pListe).coordonnees[0][1], 1, Jeu.flotteJoueur1.get(pListe).taille, pListe, Jeu.flotteJoueur1.get(pListe).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[1], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1], 1, Jeu.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, Jeu.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[1]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
             
             if (possibilite[2] != 90){          //On vérifie que la possibilité est possible
-                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, Jeu.flotteJoueur1.get(pListe).coordonnees[0][0], possibilite[2], 1, Jeu.flotteJoueur1.get(pListe).taille, pListe, Jeu.flotteJoueur1.get(pListe).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0], possibilite[2], 1, Jeu.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, Jeu.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[2]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
             if (possibilite[3] != 90){          //On vérifie que la possibilité est possible
-                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, Jeu.flotteJoueur1.get(pListe).coordonnees[0][0], possibilite[3]-  Jeu.flotteJoueur1.get(pListe).taille +1 , 1, Jeu.flotteJoueur1.get(pListe).taille, pListe, Jeu.flotteJoueur1.get(pListe).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0], possibilite[3]-  Jeu.flotteJoueur1.get(pListeBougerNavire).taille +1 , 1, Jeu.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, Jeu.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[3]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
@@ -255,101 +273,102 @@ public class IA {
         
 
         
-        if (Jeu.flotteJoueur1.get(pListe).direction==0){
+        if (Jeu.flotteJoueur1.get(pListeBougerNavire).direction==0){
 
-            if (selectionPossibilite==3){//Possibilité de descendre
-                for (int i=0; i<Jeu.flotteJoueur1.get(pListe).taille;i++){
-                    Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListe).coordonnees[i][0], Jeu.flotteJoueur1.get(pListe).coordonnees[i][1], Jeu.flotteJoueur1.get(pListe).coordonnees[i][0] , Jeu.flotteJoueur1.get(pListe).coordonnees[i][1]+ 1, Plateau.numeroEtage(numeroJoueur, 0));
-                    Jeu.flotteJoueur1.get(pListe).coordonnees[i][1] ++;
-                }
-                System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
-                TimeUnit.SECONDS.sleep(5);
-                return 1;
-            }
-            else if (selectionPossibilite==2){//Possibilité de monter
-                for (int i=0; i<Jeu.flotteJoueur1.get(pListe).taille;i++){
-                    Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListe).coordonnees[i][0], Jeu.flotteJoueur1.get(pListe).coordonnees[i][1], Jeu.flotteJoueur1.get(pListe).coordonnees[i][0], Jeu.flotteJoueur1.get(pListe).coordonnees[i][1] - 1, Plateau.numeroEtage(numeroJoueur, 0));
-                    Jeu.flotteJoueur1.get(pListe).coordonnees[i][1] --;
-                }
-                System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
-                TimeUnit.SECONDS.sleep(5);
-                return 1;
-            }
-  
-            else if (selectionPossibilite==1){//Posibilité d'aller à gauche
-                for (int i=Jeu.flotteJoueur1.get(pListe).taille - 1; i>=0;i--){
-                    Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListe).coordonnees[i][0], Jeu.flotteJoueur1.get(pListe).coordonnees[i][1], Jeu.flotteJoueur1.get(pListe).coordonnees[i][0] + 1, Jeu.flotteJoueur1.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));
-                    Jeu.flotteJoueur1.get(pListe).coordonnees[i][0] ++;
-                }
-                System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
-                TimeUnit.SECONDS.sleep(5);
-                return 1;
-            }
-            else if (selectionPossibilite==0){//Possibilité d'aller à droite
-                for (int i=0; i<Jeu.flotteJoueur1.get(pListe).taille;i++){
-                    Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListe).coordonnees[i][0], Jeu.flotteJoueur1.get(pListe).coordonnees[i][1], Jeu.flotteJoueur1.get(pListe).coordonnees[i][0] - 1, Jeu.flotteJoueur1.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));
-                    Jeu.flotteJoueur1.get(pListe).coordonnees[i][0] --;
-                }
-                System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
-                TimeUnit.SECONDS.sleep(5);
-                return 1;
-            }
-            else {
-                System.out.println(ROUGE +"Erreur_bougerNavireIA !"+RESET +"\nErreur de choix de déplacement");
-                return 3;
+            switch (selectionPossibilite) {
+                case 3:
+                    //Possibilité de descendre
+                    for (int i=0; i<Jeu.flotteJoueur1.get(pListeBougerNavire).taille;i++){
+                        Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] , Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1]+ 1, Plateau.numeroEtage(numeroJoueur, 0));
+                        Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] ++;
+                    }
+                    System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
+                case 2:
+                    //Possibilité de monter
+                    for (int i=0; i<Jeu.flotteJoueur1.get(pListeBougerNavire).taille;i++){
+                        Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] - 1, Plateau.numeroEtage(numeroJoueur, 0));
+                        Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] --;
+                    }
+                    System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
+                case 1:
+                    //Posibilité d'aller à gauche
+                    for (int i=Jeu.flotteJoueur1.get(pListeBougerNavire).taille - 1; i>=0;i--){
+                        Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] + 1, Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));
+                        Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] ++;
+                    }
+                    System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
+                case 0:
+                    //Possibilité d'aller à droite
+                    for (int i=0; i<Jeu.flotteJoueur1.get(pListeBougerNavire).taille;i++){
+                        Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] - 1, Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));
+                        Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] --;
+                    }
+                    System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
+                default:
+                    System.out.println(ROUGE +"Erreur_bougerNavireIA !"+RESET +"\nErreur de choix de déplacement");
+                    return 3;
             }
             
         }
         
         
-        if (Jeu.flotteJoueur1.get(pListe).direction==1){
-            if (selectionPossibilite==3){           //Possibilité de descendre
-                for (int i=Jeu.flotteJoueur1.get(pListe).taille - 1; i>=0;i--){
-                    Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListe).coordonnees[i][0], Jeu.flotteJoueur1.get(pListe).coordonnees[i][1] , Jeu.flotteJoueur1.get(pListe).coordonnees[i][0], Jeu.flotteJoueur1.get(pListe).coordonnees[i][1]+1, Plateau.numeroEtage(numeroJoueur, 0));
-                    Jeu.flotteJoueur1.get(pListe).coordonnees[i][1] ++;
-                }
-                System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
-                TimeUnit.SECONDS.sleep(5);
-                return 1;
-            }
-            else if (selectionPossibilite==2){          //Possibilité de monter
-                for (int i=0; i<Jeu.flotteJoueur1.get(pListe).taille;i++){
-                    Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListe).coordonnees[i][0], Jeu.flotteJoueur1.get(pListe).coordonnees[i][1], Jeu.flotteJoueur1.get(pListe).coordonnees[i][0], Jeu.flotteJoueur1.get(pListe).coordonnees[i][1]- 1, Plateau.numeroEtage(numeroJoueur, 0));
-                    Jeu.flotteJoueur1.get(pListe).coordonnees[i][1] --;
-                }
-                System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
-                TimeUnit.SECONDS.sleep(5);
-                return 1;
-            }
-                
-            else if (selectionPossibilite==1){//Possibilité d'aller à gauche
-                for (int i=0; i<Jeu.flotteJoueur1.get(pListe).taille;i++){
-                    Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListe).coordonnees[i][0], Jeu.flotteJoueur1.get(pListe).coordonnees[i][1], Jeu.flotteJoueur1.get(pListe).coordonnees[i][0]+1 , Jeu.flotteJoueur1.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));
-                    Jeu.flotteJoueur1.get(pListe).coordonnees[i][0] ++;
-                }
-                System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
-                TimeUnit.SECONDS.sleep(5);
-                return 1;
-            }
-            else if (selectionPossibilite==0){//Possibilité d'aller à droite
-                for (int i=0; i<Jeu.flotteJoueur1.get(pListe).taille;i++){
-                    Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListe).coordonnees[i][0], Jeu.flotteJoueur1.get(pListe).coordonnees[i][1], Jeu.flotteJoueur1.get(pListe).coordonnees[i][0]-1, Jeu.flotteJoueur1.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));
-                    Jeu.flotteJoueur1.get(pListe).coordonnees[i][0] --;
-                }
-                System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
-                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
-                TimeUnit.SECONDS.sleep(5);
-                return 1;
-            }
-            else {
-                System.out.println(ROUGE +"Erreur_bougerNavireIA !"+RESET +"\nErreur de choix de déplacement");
+        if (Jeu.flotteJoueur1.get(pListeBougerNavire).direction==1){
+            switch (selectionPossibilite) {
+                case 3:
+                    //Possibilité de descendre
+                    for (int i=Jeu.flotteJoueur1.get(pListeBougerNavire).taille - 1; i>=0;i--){
+                        Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] , Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1]+1, Plateau.numeroEtage(numeroJoueur, 0));
+                        Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] ++;
+                    }
+                    System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
+                case 2:
+                    //Possibilité de monter
+                    for (int i=0; i<Jeu.flotteJoueur1.get(pListeBougerNavire).taille;i++){
+                        Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1]- 1, Plateau.numeroEtage(numeroJoueur, 0));
+                        Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] --;
+                    }
+                    System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
+                case 1:
+                    //Possibilité d'aller à gauche
+                    for (int i=0; i<Jeu.flotteJoueur1.get(pListeBougerNavire).taille;i++){
+                        Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0]+1 , Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));
+                        Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] ++;
+                    }
+                    System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
+                case 0:
+                    //Possibilité d'aller à droite
+                    for (int i=0; i<Jeu.flotteJoueur1.get(pListeBougerNavire).taille;i++){
+                        Jeu.plateauDeJeu.deplacement(Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0]-1, Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));
+                        Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] --;
+                    }
+                    System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    TimeUnit.SECONDS.sleep(5);
+                    return 1;
+                default:
+                    System.out.println(ROUGE +"Erreur_bougerNavireIA !"+RESET +"\nErreur de choix de déplacement");
+                    break;
             }
         }
         return 3;   
@@ -400,6 +419,7 @@ public class IA {
                     System.out.println("Je ne peux plus couler vos sous-marin car vous avez détruit tous mes sous marin");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
                     return 1;
                 }
+                
                 choixCoordonneesTir = true;         //On autorise la sortie de la boucle, si on a trouvé un sous marin
             }
             
@@ -589,7 +609,7 @@ public class IA {
                     System.out.println("Je ne peux plus couler vos sous-marin car vous avez détruit tous mes sous marin");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
                     return 1;           //On retourne 1 pour que le programme confirme la victoire du joueur
                 }
-
+                nombreDeTir ++;         //On rajoute 1 au nombre de tir
                 System.out.println("J'ai touché un objet non identifié.");
                 System.out.println("Je retient...");TimeUnit.SECONDS.sleep(5);
 
@@ -664,9 +684,6 @@ public class IA {
         boolean bougerNavire3=false;
         if (((int) (Math.random()*6))>4) bougerNavire3=true;
 
-        
-        
-
 
         /*Vérification emplacement de sauvegarde***********************/
         boolean emplacementSave = false;        //Variable utilisé pour savoir s'il y a des coordonées de tir déjà enregistré
@@ -694,7 +711,9 @@ public class IA {
                     for (int j=0 ;j<242;j++){
                         xTireFusee = (int) (Math.random()* 12);
                         yTireFusee = (int) (Math.random()* 12);
-                        if (verifDejaExplore(xTireFusee, yTireFusee) ==false) break;
+                        if (verifDejaExplore(xTireFusee, yTireFusee) ==false){
+                            break;
+                        }
                     }
 
                     int pSaveCoord = 0;
@@ -706,7 +725,7 @@ public class IA {
                                 
                                 do{
                                     pSaveCoord=(int) (Math.random()*16);
-                                } while (saveCoord[pSaveCoord]=true);
+                                } while (saveCoord[pSaveCoord]==true);
                                 
                                 stockSaveCoord[pSaveCoord][0]=xTireFusee+k;
                                 stockSaveCoord[pSaveCoord][1]=yTireFusee+k;
@@ -841,7 +860,7 @@ public class IA {
                     System.out.println("Je ne peux plus couler vos sous-marin car vous avez détruit tous mes sous marin");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
                     return 1;           //On retourne 1 pour que le programme confirme la victoire du joueur
                 }
-
+                nombreDeTir ++;         //On rajoute 1 au nombre de tir
                 System.out.println("J'ai touché un objet non identifié.");
                 System.out.println("Je retient...");TimeUnit.SECONDS.sleep(5);
 

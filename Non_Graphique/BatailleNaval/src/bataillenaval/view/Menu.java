@@ -97,8 +97,7 @@ public class Menu {
         switch (choix){
             case 1:            //Si le choix est 1
                 System.out.println(""); 
-                System.out.println("Bienvenue dans le jeu de la "+ CYAN +"Bataille Navale"+ RESET);           //On affiche un message de bienvenue
-                System.out.println("Voici vos grilles au début de la partie");
+                System.out.println("Bienvenue dans le jeu de la "+ CYAN +"Bataille Navale"+ RESET+"\n");           //On affiche un message de bienvenue
                 jeu.lancementJeu();             //On appel la méthode qui permet de lancer une nouvelle partie
                 
                 break;
@@ -412,19 +411,24 @@ public class Menu {
                 scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
             }
         }
+        
+        System.out.println();
 
         switch(niveauIA){
             case 1:
-                System.out.println("Vous avez choisie le niveau Facile. Tu as peur ?");TimeUnit.SECONDS.sleep(2);
-                System.err.println("On peut commencer. Bonne chance !");TimeUnit.SECONDS.sleep(3);
+                System.out.println("Vous avez choisie le niveau Facile.");TimeUnit.SECONDS.sleep(2);
+                System.out.println("Tu as peur ?");TimeUnit.SECONDS.sleep(1);
+                System.out.println("On peut commencer. Bonne chance !");TimeUnit.SECONDS.sleep(3);
                 break;
             case 2:
-                System.out.println("Vous avez choisie le niveau Moyen. Ok ok");TimeUnit.SECONDS.sleep(2);
-                System.err.println("On peut commencer. Bonne chance !");TimeUnit.SECONDS.sleep(3);
+                System.out.println("Vous avez choisie le niveau Moyen.");TimeUnit.SECONDS.sleep(2);
+                System.out.println("Ok ok");TimeUnit.SECONDS.sleep(1);
+                System.out.println("On peut commencer. Bonne chance !");TimeUnit.SECONDS.sleep(3);
                 break;
             case 3:
-                System.out.println("Vous avez choisie le niveau Facile. Bienn! On est joueur");TimeUnit.SECONDS.sleep(2);
-                System.err.println("On peut commencer. Bonne chance !");TimeUnit.SECONDS.sleep(3);
+                System.out.println("Vous avez choisie le niveau Difficile.");TimeUnit.SECONDS.sleep(2);
+                System.out.println("Bienn! On est joueur");TimeUnit.SECONDS.sleep(1);
+                System.out.println("On peut commencer. Bonne chance !");TimeUnit.SECONDS.sleep(3);
                 break;
             default:
         }

@@ -138,7 +138,7 @@ public class Jeu {
                 System.out.println();
                 Affichage.afficher(numeroJoueur, 1, Jeu.plateauDeJeu);
                 
-                ia.jouer(niveauIA);            //On lance la méthode qui permet à l'IA de jouer
+                retourMenu = ia.jouer(niveauIA);            //On lance la méthode qui permet à l'IA de jouer
             }
             
             if (retourMenu==2) {            //Si le menu retourne 2 à la fin de la boucle
@@ -683,6 +683,8 @@ public class Jeu {
 
 
     public boolean victoire(){
+        
+        System.out.println();
         boolean etat0;
         boolean etat0SousMarin=false;
         for (int i=0; i<10; i++){
@@ -691,11 +693,11 @@ public class Jeu {
             if (i==9 && etat0!=true){
                 System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!\nT'ES NUL"+RESET);
                 return true;
-            }
-
-            if(i>6){
-                if (etat0SousMarin==false) etat0SousMarin=flotteJoueur0.get(i).etat;
-            }
+            } 
+        }
+        
+        for (int i=6; i<10;i++){
+            if (etat0SousMarin==false) etat0SousMarin=flotteJoueur0.get(i).etat;
         }
 
         if (etat0SousMarin==false){
@@ -714,9 +716,10 @@ public class Jeu {
                 System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!\n BIEN JOUE CA GASSON"+RESET);
                 return true;
             }
-            if(i>6){
-                if (etat1SousMarin==false) etat0SousMarin=flotteJoueur0.get(i).etat;
-            }
+        }
+        
+        for (int i=6; i<10;i++){
+            if (etat1SousMarin==false) etat1SousMarin=flotteJoueur0.get(i).etat;
         }
 
         if (etat1SousMarin==false){
