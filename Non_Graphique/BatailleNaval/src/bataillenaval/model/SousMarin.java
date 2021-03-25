@@ -6,8 +6,12 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
     
-public class SousMarin extends Flotte {
+public class SousMarin extends Flotte{
     
+    /**
+     *
+     */
+    private static final long serialVersionUID = 3045793040051941049L;
     private final Scanner scSousMarin = new Scanner(System.in);
 
 

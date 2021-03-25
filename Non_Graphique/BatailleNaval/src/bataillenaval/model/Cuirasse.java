@@ -9,6 +9,10 @@ import java.util.concurrent.TimeUnit;
 public class Cuirasse extends Flotte{
     
     
+    /**
+     *
+     */
+    private static final long serialVersionUID = 2755963685973214786L;
     private final Scanner scCuirasse = new Scanner(System.in);
 
 

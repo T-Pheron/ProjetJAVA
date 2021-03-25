@@ -8,8 +8,12 @@ import java.util.concurrent.TimeUnit;
 
 
 
-public class Destroyer extends Flotte {
+public class Destroyer extends Flotte{
     
+    /**
+     *
+     */
+    private static final long serialVersionUID = -2188496570477313059L;
     private final Scanner scDestroyer = new Scanner(System.in);
 
     public Destroyer(){

@@ -8,17 +8,28 @@ import bataillenaval.model.Destroyer;
 import bataillenaval.model.Cuirasse;
 import bataillenaval.model.Flotte;
 import bataillenaval.view.Affichage;
+import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
 
 
-public class Jeu {
+public class Jeu implements Serializable{
     
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     public static Plateau plateauDeJeu = new Plateau();             //Variable qui stocke l'ensemble du plateau de jeu 
     public static List <Flotte> flotteJoueur0 ;               //List qui stocke l'ensemble de la flotte du joueur 0
     public static List <Flotte> flotteJoueur1 ;               //List qui stocke l'ensemble de la flotte du joueur 1
+    public static String nomPartie;            //Variable utilisé pour stocker le nom de la partie
+    
+    public static int numeroJoueur;                 //Variable qui permet de connaître à quelle joueur c'est la tour
+    public static int niveauIA;           //Variable qui permet de 
+    public static boolean premierTour = true;        //Variable utilisé pour savoir si c'est le premier tir 
     
     //**************************************************************************
     /**
@@ -27,6 +38,15 @@ public class Jeu {
      */
     public Jeu(){
         
+    }
+    
+    public Jeu(String nomPartie, int numeroJoueur, int niveauIA, boolean premierTour, Plateau plateauDeJeu){
+        
+        Jeu.nomPartie= nomPartie;
+        Jeu.numeroJoueur = numeroJoueur;
+        Jeu.niveauIA= niveauIA;
+        Jeu.premierTour= premierTour;
+        Jeu.plateauDeJeu= plateauDeJeu;
     }
     
     
@@ -78,23 +98,34 @@ public class Jeu {
      * @throws InterruptedException 
      */
     public void lancementJeu() throws InterruptedException{
+        
         //Initialisation des flottes************************
         flotteJoueur0 = createFlotte();            //On créé une flotte pour le joueur 0
         flotteJoueur1 = createFlotte();            //On créé une flotte pour le joueur 1
-                    
-        placementFlotte(flotteJoueur0, 0);            //On place aléatoirement la flotte du joueur 0 sur sa grille de navire
-        placementFlotte(flotteJoueur1, 1);            //On place aléatoirement la flotte du joueur 1 sur sa grille de navire
+        
+        if (premierTour==true){          
+            placementFlotte(flotteJoueur0, 0);            //On place aléatoirement la flotte du joueur 0 sur sa grille de navire
+            placementFlotte(flotteJoueur1, 1);            //On place aléatoirement la flotte du joueur 1 sur sa grille de navire
+        }
         
         /*Initialisation des variables*****************************************/
         Menu menu = new Menu();             //On initialise une variable pour lancer les différents menus
         IA ia = new IA();           //On initialise une varaible pour lancer l'IA
         boolean tourSuivant = true;             //Variable qui permet de savoir si on passe au tour suivant
-        int numeroJoueur=0;                 //Variable qui permet de connaître à quelle joueur c'est la tour
-        int niveauIA=0;
+        
+        if (premierTour==true){
+            niveauIA=0;         //On met le niveau de l'IA par d'éfaut à 0
+            nomPartie="Coucou";
+            numeroJoueur=0;         //On met le joueur qui joue par défaut à 0
+        }
+        
+        System.out.println(plateauDeJeu.get(6,6,0,0));
 
-
-        /*Choix du niveau de l'IA**********************************************/
-        niveauIA = menu.choixNiveauIA();
+        if (premierTour==true){
+            /*Choix du niveau de l'IA******************************************/
+            niveauIA = menu.choixNiveauIA();
+            premierTour=false;
+        }
         
         /*Boucle de jeu********************************************************/
         while (tourSuivant==true){            //On vérifie qu'on doit passer au tour suivant
@@ -103,9 +134,9 @@ public class Jeu {
             
             if (numeroJoueur==0){            //Si le joueur est le joueur humain on affiche sa grille et son
                 System.out.println();
-                Affichage.afficher(numeroJoueur, 1, Jeu.plateauDeJeu);            //On affiche la grille des tirs du joueur
+                Affichage.afficher(numeroJoueur, 1, plateauDeJeu);            //On affiche la grille des tirs du joueur
                 System.out.println();
-                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);            //On affiche la grille des navires du joueur
+                Affichage.afficher(numeroJoueur, 0, plateauDeJeu);            //On affiche la grille des navires du joueur
             
                 retourMenu = menu.menuJoueur();            //On lance le menu joueur et stocke ce qu'il retourne
             
@@ -126,6 +157,8 @@ public class Jeu {
                     case 2:
                         if (numeroJoueur==0) retourMenu = bougerNavire (flotteJoueur0,numeroJoueur);            //On appel la méthode qui permet de bouger un navire
                         break;
+                        
+                    case 4: System.out.println("\nFermeture du jeu. \nA bientôt"); break;
                     default:
                         System.out.println(ROUGE + "Erreur!"+RESET+ "Problème d'appelle du menuJoueur");            //En cas d'erreur on affiche un message d'erreur
                         retourMenu=2;            //On relance le tour du joueur

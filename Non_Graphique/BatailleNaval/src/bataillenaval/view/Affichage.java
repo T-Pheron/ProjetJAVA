@@ -1,5 +1,6 @@
 package bataillenaval.view;
 
+import static bataillenaval.controller.Jeu.plateauDeJeu;
 import bataillenaval.model.Plateau;
 import static bataillenaval.model.Plateau.numeroEtage;
 
@@ -83,29 +84,29 @@ public class Affichage {
                     /*On utilise cette partie pour pouvoir afficher les tires que l'adversaire a effectué sur le plateau de jeu du joueur*/
                     
                     if (numeroJoueur==0){               //On vérifie le numéro du joueur pour pouvoir différencier l'étage dans la plateau de jeu
-                        if (plateauDeJeu.get(i, j, 3, 0)=="1" && plateauDeJeu.get(i, j, numeroEtage, 0)!=(Object) 'U'&&plateauDeJeu.get(i, j, numeroEtage, 0)!=(Object) 'C'&&plateauDeJeu.get(i, j, numeroEtage, 0)!=(Object) 'D'&&plateauDeJeu.get(i, j, numeroEtage, 0)!=(Object) 'S'){               //Si le joueur adversaire à tirer à cette emplacement mais n'a rien touché. On exclu aussi le faite que le joueur est bien pu déplacer son bateau sur cette case à un tour n+1
+                        if (plateauDeJeu.get(i, j, 3, 0).equals("1") && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('U')&& !plateauDeJeu.get(i, j, numeroEtage, 0).equals('C') && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('D') && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('S')){               //Si le joueur adversaire à tirer à cette emplacement mais n'a rien touché. On exclu aussi le faite que le joueur est bien pu déplacer son bateau sur cette case à un tour n+1
                             System.out.print(CYAN_AR + B_ROUGE + "XX" + RESET_AR + RESET +"|");               //On affiche l'information sur la grille de jeu avec des croix rouge brillant et un fond cyan
                             continue;               //On passe au tour suivant de la boucle sans effectuer le reste de la boucle
                         }
-                        if (plateauDeJeu.get(i, j, 3, 0)=="2"){               //Si le joueur adversaire à tirer à cette emplacement et a touché un navire 
+                        if (plateauDeJeu.get(i, j, 3, 0).equals("2")){               //Si le joueur adversaire à tirer à cette emplacement et a touché un navire 
                             System.out.print(ROUGE_AR + B_ROUGE + plateauDeJeu.get(i, j, numeroEtage, 0) +""+ plateauDeJeu.get(i, j, numeroEtage, 1)+RESET_AR +RESET+"|");               //On affiche les informations du navire en rouge foncé
                             continue;               //On passe au tour suivant de la boucle sans effectuer le reste de la boucle
                         }
-                        if (plateauDeJeu.get(i, j, 3, 0)=="5"){               //Si le joueur adversaire à tirer sur un sous marin mais ne la pas coulé parce-que le navire qu'il a tiré n'était pas un sous marin
+                        if (plateauDeJeu.get(i, j, 3, 0).equals("5")){               //Si le joueur adversaire à tirer sur un sous marin mais ne la pas coulé parce-que le navire qu'il a tiré n'était pas un sous marin
                             System.out.print(CYAN_AR + ROUGE + "S"+ plateauDeJeu.get(i, j, numeroEtage, 1)+RESET_AR +RESET+"|");               //On affiche le sous marin avec la couleur cyan et rouge
                             continue;               //On passe au tour suivant de la boucle sans effectuer le reste de la boucle
                         }
                     }
                     else {               //Si c'est l'autre joueur (IA)
-                        if (plateauDeJeu.get(i, j, 1, 0)=="1" && plateauDeJeu.get(i, j, numeroEtage, 0)!=(Object) 'U'&&plateauDeJeu.get(i, j, numeroEtage, 0)!=(Object) 'C'&&plateauDeJeu.get(i, j, numeroEtage, 0)!=(Object) 'D'&&plateauDeJeu.get(i, j, numeroEtage, 0)!=(Object) 'S'){               //Si le joueur adversaire à tirer à cette emplacement mais n'a rien touché. On exclu aussi le faite que le joueur est bien pu déplacer son bateau sur cette case à un tour n+1
+                        if (plateauDeJeu.get(i, j, 1, 0).equals("1") && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('U')&& !plateauDeJeu.get(i, j, numeroEtage, 0).equals('C') && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('D') && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('S')){               //Si le joueur adversaire à tirer à cette emplacement mais n'a rien touché. On exclu aussi le faite que le joueur est bien pu déplacer son bateau sur cette case à un tour n+1
                             System.out.print(CYAN_AR + B_ROUGE + "XX" + RESET_AR + RESET +"|");               //On affiche l'information sur la grille de jeu avec des croix rouge brillant et un fond cyan
                             continue;               //On passe au tour suivant de la boucle sans effectuer le reste de la boucle
                         }
-                        if (plateauDeJeu.get(i, j, 1, 0)=="2"){               //Si le joueur adversaire à tirer à cette emplacement et a touché un navire 
+                        if (plateauDeJeu.get(i, j, 1, 0).equals("2")){               //Si le joueur adversaire à tirer à cette emplacement et a touché un navire 
                             System.out.print(ROUGE_AR + B_ROUGE + plateauDeJeu.get(i, j, numeroEtage, 0) +""+ plateauDeJeu.get(i, j, numeroEtage, 1)+RESET_AR +RESET+"|");               //On affiche les informations du navire en rouge foncé
                             continue;               //On passe au tour suivant de la boucle sans effectuer le reste de la boucle
                         }
-                        if (plateauDeJeu.get(i, j, 1, 0)=="5"){               //Si le joueur adversaire à tirer sur un sous marin mais ne la pas coulé parce-que le navire qu'il a tiré n'était pas un sous marin
+                        if (plateauDeJeu.get(i, j, 1, 0).equals("5")){               //Si le joueur adversaire à tirer sur un sous marin mais ne la pas coulé parce-que le navire qu'il a tiré n'était pas un sous marin
                             System.out.print(CYAN_AR + ROUGE + "S"+ plateauDeJeu.get(i, j, numeroEtage, 1)+RESET_AR +RESET+"|");               //On affiche le sous marin avec la couleur cyan et rouge
                             continue;               //On passe au tour suivant de la boucle sans effectuer le reste de la boucle
                         }
@@ -114,19 +115,19 @@ public class Affichage {
                     //**************************
                     /*Sinon on affiche les autres emplacements du plateau de jeu normalement*/
                     
-                    if (plateauDeJeu.get(i, j, numeroEtage, 0)=="_"){               //Si l'emplacement est vide
+                    if (plateauDeJeu.get(i, j, numeroEtage, 0).equals("_")){               //Si l'emplacement est vide
                         System.out.print("__|");               //On affiche le emplacement vide
                     }
-                    if (plateauDeJeu.get(i, j, numeroEtage, 0)==(Object) 'U'){               //Si l'emplacement contient un cuirasse
+                    if (plateauDeJeu.get(i, j, numeroEtage, 0).equals('U')){               //Si l'emplacement contient un cuirasse
                         System.out.print(B_ROUGE_AR + BLANC + plateauDeJeu.get(i, j, numeroEtage, 0) +""+ plateauDeJeu.get(i, j, numeroEtage, 1)+RESET_AR +RESET+"|");               //On affiche la letrre et la numero du navire avec la couleur rouge en fond
                     }
-                    if (plateauDeJeu.get(i, j, numeroEtage, 0)==(Object) 'C'){               //Si l'emplacement contient un croisseur
+                    if (plateauDeJeu.get(i, j, numeroEtage, 0).equals('C')){               //Si l'emplacement contient un croisseur
                         System.out.print(VOILET_AR + BLANC + plateauDeJeu.get(i, j, numeroEtage, 0) +""+ plateauDeJeu.get(i, j, numeroEtage, 1)+RESET_AR +RESET+"|");               //On affiche la letrre et la numero du navire avec la couleur violet en fond
                     }
-                    if (plateauDeJeu.get(i, j, numeroEtage, 0)==(Object) 'D'){               //Si l'emplacement contient un destroyer
+                    if (plateauDeJeu.get(i, j, numeroEtage, 0).equals('D')){               //Si l'emplacement contient un destroyer
                         System.out.print(BLEU_AR + BLANC + plateauDeJeu.get(i, j, numeroEtage, 0) +""+ plateauDeJeu.get(i, j, numeroEtage, 1)+RESET_AR +RESET+"|");               //On affiche la letrre et la numero du navire avec la couleur bleu en fond
                     }
-                    if (plateauDeJeu.get(i, j, numeroEtage, 0)==(Object) 'S'){               //Si l'emplacement contient un sous_marin
+                    if (plateauDeJeu.get(i, j, numeroEtage, 0).equals('S')){               //Si l'emplacement contient un sous_marin
                         System.out.print(VERT_AR + BLANC + plateauDeJeu.get(i, j, numeroEtage, 0) +""+ plateauDeJeu.get(i, j, numeroEtage, 1)+RESET_AR +RESET+"|");               //On affiche la letrre et la numero du navire avec la couleur vert en fond
                     }
                 } 
@@ -145,22 +146,22 @@ public class Affichage {
             
                 for (int i=0; i<15; i++){               //On fait une boucle pour parcourir toute les colonnes de la grille
                
-                    if (plateauDeJeu.get(i, j, numeroEtage, 0)=="0"){               //Si le joueur a jamais tiré sur cette emplacement 
+                    if (plateauDeJeu.get(i, j, numeroEtage, 0).equals("0")){               //Si le joueur a jamais tiré sur cette emplacement 
                         System.out.print("__|");               //On affiche une case vide
                     }
-                    if (plateauDeJeu.get(i, j, numeroEtage, 0)=="1"){               //Si le joueur a déjà tiré sur cette case mais n'a rien touché
+                    if (plateauDeJeu.get(i, j, numeroEtage, 0).equals("1")){               //Si le joueur a déjà tiré sur cette case mais n'a rien touché
                         System.out.print(CYAN_AR +BLANC+ "XX" + RESET +RESET_AR+ "|");               //On affiche des croix avec blanche sur un fond cyan
                     }
-                    if (plateauDeJeu.get(i, j, numeroEtage, 0)=="2"){               //Si le joueur a déjà tiré sur cette case et a touché un navire
+                    if (plateauDeJeu.get(i, j, numeroEtage, 0).equals("2")){               //Si le joueur a déjà tiré sur cette case et a touché un navire
                         System.out.print(ROUGE_AR+BLANC + "XX" + RESET+ RESET_AR +"|");               //On affiche des croix blanche sur un fonc rouge
                     }
-                    if (plateauDeJeu.get(i, j, numeroEtage, 0)=="3"){               //Si le joueur a tiré avec sa fusée éclairante mais n'a rien repéré
+                    if (plateauDeJeu.get(i, j, numeroEtage, 0).equals("3")){               //Si le joueur a tiré avec sa fusée éclairante mais n'a rien repéré
                         System.out.print(JAUNE_AR + "__" + RESET_AR +"|");               //On affiche une case jaune sans rien dedans
                     }
-                    if (plateauDeJeu.get(i, j, numeroEtage, 0)=="4"){               //Si le joueur a tiré avec sa fusée éclairante et a repéré un navire
+                    if (plateauDeJeu.get(i, j, numeroEtage, 0).equals("4")){               //Si le joueur a tiré avec sa fusée éclairante et a repéré un navire
                         System.out.print(JAUNE_AR + "--" + RESET_AR +"|");               //On affiche une case jaune avec des tirets dedans
                     }
-                    if (plateauDeJeu.get(i, j, numeroEtage, 0)=="5"){               //Si le joueur a toucher un sous-marin mais n'a pas tiré avec un sous marin
+                    if (plateauDeJeu.get(i, j, numeroEtage, 0).equals("5")){               //Si le joueur a toucher un sous-marin mais n'a pas tiré avec un sous marin
                         System.out.print(GRIS_AR + "--" + RESET_AR +"|");               //On affiche une case verte avec des tirets dedans
                     }
                 } 

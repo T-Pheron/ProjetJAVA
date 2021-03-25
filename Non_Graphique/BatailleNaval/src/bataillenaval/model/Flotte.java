@@ -1,9 +1,17 @@
 package bataillenaval.model;
 
+import java.io.Serializable;
 
 
-public abstract class Flotte {
+
+public abstract class Flotte implements Serializable{
     
+    
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 7786772327657687295L;
     public boolean etat = false;        //Variable qui permet de connître si le navire est coulé. True si le navire n'est pas coulé, false sinon
     public String nom;              //Variable qui permet de stocker le nom du navire
     public int [][] coordonnees;        //Variable qui stock les coordonnées du navire

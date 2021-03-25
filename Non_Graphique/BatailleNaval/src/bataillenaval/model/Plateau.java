@@ -1,9 +1,15 @@
 package bataillenaval.model;
 
+import java.io.Serializable;
 
 
-public class Plateau {
+
+public class Plateau implements Serializable{
     
+    /**
+     *
+     */
+    private static final long serialVersionUID = 974977841461260968L;
     public Object [][][][] plateauDeJeu = new Object[15][15][4][2];             //Variable pour le stockage les différentes informations du plateau de jeu
     
     

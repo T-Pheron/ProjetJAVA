@@ -5,10 +5,14 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class Croiseur extends Flotte{
+public class Croiseur extends Flotte {
 
 
     
+    /**
+     *
+     */
+    private static final long serialVersionUID = 6887469948251489653L;
     private final Scanner scCroiseur = new Scanner(System.in);
 
 
