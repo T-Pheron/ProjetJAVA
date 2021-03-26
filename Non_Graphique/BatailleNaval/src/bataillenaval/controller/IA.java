@@ -17,10 +17,10 @@ public class IA implements Serializable{
      *
      */
     private static final long serialVersionUID = -8187468013304872508L;
-    private int nombreDeTir = 0;
-    private boolean premierTire = true;
-    private  boolean[] saveCoord = new boolean [20];
-    private int [][] stockSaveCoord = new int[20][3];
+    private int nombreDeTir = 0;            //Variable utilisée pour stocker le nombre de tir
+    private boolean premierTire = true;         //Variable utilisée pour stocker 
+    private  boolean[] saveCoord = new boolean [20];            //Variable utilisée pour stocker
+    private int [][] stockSaveCoord = new int[20][3];           //Variable utilisée pour stocker
 
     private int xTire=0;           //Variable utilisée pour stocker la valeur de l'axe x lors du tir
     private int yTire=0;           //Variable utilisée pour stocker la valeur de l'axe y lors du tir
@@ -758,15 +758,15 @@ public class IA implements Serializable{
                                 
                                 do{
                                     pSaveCoord=(int) (Math.random()*16);            //On prend aléatoirement un nombre entre 0 et 15
-                                } while (saveCoord[pSaveCoord]==true);          //Tant que 
+                                } while (saveCoord[pSaveCoord]==true);          //Tant qu'il a pas trouvé un emplacement de stockage
                                 
-                                saveCoord[pSaveCoord]=true;
-                                stockSaveCoord[pSaveCoord][0]=xTireFusee+k;
+                                saveCoord[pSaveCoord]=true;         //On met cet emplacement contient une sauvegarde
+                                stockSaveCoord[pSaveCoord][0]=xTireFusee+k;         //On stock les nouvelles coordonnées a cet emplacement
                                 stockSaveCoord[pSaveCoord][1]=yTireFusee+l;
                                 for (int m=0; m<10;m++){
-                                    if (Jeu.flotteJoueur1.get(m).etat==true) {
+                                    if (Jeu.flotteJoueur1.get(m).etat==true) {          //Si le navire n'a pas coulé
                                         stockSaveCoord[pSaveCoord][2]=m;            //On prend les références du bateau le plus puissant non coulé
-                                        m=10;
+                                        m=10;           //On sort de la boucle
                                     }
                                 }
                                 
@@ -775,11 +775,11 @@ public class IA implements Serializable{
                         }
                     }
 
-                    System.out.println("C'est intérésant ce que mes avions mon rapporté du terrain");
+                    System.out.println("C'est intérésant ce que mes avions mon rapporté du terrain");           //On affiche un message disant que l'IA a bien effectué le tir de la fusée éclairante
                     System.out.println("Je prends note");TimeUnit.SECONDS.sleep(5);
-                    Jeu.flotteJoueur1.get(i).premierTire=false;
-                    nombreDeTirDestroyer++;
-                    return 1;
+                    Jeu.flotteJoueur1.get(i).premierTire=false;         //le premier tir du destroyer choisi est mis à false
+                    nombreDeTirDestroyer++;         //On rajoute 1 au nombre de tir du destroyer
+                    return 1;           //On retourne 1 si tout c'est bien passé
                 }
             }
         }
@@ -797,19 +797,19 @@ public class IA implements Serializable{
                 for (int i=0; i<20;i++){
                     if (saveCoord[i]==true){            //Si il y a des coordonées de tir sauvegar dans la mémoir 1
 
-                        if (Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).etat !=true && Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).lRef!= 'S') {            //On vérifie que le bateau sélecctionner pour le tir est toujours à flot et quelle est différente d'un sous-marin 
+                        if (Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).etat !=true && Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).lRef!= 'S') {            //On vérifie que le navire sélecctionner pour le tir est toujours à flot et quelle est différente d'un sous-marin 
                             for (int j=0; j<10;j++){            //Si le navire est coulé on sélectionner un nouveau navire qui n'est pas coulé
                                 if (Jeu.flotteJoueur1.get(j).etat==true) {
-                                    stockSaveCoord[i][2]=j;            //On prend les coordonnées du bateau le plus puissant non coulé
-                                    j =10;
+                                    stockSaveCoord[i][2]=j;            //On prend les coordonnées du navire le plus puissant non coulé
+                                    j =10;          //On sort de la boucle
                                 }
                             }
                         }
-                        else if (Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).etat!=true && Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).lRef== 'S'){
+                        else if (Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).etat!=true && Jeu.flotteJoueur1.get(stockSaveCoord[i][2]).lRef== 'S'){         //Si le navire sélectionné est coulé et que c'est un sous-marin
                             for (int k=6; k<10;k++){
-                                if (Jeu.flotteJoueur1.get(k).navireVivant()==true) {
+                                if (Jeu.flotteJoueur1.get(k).navireVivant()==true) {            //Si le navire n'a pas coulé
                                     stockSaveCoord[0][2]=k;          //On sélectionne un sous-marin
-                                    k =10;
+                                    k =10;          //On sort de la boucle
                                 }
                             }      //Si le navire sélectionné pour le tir été un sous-marin on prend le suivant si c'est possible
                         }
@@ -821,13 +821,12 @@ public class IA implements Serializable{
                         saveCoord[i]=false;
                         
 
-                        if (!Jeu.plateauDeJeu.get(xTire, yTire, 3, 0).equals("1") && !Jeu.plateauDeJeu.get(xTire, yTire, 3, 0).equals("2") && !Jeu.plateauDeJeu.get(xTire, yTire, 3, 0).equals("3")){
-                            emplacementSave=true;
-                            i=20;
-                            System.out.println("On est la");
+                        if (!Jeu.plateauDeJeu.get(xTire, yTire, 3, 0).equals("1") && !Jeu.plateauDeJeu.get(xTire, yTire, 3, 0).equals("2") && !Jeu.plateauDeJeu.get(xTire, yTire, 3, 0).equals("3")){           //Si l'emplacement n'a pas été 
+                            emplacementSave=true;           //On met l'emplacement de sauvegarde sur true pour qu'il effectue le tir avec ces coordonées
+                            i=20;           //On sort de la boucle
                         }
-                        else{
-                            emplacementSave=false;
+                        else{           //Sinon
+                            emplacementSave=false;          //On met l'emplacement de sauvegarde sur false pour qu'il calcul des coordonées alléatoire s'il ne reste plus d'emplacement de sauvegarde
                         }
                     }
                 }
@@ -841,9 +840,9 @@ public class IA implements Serializable{
                     yTire = (int) (Math.random() * 15);          //On stock un nombre aléatoire compris entre 0 et 14 dans y
 
                     for (int i=0; i<10;i++){
-                        if (Jeu.flotteJoueur1.get(i).etat==true) {
+                        if (Jeu.flotteJoueur1.get(i).etat==true) {          //Si le navire de l'IA est encore à flot 
                             pListe=i;            //On prend les coordonnées du bateau le plus puissant non coulé
-                            i=10;
+                            i=10;           //On sort de la boucle
                         }
                     }
                     
@@ -906,7 +905,7 @@ public class IA implements Serializable{
                 for (int i=6; i<10;i++){
                     if (Jeu.flotteJoueur1.get(i).navireVivant()==true) {
                         stockSaveCoord[0][2]=6;          //On sélectionne un sous-marin
-                        i=10;
+                        i=10;           //On sort de la boucle
                     }
                 }
                 if (stockSaveCoord[0][2]==0){           //Si l'IA n'a plus de sous-marin le joueur adverse à gagner
@@ -936,7 +935,7 @@ public class IA implements Serializable{
                         for (int i=0; i<10;i++){
                             if (Jeu.flotteJoueur1.get(i).etat==true) {
                                 stockSaveCoord[16][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
-                                i=10;
+                                i=10;           //On sort de la boucle
                             }
                         }
                     }
@@ -949,7 +948,7 @@ public class IA implements Serializable{
                         for (int i=0; i<10;i++){
                             if (Jeu.flotteJoueur1.get(i).etat==true) {
                                 stockSaveCoord[17][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
-                                i=10;
+                                i=10;           //On sort de la boucle
                             }
                         }
                     }
@@ -962,7 +961,7 @@ public class IA implements Serializable{
                         for (int i=0; i<10;i++){
                             if (Jeu.flotteJoueur1.get(i).etat==true) {
                                 stockSaveCoord[18][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
-                                i=10;
+                                i=10;           //On sort de la boucle
                             }
                         }
                     }
@@ -976,7 +975,7 @@ public class IA implements Serializable{
                         for (int i=0; i<10;i++){
                             if (Jeu.flotteJoueur1.get(i).etat==true) {
                                 stockSaveCoord[19][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
-                                i=10;
+                                i=10;           //On sort de la boucle
                             }
                         }
                     }
@@ -996,7 +995,7 @@ public class IA implements Serializable{
 
     public boolean verifDejaExplore (int xTireFusee, int yTireFusee){
         
-        for (int i=0; i<4 ; i++){
+        for (int i=0; i<4 ; i++){           //On parcourt le carré de coté 4 cases
             for (int j=0; j<4; j++){
                 if (!Jeu.plateauDeJeu.get(xTireFusee+i,yTireFusee+j,3,0).equals("0")) {
                     return true;       //Inqique que ces  cases on déjà été exploré
