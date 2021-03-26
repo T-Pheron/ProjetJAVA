@@ -159,7 +159,7 @@ public class Croiseur extends Flotte {
             return impact(xTire, yTire,0);          //On retourne la valeur d'impact
         }
         else{
-            System.out.println("Bon c'est un échec, tkt c'est rien c'est la rue");TimeUnit.SECONDS.sleep(4);           //On affiche un message comme quoi il n'a rien touché
+            System.out.println("Nous n'avons rien touché");TimeUnit.SECONDS.sleep(4);           //On affiche un message comme quoi il n'a rien touché
             Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici
             return 1;           //On a la justification que tout c'est bien passe
         }  
