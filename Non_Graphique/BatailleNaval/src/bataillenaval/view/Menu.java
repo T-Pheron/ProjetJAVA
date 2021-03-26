@@ -152,7 +152,7 @@ public class Menu {
         }
         switch (choix){
             case 1: return 1;                //Si le choix est 1 alors on retourne 1 (Cela signifie que le joueur souhaite effectuer un tir)
-            case 2: return 5;               //Si le choix est 2 alors on retounr 2 (Cela signifie que le joueur souhaite déplacer son navire)
+            case 2: return 5;               //Si le choix est 2 alors on retourne 2 (Cela signifie que le joueur souhaite déplacer son navire)
             case 3: 
                 int choix2=0;
                 System.out.println("Voulez vous sauvegarder la partie ?");
@@ -570,7 +570,7 @@ public class Menu {
         System.out.println(GRIS_AR +NOIR+ "               MENU TIRE              "+RESET+ RESET_AR);           //On afficher le titre du menu
         char lRef ='A';
         int nPlateau =0;
-        int maxNavire=0;           //Variable qui permet de stocker le maximun de bateau d'une catégorie de navire que contient la flotte
+        int maxNavire=0;           //Variable qui permet de stocker le maximun de navire d'une catégorie de navire que contient la flotte
 
         System.out.println("Veuillez entrer la lettre du navire avec lequel vous voulez tirer :");           //On demande à l'utilisateur de saisir la lettre du navire
         try{
@@ -597,9 +597,9 @@ public class Menu {
             lRef=Jeu.convertirMinuscules(lRef);           //On convertir sa saisie en majuscule
         }
 
-        if (lRef=='U') nPlateau=1;           //Si le choix du bateaue est cuirasse, le choix du numéro du bateau n'est pas nécésaire
+        if (lRef=='U') nPlateau=1;           //Si le choix du navire est cuirasse, le choix du numéro du navire n'est pas nécésaire
         else {
-            System.out.println("Veuillez entrer le numero du navire avec lequel vous voulez tirer :");           //Sinon, on demande à l'utilisateur de rentrer le numéro affiché sur le plateau du bateau qu'il souhaite utiliser pour tirer
+            System.out.println("Veuillez entrer le numero du navire avec lequel vous voulez tirer :");           //Sinon, on demande à l'utilisateur de rentrer le numéro affiché sur le plateau du navire qu'il souhaite utiliser pour tirer
             try{
                 nPlateau = scMenu.nextInt();          //On stock la saisie de l'utilisateur
             }
@@ -639,7 +639,7 @@ public class Menu {
         System.out.println("Veuillez choisir le niveau de l'ordinateur que vous souhaitez :"
                         +"\n1.Facile"
                         +"\n2.Moyen"
-                        +"\n3.Difficile");           //Sinon, on demande à l'utilisateur de rentrer le numéro affiché sur le plateau du bateau qu'il souhaite utiliser pour tirer
+                        +"\n3.Difficile");           //Sinon, on demande à l'utilisateur de rentrer le numéro affiché sur le plateau du navire qu'il souhaite utiliser pour tirer
         
         System.out.println("Saisisez votre choix :");
         
@@ -668,7 +668,7 @@ public class Menu {
 
         switch(niveauIA){
             case 1:
-                System.out.println("Vous avez choisie le niveau Facile.");TimeUnit.SECONDS.sleep(2);
+                System.out.println("Vous avez choisie le niveau Facile.");TimeUnit.SECONDS.sleep(2);            //On affiche un message annonçant le niveau choisi
                 System.out.println("Tu as peur ?");TimeUnit.SECONDS.sleep(1);
                 System.out.println("On peut commencer. Bonne chance !");TimeUnit.SECONDS.sleep(3);
                 break;
@@ -685,7 +685,7 @@ public class Menu {
             default:
         }
         
-        return niveauIA;
+        return niveauIA;            //On retourne le niveau de l'IA
 
     }
 }

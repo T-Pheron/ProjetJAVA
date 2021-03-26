@@ -1,13 +1,7 @@
 package bataillenaval.controller;
 
-import bataillenaval.view.Menu;
-import bataillenaval.model.Plateau;
-import bataillenaval.model.SousMarin;
-import bataillenaval.model.Croiseur;
-import bataillenaval.model.Destroyer;
-import bataillenaval.model.Cuirasse;
-import bataillenaval.model.Flotte;
-import bataillenaval.view.Affichage;
+import bataillenaval.view.*;
+import bataillenaval.model.*;
 import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -17,11 +11,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Jeu implements Serializable{
     
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
-
+    //**************************************************************************
+    private static final long serialVersionUID = 1L;            //Runtime définie par l'éditeur
+    
     public static Plateau plateauDeJeu = new Plateau();             //Variable qui stocke l'ensemble du plateau de jeu 
     public static List <Flotte> flotteJoueur0 ;               //List qui stocke l'ensemble de la flotte du joueur 0
     public static List <Flotte> flotteJoueur1 ;               //List qui stocke l'ensemble de la flotte du joueur 1
@@ -29,7 +21,9 @@ public class Jeu implements Serializable{
     public static int numeroJoueur;                 //Variable qui permet de connaître à quelle joueur c'est la tour
     public static int niveauIA;           //Variable qui permet de stoker le niveau de l'IA
     public static IA ia = new IA();           //On initialise une variable qui permet de faire fonctionner l'IA
-    public static boolean premierTour = true;        //Variable utilisé pour savoir si c'est le premier tir 
+    public static boolean premierTour = true;        //Variable utilisé pour savoir si c'est le premier tir
+    public static int compteurTourIA;               //Variable qui compte le nombre de tour de l'IA
+    public static int compteurTourHumain;           //variable qui compte le nombre de tour du joueur humain
     
     //**************************************************************************
     /**
@@ -40,19 +34,15 @@ public class Jeu implements Serializable{
         
     }
     
-    public Jeu(int numeroJoueur, int niveauIA,IA ia, boolean premierTour, Plateau plateauDeJeu, List <Flotte> flotteJoueur0, List <Flotte> flotteJoueur1){
+    public Jeu(int numeroJoueur, int niveauIA,IA ia, boolean premierTour, Plateau plateauDeJeu, List <Flotte> flotteJoueur0, List <Flotte> flotteJoueur1, int compteurTourIA, int compteurTourHumain){
         
         Jeu.numeroJoueur = numeroJoueur;
         Jeu.niveauIA= niveauIA;
         Jeu.ia = ia;
         Jeu.premierTour= premierTour;
+        Jeu.compteurTourHumain =compteurTourHumain;
+        Jeu.compteurTourIA = compteurTourIA;
         Jeu.plateauDeJeu= plateauDeJeu;
-        for (int i=0; i<10; i++){
-        for (int j=0; j<flotteJoueur0.get(i).taille; j++){
-                    System.out.print(flotteJoueur0.get(i).coordonnees[j][0]+"_");
-                    System.out.print(flotteJoueur0.get(i).coordonnees[j][1]+"_");
-                    System.out.println(flotteJoueur0.get(i).coordonnees[j][2]);
-         }}
         Jeu.flotteJoueur0 = flotteJoueur0;
         Jeu.flotteJoueur1 = flotteJoueur1;
     }
@@ -138,26 +128,34 @@ public class Jeu implements Serializable{
                 System.out.println();
                 Affichage.afficher(numeroJoueur, 1, plateauDeJeu);            //On affiche la grille des tirs du joueur
                 System.out.println();
-                Affichage.afficher(numeroJoueur, 0, plateauDeJeu);            //On affiche la grille des navires du joueur
+                Affichage.afficher(numeroJoueur, 0, plateauDeJeu);            //On affiche la grille des navire du joueur
             
                 retourMenu = menu.menuJoueur();            //On lance le menu joueur et stocke ce qu'il retourne
             
                 switch (retourMenu) {
-                    case 1:            //Si le retour du menu est 1
+                    case 1:            //Si le joueur souhaite tirer
                         Object[] referencesNavire = new Object [2];         //On créé un tableau pour stocker les références du navire
-                        if (numeroJoueur==0) referencesNavire = menu.menuTirer ();            //On lance le menu pour tirer et on récupère les informations du navire sélectionné
-                        if (retourMenu==1) {
-                            int pListe=Flotte.nPlateauToPListe((char) referencesNavire[0], (int) referencesNavire[1]);           //On trouve la position du navire dans la liste à l'aide de son numéro plateau et sa lettre de reférence
-                            if (flotteJoueur0.get(pListe).etat==true) retourMenu= flotteJoueur0.get(pListe).tir();          //On vérifie que le bateau n'est pas coulé 
-                            else {
-                                System.out.println(ROUGE + "Erreur!"+RESET +"\nCe navire à déjà été coulé et ne peut plus effectuer de tire");TimeUnit.SECONDS.sleep(3);           //Sinon, on affiche un message d'erreur
-                                retourMenu = 2;           //On relance le tour du joueur
-                            }
+                        compteurTourHumain++;       //On rajouter 1 au nombre de tour du joueur
+                        
+                        referencesNavire = menu.menuTirer ();            //On lance le menu pour tirer et on récupère les informations du navire sélectionné
+                        
+                        int pListe=Flotte.nPlateauToPListe((char) referencesNavire[0], (int) referencesNavire[1]);           //On trouve la position du navire dans la liste à l'aide de son numéro plateau et sa lettre de reférence
+                        if (flotteJoueur0.get(pListe).etat==true) retourMenu= flotteJoueur0.get(pListe).tir();          //On vérifie que le navire n'est pas coulé 
+                        else {
+                            System.out.println(ROUGE + "Erreur!"+RESET +"\nCe navire à déjà été coulé et ne peut plus effectuer de tire");TimeUnit.SECONDS.sleep(3);           //Sinon, on affiche un message d'erreur
+                            retourMenu = 2;           //On relance le tour du joueur
                         }
                         
+                        if (retourMenu==2 || retourMenu==3) compteurTourHumain--;           //Si on recommence le tour du joueur on retire 1 au tour du joueur
+                        
                         break;
-                    case 5:
+                    case 5:         //Si le joueur souhaite déplacer son navire
+                        compteurTourHumain++;
+
                         if (numeroJoueur==0) retourMenu = bougerNavire (flotteJoueur0,numeroJoueur);            //On appel la méthode qui permet de bouger un navire
+                        
+                        if (retourMenu==2 || retourMenu==3) compteurTourHumain--;//Si on recommence le tour du joueur on retire 1 au tour du joueur
+
                         break;
                     case 2: retourMenu=2;           //On recommence le tour du joueur
                     case 4: System.out.println("\nFermeture du jeu. \nA bientôt"); break;
@@ -169,11 +167,15 @@ public class Jeu implements Serializable{
             }
             
             if(numeroJoueur==1){
-                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);         //TEST
+                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);         //Pour les test on affiche les plateaux de l'IA
                 System.out.println();
                 Affichage.afficher(numeroJoueur, 1, Jeu.plateauDeJeu);
                 
+                compteurTourIA++;           //On rajoute 1 au compteur de tour de l'IA
+
                 retourMenu = ia.jouer(niveauIA);            //On lance la méthode qui permet à l'IA de jouer
+
+                if (retourMenu==2) compteurTourIA--;            //Si l'IA recommence son tour on retire 1 au compteur
             }
             
             if (retourMenu==2) {            //Si le menu retourne 2 à la fin de la boucle
@@ -285,7 +287,12 @@ public class Jeu implements Serializable{
     
     
     //**************************************************************************
-    
+    /**
+     * Méhode qui permet à l'utilisateur de bouger un de ses navires.
+     * Elle permet de vérifier si toutes les conditions sont réunis pour bouger un navire et le déplace.
+     * @param flotte La flotte du joueur
+     * @param numeroJoueur Le numéro de joueur qui souhaite déplacer le navire
+     */
     public int bougerNavire(List<Flotte> flotte,int numeroJoueur) throws InterruptedException{
         
         int nPlateau = 0;           //Variable qui stocke le numéro plateau du navire
@@ -320,7 +327,7 @@ public class Jeu implements Serializable{
                 lRef=convertirMinuscules(lRef);            //On convertie la saisie en majuscule
             }
             
-            if (lRef=='U') nPlateau=1;          //Si le bateau choisie est un cuirassé, il n'est pas nécésaire de demander le numéro plateau car il existe qu'un seule
+            if (lRef=='U') nPlateau=1;          //Si le navire choisie est un cuirassé, il n'est pas nécésaire de demander le numéro plateau car il existe qu'un seule
             
             else{           //Si c'est pas la cas
                 System.out.println("Veuillez entrer le numero du navire que vous voulez bouger :");         //On demande le numéro plateau du navire
@@ -352,9 +359,9 @@ public class Jeu implements Serializable{
             
             pListe = Flotte.nPlateauToPListe(lRef, nPlateau);           //On déduir la position du navire dans de la liste avec la lettre de référance et le numéro plateau
             
-            if (flotte.get(pListe).etat==false){            //On vérifie que le bateau que l'utilisateur souhaite bouger n'est pas déjà coulé
+            if (flotte.get(pListe).etat==false){            //On vérifie que le navire que l'utilisateur souhaite bouger n'est pas déjà coulé
                 System.out.println(B_JAUNE + "Echec!" + RESET + "\nCe navire a déjà été coulé!");          //Sinon on affiche un message d'échec de l'opération
-                System.out.println("Voulez vous tentez de déplacer un autre navire ?");         //On demande ce que l'utilisateur se qu'il souhaite faire
+                System.out.println("Voulez vous tenter de déplacer un autre navire ?");         //On demande ce que l'utilisateur se qu'il souhaite faire
                 System.out.println("1.OUI   2.NON");
                 choix = 0;
                 try{
@@ -374,11 +381,11 @@ public class Jeu implements Serializable{
             }
             else sortieChoixNavire=true;        //Si le navire n'est pas coulé on continue et on autorise la sortie de la boucle de choix
             
-            for (int i=0; i<flotte.get(pListe).taille; i++){                //On fait une boucle pour vérifier toutes les coordonnées du bateau
-                if (flotte.get(pListe).coordonnees[i][2]==0 && sortieChoixNavire==true){               //On vérifie pour chaque coordonnées qu'elles ont pas déjà été touchées et que pour l'instant on a les autorisations de quitter la boucle de choix du bateau  
+            for (int i=0; i<flotte.get(pListe).taille; i++){                //On fait une boucle pour vérifier toutes les coordonnées du navire
+                if (flotte.get(pListe).coordonnees[i][2]==0 && sortieChoixNavire==true){               //On vérifie pour chaque coordonnées qu'elles ont pas déjà été touchées et que pour l'instant on a les autorisations de quitter la boucle de choix du navire  
 
                     System.out.println(B_JAUNE + "Echec!"+RESET+ " Ce navire a déjà été touché!");         //Si ce n'est pas le cas, on affiche un message d'échec de l'opération
-                    System.out.println("Voulez vous tentez de déplacer un autre navire ?");         //On demande à l'utilisateur ce qu'il souhaite faire
+                    System.out.println("Voulez vous tenter de déplacer un autre navire ?");         //On demande à l'utilisateur ce qu'il souhaite faire
                     System.out.println("1.OUI   2.NON");
                     try{
                         choix = scJeu.nextInt();          //On stock la saisie de l'utilisateur
@@ -583,7 +590,7 @@ public class Jeu implements Serializable{
         
         else if (verifEntier==false && saisieChar == (char) (flotte.get(pListe).coordonnees[0][0] + 65)){           //Si l'utilisateur n'a pas saisie un nouvelle emplacement mais la colonne où se situe le navire
             System.out.println("Veuillez saisir le numéro de la case où vous voulez placer le navire");
-            verifEntier=true;
+            verifEntier=true;           //Si la saisie de l'uilisateur est un entier
             try{
                 saisieInt = scJeu.nextInt();          //On stock la saisie de l'utilisateur
             }
@@ -604,168 +611,191 @@ public class Jeu implements Serializable{
         }
 
         
-        if (flotte.get(pListe).direction==0){
-            if (verifEntier==true){
-                saisieInt--;
-                if (saisieInt==possibilite[3]){
-                    for (int i=0; i<flotte.get(pListe).taille;i++){
-                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0] , flotte.get(pListe).coordonnees[i][1]+ 1, Plateau.numeroEtage(numeroJoueur, 0));
-                        flotte.get(pListe).coordonnees[i][1] ++;
+        if (flotte.get(pListe).direction==0){           //Si le navire est à l'horizontale
+            if (verifEntier==true){         //Si la saisie de l'utilisateur est un entier
+                saisieInt--;            //On retire un à la saisie
+                if (saisieInt==possibilite[3]){         //possibilité de desecendre
+                    for (int i=0; i<flotte.get(pListe).taille;i++){         //On parcourt la taille du navire
+                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0] , flotte.get(pListe).coordonnees[i][1]+ 1, Plateau.numeroEtage(numeroJoueur, 0));         //On déplace le navire
+                        flotte.get(pListe).coordonnees[i][1] ++;            //On change les coordonnées 
                     }
-                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
-                    return 1;
+                    return 1;           //On retourne 1 si tout c'est bien passé
                 }
-                else if (saisieInt==possibilite[2]){
-                    for (int i=0; i<flotte.get(pListe).taille;i++){
-                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1] - 1, Plateau.numeroEtage(numeroJoueur, 0));
-                        flotte.get(pListe).coordonnees[i][1] --;
+                else if (saisieInt==possibilite[2]){            //possibilité de monter
+                    for (int i=0; i<flotte.get(pListe).taille;i++){         //On parcourt la taille du navire
+                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1] - 1, Plateau.numeroEtage(numeroJoueur, 0));          //On déplace le navire
+                        flotte.get(pListe).coordonnees[i][1] --;            //On change les coordonnées 
                     }
-                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
-                    return 1;
+                    return 1;           //On retourne 1 si tout c'est bien passé
                 }
                 else {
-                    System.out.println(ROUGE +"Erreur!"+RESET +"\nCe déplacement n'est pas possible");
+                    System.out.println(ROUGE +"Erreur!"+RESET +"\nCe déplacement n'est pas possible");          //On affiche un message d'erreur
                 }
             }
             else {
                 
-                if (saisieChar == (char) (possibilite[1]+65)){
-                    for (int i=flotte.get(pListe).taille - 1; i>=0;i--){
-                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0] + 1, flotte.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));
-                        flotte.get(pListe).coordonnees[i][0] ++;
+                if (saisieChar == (char) (possibilite[1]+65)){              //Possibilité d'aller à gauche 
+                    for (int i=flotte.get(pListe).taille - 1; i>=0;i--){            //On parcourt la taille du navire
+                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0] + 1, flotte.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));          //On déplace le navire
+                        flotte.get(pListe).coordonnees[i][0] ++;            //On change les coordonnées 
                     }
-                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
-                    return 1;
+                    return 1;           //On retourne 1 si tout c'est bien passé
                 }
-                else if (saisieChar ==(char) (possibilite[0])+65){
-                    for (int i=0; i<flotte.get(pListe).taille;i++){
-                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0] - 1, flotte.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));
-                        flotte.get(pListe).coordonnees[i][0] --;
+                else if (saisieChar ==(char) (possibilite[0])+65){          //Possibilité d'aller à droite
+                    for (int i=0; i<flotte.get(pListe).taille;i++){         //On parcourt la taille du navire
+                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0] - 1, flotte.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));          //On déplace le navire
+                        flotte.get(pListe).coordonnees[i][0] --;            //On change les coordonnées 
                     }
-                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
-                    return 1;
+                    return 1;           //On retourne 1 si tout c'est bien passé
                 }
                 else {
-                    System.out.println(ROUGE +"Erreur!"+RESET +"\nCe déplacement n'est pas possible");
+                    System.out.println(ROUGE +"Erreur!"+RESET +"\nCe déplacement n'est pas possible");          //On affiche un message d'erreur
                 }
             }
         }
         
         
-        if (flotte.get(pListe).direction==1){
-            if (verifEntier==true){
-                saisieInt--;
-                if (saisieInt==possibilite[3]){
-                    for (int i=flotte.get(pListe).taille - 1; i>=0;i--){
-                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1] , flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1]+1, Plateau.numeroEtage(numeroJoueur, 0));
-                        flotte.get(pListe).coordonnees[i][1] ++;
+        if (flotte.get(pListe).direction==1){           //Si le navire est à la veretical
+            if (verifEntier==true){         //Si la saisie de l'utilisateur est un entier
+                saisieInt--;            //On retire un à la saisie
+                if (saisieInt==possibilite[3]){         //possibilité de desecendre
+                    for (int i=flotte.get(pListe).taille - 1; i>=0;i--){            //On parcourt la taille du navire
+                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1] , flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1]+1, Plateau.numeroEtage(numeroJoueur, 0));          //On déplace le navire
+                        flotte.get(pListe).coordonnees[i][1] ++;            //On change les coordonnées 
                     }
-                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
-                    return 1;
+                    return 1;           //On retourne 1 si tout c'est bien passé
                 }
-                else if (saisieInt==possibilite[2]){
-                    for (int i=0; i<flotte.get(pListe).taille;i++){
-                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1]- 1, Plateau.numeroEtage(numeroJoueur, 0));
-                        flotte.get(pListe).coordonnees[i][1] --;
+                else if (saisieInt==possibilite[2]){            //possibilité de monter
+                    for (int i=0; i<flotte.get(pListe).taille;i++){         //On parcourt la taille du navire
+                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1]- 1, Plateau.numeroEtage(numeroJoueur, 0));          //On déplace le navire
+                        flotte.get(pListe).coordonnees[i][1] --;            //On change les coordonnées
                     }
-                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
-                    return 1;
+                    return 1;           //On retourne 1 si tout c'est bien passé
                 }
                 else {
-                    System.out.println(ROUGE +"Erreur!"+RESET +"\nCe déplacement n'est pas possible");
+                    System.out.println(ROUGE +"Erreur!"+RESET +"\nCe déplacement n'est pas possible");          //On affiche un message d'erreur
                 }
             }
             else {
                 
-                if (saisieChar == (char) (possibilite[1]+65)){
-                    for (int i=0; i<flotte.get(pListe).taille;i++){
-                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0]+1 , flotte.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));
-                        flotte.get(pListe).coordonnees[i][0] ++;
+                if (saisieChar == (char) (possibilite[1]+65)){          //Possibilité d'aller à gauche
+                    for (int i=0; i<flotte.get(pListe).taille;i++){         //On parcourt la taille du navire
+                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0]+1 , flotte.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));          //On déplace le navire
+                        flotte.get(pListe).coordonnees[i][0] ++;            //On change les coordonnées
                     }
-                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
-                    return 1;
+                    return 1;           //On retourne 1 si tout c'est bien passé
                 }
-                else if (saisieChar ==(char) (possibilite[0])+65){
-                    for (int i=0; i<flotte.get(pListe).taille;i++){
-                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0]-1, flotte.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));
-                        flotte.get(pListe).coordonnees[i][0] --;
+                else if (saisieChar ==(char) (possibilite[0])+65){          //Possibilité d'aller à droite
+                    for (int i=0; i<flotte.get(pListe).taille;i++){         //On parcourt la taille du navire
+                        plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0]-1, flotte.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));           //On déplace le navire
+                        flotte.get(pListe).coordonnees[i][0] --;            //On change les coordonnées
                     }
-                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);
+                    System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
+                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
-                    return 1;
+                    return 1;           //On retourne 1 si tout c'est bien passé
                 }
                 else {
-                    System.out.println(ROUGE +"Erreur!"+RESET +"\nCe déplacement n'est pas possible");
+                    System.out.println(ROUGE +"Erreur!"+RESET +"\nCe déplacement n'est pas possible");          //On affiche un message d'erreur
                 }
             }
         }
-        return 2;   
+        return 2;           //On recommence le tour du joueur  
     }
 
 
+    //**************************************************************************
+    /**
+     * Méthode qui permet de savoir si un joueur a gagné.
+     * La méthode vérifie si un des navires est encore à flot
+     * @return True si un joueur a gagné, false sinon
+     */
     public boolean victoire(){
         
         System.out.println();
-        boolean etat0;
-        boolean etat0SousMarin=false;
-        for (int i=0; i<10; i++){
-            etat0 = flotteJoueur0.get(i).etat;
-            if (etat0==true) break;
-            if (i==9 && etat0!=true){
-                System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!\nT'ES NUL"+RESET);
-                return true;
+        boolean etat0;          //On initialise un booléen
+        boolean etat0SousMarin=false;           //On initialise un booléen à false pour le sous-marin 
+        for (int i=0; i<10; i++){           //On parcourt la flotte du joueur 
+            etat0 = flotteJoueur0.get(i).etat;          //Pour chaque navire, on regarde si il a coulé ou pas
+            if (etat0==true) break;         //Si il est toujours à flot
+            if (i==9 && etat0!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
+                System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);            //On affiche un message 
+                System.out.println("\nInformations sur la partie : ");
+                System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
+                System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
+                System.out.println("Nombre de tour de l'IA : "+compteurTourIA);
+                return true;            //On renvoie true si l'IA a gagné
             } 
         }
         
-        for (int i=6; i<10;i++){
-            if (etat0SousMarin==false) etat0SousMarin=flotteJoueur0.get(i).etat;
+        for (int i=6; i<10;i++){            //On parcourt les sous-marin
+            if (etat0SousMarin==false) etat0SousMarin=flotteJoueur0.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
         }
 
-        if (etat0SousMarin==false){
-            System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);
+        if (etat0SousMarin==false){         //Si il y a plus aucun sous-marin
+            System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);          //On affiche un message de victoire de l'IA
             System.out.println("Vous n'avez plus de sous-marin");
             System.out.println("L'ordinateur gagne par fofait de votre part");
-            return true;
+            System.out.println("\nInformations sur la partie : ");
+            System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
+            System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
+            System.out.println("Nombre de tour de l'IA : "+compteurTourIA);
+            return true;            //Renvoie true si l'un des deux joueurs a gagné
         }
 
-        boolean etat1SousMarin=false;
-        boolean etat1;
-        for (int i=0; i<10; i++){
-            etat1 = flotteJoueur1.get(i).etat;
-            if (etat1==true) break;
-            if (i==9 && etat1!=true){
-                System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!\nBIEN JOUÉ CA GASSON"+RESET);
-                return true;
+        boolean etat1SousMarin=false;           //On initialise un booléen à false pour le sous-marin
+        boolean etat1;      //On initialise un booléen
+        for (int i=0; i<10; i++){           //On parcourt la flotte de l'IA
+            etat1 = flotteJoueur1.get(i).etat;          //Pour chaque navire, on regarde si il a coulé ou pas
+            if (etat1==true) break;         //Si il est toujours à flot
+            if (i==9 && etat1!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
+                System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);           //On affiche un message
+                System.out.println("\nInformations sur la partie : ");
+                System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
+                System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
+                System.out.println("Nombre de tour de l'IA : "+compteurTourIA); 
+                return true;            //On renvoie true si le joueur a gagné
             }
         }
         
-        for (int i=6; i<10;i++){
-            if (etat1SousMarin==false) etat1SousMarin=flotteJoueur0.get(i).etat;
+        for (int i=6; i<10;i++){            //On parcourt les sous-marins
+            if (etat1SousMarin==false) etat1SousMarin=flotteJoueur0.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
         }
 
-        if (etat1SousMarin==false){
-            System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);
+        if (etat1SousMarin==false){         //Si il y a plus aucun sous-marin
+            System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);            //On affiche un message de victoire du joueur
             System.out.println("Vous avez détruit tout les sous-marin de l'ordinateur");
             System.out.println("Vous gagnez par forfait");
-            return true;
+            System.out.println("\nInformations sur la partie : ");
+            System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
+            System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
+            System.out.println("Nombre de tour de l'IA : "+compteurTourIA);
+            return true;            //Renvoie true si l'un des deux joueurs a gagné
         }
-        return false;
+        return false;           //Si aucun des joueurs a gagné
     }
+    
     
     //**************************************************************************
     /**

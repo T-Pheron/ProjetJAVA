@@ -10,22 +10,32 @@ import java.util.concurrent.TimeUnit;
 
 public class Destroyer extends Flotte{
     
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2188496570477313059L;
-    private final Scanner scDestroyer = new Scanner(System.in);
+    //**************************************************************************
+    private static final long serialVersionUID = -2188496570477313059L;         //Runtine définie par le logiciel
+    private final Scanner scDestroyer = new Scanner(System.in);         //On initialise une varible de type scanner pour récupérer les saisis de l'utilisateur
 
+
+    //**************************************************************************
+    /**
+     * Constructeur de la classe Destroyer.
+     * Il permet de créer un un navire de type destroyer. 
+     */
     public Destroyer(){
-        etat = true;
-        nom = "destroyer";
-        taille = 3;
-        coordonnees = new int [taille][3];
-        puissance = 1;
-        lRef = 'D';
-        nRef =17;
+        etat = true;            //On met l'état du navire à true
+        nom = "destroyer";          //On donne au navire son nom
+        taille = 3;         //On stock la taille du navire
+        coordonnees = new int [taille][3];           //Variable qui stocke les coordonnées du navire. 0 pour une coordonnées qui a été touché, 1 pour une coordonnées non touché.
+        puissance = 1;          //On stocke la puissance du navire 
+        lRef = 'D';         //On stocke la lettre de référence du navire
+        nRef =17;           //On donne un numéro de référence par défaut au navire
     }
     
+
+    /**
+     * Méthode qui permet de donner un numéro de référence unique à un destroyer.
+     * D'après la position dans la liste Destroyer à un numéro de référence unique.
+     * @param pListe 
+     */
     @Override
     public void nRef (int pListe){
         nRef += pListe;
@@ -33,7 +43,7 @@ public class Destroyer extends Flotte{
     
     
     /**
-     * Méthode à un bateau d'effectuer un tir.
+     * Méthode à un navire d'effectuer un tir.
      * La méthode permet de demander des coordonnées de tir et d'effectuer un tir.
      * @return 1 Si tout c'est bien déroulé, 0 en cas de problème
      * @throws InterruptedException 
@@ -134,7 +144,7 @@ public class Destroyer extends Flotte{
             premierTire=false;
         }
 
-        /*Si c'est pas le premier tir du bateau***********************************************/
+        /*Si c'est pas le premier tir du navire***********************************************/
         else {
             char xTireChar='@';         //On declare la variable par defaut avec un @
             int yTire=-1;           //On declare la variable par defaut avec un -1
@@ -231,7 +241,7 @@ public class Destroyer extends Flotte{
             if (Jeu.plateauDeJeu.get(xTire,yTire,2,0) == (Object) 'S'){
                 if (!Jeu.plateauDeJeu.get(xTire,yTire,1,0).equals("2")) Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"5");
 
-                int nPlateauAdv;            //Le numéro du plateau du bateau adverse
+                int nPlateauAdv;            //Le numéro du plateau du navire adverse
                 int pListeAdv;              //La position dans la liste des navires de l'adversaire      
 
                 nPlateauAdv = (int) Jeu.plateauDeJeu.get(xTire,yTire,2,1);         //On récupère le numéro de plateau de l'adversaire aux coordonnées où le joueur veut tirer
@@ -247,7 +257,7 @@ public class Destroyer extends Flotte{
                 return impact(xTire, yTire,0);          //On retourne la valeur d'impact
             }
             else{
-                System.out.println("Bon c 'est un échec, tkt c'est rien c'est la rue");TimeUnit.SECONDS.sleep(4);           //On affiche un message comme quoi il n'a rien touché
+                System.out.println("Nous n'avons rien touché");TimeUnit.SECONDS.sleep(4);           //On affiche un message comme quoi il n'a rien touché
                 Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici
                 return 1;           //On a la justification que tout c'est bien passe
             }
@@ -256,6 +266,7 @@ public class Destroyer extends Flotte{
     }
     
     
+    //**************************************************************************
     /**
      * Méthode qui permet de donner les dégats sur le navire adverse.
      * La méthode permet de mettre le tir sur la grille de tir du joueur, et de mettre les dégats sur le navire adverse.
@@ -271,13 +282,13 @@ public class Destroyer extends Flotte{
 
         int numeroJoueurAdv = -1;           //Le numéro du joueur mit à -1 par defaut
         char lRefAdv = 'A';         //La lettre de référence du navire mit à A par defaut
-        int nPlateauAdv;            //Le numéro du plateau du bateau adverse
+        int nPlateauAdv;            //Le numéro du plateau du navire adverse
         int pListeAdv;              //La position dans la liste des navires de l'adversaire
         
         if (numeroJoueur==0) numeroJoueurAdv=1;         //On déduit le numéro du joueur adverse en fonction du joueur
         if (numeroJoueur==1) numeroJoueurAdv=0;         
 
-        lRefAdv= (char) Jeu.plateauDeJeu.get(xTire,yTire,Plateau.numeroEtage(numeroJoueurAdv,0),0);         //On récupère la lettre de référence du bateau de l'adversaire aux coordonnées où le joueur veut tirer 
+        lRefAdv= (char) Jeu.plateauDeJeu.get(xTire,yTire,Plateau.numeroEtage(numeroJoueurAdv,0),0);         //On récupère la lettre de référence du navire de l'adversaire aux coordonnées où le joueur veut tirer 
         nPlateauAdv = (int) Jeu.plateauDeJeu.get(xTire,yTire,Plateau.numeroEtage(numeroJoueurAdv,0),1);         //On récupère le numéro de plateau de l'adversaire aux coordonnées où le joueur veut tirer
         pListeAdv=nPlateauToPListe(lRefAdv, nPlateauAdv);           //On en deduit la position dans la liste du navire de l'adversaire
 
@@ -292,7 +303,7 @@ public class Destroyer extends Flotte{
                     }
                 }
                 if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("CHEE PRENDS CA CHACAL j'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    System.out.println("Yes! J'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                     TimeUnit.SECONDS.sleep(3);   
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
@@ -305,7 +316,7 @@ public class Destroyer extends Flotte{
                     }
                 }
                 if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("CHEE PRENDS CA CHACAL j'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    System.out.println("Yes ! J'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                     TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
@@ -321,13 +332,13 @@ public class Destroyer extends Flotte{
 
                     if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][0]==xTire){          //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
                         Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        System.out.println("\n"+VERT+"EH BIM TOUCHE ! \nCroquette !"+RESET);           //On affiche un message disant que le joueur a bien touché un navire
+                        System.out.println("\n"+VERT+"TOUCHE ! \n!"+RESET);           //On affiche un message disant que le joueur a bien touché un navire
                         TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
                         
                     }
                 }
                 if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("Bien joué ca gasson ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    System.out.println("Bravo ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                     TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
@@ -338,13 +349,13 @@ public class Destroyer extends Flotte{
 
                     if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][1]==yTire){          //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
                         Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        System.out.println("\n"+VERT+"EH BIM TOUCHE ! \nCroquette !"+RESET);           //On affiche un message disant que le joueur a bien touché un navire
+                        System.out.println("\n"+VERT+"TOUCHE !"+RESET);           //On affiche un message disant que le joueur a bien touché un navire
                         TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
                        
                     }
                 }
                 if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("Bien joué ca gasson ! T'as coulé un"+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    System.out.println("Bien joué ! T'as coulé un"+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                     TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé

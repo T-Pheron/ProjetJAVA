@@ -6,10 +6,8 @@ import java.io.Serializable;
 
 public class Plateau implements Serializable{
     
-    /**
-     *
-     */
-    private static final long serialVersionUID = 974977841461260968L;
+    //**************************************************************************
+    private static final long serialVersionUID = 974977841461260968L;           //Runtine définie par le logiciel
     public Object [][][][] plateauDeJeu = new Object[15][15][4][2];             //Variable pour le stockage les différentes informations du plateau de jeu
     
     
@@ -26,7 +24,7 @@ public class Plateau implements Serializable{
      *         [y][x][numeroEtage][0] est utilisé pour stocker un numéro qui correspond au tir du joueur<br>
      *             0 On a jamais tiré sur cette case<br>
      *             1 On a déjà tiré sur cette case mais on a rien touché<br>
-     *             2 On a déjà tiré sur cette case et on a touché un bateau<br><br>
+     *             2 On a déjà tiré sur cette case et on a touché un navire<br><br>
      * 
      * Les étages d'indice 2 et 3 sont réservés à l'IA (joueur 1)<br>
      *     - Etage 2 : Correspond à l'étage 0 pour l'IA<br>
@@ -151,7 +149,7 @@ public class Plateau implements Serializable{
         
         int numeroEtage= numeroEtage(numeroJoueur,0);               //On calcul l'étage dans le plateau de jeu en fonction de numéro du joueur
         
-        if (direction==0 && x+taille-1>=15)return false;               //Si le bateau dépasse la grille de jeu, on renvoie false
+        if (direction==0 && x+taille-1>=15)return false;               //Si le navire dépasse la grille de jeu, on renvoie false
         if (direction==1 && y+taille-1>=15)return false;
         
         
