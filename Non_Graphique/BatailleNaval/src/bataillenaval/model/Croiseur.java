@@ -105,7 +105,7 @@ public class Croiseur extends Flotte {
 
         /*Confirmation du tir sur une case qui a déjà été touchée****************************/
         int xTire = (int) (xTireChar - 65);             //On convertie la saisie en un entier
-        if ( Jeu.plateauDeJeu.get(xTire,yTire,1,0) == (Object) "1"){            //Si la case choisie a deja ete touche
+        if ( Jeu.plateauDeJeu.get(xTire,yTire,1,0).equals("1")){            //Si la case choisie a deja ete touche
             int choix=0;            //On declare une variable qui stock le choix du joueur 
             System.out.println("Voulez vous vraiment tirer sur cette case ? Elle à deja été bombardée");            //On lui demande si il veut vraiment tirer sur cette case
             System.out.println("1.OUI \n2.NON");           //On affiche les choix du joueur 
@@ -142,7 +142,7 @@ public class Croiseur extends Flotte {
 
         /*Vérification qu'il y a un impacte********************************************/
         if (Jeu.plateauDeJeu.get(xTire,yTire,2,0) == (Object) 'S'){
-            if (Jeu.plateauDeJeu.get(xTire,yTire,1,0) != (Object) "2") Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"5");
+            if (!Jeu.plateauDeJeu.get(xTire,yTire,1,0).equals("2")) Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"5");
 
             int nPlateauAdv;            //Le numéro du plateau du navire adverse
             int pListeAdv;              //La position dans la liste des navires de l'adversaire      

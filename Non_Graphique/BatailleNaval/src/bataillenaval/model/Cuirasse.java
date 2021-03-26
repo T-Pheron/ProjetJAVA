@@ -142,7 +142,7 @@ public class Cuirasse extends Flotte{
 
         /*Vérification qu'il y a un impacte********************************************/
         if (Jeu.plateauDeJeu.get(xTire,yTire,2,0) == (Object) 'S'){
-            if (Jeu.plateauDeJeu.get(xTire,yTire,1,0) != (Object) "2") Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"5");
+            if (!Jeu.plateauDeJeu.get(xTire,yTire,1,0).equals("2")) Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"5");
 
             int nPlateauAdv;            //Le numéro du plateau du navire adverse
             int pListeAdv;              //La position dans la liste des navires de l'adversaire      
