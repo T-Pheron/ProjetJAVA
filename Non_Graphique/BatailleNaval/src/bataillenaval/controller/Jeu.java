@@ -8,17 +8,28 @@ import bataillenaval.model.Destroyer;
 import bataillenaval.model.Cuirasse;
 import bataillenaval.model.Flotte;
 import bataillenaval.view.Affichage;
+import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
 
 
-public class Jeu {
+public class Jeu implements Serializable{
     
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+
     public static Plateau plateauDeJeu = new Plateau();             //Variable qui stocke l'ensemble du plateau de jeu 
     public static List <Flotte> flotteJoueur0 ;               //List qui stocke l'ensemble de la flotte du joueur 0
     public static List <Flotte> flotteJoueur1 ;               //List qui stocke l'ensemble de la flotte du joueur 1
+    
+    public static int numeroJoueur;                 //Variable qui permet de connaître à quelle joueur c'est la tour
+    public static int niveauIA;           //Variable qui permet de stoker le niveau de l'IA
+    public static IA ia = new IA();           //On initialise une variable qui permet de faire fonctionner l'IA
+    public static boolean premierTour = true;        //Variable utilisé pour savoir si c'est le premier tir 
     
     //**************************************************************************
     /**
@@ -27,6 +38,23 @@ public class Jeu {
      */
     public Jeu(){
         
+    }
+    
+    public Jeu(int numeroJoueur, int niveauIA,IA ia, boolean premierTour, Plateau plateauDeJeu, List <Flotte> flotteJoueur0, List <Flotte> flotteJoueur1){
+        
+        Jeu.numeroJoueur = numeroJoueur;
+        Jeu.niveauIA= niveauIA;
+        Jeu.ia = ia;
+        Jeu.premierTour= premierTour;
+        Jeu.plateauDeJeu= plateauDeJeu;
+        for (int i=0; i<10; i++){
+        for (int j=0; j<flotteJoueur0.get(i).taille; j++){
+                    System.out.print(flotteJoueur0.get(i).coordonnees[j][0]+"_");
+                    System.out.print(flotteJoueur0.get(i).coordonnees[j][1]+"_");
+                    System.out.println(flotteJoueur0.get(i).coordonnees[j][2]);
+         }}
+        Jeu.flotteJoueur0 = flotteJoueur0;
+        Jeu.flotteJoueur1 = flotteJoueur1;
     }
     
     
@@ -76,25 +104,30 @@ public class Jeu {
      * La méthode créé de nouvelle flotte pour chaque joueur ainsi que le plateau de jeu.
      * Cette méthode est celle qui possède la boucle de jeu qui permet de faire les différents tour de chaque joueur.
      * @throws InterruptedException 
+     * @throws ClassNotFoundException
      */
-    public void lancementJeu() throws InterruptedException{
-        //Initialisation des flottes************************
-        flotteJoueur0 = createFlotte();            //On créé une flotte pour le joueur 0
-        flotteJoueur1 = createFlotte();            //On créé une flotte pour le joueur 1
-                    
-        placementFlotte(flotteJoueur0, 0);            //On place aléatoirement la flotte du joueur 0 sur sa grille de navire
-        placementFlotte(flotteJoueur1, 1);            //On place aléatoirement la flotte du joueur 1 sur sa grille de navire
+    public void lancementJeu() throws InterruptedException, ClassNotFoundException{
         
         /*Initialisation des variables*****************************************/
         Menu menu = new Menu();             //On initialise une variable pour lancer les différents menus
-        IA ia = new IA();           //On initialise une varaible pour lancer l'IA
         boolean tourSuivant = true;             //Variable qui permet de savoir si on passe au tour suivant
-        int numeroJoueur=0;                 //Variable qui permet de connaître à quelle joueur c'est la tour
-        int niveauIA=0;
-
-
-        /*Choix du niveau de l'IA**********************************************/
-        niveauIA = menu.choixNiveauIA();
+        
+        if (premierTour==true){
+            //Initialisation des flottes************************
+            flotteJoueur0 = createFlotte();            //On créé une flotte pour le joueur 0
+            flotteJoueur1 = createFlotte();            //On créé une flotte pour le joueur 1  
+            
+            placementFlotte(flotteJoueur0, 0);            //On place aléatoirement la flotte du joueur 0 sur sa grille de navire
+            placementFlotte(flotteJoueur1, 1);            //On place aléatoirement la flotte du joueur 1 sur sa grille de navire
+        
+            niveauIA=0;         //On met le niveau de l'IA par d'éfaut à 0
+            numeroJoueur=0;         //On met le joueur qui joue par défaut à 0
+        
+            /*Choix du niveau de l'IA******************************************/
+            niveauIA = menu.choixNiveauIA();
+            premierTour=false;
+        }
+        
         
         /*Boucle de jeu********************************************************/
         while (tourSuivant==true){            //On vérifie qu'on doit passer au tour suivant
@@ -103,9 +136,9 @@ public class Jeu {
             
             if (numeroJoueur==0){            //Si le joueur est le joueur humain on affiche sa grille et son
                 System.out.println();
-                Affichage.afficher(numeroJoueur, 1, Jeu.plateauDeJeu);            //On affiche la grille des tirs du joueur
+                Affichage.afficher(numeroJoueur, 1, plateauDeJeu);            //On affiche la grille des tirs du joueur
                 System.out.println();
-                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);            //On affiche la grille des navires du joueur
+                Affichage.afficher(numeroJoueur, 0, plateauDeJeu);            //On affiche la grille des navires du joueur
             
                 retourMenu = menu.menuJoueur();            //On lance le menu joueur et stocke ce qu'il retourne
             
@@ -123,9 +156,11 @@ public class Jeu {
                         }
                         
                         break;
-                    case 2:
+                    case 5:
                         if (numeroJoueur==0) retourMenu = bougerNavire (flotteJoueur0,numeroJoueur);            //On appel la méthode qui permet de bouger un navire
                         break;
+                    case 2: retourMenu=2;           //On recommence le tour du joueur
+                    case 4: System.out.println("\nFermeture du jeu. \nA bientôt"); break;
                     default:
                         System.out.println(ROUGE + "Erreur!"+RESET+ "Problème d'appelle du menuJoueur");            //En cas d'erreur on affiche un message d'erreur
                         retourMenu=2;            //On relance le tour du joueur
@@ -161,7 +196,7 @@ public class Jeu {
      * La méthode créé une liste contenant tous les navires présent dans une flotte.
      * @return La liste remplie avec tous les navires d'une flotte
      */
-    public List<Flotte> createFlotte(){
+    public static List<Flotte> createFlotte(){
         
         List <Flotte> flotte = new ArrayList<Flotte>();             //On créé une liste qui contient des object de type flotte
         
@@ -340,8 +375,8 @@ public class Jeu {
             
             for (int i=0; i<flotte.get(pListe).taille; i++){                //On fait une boucle pour vérifier toutes les coordonnées du bateau
                 if (flotte.get(pListe).coordonnees[i][2]==0 && sortieChoixNavire==true){               //On vérifie pour chaque coordonnées qu'elles ont pas déjà été touchées et que pour l'instant on a les autorisations de quitter la boucle de choix du bateau  
-                    
-                    System.out.println(B_JAUNE + "Echec!"+RESET+ "Ce navire a déjà été touché!");         //Si ce n'est pas le cas, on affiche un message d'échec de l'opération
+
+                    System.out.println(B_JAUNE + "Echec!"+RESET+ " Ce navire a déjà été touché!");         //Si ce n'est pas le cas, on affiche un message d'échec de l'opération
                     System.out.println("Voulez vous tentez de déplacer un autre navire ?");         //On demande à l'utilisateur ce qu'il souhaite faire
                     System.out.println("1.OUI   2.NON");
                     try{

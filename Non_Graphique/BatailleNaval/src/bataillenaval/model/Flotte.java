@@ -1,9 +1,17 @@
 package bataillenaval.model;
 
+import java.io.Serializable;
 
 
-public abstract class Flotte {
+
+public abstract class Flotte implements Serializable{
     
+    
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 7786772327657687295L;
     public boolean etat = false;        //Variable qui permet de connître si le navire est coulé. True si le navire n'est pas coulé, false sinon
     public String nom;              //Variable qui permet de stocker le nom du navire
     public int [][] coordonnees;        //Variable qui stock les coordonnées du navire
@@ -30,15 +38,15 @@ public abstract class Flotte {
      * Méthode qui permet de renvoyer la position dans la liste.
      * Elle permet avec le numéro présent sur le plateau de renvoyer la position du bateau dans la liste avec les navires.
      * @param lRef La lettre de référence du bateau
-     * @param nPlateau Le numéro sur le plateau
+     * @param pListe La position dans la liste
      * @return Retourne la position dans la liste du navire
      */
-    public static int pListeToNPlateau(char lRef, int nPlateau){
+    public static int pListeToNPlateau(char lRef, int pListe){
         
-        if (lRef=='U') return nPlateau+1;//On déduit la position dans la liste
-        if (lRef=='C') return nPlateau;
-        if (lRef=='D') return nPlateau-2;
-        if (lRef=='S') return nPlateau-5;
+        if (lRef=='U') return pListe+1;//On déduit la position dans la liste
+        if (lRef=='C') return pListe;
+        if (lRef=='D') return pListe-2;
+        if (lRef=='S') return pListe-5;
         return 0;
     }
     

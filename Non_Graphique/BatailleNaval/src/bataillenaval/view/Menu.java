@@ -2,15 +2,13 @@ package bataillenaval.view;
 
 
 import bataillenaval.controller.Jeu;
+import bataillenaval.controller.Sauvegarde;
+
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 
 public class Menu {
@@ -53,6 +51,7 @@ public class Menu {
     
     //**************************************************************************
     private Scanner scMenu = new Scanner(System.in);
+    private Scanner scMenuLine = new Scanner(System.in);
      
     
     
@@ -62,8 +61,9 @@ public class Menu {
      * Permet le lancement du jeu, le chargement d'une 
      * partie sauvegardée, le lancement de l'aide, quitter le jeu.
      * @throws java.lang.InterruptedException
+     * @throws ClassNotFoundException
     */
-    public void menuPrincipal() throws InterruptedException{
+    public void menuPrincipal() throws InterruptedException, ClassNotFoundException{
         int choix=0;              //Variable qui permet de stocker le choix du joueur
         Jeu jeu = new Jeu();                //On initialise une variable de type Jeu 
 
@@ -96,12 +96,14 @@ public class Menu {
         
         switch (choix){
             case 1:            //Si le choix est 1
-                System.out.println(""); 
+                System.out.println(); 
                 System.out.println("Bienvenue dans le jeu de la "+ CYAN +"Bataille Navale"+ RESET+"\n");           //On affiche un message de bienvenue
                 jeu.lancementJeu();             //On appel la méthode qui permet de lancer une nouvelle partie
                 
                 break;
-            case 2: break;
+            case 2: 
+                menuChargement();
+                break;
             case 3: menuAide();         //On va dans le menu aide 
                     menuPrincipal();
                     break;
@@ -118,14 +120,16 @@ public class Menu {
      * 2 s'il veut déplacer un navire.<br>
      * 0 En cas d'erreur.
      * @return Le choix du joueur
+     * @throws ClassNotFoundException
      */
-    public int menuJoueur(){
+    public int menuJoueur() throws ClassNotFoundException{
         int choix=0;           //Variable qui permet de stocker le choix du joueur
-        System.out.println("");
+        System.out.println();
         System.out.println(GRIS_AR +NOIR+ "               MENU JOUEUR              "+RESET+ RESET_AR);           //On afficher le titre du menu
         System.out.println("Que voulez vous faire ?");
         System.out.println("1. Tirer ! "
-                +        "\n2. Deplacer le navire !");           //On affiche les choix possibles
+                +        "\n2. Deplacer le navire !"
+                +        "\n3. Quitter");           //On affiche les choix possibles
         
         System.out.println("Veuillez saisir votre choix");           //On demande à l'utilisateur de saisir son choix
         try{
@@ -136,7 +140,7 @@ public class Menu {
             scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
         }
         
-        while ((choix<1)||(choix>2)){               //On blinde en vérifiant que la saisie fait partie des choix
+        while ((choix<1)||(choix>3)){               //On blinde en vérifiant que la saisie fait partie des choix
             System.out.println(ROUGE+"Erreur! "+ RESET +"Veuillez saisir à nouveau votre choix");           //Sinon, on affiche un message d'erreur et demande la ressaisie
             try{
                 choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
@@ -148,7 +152,64 @@ public class Menu {
         }
         switch (choix){
             case 1: return 1;                //Si le choix est 1 alors on retourne 1 (Cela signifie que le joueur souhaite effectuer un tir)
-            case 2: return 2;               //Si le choix est 2 alors on retounr 2 (Cela signifie que le joueur souhaite déplacer son navire)
+            case 2: return 5;               //Si le choix est 2 alors on retounr 2 (Cela signifie que le joueur souhaite déplacer son navire)
+            case 3: 
+                int choix2=0;
+                System.out.println("Voulez vous sauvegarder la partie ?");
+                System.out.println("1.OUI \n2.NON");
+                System.out.println("Veuillez saisir votre choix");           //On demande à l'utilisateur de saisir son choix
+                try{
+                    choix2 = scMenu.nextInt();          //On stock la saisie de l'utilisateur
+                }
+                catch(InputMismatchException e){            //Si ce n'est pas un entier
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
+                }
+                while ((choix2<1)||(choix2>2)){               //On blinde en vérifiant que la saisie fait partie des choix
+                    System.out.println(ROUGE+"Erreur! "+ RESET +"Veuillez saisir à nouveau votre choix");           //Sinon, on affiche un message d'erreur et demande la ressaisie
+                    try{
+                        choix2 = scMenu.nextInt();          //On stock la saisie de l'utilisateur
+                    }
+                    catch(InputMismatchException e){            //Si ce n'est pas un entier
+                        System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                        scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
+                    }
+                }
+
+                switch(choix2){
+                    case 1:
+                        return menuSauvegarde();
+
+                    case 2: 
+                        int choix3=0;
+                        System.out.println("Etes vous sûr de vouloir quitter sans sauvegarder ?");
+                        System.out.println("1.OUI \n2.NON");
+                        System.out.println("Veuillez saisir votre choix");           //On demande à l'utilisateur de saisir son choix
+                        try{
+                            choix3 = scMenu.nextInt();          //On stock la saisie de l'utilisateur
+                        }
+                        catch(InputMismatchException e){            //Si ce n'est pas un entier
+                            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                            scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
+                        }
+                        while ((choix3<1)||(choix3>2)){               //On blinde en vérifiant que la saisie fait partie des choix
+                            System.out.println(ROUGE+"Erreur! "+ RESET +"Veuillez saisir à nouveau votre choix");           //Sinon, on affiche un message d'erreur et demande la ressaisie
+                            try{
+                                choix3 = scMenu.nextInt();          //On stock la saisie de l'utilisateur
+                            }
+                            catch(InputMismatchException e){            //Si ce n'est pas un entier
+                                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                                scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
+                            }
+                        }
+
+                        switch(choix3){
+                            case 1: return 4;
+                            case 2: return 2;
+                        }
+                }
+
+                    
             
             default: System.out.println("Erreur_menuJoueur!"); return 0;           //En cas d'erreur, on affiche un message
         }
@@ -159,18 +220,208 @@ public class Menu {
     /**
      * Menu qui permet de sauvegarder une partie de jeu.
      * 
+     * @return 
+     * @throws ClassNotFoundException
      */
-    public void menuSauvegarde(){
+    public int menuSauvegarde() throws ClassNotFoundException{
+        int choix=0;           //Variable qui permet de stocker le choix du joueur
+        boolean selectionEmplacement=true;
+        String saisie;
+
+        /*Récupération des informations de sauvegarde**************************/
+        String [] nomPartie = new String [3];
+        for (int i=0; i<3; i++){
+            String nomSauvegarde="A";
+            if (i==0) nomSauvegarde="saveFiles/save1";
+            if (i==1) nomSauvegarde="saveFiles/save2";
+            if (i==2) nomSauvegarde="saveFiles/save3";
+
+            try (FileInputStream fichier = new FileInputStream(nomSauvegarde); ObjectInputStream in = new ObjectInputStream(fichier)) {
+                    nomPartie[i]= (String) in.readObject();
+            }
+            catch(IOException e){
+                System.out.println("Le fichier save1 n'a pas pu être ouvert");
+            }
+            if (nomPartie[i]==null ) nomPartie[i]="[VIDE]";
+        }
+        System.out.println(GRIS_AR +NOIR+ "                    MENU SAUVEGARDE                "+RESET+ RESET_AR);           //On afficher le titre du menu
+
+        /*Sélection de l'emplacement par le joueur*****************************/
+        do {
+                        System.out.println("A quel emplacement voulez vous sauvegarder votre partie ?" 
+                +               "\n1. " + nomPartie[0]
+                +               "\n2. " + nomPartie[1]
+                +               "\n3. " + nomPartie[2]
+                +               "\n\n4. Retour");           //On affiche les choix possibles
+            System.out.println("Veuillez saisir votre choix");           //On demande à l'utilisateur de saisir son choix
+            
+            try{
+                choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
+            }
+            catch(InputMismatchException e){            //Si ce n'est pas un entier
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
+            }
+            
+            while ((choix<1)||(choix>4)){           //On blinde en vérifiant que la saisie fait partie des choix
+                System.out.println(ROUGE+"Erreur! "+ RESET +"Veuillez saisir à nouveau votre choix");           //Sinon, on affiche un message d'erreur et demande la ressaisie
+                try{
+                    choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
+                }
+                catch(InputMismatchException e){            //Si ce n'est pas un entier
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
+                }
+            }
+
+            selectionEmplacement = false ;
+
+            if (choix<4 && !nomPartie[choix-1].equals("[VIDE]")){
+                System.out.println("Cette emplacement contient déjà la sauvegarde "+nomPartie[choix-1]+".");
+                System.out.println("Etes vous sûr de vouloir écrasé cette sauvegarde ?");
+                System.out.println("1. OUI \n2. NON");
+                int choix2=0;
+                try{
+                    choix2 = scMenu.nextInt();          //On stock la saisie de l'utilisateur
+                }
+                catch(InputMismatchException e){            //Si ce n'est pas un entier
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
+                }
+                while ((choix2<1)||(choix2>2)){               //On blinde en vérifiant que la saisie fait partie des choix
+                    System.out.println(ROUGE+"Erreur! "+ RESET +"Veuillez saisir à nouveau votre choix");           //Sinon, on affiche un message d'erreur et demande la ressaisie
+                    try{
+                        choix2 = scMenu.nextInt();          //On stock la saisie de l'utilisateur
+                    }
+                    catch(InputMismatchException e){            //Si ce n'est pas un entier
+                        System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                        scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
+                    }
+                }
+
+                switch(choix2){
+                    case 1: 
+                        selectionEmplacement = false;
+                        break;
+                    case 2:
+                        selectionEmplacement = true;
+                        break;
+                }
+            }
+
+            if (choix<4 && selectionEmplacement==false){
+                System.out.println("\nVeuillez entrez le nom de la partie :");
+                saisie = scMenuLine.nextLine();
+                nomPartie[choix-1]=saisie;
+            }
+        } while (selectionEmplacement == true);
         
+        Sauvegarde sauvegarde = new Sauvegarde();
+
+        switch (choix){
+            case 1:  return sauvegarde.savePartie(1, nomPartie[0]);
+                        
+            case 2:  return sauvegarde.savePartie(2, nomPartie[1]);
+
+            case 3:  return sauvegarde.savePartie(3, nomPartie[2]);
+
+            case 4:  return 1;
+
+            default : System.out.println(ROUGE +"Erreur_menuSauvegarde! "+RESET);         //Message renvoyé en cas de probleme majeur
+                break;
+        }
+
+        return 2;
     }
     
     //**************************************************************************
     /**
      * Menu qui permet de charger une partie de jeu.
+     * @return 
+     * @throws ClassNotFoundException
+     * @throws InterruptedException
      * 
      */
-    public void menuChargement(){
+    public int menuChargement() throws ClassNotFoundException, InterruptedException{
+        int choix=0;           //Variable qui permet de stocker le choix du joueur
+        boolean selectionEmplacement;
         
+        /*Récupération des informations de sauvegarde**************************/
+        String [] nomPartie = new String [3];
+        for (int i=0; i<3; i++){
+            String nomSauvegarde="A";
+            if (i==0) nomSauvegarde="saveFiles/save1";
+            if (i==1) nomSauvegarde="saveFiles/save2";
+            if (i==2) nomSauvegarde="saveFiles/save3";
+
+            try (FileInputStream fichier = new FileInputStream(nomSauvegarde); ObjectInputStream in = new ObjectInputStream(fichier)) {
+                    nomPartie[i]= (String) in.readObject();
+            }
+            catch(IOException e){
+                System.out.println("Le fichier save n'a pas pu être ouvert");
+            }
+            if (nomPartie[i]==null) nomPartie[i]="[VIDE]";
+        }
+        
+        System.out.println(GRIS_AR +NOIR+ "               MENU CHARGEMENT              "+RESET+ RESET_AR);           //On afficher le titre du menu
+
+        do{
+                        System.out.println("A quel emplacement voulez vous sauvegarder votre partie ?" 
+                    +               "\n1. " + nomPartie[0]
+                    +               "\n2. " + nomPartie[1]
+                    +               "\n3. " + nomPartie[2]
+                    +               "\n4. Retour");           //On affiche les choix possibles
+            System.out.println("Veuillez saisir votre choix");           //On demande à l'utilisateur de saisir son choix
+
+            try{
+                choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
+            }
+            catch(InputMismatchException e){            //Si ce n'est pas un entier
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
+            }
+            
+            while ((choix<1)||(choix>4)){           //On blinde en vérifiant que la saisie fait partie des choix
+                System.out.println(ROUGE+"Erreur! "+ RESET +"Veuillez saisir à nouveau votre choix");           //Sinon, on affiche un message d'erreur et demande la ressaisie
+                try{
+                    choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
+                }
+                catch(InputMismatchException e){            //Si ce n'est pas un entier
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
+                }
+            }
+            
+            selectionEmplacement = false ;
+
+            if (choix<4 && nomPartie[choix-1].equals("[VIDE]")){
+                System.out.println(ROUGE+"Erreur !"+RESET +" Cette emplacement ne contient pas de sauvegarde!");
+                System.out.println("Veuillez sélectionnez un autre emplacement ou quitter le menu de chargement\n");
+                selectionEmplacement =true;
+            }
+        }while(selectionEmplacement==true);
+
+
+        Sauvegarde sauvegarde = new Sauvegarde();
+
+        switch (choix){
+            case 1: 
+                sauvegarde.chargementPartie(1);
+                break;     
+            case 2:
+                sauvegarde.chargementPartie(2); 
+                break;
+            case 3:  
+                sauvegarde.chargementPartie(3);
+                break;
+
+            case 4:  menuPrincipal();
+                break;
+
+            default : System.out.println(ROUGE +"Erreur_menuChargement! "+RESET);         //Message renvoyé en cas de probleme majeur
+                break;
+        }
+        return 0;
     }
     
     
@@ -180,6 +431,7 @@ public class Menu {
      * Menu qui permet de naviguer dans l'aide du jeu.
      * Il y a plusieur catégorie dans laide. Ce menu permet de séparer les informations
      * et de ne pas toutes les affichées en même temps.
+     * @return 
      */
     public int menuAide(){
         int choix=0;           //Variable qui permet de stocker le choix du joueur
