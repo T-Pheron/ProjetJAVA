@@ -146,7 +146,7 @@ public class Croiseur extends Flotte {
             System.out.println("Nous avons détecté une structure mais n'avons pas pu la détruire");TimeUnit.SECONDS.sleep(4);           //Affichage d'un message disant qu'on est tombé sur un sous-marin
             return 1;
         }
-        else if (Jeu.plateauDeJeu.get(xTire,yTire,2,0) != (Object) "_"){             //Si la case contient un navire
+        else if (Jeu.plateauDeJeu.get(xTire,yTire,2,0) != (Object) '_'){             //Si la case contient un navire
             return impact(xTire, yTire,0);          //On retourne la valeur d'impact
         }
         else{

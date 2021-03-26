@@ -3,14 +3,20 @@ package bataillenaval.controller;
 import bataillenaval.model.Plateau;
 import bataillenaval.model.Flotte;
 import bataillenaval.view.Affichage;
+
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 /**
  *
  * @author Théric PHERON
  */
-public class IA {
+public class IA implements Serializable{
     
+    /**
+     *
+     */
+    private static final long serialVersionUID = -8187468013304872508L;
     private int nombreDeTir = 0;
     private boolean premierTire = true;
     private  boolean[] saveCoord = new boolean [20];
@@ -223,7 +229,7 @@ public class IA {
                 }
             }
             if (possibilite[1]!= 90){
-                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[1]- Jeu.flotteJoueur1.get(pListeBougerNavire).taille +1 , Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1], 0, Jeu.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, Jeu.flotteJoueur1.get(pListeBougerNavire).lRef)==false){            //On vérifie que le placement ne chevoche pas un autre navire
+                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, ((possibilite[1] - Jeu.flotteJoueur1.get(pListeBougerNavire).taille) + 1 ), Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1], 0, Jeu.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, Jeu.flotteJoueur1.get(pListeBougerNavire).lRef)==false){            //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[1]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
@@ -257,7 +263,7 @@ public class IA {
                 }
             }
             if (possibilite[3] != 90){          //On vérifie que la possibilité est possible
-                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0], possibilite[3]-  Jeu.flotteJoueur1.get(pListeBougerNavire).taille +1 , 1, Jeu.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, Jeu.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                if (Jeu.plateauDeJeu.verifEmplacementVide(numeroJoueur, Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0],(( possibilite[3] -  Jeu.flotteJoueur1.get(pListeBougerNavire).taille) + 1) , 1, Jeu.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, Jeu.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[3]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
@@ -408,7 +414,7 @@ public class IA {
                 nPlateau = 1+ (int) (Math.random() * (nMaxNavire));         //On génère aléatoirement un numéros de navire
             }
             
-            Object retourPlateau = Jeu.plateauDeJeu.get(xTire, yTire, 2, 0);          //On récupère les informations du point ou on veut tirer
+            Object retourPlateau = Jeu.plateauDeJeu.get(xTire, yTire, 3, 0);          //On récupère les informations du point ou on veut tirer
             if(retourPlateau == (Object) "0") choixCoordonneesTir = true;           //Si le point n'a jamais été touché on autorise la sortie de la boucle de choix de coordonnées de tir
             else if (retourPlateau == (Object) "1" || retourPlateau == (Object) "2") choixCoordonneesTir = false;           //Si le point à déja été touché on ne quitte pas la boucle pour avoir de nouvelle coordonnées
             else if (retourPlateau == (Object) "5") {           //Si les coordonnées son celle d'un sous marin qui a été touché sans être coulé
@@ -444,7 +450,7 @@ public class IA {
         
         /*Effectuer le tir*********************************************/
         Object resultatEmplacement = Jeu.plateauDeJeu.get(xTire, yTire, 0, 0);            //On récupère les informations de la case qui est sur les coordonées de tir
-        if(resultatEmplacement == (Object) "_"){            //Si la case ne contient pas de navire
+        if(resultatEmplacement == (Object) '_'){            //Si la case ne contient pas de navire
             Jeu.plateauDeJeu.modification(xTire, yTire, 3, 0, "1");           //On met sur la grille de tire de l'IA le chiffre 1 (ce qui signifie qu'on a tiré sur cette case sans rien touché)
             nombreDeTir ++;         //On rajoute 1 au nombre de tir
             System.out.println("\n\nC'est raté :(\nQuel échec!");           //On affiche un message qui dit que que l'IA n'a pas touché de navire 
@@ -596,7 +602,7 @@ public class IA {
             System.out.print(ROUGE +"Attention ! \nJe TIRE!!"+RESET); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.println("."); TimeUnit.SECONDS.sleep(1);
             
             /*Effectuer le tir*********************************************/
-            if(Jeu.plateauDeJeu.get(xTire, yTire, 0, 0) == (Object) "_"){            //Si la case ne contient pas de navire
+            if(Jeu.plateauDeJeu.get(xTire, yTire, 0, 0) == (Object) '_'){            //Si la case ne contient pas de navire
                 Jeu.plateauDeJeu.modification(xTire, yTire, 3, 0, "1");           //On met sur la grille de tire de l'IA le chiffre 1 (ce qui signifie qu'on a tiré sur cette case sans rien touché)
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
                 System.out.println("\n\nC'est raté :(\nQuel échec!");           //On affiche un message qui dit que que l'IA n'a pas touché de navire 
@@ -750,7 +756,7 @@ public class IA {
 
                     for (int k=0; k<4 ; k++){
                         for (int l=0; l<4; l++){
-                            if (Jeu.plateauDeJeu.get(xTireFusee+k,yTireFusee+l,0,0)!=(Object)"_") {
+                            if (Jeu.plateauDeJeu.get(xTireFusee+k,yTireFusee+l,0,0)!=(Object)'_') {
                                 if (Jeu.plateauDeJeu.get(xTireFusee+k,yTireFusee+l,3,0)!=(Object)"2") Jeu.plateauDeJeu.modification(xTireFusee+k,yTireFusee+l,3,0,"4");         //Affiche sur la grille de tir du joueur les navires qui ont été touché par la fusée éclairante
                                 
                                 do{
@@ -817,9 +823,10 @@ public class IA {
                         saveCoord[i]=false;
                         
 
-                        if (Jeu.plateauDeJeu.get(xTire, yTire, 3, 0) != (Object) "1" && Jeu.plateauDeJeu.get(xTire, yTire, 3, 0) != (Object) "2" && Jeu.plateauDeJeu.get(xTire, yTire, 3, 0) != (Object) "3"){
+                        if (!Jeu.plateauDeJeu.get(xTire, yTire, 3, 0).equals("1") && !Jeu.plateauDeJeu.get(xTire, yTire, 3, 0).equals("2") && !Jeu.plateauDeJeu.get(xTire, yTire, 3, 0).equals("3")){
                             emplacementSave=true;
                             i=20;
+                            System.out.println("On est la");
                         }
                         else{
                             emplacementSave=false;
@@ -877,7 +884,7 @@ public class IA {
             
 
             /*Effectuer le tir*********************************************/
-            if(Jeu.plateauDeJeu.get(xTire, yTire, 0, 0) == (Object) "_"){            //Si la case ne contient pas de navire
+            if(Jeu.plateauDeJeu.get(xTire, yTire, 0, 0) == (Object) '_'){            //Si la case ne contient pas de navire
                 Jeu.plateauDeJeu.modification(xTire, yTire, 3, 0, "1");           //On met sur la grille de tire de l'IA le chiffre 1 (ce qui signifie qu'on a tiré sur cette case sans rien touché)
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
                 System.out.println("\n\nC'est raté :(\nQuel échec!");           //On affiche un message qui dit que que l'IA n'a pas touché de navire 

@@ -37,9 +37,10 @@ public class Plateau implements Serializable{
            for (int j=0; j<15; j++){
                for (int k=0; k<4; k++){
                     if (k==0 || k==2){              //On différencie les étages où sont les navires et ceux avec les endroits où on lieu les tirs
-                        for (int l=0; l<2; l++){
-                            plateauDeJeu[i][j][k][l]="_";               //On met toutes les cases où on place les navires à la valeur par defaut
-                        }
+                        
+                        plateauDeJeu[i][j][k][0]='_';               //On met toutes les cases où on place les navires à la valeur par defaut
+                        plateauDeJeu[i][j][k][1]=0;
+                    
                     }
                     else {               //On différencie les étages où sont les navires et ceux avec les endroits où on lieu les tirs
                         for (int l=0; l<2; l++){
@@ -98,8 +99,8 @@ public class Plateau implements Serializable{
             Object stocke2 = plateauDeJeu[y1][x1][numeroEtage][1];
             
             if (numeroEtage == 0 || numeroEtage == 2) {                 //On vérifie sur quelle type de grille on est.
-                plateauDeJeu[y1][x1][numeroEtage][0]="_";               //On remet les valeurs par défaut pour ce type de grille
-                plateauDeJeu[y1][x1][numeroEtage][1]="_";
+                plateauDeJeu[y1][x1][numeroEtage][0]='_';               //On remet les valeurs par défaut pour ce type de grille
+                plateauDeJeu[y1][x1][numeroEtage][1]=0;
             }
             else{
                 plateauDeJeu[y1][x1][numeroEtage][0]="0";               //On remet les valeurs par défaut pour ce type de grille
@@ -142,11 +143,11 @@ public class Plateau implements Serializable{
      * @param y La valeur de l'axe y dans la grille du plateau de jeu 
      * @param direction La direction dans le plateaud de jeu (0; Horizontal, 1: Vertical)
      * @param taille La taille du navire
-     * @param nPlateau La numéro du navire stocké dans le plateau
+     * @param pListe La position du navire dans la liste
      * @param lRef La lettre de réfrence du navire
      * @return Retourne true si le placement est possible, false sinon
      */
-    public boolean verifEmplacementVide(int numeroJoueur, int x, int y, int direction, int taille,int nPlateau, char lRef){
+    public boolean verifEmplacementVide(int numeroJoueur, int x, int y, int direction, int taille,int pListe, char lRef){
         
         int numeroEtage= numeroEtage(numeroJoueur,0);               //On calcul l'étage dans le plateau de jeu en fonction de numéro du joueur
         
@@ -158,7 +159,7 @@ public class Plateau implements Serializable{
             for (int i=0; i<taille; i++){               //On fait une boucle pour vérifier chaque emplacment où doit se placer le navire
                 /*On vérifie que l'emplacment est vide et que la lettre de référence  et le numéro de référence du navire est différent*/
                 /*C'est pour évité que la méthode renvoir false dans le cas où on souhaite bouger le navire */
-                if (plateauDeJeu[y][x+i][numeroEtage][0]!="_" && (plateauDeJeu[y][x+i][numeroEtage][1]!=(Object) Flotte.pListeToNPlateau(lRef, nPlateau) || plateauDeJeu[y][x+i][numeroEtage][0]!=(Object) lRef)){
+                if (!plateauDeJeu[y][x+i][numeroEtage][0].equals('_') && (plateauDeJeu[y][x+i][numeroEtage][1]!= (Object) Flotte.pListeToNPlateau(lRef, pListe) || plateauDeJeu[y][x+i][numeroEtage][0]!=(Object) lRef)){
                     return false;               //Si c'est pas le cas, on renvoie false
                 }
             }
@@ -167,7 +168,7 @@ public class Plateau implements Serializable{
             for (int i=0; i<taille; i++){           //On fait une boucle pour vérifier chaque emplacment où doit se placer le navire
                 /*On vérifie que l'emplacment est vide et que la lettre de référence  et le numéro de référence du navire est différent*/
                 /*C'est pour évité que la méthode renvoir false dans le cas où on souhaite bouger le navire */
-                if (plateauDeJeu[y+i][x][numeroEtage][0]!="_" && (plateauDeJeu[y+i][x][numeroEtage][1]!=(Object) Flotte.pListeToNPlateau(lRef, nPlateau) || plateauDeJeu[y+i][x][numeroEtage][0]!=(Object) lRef)){
+                if (!plateauDeJeu[y+i][x][numeroEtage][0].equals('_') && (plateauDeJeu[y+i][x][numeroEtage][1]!= (Object) Flotte.pListeToNPlateau(lRef, pListe) || plateauDeJeu[y+i][x][numeroEtage][0]!=(Object) lRef)){
                     return false;               //Si c'est pas le cas, on renvoie false
                 }
             }

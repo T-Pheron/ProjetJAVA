@@ -1,6 +1,5 @@
 package bataillenaval.view;
 
-import static bataillenaval.controller.Jeu.plateauDeJeu;
 import bataillenaval.model.Plateau;
 import static bataillenaval.model.Plateau.numeroEtage;
 
@@ -93,7 +92,7 @@ public class Affichage {
                             continue;               //On passe au tour suivant de la boucle sans effectuer le reste de la boucle
                         }
                         if (plateauDeJeu.get(i, j, 3, 0).equals("5")){               //Si le joueur adversaire à tirer sur un sous marin mais ne la pas coulé parce-que le navire qu'il a tiré n'était pas un sous marin
-                            System.out.print(CYAN_AR + ROUGE + "S"+ plateauDeJeu.get(i, j, numeroEtage, 1)+RESET_AR +RESET+"|");               //On affiche le sous marin avec la couleur cyan et rouge
+                            System.out.print(CYAN_AR + ROUGE + 'S'+ plateauDeJeu.get(i, j, numeroEtage, 1)+RESET_AR +RESET+"|");               //On affiche le sous marin avec la couleur cyan et rouge
                             continue;               //On passe au tour suivant de la boucle sans effectuer le reste de la boucle
                         }
                     }
@@ -107,7 +106,7 @@ public class Affichage {
                             continue;               //On passe au tour suivant de la boucle sans effectuer le reste de la boucle
                         }
                         if (plateauDeJeu.get(i, j, 1, 0).equals("5")){               //Si le joueur adversaire à tirer sur un sous marin mais ne la pas coulé parce-que le navire qu'il a tiré n'était pas un sous marin
-                            System.out.print(CYAN_AR + ROUGE + "S"+ plateauDeJeu.get(i, j, numeroEtage, 1)+RESET_AR +RESET+"|");               //On affiche le sous marin avec la couleur cyan et rouge
+                            System.out.print(CYAN_AR + ROUGE +'S'+ plateauDeJeu.get(i, j, numeroEtage, 1)+RESET_AR +RESET+"|");               //On affiche le sous marin avec la couleur cyan et rouge
                             continue;               //On passe au tour suivant de la boucle sans effectuer le reste de la boucle
                         }
                     }
@@ -115,7 +114,7 @@ public class Affichage {
                     //**************************
                     /*Sinon on affiche les autres emplacements du plateau de jeu normalement*/
                     
-                    if (plateauDeJeu.get(i, j, numeroEtage, 0).equals("_")){               //Si l'emplacement est vide
+                    if (plateauDeJeu.get(i, j, numeroEtage, 0).equals('_')){               //Si l'emplacement est vide
                         System.out.print("__|");               //On affiche le emplacement vide
                     }
                     if (plateauDeJeu.get(i, j, numeroEtage, 0).equals('U')){               //Si l'emplacement contient un cuirasse
