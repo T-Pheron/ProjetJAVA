@@ -2,17 +2,15 @@ package bataillenaval.controller;
 
 import bataillenaval.view.*;
 import bataillenaval.model.*;
-import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
 
 
-public class Jeu implements Serializable{
+public class Jeu {
     
     //**************************************************************************
-    private static final long serialVersionUID = 1L;            //Runtime définie par l'éditeur
     
     public static Plateau plateauDeJeu = new Plateau();             //Variable qui stocke l'ensemble du plateau de jeu 
     public static List <Flotte> flotteJoueur0 ;               //List qui stocke l'ensemble de la flotte du joueur 0
