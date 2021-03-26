@@ -104,7 +104,7 @@ public class SousMarin extends Flotte{
         yTire--;            //On retire 1 au yTire
 
         int xTire = (int) (xTireChar - 65);             //On convertie la saisie en un entier
-        if ( Jeu.plateauDeJeu.get(xTire,yTire,1,0) == (Object) "1"){            //Si la case choisie a deja ete touche
+        if ( Jeu.plateauDeJeu.get(xTire,yTire,1,0).equals("1")){            //Si la case choisie a deja ete touche
             int choix=0;            //On declare une variable qui stock le choix du joueur 
             System.out.println("Voulez vous vraiment tirer sur cette case ? Elle à deja été bombardée");            //On lui demande si il veut vraiment tirer sur cette case
             System.out.println("1.OUI \n2.NON");           //On affiche les choix du joueur 
