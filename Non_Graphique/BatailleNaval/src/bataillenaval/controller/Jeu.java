@@ -226,7 +226,8 @@ public class Jeu implements Serializable{
             int x, y, direction;            //Variable qui permet de stocke les informations générées aléatoirement
             
             x= (int) (Math.random()*15);            //On stocke une valeur aléatoire comprise entre 0 et 14 dans x
-            y= (int) (Math.random()*15);            //On stocke une valeur aléatoire comprise entre 0 et 14 dans y
+            y= (int) (Math.random()*15);    
+                    //On stocke une valeur aléatoire comprise entre 0 et 14 dans y
             direction= (int) (Math.random()*2);            //On stocke une valeur aléatoire 0 ou 1 dans direction (0: Horizontal, 1: Vertical)
             
             if (plateauDeJeu.verifEmplacementVide(numeroJoueur, x, y, direction, flotte.get(pListe).taille, flotte.get(pListe).nRef, flotte.get(pListe).lRef)==true){            //Si l'emplacement est possible
