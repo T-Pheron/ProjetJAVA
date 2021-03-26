@@ -68,7 +68,7 @@ public class Affichage {
         int numeroEtage= numeroEtage(numeroJoueur,numeroGrille);                //On calcul le numéro de l'étage demandé
         
         /*En fonction du numéro d'étage on affiche différente chose*/
-        if (numeroEtage == 0 || numeroEtage == 2){              //Si on est sur la grille des bateau du joueur on affiche le titre
+        if (numeroEtage == 0 || numeroEtage == 2){              //Si on est sur la grille des navire du joueur on affiche le titre
             System.out.println(GRIS_AR + BLANC +"          Voici la grille de vos navires        "+RESET_AR +RESET);
             System.out.println(B_JAUNE_AR + BLANC +"  | A| B| C| D| E| F| G| H| I| J| K| L| M| N| O|"+RESET_AR +RESET);             //On affiche les repères pour l'utilisateur
         
@@ -83,7 +83,7 @@ public class Affichage {
                     /*On utilise cette partie pour pouvoir afficher les tires que l'adversaire a effectué sur le plateau de jeu du joueur*/
                     
                     if (numeroJoueur==0){               //On vérifie le numéro du joueur pour pouvoir différencier l'étage dans la plateau de jeu
-                        if (plateauDeJeu.get(i, j, 3, 0).equals("1") && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('U')&& !plateauDeJeu.get(i, j, numeroEtage, 0).equals('C') && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('D') && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('S')){               //Si le joueur adversaire à tirer à cette emplacement mais n'a rien touché. On exclu aussi le faite que le joueur est bien pu déplacer son bateau sur cette case à un tour n+1
+                        if (plateauDeJeu.get(i, j, 3, 0).equals("1") && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('U')&& !plateauDeJeu.get(i, j, numeroEtage, 0).equals('C') && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('D') && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('S')){               //Si le joueur adversaire à tirer à cette emplacement mais n'a rien touché. On exclu aussi le faite que le joueur est bien pu déplacer son navire sur cette case à un tour n+1
                             System.out.print(CYAN_AR + B_ROUGE + "XX" + RESET_AR + RESET +"|");               //On affiche l'information sur la grille de jeu avec des croix rouge brillant et un fond cyan
                             continue;               //On passe au tour suivant de la boucle sans effectuer le reste de la boucle
                         }
@@ -97,7 +97,7 @@ public class Affichage {
                         }
                     }
                     else {               //Si c'est l'autre joueur (IA)
-                        if (plateauDeJeu.get(i, j, 1, 0).equals("1") && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('U')&& !plateauDeJeu.get(i, j, numeroEtage, 0).equals('C') && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('D') && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('S')){               //Si le joueur adversaire à tirer à cette emplacement mais n'a rien touché. On exclu aussi le faite que le joueur est bien pu déplacer son bateau sur cette case à un tour n+1
+                        if (plateauDeJeu.get(i, j, 1, 0).equals("1") && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('U')&& !plateauDeJeu.get(i, j, numeroEtage, 0).equals('C') && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('D') && !plateauDeJeu.get(i, j, numeroEtage, 0).equals('S')){               //Si le joueur adversaire à tirer à cette emplacement mais n'a rien touché. On exclu aussi le faite que le joueur est bien pu déplacer son navire sur cette case à un tour n+1
                             System.out.print(CYAN_AR + B_ROUGE + "XX" + RESET_AR + RESET +"|");               //On affiche l'information sur la grille de jeu avec des croix rouge brillant et un fond cyan
                             continue;               //On passe au tour suivant de la boucle sans effectuer le reste de la boucle
                         }

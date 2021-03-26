@@ -8,22 +8,24 @@ import java.util.concurrent.TimeUnit;
 
 public class Cuirasse extends Flotte{
     
-    
+    //**************************************************************************
+    private static final long serialVersionUID = 2755963685973214786L;      //Runtine définie par le logiciel
+    private final Scanner scCuirasse = new Scanner(System.in);          //On initialise une varible de type scanner pour récupérer les saisis de l'utilisateur
+
+
+    //**************************************************************************
     /**
-     *
+     * Constructeur de la classe Cuirasse.
+     * Il permet de créer un un navire de type cuirasse 
      */
-    private static final long serialVersionUID = 2755963685973214786L;
-    private final Scanner scCuirasse = new Scanner(System.in);
-
-
     public Cuirasse(){
-        etat = true;
-        nom = "cuirassé";
-        taille = 7;
-        coordonnees = new int [taille][3];
-        puissance = 9;
-        lRef = 'U';
-        nRef =1;
+        etat = true;            //On met l'état du navire à true
+        nom = "cuirassé";           //On donne au navire son nom
+        taille = 7;         //On stock la taille du navire
+        coordonnees = new int [taille][3];          //Variable qui stocke les coordonnées du navire. 0 pour une coordonnées qui a été touché, 1 pour une coordonnées non touché.
+        puissance = 9;          //On stocke la puissance du navire 
+        lRef = 'U';             //On stocke la lettre de référence du navire
+        nRef =1;            //On donne un numéro de référence par défaut au navire
     }
     
     
@@ -142,7 +144,7 @@ public class Cuirasse extends Flotte{
         if (Jeu.plateauDeJeu.get(xTire,yTire,2,0) == (Object) 'S'){
             if (Jeu.plateauDeJeu.get(xTire,yTire,1,0) != (Object) "2") Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"5");
 
-            int nPlateauAdv;            //Le numéro du plateau du bateau adverse
+            int nPlateauAdv;            //Le numéro du plateau du navire adverse
             int pListeAdv;              //La position dans la liste des navires de l'adversaire      
 
             nPlateauAdv = (int) Jeu.plateauDeJeu.get(xTire,yTire,2,1);         //On récupère le numéro de plateau de l'adversaire aux coordonnées où le joueur veut tirer
@@ -181,14 +183,14 @@ public class Cuirasse extends Flotte{
 
         int numeroJoueurAdv = -1;           //Le numéro du joueur mit à -1 par defaut
         char lRefAdv = 'A';         //La lettre de référence du navire mit à A par defaut
-        int nPlateauAdv;            //Le numéro du plateau du bateau adverse
+        int nPlateauAdv;            //Le numéro du plateau du navire adverse
         int pListeAdv;              //La position dans la liste des navires de l'adversaire
         
         if (numeroJoueur==0) numeroJoueurAdv=1;         //On déduit le numéro du joueur adverse en fonction du joueur
         if (numeroJoueur==1) numeroJoueurAdv=0;         
 
         System.out.println(Plateau.numeroEtage(numeroJoueurAdv,0));
-        lRefAdv= (char) Jeu.plateauDeJeu.get(xTire,yTire,Plateau.numeroEtage(numeroJoueurAdv,0),0);         //On récupère la lettre de référence du bateau de l'adversaire aux coordonnées où le joueur veut tirer 
+        lRefAdv= (char) Jeu.plateauDeJeu.get(xTire,yTire,Plateau.numeroEtage(numeroJoueurAdv,0),0);         //On récupère la lettre de référence du navire de l'adversaire aux coordonnées où le joueur veut tirer 
         nPlateauAdv = (int) Jeu.plateauDeJeu.get(xTire,yTire,Plateau.numeroEtage(numeroJoueurAdv,0),1);         //On récupère le numéro de plateau de l'adversaire aux coordonnées où le joueur veut tirer
         pListeAdv=nPlateauToPListe(lRefAdv, nPlateauAdv);           //On en deduit la position dans la liste du navire de l'adversaire
 
@@ -219,7 +221,7 @@ public class Cuirasse extends Flotte{
                     }
                 }
                 if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("\nCHEE PRENDS CA CHACAL j'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    System.out.println("\nYes ! J'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                     TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
@@ -248,7 +250,7 @@ public class Cuirasse extends Flotte{
                     }
                 }
                 if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("\nCHEE PRENDS CA CHACAL j'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    System.out.println("\nYes ! J'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                     TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
@@ -282,11 +284,11 @@ public class Cuirasse extends Flotte{
                         Jeu.plateauDeJeu.modification(xTire+2,yTire,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
                 }
-                System.out.println("\n"+VERT+"EH BIM TOUCHE ! \nCroquette !"+RESET);           //On affiche un message disant que le joueur a bien touché un navire
+                System.out.println("\n"+VERT+"TOUCHE ! \n"+RESET);           //On affiche un message disant que le joueur a bien touché un navire
                 TimeUnit.SECONDS.sleep(3);
 
                 if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("\nBien joué ca gasson ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    System.out.println("\nBien joué ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                     TimeUnit.SECONDS.sleep(3);   
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
@@ -314,11 +316,11 @@ public class Cuirasse extends Flotte{
                         Jeu.plateauDeJeu.modification(xTire,yTire+2,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
                 }
-                System.out.println("\n"+VERT+"EH BIM TOUCHE ! \nCroquette !"+RESET);           //On affiche un message disant que le joueur a bien touché un navire
+                System.out.println("\n"+VERT+"TOUCHE ! \n"+RESET);           //On affiche un message disant que le joueur a bien touché un navire
                 TimeUnit.SECONDS.sleep(3);
 
                 if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("\nBien joué ca gasson ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                    System.out.println("\nBien joué ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                     TimeUnit.SECONDS.sleep(3);   
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé

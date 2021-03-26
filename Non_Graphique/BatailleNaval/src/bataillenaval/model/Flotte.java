@@ -6,22 +6,20 @@ import java.io.Serializable;
 
 public abstract class Flotte implements Serializable{
     
-    
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7786772327657687295L;
+    //**************************************************************************
+    private static final long serialVersionUID = 7786772327657687295L;          //Runtine définie par le logiciel
     public boolean etat = false;        //Variable qui permet de connître si le navire est coulé. True si le navire n'est pas coulé, false sinon
     public String nom;              //Variable qui permet de stocker le nom du navire
     public int [][] coordonnees;        //Variable qui stock les coordonnées du navire
-    public int direction;               //Variable qui stock la direction du bateau. 0 s'il est à la horizontale 1 s'il est à la vertical.
-    public int taille;                  //Variable qui stock la taille du bateau
+    public int direction;               //Variable qui stock la direction du navire. 0 s'il est à la horizontale 1 s'il est à la vertical.
+    public int taille;                  //Variable qui stock la taille du navire
     public int puissance;           //Variable qui stock la puissance de tir du navire
-    public char lRef;               //Variable qui stock la lettre de référence du bateau
-    public int nRef;                //Variable qui stock le numéro de référence du bateau
-    public boolean premierTire = true;      //Variable utilisé pour savoir si c'est le premier tir d'un bateau
+    public char lRef;               //Variable qui stock la lettre de référence du navire
+    public int nRef;                //Variable qui stock le numéro de référence du navire
+    public boolean premierTire = true;      //Variable utilisé pour savoir si c'est le premier tir d'un navire
     
+
+    //**************************************************************************
     /**
      * Constructeur des variable de type stock.
      */
@@ -29,15 +27,18 @@ public abstract class Flotte implements Serializable{
         
     }
     
+
+    //**************************************************************************
     public abstract int tir() throws InterruptedException;
     public abstract int impact(int xTire, int yTire, int numeroJoueur) throws InterruptedException;
     public abstract void nRef (int pListe);
     
+
     //**************************************************************************
     /**
      * Méthode qui permet de renvoyer la position dans la liste.
-     * Elle permet avec le numéro présent sur le plateau de renvoyer la position du bateau dans la liste avec les navires.
-     * @param lRef La lettre de référence du bateau
+     * Elle permet avec le numéro présent sur le plateau de renvoyer la position du navire dans la liste avec les navires.
+     * @param lRef La lettre de référence du navire
      * @param pListe La position dans la liste
      * @return Retourne la position dans la liste du navire
      */
@@ -61,7 +62,7 @@ public abstract class Flotte implements Serializable{
      */
     public static int nPlateauToNRef(char lRef, int nPlateau){
         
-        if (lRef=='U') return nPlateau;//On déduit le numéro de référence du bateau
+        if (lRef=='U') return nPlateau;//On déduit le numéro de référence du navire
         if (lRef=='C') return nPlateau+9;
         if (lRef=='D') return nPlateau+19;
         if (lRef=='S') return nPlateau+29;
@@ -91,7 +92,7 @@ public abstract class Flotte implements Serializable{
     /**
      * Méthode qui permet de savoir si un navire est coulé.
      * Vérifie si le navire a été coulé où pas
-     * @return True si le bateau n'est pas coulé, false sinon
+     * @return True si le navire n'est pas coulé, false sinon
      */
     public boolean navireVivant(){
         for (int j=0; j<taille; j++){           //On parcour tous les états des coordonées
