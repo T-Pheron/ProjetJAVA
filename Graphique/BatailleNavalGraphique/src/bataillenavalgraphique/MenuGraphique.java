@@ -37,7 +37,7 @@ public class MenuGraphique{
         ImageView bateauImageHover = new ImageView(getClass().getResource("/images/bateauHover.png").toString());
         ImageView chargerImage = new ImageView(getClass().getResource("/images/loading.png").toString());
         ImageView chargerImageHover = new ImageView(getClass().getResource("/images/loadingHover.png").toString());
-        ImageView helpImage = new ImageView(getClass().getResource("/images/help.png").toString());
+        ImageView helpImage = new ImageView(getClass().getResource("/images/helpI.png").toString());
         ImageView helpImageHover = new ImageView(getClass().getResource("/images/helpHove.png").toString());
         ImageView quitterImage  =new ImageView(getClass().getResource("/images/quitter.png").toString());
         ImageView quitterImageHover =new ImageView(getClass().getResource("/images/quitterHover.png").toString());
