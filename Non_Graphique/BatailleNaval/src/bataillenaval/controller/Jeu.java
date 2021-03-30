@@ -45,7 +45,7 @@ public class Jeu {
         Jeu.flotteJoueur1 = flotteJoueur1;
     }
     
-    
+     
     //**************************************************************************
     /*Variables utilisées pour modifier les couleurs du texte*/
     /*Elles doivent être placées devant le texte qui doit être mis en couleur avec un +*/
@@ -107,7 +107,7 @@ public class Jeu {
             
             placementFlotte(flotteJoueur0, 0);            //On place aléatoirement la flotte du joueur 0 sur sa grille de navire
             placementFlotte(flotteJoueur1, 1);            //On place aléatoirement la flotte du joueur 1 sur sa grille de navire
-        
+
             niveauIA=0;         //On met le niveau de l'IA par d'éfaut à 0
             numeroJoueur=0;         //On met le joueur qui joue par défaut à 0
         

@@ -14,8 +14,8 @@ public class LignePlateau {
     
     public HBox lignePlateau(int y,CaseBouton[][] pableauBoutonNavireJoueur){
         for (int x=0; x<15;x++){
-            pableauBoutonNavireJoueur[x][y]= new CaseBouton(x, y);
-            rootAffichagePlateau.getChildren().add(pableauBoutonNavireJoueur[x][y].getButton());
+            pableauBoutonNavireJoueur[y][x]= new CaseBouton(y, x);
+            rootAffichagePlateau.getChildren().add(pableauBoutonNavireJoueur[y][x].getButton());
         }
         return rootAffichagePlateau;
     }

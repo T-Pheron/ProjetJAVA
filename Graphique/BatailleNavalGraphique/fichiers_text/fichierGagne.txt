@@ -1,0 +1,9 @@
+COMMENT GAGNER:
+Une partie de bataille navale se termine lorsque l’un des joueurs n’a plus de navires ou quand il ne lui reste plus de sous-marin.
+
+
+PETITE ASTUCE:
+Pour gagner plus rapidement, vous pouvez jouer vos tirs en croix,
+étant donné que le plus petit navire fait une case alors vous ne 
+pourrez éviter aucun autre bateau sur votre chemin. 
+Cette méthode est infaillible car elle est purement logique

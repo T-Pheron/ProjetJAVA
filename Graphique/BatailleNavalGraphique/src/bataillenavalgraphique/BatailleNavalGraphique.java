@@ -14,7 +14,7 @@ public class BatailleNavalGraphique extends Application {
     public void start(Stage primaryStage) {
         
         MenuGraphique menu = new MenuGraphique();
-        menu.menuPrincipal();
+        menu.menuPrincipalGraphique();
     }
 
     /**
