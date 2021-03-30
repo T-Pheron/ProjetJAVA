@@ -249,4 +249,14 @@ public class SousMarin extends Flotte{
         }
         return 0;           //On retourne 0 si il y a un problème 
     }
+
+    @Override
+    public int tir(int xTire, int yTire) throws InterruptedException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int impactGraphique(int xTire, int yTire, int numeroJoueur) throws InterruptedException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

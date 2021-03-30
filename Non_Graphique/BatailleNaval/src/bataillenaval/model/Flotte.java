@@ -30,7 +30,9 @@ public abstract class Flotte implements Serializable{
 
     //**************************************************************************
     public abstract int tir() throws InterruptedException;
+    public abstract int tir(int xTire, int yTire) throws InterruptedException;
     public abstract int impact(int xTire, int yTire, int numeroJoueur) throws InterruptedException;
+    public abstract int impactGraphique(int xTire, int yTire, int numeroJoueur) throws InterruptedException;
     public abstract void nRef (int pListe);
     
 

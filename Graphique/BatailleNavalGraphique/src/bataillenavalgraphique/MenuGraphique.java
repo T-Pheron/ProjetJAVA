@@ -213,7 +213,7 @@ public class MenuGraphique{
         
         GridPane rootChoixNiveauIA = new GridPane();
         rootChoixNiveauIA.setPadding(new Insets(20));
-        rootChoixNiveauIA.setVgap(20);
+        rootChoixNiveauIA.setVgap(25);
         
         Label titreNiveauIA = new Label("Veuillez chosir le niveau de l'IA :");
         titreNiveauIA.setStyle (
@@ -233,21 +233,49 @@ public class MenuGraphique{
         lancementChoixNiveauIA.setScene(sceneNiveauIA);
     }
     
+    ImageView retourImage = new ImageView ("/images/retourImage.png");
+    ImageView retourImageHover = new ImageView ("/images/retourImageHover.png");
+    ImageView retourHome = new ImageView ("/images/retourHome.png");
+    ImageView retourHomeHover = new ImageView ("/images/retourHomeHover.png");
+    BackgroundImage fondEcranMenuPrincipal = new BackgroundImage(new Image("/images/fondAide.png"), 
+            BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+
     
-    
+
+    public Button boutonRetour (Stage stage, Scene sceneDeRetour){
+
+        Button boutonRetour = new Button ();
+        boutonRetour.setPrefWidth(100);
+        boutonRetour.setGraphic(retourImage);
+        boutonRetour.setStyle ("-fx-background-color: rgba(120,160,175,0.50)");
+        boutonRetour.setOnMouseEntered (e-> {
+            boutonRetour.setGraphic (retourImageHover);
+            boutonRetour.setStyle ("-fx-background-color: rgba(82,127,143,0.50)");
+                });
+        boutonRetour.setOnMouseExited (e-> {
+            boutonRetour.setGraphic (retourImage);
+            boutonRetour.setStyle ("-fx-background-color: rgba(120,160,175,0.50)");
+                });
+        boutonRetour.setOnAction((ActionEvent eventLancementJeu) -> {
+            stage.setScene(sceneDeRetour);
+        }); 
+
+        return boutonRetour;
+    }
+
+
+
     public Scene  menuAide (Stage stage) {
 
-        ImageView retourImage = new ImageView ("/images/retourImage.png");
-        ImageView retourImageHover = new ImageView ("/images/retourImageHover.png");
-        BackgroundImage fondEcranMenuPrincipal = new BackgroundImage(new Image("/images/fondAide.png"), 
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        
 
         Button boutonPourCommencer = new Button ("Pour commencer");
         Button boutonFase2Tir = new Button ("La phase de tir");
         Button boutonFlotteFct = new Button ("Flotte et fonctionnalité");
         Button boutonLegendSymb = new Button ("Légende des symboles");
         Button boutonGagnerAstuce = new Button ("Pour gagner et astuces");
-        Button boutonRetour = new Button ();
+
+        
 
         VBox boutonAide = new VBox();
 
@@ -268,7 +296,9 @@ public class MenuGraphique{
                     +                "-fx-font-size: 13pt;"
                     +                "-fx-background-color: rgba(120,160,175,0.50);"
                     +                "-fx-font-weight: bold;"));
-        boutonPourCommencer.setOnAction((ActionEvent eventLancementJeu) -> {});
+        boutonPourCommencer.setOnAction((ActionEvent eventLancementJeu) -> {
+            stage.setScene(scenePourCommencer(stage));
+        });
         
         
         boutonFase2Tir.setPrefWidth(1000);
@@ -350,26 +380,11 @@ public class MenuGraphique{
                     +                "-fx-font-size: 13pt;"
                     +                "-fx-background-color: rgba(120,160,175,0.50);"
                     +                "-fx-font-weight: bold;"));
-        boutonRetour.setOnAction((ActionEvent eventLancementJeu) -> {
+        boutonGagnerAstuce.setOnAction((ActionEvent eventLancementJeu) -> {
 
         }); 
         //boutonGagnerAstuce.setOnAction((ActionEvent eventLancementJeu) -> {});
-        
-        
-        boutonRetour.setPrefWidth(100);
-        boutonRetour.setGraphic(retourImage);
-        boutonRetour.setStyle ("-fx-background-color: rgba(120,160,175,0.50)");
-        boutonRetour.setOnMouseEntered (e-> {
-            boutonRetour.setGraphic (retourImageHover);
-            boutonRetour.setStyle ("-fx-background-color: rgba(82,127,143,0.50)");
-                });
-        boutonRetour.setOnMouseExited (e-> {
-            boutonRetour.setGraphic (retourImage);
-            boutonRetour.setStyle ("-fx-background-color: rgba(120,160,175,0.50)");
-                });
-        boutonRetour.setOnAction((ActionEvent eventLancementJeu) -> {
-            stage.setScene(sceneLancementMenuPrincipal(stage));
-        }); 
+
         
 
         
@@ -386,13 +401,319 @@ public class MenuGraphique{
         rootMenuAide.setBackground( new Background(fondEcranMenuPrincipal));
         rootMenuAide.setPadding(new javafx.geometry.Insets(20));
         rootMenuAide.add(titre,0, 0);
-        rootMenuAide.add(boutonRetour,0,1);
+        rootMenuAide.add(boutonRetour(stage, sceneLancementMenuPrincipal(stage)),0,1);
         rootMenuAide.add(boutonAide,0, 2, 2, 6);
         
 
         Scene scene = new Scene (rootMenuAide);
 
         return scene;
+    }
+
+    public Scene scenePourCommencer (Stage stage){
+        Button boutonRetourMenuPrincipal = new Button ("Menu Principal");
+        boutonRetourMenuPrincipal.setGraphic(retourHomeHover);
+        boutonRetourMenuPrincipal.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                +                "-fx-font-size: 13pt;"
+                +                "-fx-background-color: rgba(120,160,175,0.50);");
+        boutonRetourMenuPrincipal.setOnMouseEntered (e->
+        boutonRetourMenuPrincipal.setGraphic(retourHome)); 
+        boutonRetourMenuPrincipal.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(82,127,143,0.50);");
+        boutonRetourMenuPrincipal.setOnMouseExited (e-> 
+        boutonRetourMenuPrincipal.setGraphic(retourHomeHover));
+        boutonRetourMenuPrincipal.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+        boutonRetourMenuPrincipal.setOnAction((ActionEvent eventLancementJeu) -> {
+            stage.setScene(sceneLancementMenuPrincipal(stage));
+        }); 
+
+        Label labelTitrePourCommencer = new Label ("Pour Commencer");
+        labelTitrePourCommencer.setStyle (
+                  "-fx-font-police: 'Tw Cen MT Condensed' ;"
+                + " -fx-font-size: 30pt; "
+                + "-fx-text-fill: BLACK; "
+                + "-fx-font-weight: bold; ");
+
+        Label labelPourCommencer = new Label ("COMMENT COMMENCER UNE PARTIE DE BATAILLE NAVALE ?\n Au début du jeu, tout les navires sont placés de manière aléatoire sur la grille.\n"
+            +   "Le joueur pourra par la suite les deplacer a sa guise vers le haut ou vers le bas d'une seule case par tour. "
+            +   "Le but est de détruire tous les navires de l'adversaire.\n"
+            +   "Bien entendu, le joueur ne voit pas la grille de son adversaire.\n"
+            +   "Un à un, les joueurs se tire dessus pour détruire les navires ennemis.\n"
+            +   "Vous pouvez pas jouer deux fois de suite et doivez attendre le tour du joueur adverse.\n");
+            labelPourCommencer.setStyle (
+                "-fx-font-police: 'Tw Cen MT Condensed' ;"
+              + " -fx-font-size: 13pt; "
+              + "-fx-text-fill: BLACK; ");
+
+        GridPane rootPourCommencer = new GridPane();
+        rootPourCommencer.setPadding(new javafx.geometry.Insets(20));
+        rootPourCommencer.setVgap(20);
+        rootPourCommencer.add(labelTitrePourCommencer,0,0);
+        HBox rootRetour = new HBox(5); rootRetour.getChildren().addAll(boutonRetour(stage, menuAide(stage)),boutonRetourMenuPrincipal);
+        rootPourCommencer.add(rootRetour,0,1);
+        rootPourCommencer.add(labelPourCommencer,0,2,3,1);
+        rootPourCommencer.setBackground( new Background(fondEcranMenuPrincipal));
+        Scene scenePourCommencer = new Scene(rootPourCommencer);
+        return scenePourCommencer;
+    }
+
+    public Scene sceneFaz2Tir (Stage stage){
+        Button boutonRetourMenuPrincipal = new Button ("Menu Principal");
+        boutonRetourMenuPrincipal.setGraphic(retourHomeHover);
+        boutonRetourMenuPrincipal.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                +                "-fx-font-size: 13pt;"
+                +                "-fx-background-color: rgba(120,160,175,0.50);");
+        boutonRetourMenuPrincipal.setOnMouseEntered (e->
+        boutonRetourMenuPrincipal.setGraphic(retourHome)); 
+        boutonRetourMenuPrincipal.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 13pt;"
+            +                "-fx-background-color: rgba(82,127,143,0.50);"
+            +                "-fx-font-weight: bold;");
+        boutonRetourMenuPrincipal.setOnMouseExited (e-> 
+        boutonRetourMenuPrincipal.setGraphic(retourHomeHover));
+        boutonRetourMenuPrincipal.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 13pt;"
+        +                "-fx-background-color: rgba(120,160,175,0.50);"
+        +                "-fx-font-weight: bold;");
+        boutonRetourMenuPrincipal.setOnAction((ActionEvent eventLancementJeu) -> {
+            stage.setScene(sceneLancementMenuPrincipal(stage));
+        }); 
+
+        Label labelTitreFaz2tir = new Label ("Pour tirer");
+        labelTitreFaz2tir.setStyle (
+                  "-fx-font-police: 'Tw Cen MT Condensed' ;"
+                + " -fx-font-size: 30pt; "
+                + "-fx-text-fill: BLACK; "
+                + "-fx-font-weight: bold; ");
+
+        Label labelFaz2Tir = new Label ("LA PHASE DE TIRE:\n"
+            + "le joueur indique la case où il souhaite tirer, par exemple: H7 qui correspond à la case au\n"
+            + "croisement de la colonne H et de la ligne 7 sur les côtés des grilles.\n"
+            + "Si vous tirez sur un navire ennemi, le jeu vous indiquera si vous l'avez touché.\n"
+            + "Si vous ne touchez pas de navire, le jeu vous indiquera si vous l'avez raté.\n"
+            + "Si un des navire est entièrement touché, le jeu vous indiquera que vous avez coulé un navire.");
+            labelFaz2Tir.setStyle (
+                "-fx-font-police: 'Tw Cen MT Condensed' ;"
+              + " -fx-font-size: 13pt; "
+              + "-fx-text-fill: BLACK; ");
+
+        GridPane rootFaz2Tir = new GridPane();
+        rootFaz2Tir.setPadding(new javafx.geometry.Insets(20));
+        rootFaz2Tir.setVgap(20);
+        rootFaz2Tir.add(labelTitreFaz2tir,0,0);
+        HBox rootRetour = new HBox(5); rootRetour.getChildren().addAll(boutonRetour(stage, menuAide(stage)),boutonRetourMenuPrincipal);
+        rootFaz2Tir.add(rootRetour,0,1);
+        rootFaz2Tir.add(labelFaz2Tir,0,2,3,1);
+        rootFaz2Tir.setBackground( new Background(fondEcranMenuPrincipal));
+        Scene sceneFaz2Tir = new Scene(rootFaz2Tir);
+        return sceneFaz2Tir;
+    }
+
+
+
+
+    public Scene sceneFlotteFct (Stage stage){
+        Button boutonRetourMenuPrincipal = new Button ("Menu Principal");
+        boutonRetourMenuPrincipal.setGraphic(retourHomeHover);
+        boutonRetourMenuPrincipal.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                +                "-fx-font-size: 13pt;"
+                +                "-fx-background-color: rgba(120,160,175,0.50);");
+        boutonRetourMenuPrincipal.setOnMouseEntered (e-> 
+        boutonRetourMenuPrincipal.setGraphic(retourHome));
+        boutonRetourMenuPrincipal.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(82,127,143,0.50);"
+                    +                "-fx-font-weight: bold;");
+        boutonRetourMenuPrincipal.setOnMouseExited (e-> 
+        boutonRetourMenuPrincipal.setGraphic(retourHomeHover));
+        boutonRetourMenuPrincipal.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);"
+                    +                "-fx-font-weight: bold;");
+        boutonRetourMenuPrincipal.setOnAction((ActionEvent eventLancementJeu) -> {
+            stage.setScene(sceneLancementMenuPrincipal(stage));
+        }); 
+
+        Label labelTitreFlotteFct = new Label ("Pour les navires");
+        labelTitreFlotteFct.setStyle (
+                  "-fx-font-police: 'Tw Cen MT Condensed' ;"
+                + " -fx-font-size: 30pt; "
+                + "-fx-text-fill: BLACK; "
+                + "-fx-font-weight: bold; ");
+
+        Label labelFlotteFct = new Label ("LES DIFFERENTS NAVIRES ET LEURS FONCTIONNALITEES:"
+
+
+        +"Il y a 4 types de navires:\n"
+        +"\n"
+        +"    -Le cuirassé : le plus grand navire de votre flotte (7 cases), il est également le plus puissant.\n" 
+        +"                   Lors de ces tires, il touche 2 cases de part et d'autre du point d'impact que vous avez decidé.\n"
+        +"                 Il ne peut pas couler les sous-marins.\n"
+        +"\n"
+        +"    -Le croiseur : Il est un peu plus petit que le cuirassé (5 cases) mais garde les mêmes fonctionnalitées.\n"
+        +"                  Lors de ces tires, il touche 1 cases de part et d'autre du point d'impact que vous avez decidé.\n"
+        +"                   Il ne peut pas couler les sous-marins.\n"
+        +"\n"
+        +"    -Le destroyer : Il est petit (3 cases) et ne fait des dégats uniquement au point d'impact que vous avez décidé.\n"
+        +"                    Il a cependant une capacité spéciale : Son premier tir est en fait une fusée éclairante.\n"
+        +"                    Couvrant une surface de 4*4 cases, vous serez capable de voir si il y a des navires dans cette zone.\n"
+        +"                    Le point d'impact de la fusée est tout en haut à gauche de la surface. Puis reprend des tirs normaux \n"
+        +"                    la où vous le décidez. Il ne peut pas couler les sous-marins.\n"
+        +"\n"                    
+        +"    -Le sous-marin : Il est tout petit (1 case) mais est capable de couler tout les navires sur son chemin.\n"
+        +"                     Son tir fait également 1 case à l'endroit que vous aurez decidé.\n"
+        +"\n"
+        +"Dans votre flotte, vous avez 10 navires: 1 cuirassé, 2 croiseurs, 3 destroyers et 4 sous-marins.\n");
+
+            labelFlotteFct.setStyle (
+                "-fx-font-police: 'Tw Cen MT Condensed' ;"
+              + " -fx-font-size: 13pt; "
+              + "-fx-text-fill: BLACK; ");
+
+        GridPane rootFlotteFct = new GridPane();
+        rootFlotteFct.setPadding(new javafx.geometry.Insets(20));
+        rootFlotteFct.setVgap(20);
+        rootFlotteFct.add(labelTitreFlotteFct ,0,0);
+        HBox rootRetour = new HBox(5); rootRetour.getChildren().addAll(boutonRetour(stage, menuAide(stage)),boutonRetourMenuPrincipal);
+        rootFlotteFct.add(rootRetour,0,1);
+        rootFlotteFct.add(labelFlotteFct,0,2,3,1);
+        rootFlotteFct.setBackground( new Background(fondEcranMenuPrincipal));
+        Scene sceneFlotteFct = new Scene(rootFlotteFct);
+        return sceneFlotteFct;
+    }
+
+
+
+    public Scene sceneLegendSymb (Stage stage){
+        Button boutonRetourMenuPrincipal = new Button ("Menu Principal");
+        boutonRetourMenuPrincipal.setGraphic(retourHomeHover);
+        boutonRetourMenuPrincipal.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                +                "-fx-font-size: 13pt;"
+                +                "-fx-background-color: rgba(120,160,175,0.50);");
+        boutonRetourMenuPrincipal.setOnMouseEntered (e-> 
+        boutonRetourMenuPrincipal.setGraphic(retourHome));
+        boutonRetourMenuPrincipal.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(82,127,143,0.50);");
+        boutonRetourMenuPrincipal.setOnMouseExited (e-> 
+        boutonRetourMenuPrincipal.setGraphic(retourHomeHover));
+        boutonRetourMenuPrincipal.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+        boutonRetourMenuPrincipal.setOnAction((ActionEvent eventLancementJeu) -> {
+            stage.setScene(sceneLancementMenuPrincipal(stage));
+        }); 
+
+        Label labelTitreLegendSymb = new Label ("Pour les symboles");
+        labelTitreLegendSymb.setStyle (
+                  "-fx-font-police: 'Tw Cen MT Condensed' ;"
+                + " -fx-font-size: 30pt; "
+                + "-fx-text-fill: BLACK; "
+                + "-fx-font-weight: bold; ");
+
+        Label labelLegendSymb = new Label ("LES DIFFERENTS SYMBOLES QUI PEUVENT ETRE PRESENT SUR LA GRILLE:\n"
+        +"Légende grille de tir\n"
+        + "Il y a deux grilles qui vont vous etres affichées, la grille des navires et la grille des tirs.\n"
+        + "Couleur des grilles :\n"
+        +"\n"
+        + "     -Grille des navires : Jaune\n"
+        + "     -Grille des tirs : Bleu marine\n" 
+        + "\n"
+        + "Les navires ont différentes couleurs suivant leur catégorie.\n"
+        + "Couleur des navires :\n"
+        + "\n"
+        + "     -Cuirassé : Rouge\n"
+        + "     -Croiseur : Violet\n"
+        + "    -Destroyer : Bleu marine\n"
+        + "     -Un sous-marin : Vert\n"
+        + "\n"
+        
+        + "Sur la grille des navires :\n"
+        
+        + "     -La casse d’un bateau toucher devient rouge foncé avec ses identifiants en rouge.\n"
+        + "     -Un sous-marin touché mais non coulé devient cyan avec ses coordonnées en rouge.\n"
+        + "     -Un emplacement devient bleu vert avec des croix rouge si un adversaire a tiré dessus.\n"
+        + "\n"
+        
+        + "Sur la grille des tires :\n"
+        + "     -Un emplacement cyan avec des croix blanche, signifie que le joueur a tiré dessus mais n’a rien touché\n"
+        + "     -Un emplacement cyan, avec des croix rouges, signifie qu’un joueur à tire dessus et à toucher un navire\n"
+        + "     -Un emplacement gris avec des tirets, signifie que le joueur a toucher un sous-marin sans utilisé un sous-marin\n"
+        + "\n"
+        + "Lors du tir de la fusée éclairante :\n"
+        + "    -Un emplacement jaune signifie qu’il n’y a rien dessus\n"
+        + "     -Un emplacement jaune avec 2 tirets signifie qu’il y a un navire à cet emplacement");
+        labelLegendSymb.setStyle (
+                "-fx-font-police: 'Tw Cen MT Condensed' ;"
+              + " -fx-font-size: 13pt; "
+              + "-fx-text-fill: BLACK; ");
+
+        GridPane rootLegendSymb = new GridPane();
+        rootLegendSymb.setPadding(new javafx.geometry.Insets(20));
+        rootLegendSymb.setVgap(20);
+        rootLegendSymb.add(labelTitreLegendSymb,0,0);
+        HBox rootRetour = new HBox(5); rootRetour.getChildren().addAll(boutonRetour(stage, menuAide(stage)),boutonRetourMenuPrincipal);
+        rootLegendSymb.add(rootRetour,0,1);
+        rootLegendSymb.add(labelLegendSymb,0,2,3,1);
+        rootLegendSymb.setBackground( new Background(fondEcranMenuPrincipal));
+        Scene sceneLegendSymb = new Scene(rootLegendSymb);
+        return sceneLegendSymb;
+    }
+
+    public Scene sceneGagnerAstuce (Stage stage){
+        Button boutonRetourMenuPrincipal = new Button ("Menu Principal");
+        boutonRetourMenuPrincipal.setGraphic(retourHomeHover);
+        boutonRetourMenuPrincipal.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                +                "-fx-font-size: 13pt;"
+                +                "-fx-background-color: rgba(120,160,175,0.50);");
+        boutonRetourMenuPrincipal.setOnMouseEntered (e-> 
+        boutonRetourMenuPrincipal.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(82,127,143,0.50);"));
+        boutonRetourMenuPrincipal.setOnMouseExited (e->
+        boutonRetourMenuPrincipal.setGraphic(retourHome));
+        boutonRetourMenuPrincipal.setGraphic(retourHomeHover); 
+        boutonRetourMenuPrincipal.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+        boutonRetourMenuPrincipal.setOnAction((ActionEvent eventLancementJeu) -> {
+            stage.setScene(sceneLancementMenuPrincipal(stage));
+        }); 
+
+        Label labelTitreGagnerAstuce = new Label ("Pour gagner");
+        labelTitreGagnerAstuce.setStyle (
+                  "-fx-font-police: 'Tw Cen MT Condensed' ;"
+                + " -fx-font-size: 30pt; "
+                + "-fx-text-fill: BLACK; "
+                + "-fx-font-weight: bold; ");
+
+        Label labelGagnerAstuce = new Label ("COMMENT GAGNER:\n"
+        + "Une partie de bataille navale se termine lorsque l’un des joueurs n’a plus de navires ou quand il ne lui reste plus de sous-marin.\n"
+        + "\n"
+        
+        + "PETITE ASTUCE:\n"
+        + "Pour gagner plus rapidement, vous pouvez jouer vos tirs en croix,\n"
+        + "étant donné que le plus petit navire fait une case alors vous ne\n" 
+        + "pourrez éviter aucun autre bateau sur votre chemin.\n"
+        + "Cette méthode est infaillible car elle est purement logique.\n");
+            labelGagnerAstuce.setStyle (
+                "-fx-font-police: 'Tw Cen MT Condensed' ;"
+              + " -fx-font-size: 13pt; "
+              + "-fx-text-fill: BLACK; ");
+
+        GridPane rootGagnerAstuce = new GridPane();
+        rootGagnerAstuce.setPadding(new javafx.geometry.Insets(20));
+        rootGagnerAstuce.setVgap(15);
+        rootGagnerAstuce.add(labelTitreGagnerAstuce,0,0);
+        HBox rootRetour = new HBox(5); rootRetour.getChildren().addAll(boutonRetour(stage, menuAide(stage)),boutonRetourMenuPrincipal);
+        rootGagnerAstuce.add(rootRetour,0,1);
+        rootGagnerAstuce.add(labelGagnerAstuce,0,2,3,1);
+        rootGagnerAstuce.setBackground( new Background(fondEcranMenuPrincipal));
+        Scene sceneGagnerAstuce = new Scene(rootGagnerAstuce);
+        return sceneGagnerAstuce;
     }
     
 }
