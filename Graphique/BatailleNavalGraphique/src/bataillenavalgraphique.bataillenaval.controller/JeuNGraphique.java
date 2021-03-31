@@ -1,14 +1,15 @@
-package bataillenaval.controller;
+package bataillenavalgraphique.bataillenaval.controller;
 
-import bataillenaval.model.*;
-import bataillenaval.view.*;
+import bataillenavalgraphique.bataillenaval.view.Affichage;
+import bataillenavalgraphique.bataillenaval.view.Menu;
+import bataillenavalgraphique.bataillenaval.model.*;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
 
 
-public class Jeu {
+public class JeuNGraphique {
     
     //**************************************************************************
     
@@ -28,21 +29,21 @@ public class Jeu {
      * Constructeur du jeu.
      * Permet la création d'un type jeu. Ce type permet de lancer une partie.
      */
-    public Jeu(){
+    public JeuNGraphique(){
         
     }
     
-    public Jeu(int numeroJoueur, int niveauIA,IA ia, boolean premierTour, Plateau plateauDeJeu, List <Flotte> flotteJoueur0, List <Flotte> flotteJoueur1, int compteurTourIA, int compteurTourHumain){
+    public JeuNGraphique(int numeroJoueur, int niveauIA,IA ia, boolean premierTour, Plateau plateauDeJeu, List <Flotte> flotteJoueur0, List <Flotte> flotteJoueur1, int compteurTourIA, int compteurTourHumain){
         
-        Jeu.numeroJoueur = numeroJoueur;
-        Jeu.niveauIA= niveauIA;
-        Jeu.ia = ia;
-        Jeu.premierTour= premierTour;
-        Jeu.compteurTourHumain =compteurTourHumain;
-        Jeu.compteurTourIA = compteurTourIA;
-        Jeu.plateauDeJeu= plateauDeJeu;
-        Jeu.flotteJoueur0 = flotteJoueur0;
-        Jeu.flotteJoueur1 = flotteJoueur1;
+        JeuNGraphique.numeroJoueur = numeroJoueur;
+        JeuNGraphique.niveauIA= niveauIA;
+        JeuNGraphique.ia = ia;
+        JeuNGraphique.premierTour= premierTour;
+        JeuNGraphique.compteurTourHumain =compteurTourHumain;
+        JeuNGraphique.compteurTourIA = compteurTourIA;
+        JeuNGraphique.plateauDeJeu= plateauDeJeu;
+        JeuNGraphique.flotteJoueur0 = flotteJoueur0;
+        JeuNGraphique.flotteJoueur1 = flotteJoueur1;
     }
     
      
@@ -138,11 +139,11 @@ public class Jeu {
                         referencesNavire = menu.menuTirer ();            //On lance le menu pour tirer et on récupère les informations du navire sélectionné
                         
                         int pListe=Flotte.nPlateauToPListe((char) referencesNavire[0], (int) referencesNavire[1]);           //On trouve la position du navire dans la liste à l'aide de son numéro plateau et sa lettre de reférence
-                        if (flotteJoueur0.get(pListe).etat==true) retourMenu= flotteJoueur0.get(pListe).tir();          //On vérifie que le navire n'est pas coulé 
+                        /*if (flotteJoueur0.get(pListe).etat==true) retourMenu= flotteJoueur0.get(pListe).tir();          //On vérifie que le navire n'est pas coulé 
                         else {
                             System.out.println(ROUGE + "Erreur!"+RESET +"\nCe navire à déjà été coulé et ne peut plus effectuer de tire");TimeUnit.SECONDS.sleep(3);           //Sinon, on affiche un message d'erreur
                             retourMenu = 2;           //On relance le tour du joueur
-                        }
+                        }*/
                         
                         if (retourMenu==2 || retourMenu==3) compteurTourHumain--;           //Si on recommence le tour du joueur on retire 1 au tour du joueur
                         
@@ -165,9 +166,9 @@ public class Jeu {
             }
             
             if(numeroJoueur==1){
-                Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);         //Pour les test on affiche les plateaux de l'IA
+                Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);         //Pour les test on affiche les plateaux de l'IA
                 System.out.println();
-                Affichage.afficher(numeroJoueur, 1, Jeu.plateauDeJeu);
+                Affichage.afficher(numeroJoueur, 1, JeuNGraphique.plateauDeJeu);
                 
                 compteurTourIA++;           //On rajoute 1 au compteur de tour de l'IA
 
@@ -618,7 +619,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][1] ++;            //On change les coordonnées 
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
+                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
                     return 1;           //On retourne 1 si tout c'est bien passé
                 }
@@ -628,7 +629,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][1] --;            //On change les coordonnées 
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
+                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
                     return 1;           //On retourne 1 si tout c'est bien passé
                 }
@@ -644,7 +645,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][0] ++;            //On change les coordonnées 
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
+                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
                     return 1;           //On retourne 1 si tout c'est bien passé
                 }
@@ -654,7 +655,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][0] --;            //On change les coordonnées 
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
+                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
                     return 1;           //On retourne 1 si tout c'est bien passé
                 }
@@ -674,7 +675,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][1] ++;            //On change les coordonnées 
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
+                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
                     return 1;           //On retourne 1 si tout c'est bien passé
                 }
@@ -684,7 +685,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][1] --;            //On change les coordonnées
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
+                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
                     return 1;           //On retourne 1 si tout c'est bien passé
                 }
@@ -700,7 +701,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][0] ++;            //On change les coordonnées
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
+                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
                     return 1;           //On retourne 1 si tout c'est bien passé
                 }
@@ -710,7 +711,7 @@ public class Jeu {
                         flotte.get(pListe).coordonnees[i][0] --;            //On change les coordonnées
                     }
                     System.out.println(VERT + "Le déplacement a bien été effectué"+RESET+"\n");         //On affiche que le déplacement a bien été effectué
-                    Affichage.afficher(numeroJoueur, 0, Jeu.plateauDeJeu);          //On affiche le plateau
+                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);          //On affiche le plateau
                     TimeUnit.SECONDS.sleep(5);
                     return 1;           //On retourne 1 si tout c'est bien passé
                 }

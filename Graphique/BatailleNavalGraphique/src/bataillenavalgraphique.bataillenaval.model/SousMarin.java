@@ -1,7 +1,7 @@
-package bataillenaval.model;
+package bataillenavalgraphique.bataillenaval.model;
 
-import bataillenaval.controller.Jeu;
-import bataillenaval.view.Menu;
+import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
+import bataillenavalgraphique.bataillenaval.view.Menu;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -43,14 +43,15 @@ public class SousMarin extends Flotte{
     /**
      * Méthode à un navire d'effectuer un tir.
      * La méthode permet de demander des coordonnées de tir et d'effectuer un tir.
+     * @param xTire
+     * @param yTire
      * @return 1 Si tout c'est bien déroulé, 0 en cas de problème
      * @throws InterruptedException 
      */
     @Override
-    public int tir()throws InterruptedException{
+    public int tir(int xTire, int yTire)throws InterruptedException{
         
         char xTireChar='@';         //On declare la variable par defaut avec un @
-        int yTire=-1;           //On declare la variable par defaut avec un -1
         System.out.println("Où voulez vous tirer ?");           //On demande à l'utilisateur de saisir les coordonnées du tire
         System.out.println("Rentrer la colonne");           //On demande à l'utilisateur de rentrer la colonne
         try{
@@ -61,7 +62,7 @@ public class SousMarin extends Flotte{
             scSousMarin.next();            //On met à la poubelle la saisie de l'utilisateur
             xTireChar='@';          //On remet la variable par defaut 
         }
-        xTireChar=Jeu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
+        xTireChar=JeuNGraphique.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
                     
         while ((xTireChar<'A')||(xTireChar>'O')){           //On blinde, en vérifiant que sa saisie fait partie des choix possible
             System.out.println(Menu.ROUGE + "Erreur !"+Menu.RESET);           //Sinon on affiche un message d'erreur
@@ -74,7 +75,7 @@ public class SousMarin extends Flotte{
                 scSousMarin.next();            //On met à la poubelle la saisie de l'utilisateur
                 xTireChar='@';          //On remet la variable par defaut 
             }
-            xTireChar=Jeu.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
+            xTireChar=JeuNGraphique.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
         }
 
         System.out.println("Rentrer la ligne");         //On lui demande de saisir 
@@ -103,8 +104,7 @@ public class SousMarin extends Flotte{
         }
         yTire--;            //On retire 1 au yTire
 
-        int xTire = (int) (xTireChar - 65);             //On convertie la saisie en un entier
-        if ( Jeu.plateauDeJeu.get(xTire,yTire,1,0).equals("1")){            //Si la case choisie a deja ete touche
+        if ( JeuNGraphique.plateauDeJeu.get(xTire,yTire,1,0).equals("1")){            //Si la case choisie a deja ete touche
             int choix=0;            //On declare une variable qui stock le choix du joueur 
             System.out.println("Voulez vous vraiment tirer sur cette case ? Elle à deja été bombardée");            //On lui demande si il veut vraiment tirer sur cette case
             System.out.println("1.OUI \n2.NON");           //On affiche les choix du joueur 
@@ -139,12 +139,12 @@ public class SousMarin extends Flotte{
         TimeUnit.SECONDS.sleep(2);System.out.println(Menu.ROUGE_AR+Menu.BLANC+"FEU!!"+Menu.RESET+Menu.RESET_AR);TimeUnit.SECONDS.sleep(2);
         
 
-        if (Jeu.plateauDeJeu.get(xTire,yTire,2,0) != (Object) '_'){             //Si la case contient un navire
+        if (JeuNGraphique.plateauDeJeu.get(xTire,yTire,2,0) != (Object) '_'){             //Si la case contient un navire
             return impact(xTire, yTire,0);          //On retourne la valeur d'impact
         }
         else{
             System.out.println("Nous avons rien touché");TimeUnit.SECONDS.sleep(4);           //On affiche un message comme quoi il n'a rien touché
-            Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici  
+            JeuNGraphique.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici  
             return 1;           //On a la justification que tout c'est bien passe
         }
     }
@@ -161,7 +161,7 @@ public class SousMarin extends Flotte{
      */
     @Override
     public int impact(int xTire, int yTire, int numeroJoueur) throws InterruptedException{
-        Jeu.plateauDeJeu.modification(xTire,yTire,Plateau.numeroEtage(numeroJoueur,1),0,"2");           //On modifie le plateau et on met qu'on a tire ici et que le joueur a touché un navire
+        JeuNGraphique.plateauDeJeu.modification(xTire,yTire,Plateau.numeroEtage(numeroJoueur,1),0,"2");           //On modifie le plateau et on met qu'on a tire ici et que le joueur a touché un navire
 
         int numeroJoueurAdv = -1;           //Le numéro du joueur mit à -1 par defaut
         char lRefAdv = 'A';         //La lettre de référence du navire mit à A par defaut
@@ -171,35 +171,35 @@ public class SousMarin extends Flotte{
         if (numeroJoueur==0) numeroJoueurAdv=1;         //On déduit le numéro du joueur adverse en fonction du joueur
         if (numeroJoueur==1) numeroJoueurAdv=0;         
 
-        lRefAdv= (char) Jeu.plateauDeJeu.get(xTire,yTire,Plateau.numeroEtage(numeroJoueurAdv,0),0);         //On récupère la lettre de référence du navire de l'adversaire aux coordonnées où le joueur veut tirer 
-        nPlateauAdv = (int) Jeu.plateauDeJeu.get(xTire,yTire,Plateau.numeroEtage(numeroJoueurAdv,0),1);         //On récupère le numéro de plateau de l'adversaire aux coordonnées où le joueur veut tirer
+        lRefAdv= (char) JeuNGraphique.plateauDeJeu.get(xTire,yTire,Plateau.numeroEtage(numeroJoueurAdv,0),0);         //On récupère la lettre de référence du navire de l'adversaire aux coordonnées où le joueur veut tirer 
+        nPlateauAdv = (int) JeuNGraphique.plateauDeJeu.get(xTire,yTire,Plateau.numeroEtage(numeroJoueurAdv,0),1);         //On récupère le numéro de plateau de l'adversaire aux coordonnées où le joueur veut tirer
         pListeAdv=nPlateauToPListe(lRefAdv, nPlateauAdv);           //On en deduit la position dans la liste du navire de l'adversaire
 
         if (numeroJoueurAdv==0){            //Si c'est l'IA qui joue
             
-            Jeu.plateauDeJeu.modification(xTire,yTire,3,0,"2");         //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
-            if (Jeu.flotteJoueur0.get(pListeAdv).direction==0){         //Si le navire est à l'horizontale
+            JeuNGraphique.plateauDeJeu.modification(xTire,yTire,3,0,"2");         //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
+            if (JeuNGraphique.flotteJoueur0.get(pListeAdv).direction==0){         //Si le navire est à l'horizontale
                 
-                for (int i=0; i<Jeu.flotteJoueur0.get(pListeAdv).taille; i++){          //On parcourt tout le navire
-                    if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][0]==xTire){          //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
-                        Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;           //On met que cette case du navire a été touché
+                for (int i=0; i<JeuNGraphique.flotteJoueur0.get(pListeAdv).taille; i++){          //On parcourt tout le navire
+                    if(JeuNGraphique.flotteJoueur0.get(pListeAdv).coordonnees[i][0]==xTire){          //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
+                        JeuNGraphique.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;           //On met que cette case du navire a été touché
                     }
                 }
-                if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("Yes ! J'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                if(JeuNGraphique.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                    System.out.println("Yes ! J'ai coulé un "+JeuNGraphique.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                     TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
             else{           //Si le navire est à la vertical
                 
-                for (int i=0; i<Jeu.flotteJoueur0.get(pListeAdv).taille; i++){           //On parcourt tout le navire
-                    if(Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][1]==yTire){           //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
-                        Jeu.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;           //On met que cette case du navire a été touché
+                for (int i=0; i<JeuNGraphique.flotteJoueur0.get(pListeAdv).taille; i++){           //On parcourt tout le navire
+                    if(JeuNGraphique.flotteJoueur0.get(pListeAdv).coordonnees[i][1]==yTire){           //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
+                        JeuNGraphique.flotteJoueur0.get(pListeAdv).coordonnees[i][2]=0;           //On met que cette case du navire a été touché
                     }
                 }
-                if(Jeu.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("Yes ! J'ai coulé un "+Jeu.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                if(JeuNGraphique.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                    System.out.println("Yes ! J'ai coulé un "+JeuNGraphique.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                     TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
@@ -208,21 +208,21 @@ public class SousMarin extends Flotte{
 
         if (numeroJoueurAdv==1){           //Si c'est le joueur humain qui joue 
             
-            Jeu.plateauDeJeu.modification(xTire,yTire,1,0,"2");//On modifie le plateau et on met qu'on a tire et touche quelqu'un a ces coordonnes la
-            if (Jeu.flotteJoueur1.get(pListeAdv).direction==0){         //Si le navire est à l'horizontale
+            JeuNGraphique.plateauDeJeu.modification(xTire,yTire,1,0,"2");//On modifie le plateau et on met qu'on a tire et touche quelqu'un a ces coordonnes la
+            if (JeuNGraphique.flotteJoueur1.get(pListeAdv).direction==0){         //Si le navire est à l'horizontale
                 
-                for (int j=0; j<Jeu.flotteJoueur1.get(pListeAdv).taille;){          //On parcourt tout le navire
+                for (int j=0; j<JeuNGraphique.flotteJoueur1.get(pListeAdv).taille;){          //On parcourt tout le navire
 
-                    if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[j][0]==xTire){          //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
-                        Jeu.flotteJoueur1.get(pListeAdv).coordonnees[j][2]=0;            //On met que cette case du navire a été touchée
+                    if(JeuNGraphique.flotteJoueur1.get(pListeAdv).coordonnees[j][0]==xTire){          //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
+                        JeuNGraphique.flotteJoueur1.get(pListeAdv).coordonnees[j][2]=0;            //On met que cette case du navire a été touchée
                         System.out.println("\n"+Menu.VERT+"TOUCHE !"+Menu.RESET);           //On affiche un message disant que le joueur a bien touché un navire
                         TimeUnit.SECONDS.sleep(3);
                     }
                     j++;
                 }    
                 
-                if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("Bien joué ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                if(JeuNGraphique.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                    System.out.println("Bien joué ! T'as coulé un "+JeuNGraphique.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                     TimeUnit.SECONDS.sleep(3);          //On patient pendant 3 seconde avant de continuer
                 }
                 
@@ -231,17 +231,17 @@ public class SousMarin extends Flotte{
             }
             else{           //Si le navire est à la vertical
                 
-                for (int i=0; i<Jeu.flotteJoueur1.get(pListeAdv).taille; i++){          //On parcourt tout le navire
+                for (int i=0; i<JeuNGraphique.flotteJoueur1.get(pListeAdv).taille; i++){          //On parcourt tout le navire
 
-                    if(Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][1]==yTire){          //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
-                        Jeu.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
+                    if(JeuNGraphique.flotteJoueur1.get(pListeAdv).coordonnees[i][1]==yTire){          //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
+                        JeuNGraphique.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
                         System.out.println("\n"+Menu.VERT+"TOUCHE !"+Menu.RESET);           //On affiche un message disant que le joueur a bien touché un navire
                         TimeUnit.SECONDS.sleep(3);          //On patient pendant 3 seconde avant de continuer
                         
                     }
                 }
-                if(Jeu.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("Bravo ! T'as coulé un "+Jeu.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
+                if(JeuNGraphique.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
+                    System.out.println("Bravo ! T'as coulé un "+JeuNGraphique.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                     TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé

@@ -1,4 +1,4 @@
-package bataillenaval.model;
+package bataillenavalgraphique.bataillenaval.model;
 
 import java.io.Serializable;
 
@@ -29,7 +29,7 @@ public abstract class Flotte implements Serializable{
     
 
     //**************************************************************************
-    public abstract int tir() throws InterruptedException;
+    public abstract int tir(int xTire, int yTire) throws InterruptedException;
     public abstract int impact(int xTire, int yTire, int numeroJoueur) throws InterruptedException;
     public abstract void nRef (int pListe);
     

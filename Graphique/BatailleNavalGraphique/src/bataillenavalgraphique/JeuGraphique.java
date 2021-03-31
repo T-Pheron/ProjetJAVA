@@ -1,22 +1,19 @@
 package bataillenavalgraphique;
 
-import bataillenaval.controller.*;
-import bataillenaval.view.*;
-import bataillenaval.model.Flotte;
-import bataillenaval.model.Plateau;
+import bataillenavalgraphique.bataillenaval.view.Affichage;
+import bataillenavalgraphique.bataillenaval.controller.IA;
+import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
+import bataillenavalgraphique.bataillenaval.model.Flotte;
+import bataillenavalgraphique.bataillenaval.model.Plateau;
 import java.util.*;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.*;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.GridPane;
-
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
         
 public class JeuGraphique{
-    
-    public static GrilleBoutons grilleBoutonNavire = new GrilleBoutons();
-    public static GrilleBoutons grilleBoutonTirs = new GrilleBoutons();
+
     
     public static Plateau plateauDeJeu = new Plateau();             //Variable qui stocke l'ensemble du plateau de jeu 
     public static List <Flotte> flotteJoueur0 ;               //List qui stocke l'ensemble de la flotte du joueur 0
@@ -28,6 +25,9 @@ public class JeuGraphique{
     public static boolean premierTour = true;        //Variable utilisé pour savoir si c'est le premier tir
     public static int compteurTourIA;               //Variable qui compte le nombre de tour de l'IA
     public static int compteurTourHumain;           //variable qui compte le nombre de tour du joueur humain
+    
+    public static Stage fenetreJeu = new Stage();
+    public static boolean selectionJoueur=false;
     
     public JeuGraphique(){
 
@@ -65,23 +65,12 @@ public class JeuGraphique{
     public void lancementJeuGraphique() throws InterruptedException, ClassNotFoundException{
         
         /*Initialisation des variables*****************************************/
-        Menu menu = new Menu();             //On initialise une variable pour lancer les différents menus
-        MenuGraphique menuGraphique = new MenuGraphique();
         boolean tourSuivant = true;             //Variable qui permet de savoir si on passe au tour suivant
-        
-        Stage fenetreJeu = new Stage();
-        fenetreJeu.setTitle("Bataille Navale - Jeu");
-        fenetreJeu.setWidth(1400);
-        fenetreJeu.setHeight(700);
-        fenetreJeu.setResizable(false);
-        fenetreJeu.getIcons().add(new Image("/images/iconNaval.png")); 
 
-        
         if (premierTour==true){
             //Initialisation des flottes************************
-            System.out.println("On est la");
-            flotteJoueur0 = Jeu.createFlotte();            //On créé une flotte pour le joueur 0
-            flotteJoueur1 = Jeu.createFlotte();            //On créé une flotte pour le joueur 1  
+            flotteJoueur0 = JeuNGraphique.createFlotte();            //On créé une flotte pour le joueur 0
+            flotteJoueur1 = JeuNGraphique.createFlotte();            //On créé une flotte pour le joueur 1  
             
             placementFlotteGraphique(flotteJoueur0, 0);            //On place aléatoirement la flotte du joueur 0 sur sa grille de navire
             placementFlotteGraphique(flotteJoueur1, 1);            //On place aléatoirement la flotte du joueur 1 sur sa grille de navire
@@ -89,57 +78,35 @@ public class JeuGraphique{
             numeroJoueur=0;         //On met le joueur qui joue par défaut à 0
             premierTour=false;
         }
-        
-        GridPane rootJeu = new GridPane();
-        rootJeu.setPadding(new Insets(20));
-        rootJeu.setHgap(30);
-        rootJeu.setVgap(20);
-        
-        grilleBoutonNavire.miseAJourAffichage(plateauDeJeu);
-        
-        rootJeu.add(grilleBoutonNavire.getRoot(),0,1,3,5);
-        rootJeu.add(grilleBoutonTirs.getRoot(),3,1,3,5);
-        
-        
-        Label titreGrilleNavire = new Label("Voici la grille de vos bateaux :");
-        rootJeu.add(titreGrilleNavire,0,0,3,1);
-        Label titreGrilleTirs = new Label("Voici la grille de vos tirs :");
-        rootJeu.add(titreGrilleTirs,3,0,3,1);
-        
-        Scene sceneJeu = new Scene(rootJeu);
-        fenetreJeu.setScene(sceneJeu);
-        fenetreJeu.show();
-        
-        Affichage.afficher(0, 0, plateauDeJeu);
-        
-        
-             
-        /*Boucle de jeu********************************************************/
-        /*while (tourSuivant==true){            //On vérifie qu'on doit passer au tour suivant
 
-            int retourMenu = 0;
+        JeuGraphique.fenetreJeu.setTitle("Bataille Navale - Jeu");
+        JeuGraphique.fenetreJeu.setWidth(1400);
+        JeuGraphique.fenetreJeu.setHeight(900);
+        JeuGraphique.fenetreJeu.setResizable(false);
+        JeuGraphique.fenetreJeu.getIcons().add(new Image("/images/iconNaval.png")); 
+        
+        
+        AffichageJeuGraphique choixJoueur = new AffichageJeuGraphique();
+        choixJoueur.affichageJoueur();
+    }
+        
+    public void effectuerUnTour(int retourMenu) throws InterruptedException{
 
+        while (selectionJoueur==false){
             if (numeroJoueur==0){            //Si le joueur est le joueur humain on affiche sa grille et son
-                System.out.println();
-                Affichage.afficher(numeroJoueur, 1, plateauDeJeu);            //On affiche la grille des tirs du joueur
-                System.out.println();
-                Affichage.afficher(numeroJoueur, 0, plateauDeJeu);            //On affiche la grille des navire du joueur
-
-                retourMenu = menu.menuJoueur();            //On lance le menu joueur et stocke ce qu'il retourne
-
                 switch (retourMenu) {
                     case 1:            //Si le joueur souhaite tirer
                         Object[] referencesNavire = new Object [2];         //On créé un tableau pour stocker les références du navire
                         compteurTourHumain++;       //On rajouter 1 au nombre de tour du joueur
 
-                        referencesNavire = menu.menuTirer ();            //On lance le menu pour tirer et on récupère les informations du navire sélectionné
+                        //referencesNavire = menu.menuTirer ();            //On lance le menu pour tirer et on récupère les informations du navire sélectionné
 
                         int pListe=Flotte.nPlateauToPListe((char) referencesNavire[0], (int) referencesNavire[1]);           //On trouve la position du navire dans la liste à l'aide de son numéro plateau et sa lettre de reférence
-                        if (flotteJoueur0.get(pListe).etat==true) retourMenu= flotteJoueur0.get(pListe).tir();          //On vérifie que le navire n'est pas coulé 
+                        /*if (flotteJoueur0.get(pListe).etat==true) retourMenu= flotteJoueur0.get(pListe).tir();          //On vérifie que le navire n'est pas coulé 
                         else {
                             //System.out.println(ROUGE + "Erreur!"+RESET +"\nCe navire à déjà été coulé et ne peut plus effectuer de tire");TimeUnit.SECONDS.sleep(3);           //Sinon, on affiche un message d'erreur
                             retourMenu = 2;           //On relance le tour du joueur
-                        }
+                        }*/
 
                         if (retourMenu==2 || retourMenu==3) compteurTourHumain--;           //Si on recommence le tour du joueur on retire 1 au tour du joueur
 
@@ -175,17 +142,19 @@ public class JeuGraphique{
 
             if (retourMenu==2) {            //Si le menu retourne 2 à la fin de la boucle
                 System.out.println("On relance votre tour");            //On affiche le message de relance de tour
-                System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".\n");TimeUnit.SECONDS.sleep(1);
+                //System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".\n");TimeUnit.SECONDS.sleep(1);
                 numeroJoueur--;             //On retire 1 au numéro du joueur pour recommencer le tour
             }
             if (retourMenu==3) numeroJoueur--;              //Si le menu retourne 3 à la fin de la boucle, ça signifie qu'on doit relancer le tour sans message
-            if (retourMenu==4) tourSuivant=false;               //Si le menu retourne 4 à la fin de la boucle; ça signifie qu'on doit quitter le jeu
-            if (jeu.victoire()==true) tourSuivant=false;                //On test à chaque tour la victoire d'un des 2 joueurs
+            //if (retourMenu==4) tourSuivant=false;               //Si le menu retourne 4 à la fin de la boucle; ça signifie qu'on doit quitter le jeu
+            //if (jeu.victoire()==true) tourSuivant=false;                //On test à chaque tour la victoire d'un des 2 joueurs
             if (numeroJoueur == 1) numeroJoueur=0;              //Si le numéro du joueur est 1 on le remet à 0
             else numeroJoueur ++;            //Sinon on lui rajoute 1
         }
-        */
     }
+    
+    
+    
     
     
     
@@ -266,4 +235,130 @@ public class JeuGraphique{
     }
     
     
+
+    public void victoire(){
+        /*Button bontonVictoire = new Button ("SUPER !");
+        bontonVictoire.setGraphic(retourHomeHover);
+        bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 17pt;"
+        +                "-fx-background-color: rgba(120,160,175,0.50);");
+        bontonVictoire.setOnMouseEntered (e->
+        bontonVictoire.setGraphic(retourHome)); 
+        bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(82,127,143,0.50);");
+        bontonVictoire.setOnMouseExited (e-> 
+        bontonVictoire.setGraphic(retourHomeHover));
+        bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+        bontonVictoire.setOnAction((ActionEvent eventLancementJeu) -> {
+            fenetreJeu.setScene(sceneLancementMenuPrincipal(fenetreJeu));
+        });*/
+
+        Label labelAffichageVictoireJoueur = new Label ("VICTOIRE DU JOUEUR !!");
+        labelAffichageVictoireJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+        Label labelAffichageVictoireIA = new Label ("VICTOIRE DE L'ORDINATEUR !!");
+        labelAffichageVictoireIA.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+        Label labelAffichageInfoPartie = new Label ("\nInformation sur la partie : "
+            +"\nNombre de tour : "+compteurTourHumain+compteurTourIA
+            +"\nNombre de tour du joueur : "+ compteurTourHumain
+            +"\nNombre de tour de l'IA : "+compteurTourIA);
+        labelAffichageInfoPartie.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+        Label labelAffichageVictoireSousMarin = new Label ("Vous n'avez plus de sous-marin"
+            +"L'ordinateur gagne par fofait de votre part");
+        labelAffichageVictoireSousMarin.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+
+        GridPane rootVictoire = new GridPane();
+        rootVictoire.setPadding(new javafx.geometry.Insets(20));
+        rootVictoire.setVgap(20);
+        
+
+        boolean etat0;          //On initialise un booléen
+        boolean etat0SousMarin=false;           //On initialise un booléen à false pour le sous-marin 
+        for (int i=0; i<10; i++){           //On parcourt la flotte du joueur 
+            etat0 = flotteJoueur0.get(i).etat;          //Pour chaque navire, on regarde si il a coulé ou pas
+            if (etat0==true) break;         //Si il est toujours à flot
+            if (i==9 && etat0!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
+
+                rootVictoire.add(labelAffichageVictoireIA,0,0);
+                rootVictoire.add(labelAffichageInfoPartie,0,1);
+                //rootVictoire.add(bontonVictoire,1,1);
+                /*System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);            //On affiche un message 
+                System.out.println("\nInformations sur la partie : ");
+                System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
+                System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
+                System.out.println("Nombre de tour de l'IA : "+compteurTourIA);*/
+                Scene sceneFlotteFct = new Scene(rootVictoire);
+                //nreturn true;            //On renvoie true si l'IA a gagné
+            } 
+        }
+        
+        for (int i=6; i<10;i++){            //On parcourt les sous-marin
+            if (etat0SousMarin==false) etat0SousMarin=flotteJoueur0.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
+        }
+
+        if (etat0SousMarin==false){         //Si il y a plus aucun sous-marin
+            //System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);          //On affiche un message de victoire de l'IA
+            rootVictoire.add(labelAffichageVictoireIA,0,0);
+            rootVictoire.add(labelAffichageVictoireSousMarin,0,1);
+            rootVictoire.add(labelAffichageInfoPartie,0,2);
+            //rootVictoire.add(bontonVictoire,1,3);
+            /*System.out.println("Vous n'avez plus de sous-marin");
+            System.out.println("L'ordinateur gagne par fofait de votre part");
+            System.out.println("\nInformations sur la partie : ");
+            System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
+            System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
+            System.out.println("Nombre de tour de l'IA : "+compteurTourIA);*/
+            //Scene sceneFlotteFct = new Scene(rootFlotteFct);
+            //return true;            //Renvoie true si l'un des deux joueurs a gagné
+        }
+
+        boolean etat1SousMarin=false;           //On initialise un booléen à false pour le sous-marin
+        boolean etat1;      //On initialise un booléen
+        for (int i=0; i<10; i++){           //On parcourt la flotte de l'IA
+            etat1 = flotteJoueur1.get(i).etat;          //Pour chaque navire, on regarde si il a coulé ou pas
+            if (etat1==true) break;         //Si il est toujours à flot
+            if (i==9 && etat1!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
+                rootVictoire.add(labelAffichageVictoireJoueur,0,0);
+                rootVictoire.add(labelAffichageInfoPartie,0,1);
+                //rootVictoire.add(bontonVictoire,1,1);
+                /*System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);           //On affiche un message
+                System.out.println("\nInformations sur la partie : ");
+                System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
+                System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
+                System.out.println("Nombre de tour de l'IA : "+compteurTourIA); */
+                //Scene sceneFlotteFct = new Scene(rootFlotteFct);
+                //return true;            //On renvoie true si le joueur a gagné
+            }
+        }
+        
+        for (int i=6; i<10;i++){            //On parcourt les sous-marins
+            if (etat1SousMarin==false) etat1SousMarin=flotteJoueur0.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
+        }
+
+        if (etat1SousMarin==false){         //Si il y a plus aucun sous-marin
+            rootVictoire.add(labelAffichageVictoireJoueur,0,0);
+            rootVictoire.add(labelAffichageVictoireSousMarin,0,1);
+            rootVictoire.add(labelAffichageInfoPartie,0,2);
+            //rootVictoire.add(bontonVictoire,1,3);
+            /*System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);            //On affiche un message de victoire du joueur
+            System.out.println("Vous avez détruit tout les sous-marin de l'ordinateur");
+            System.out.println("Vous gagnez par forfait");
+            System.out.println("\nInformations sur la partie : ");
+            System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
+            System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
+            System.out.println("Nombre de tour de l'IA : "+compteurTourIA);*/
+            //Scene sceneFlotteFct = new Scene(rootFlotteFct);
+            //return true;            //Renvoie true si l'un des deux joueurs a gagné
+        }
+    }
 }

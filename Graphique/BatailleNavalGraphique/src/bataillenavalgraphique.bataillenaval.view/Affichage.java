@@ -1,8 +1,7 @@
-package bataillenaval.view;
+package bataillenavalgraphique.bataillenaval.view;
 
-import bataillenaval.model.Plateau;
-import static bataillenaval.model.Plateau.numeroEtage;
-
+import bataillenavalgraphique.bataillenaval.model.Plateau;
+import static bataillenavalgraphique.bataillenaval.model.Plateau.numeroEtage;
 
 /**
  *

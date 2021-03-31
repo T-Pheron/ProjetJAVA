@@ -1,10 +1,11 @@
-package bataillenaval.controller;
+package bataillenavalgraphique.bataillenaval.controller;
 
 
-import bataillenaval.model.Flotte;
-import bataillenaval.model.Plateau;
 import java.io.*;
 import java.util.*;
+
+import bataillenavalgraphique.bataillenaval.model.Flotte;
+import bataillenavalgraphique.bataillenaval.model.Plateau;
 
 public class Sauvegarde {
 
@@ -26,63 +27,63 @@ public class Sauvegarde {
 
             //On stock les informations nécéssaires pour recommencer à jouer plus tard
             out.writeObject(nomPartie);
-            out.writeInt(Jeu.numeroJoueur);
-            out.writeInt(Jeu.niveauIA);
-            out.writeObject(Jeu.ia);
-            out.writeBoolean(Jeu.premierTour);
-            out.writeInt(Jeu.compteurTourHumain);
-            out.writeInt(Jeu.compteurTourIA);
+            out.writeInt(JeuNGraphique.numeroJoueur);
+            out.writeInt(JeuNGraphique.niveauIA);
+            out.writeObject(JeuNGraphique.ia);
+            out.writeBoolean(JeuNGraphique.premierTour);
+            out.writeInt(JeuNGraphique.compteurTourHumain);
+            out.writeInt(JeuNGraphique.compteurTourIA);
 
 
             //On stock dans le fichier le plateau
             for(int x=0; x<15 ; x++){
                 for (int y=0; y<15 ;y++){
-                    out.writeChar((char) Jeu.plateauDeJeu.get(x, y, 0, 0));
-                    out.writeInt((int) Jeu.plateauDeJeu.get(x, y, 0, 1));
-                    out.writeObject((String) Jeu.plateauDeJeu.get(x, y, 1, 0));
-                    out.writeObject((String) Jeu.plateauDeJeu.get(x, y, 1, 1));
+                    out.writeChar((char) JeuNGraphique.plateauDeJeu.get(x, y, 0, 0));
+                    out.writeInt((int) JeuNGraphique.plateauDeJeu.get(x, y, 0, 1));
+                    out.writeObject((String) JeuNGraphique.plateauDeJeu.get(x, y, 1, 0));
+                    out.writeObject((String) JeuNGraphique.plateauDeJeu.get(x, y, 1, 1));
 
-                    out.writeChar((char) Jeu.plateauDeJeu.get(x, y, 2, 0));
-                    out.writeInt((int) Jeu.plateauDeJeu.get(x, y, 2, 1));
-                    out.writeObject((String) Jeu.plateauDeJeu.get(x, y, 3, 0));
-                    out.writeObject((String) Jeu.plateauDeJeu.get(x, y, 3, 1));
+                    out.writeChar((char) JeuNGraphique.plateauDeJeu.get(x, y, 2, 0));
+                    out.writeInt((int) JeuNGraphique.plateauDeJeu.get(x, y, 2, 1));
+                    out.writeObject((String) JeuNGraphique.plateauDeJeu.get(x, y, 3, 0));
+                    out.writeObject((String) JeuNGraphique.plateauDeJeu.get(x, y, 3, 1));
                 }
             }
             
             //On stock dans le fichier la flotte du joueur
             for (int i=0; i<10; i++){
-                out.writeBoolean(Jeu.flotteJoueur0.get(i).etat);
-                out.writeObject(Jeu.flotteJoueur0.get(i).nom);
-                out.writeInt(Jeu.flotteJoueur0.get(i).taille);
+                out.writeBoolean(JeuNGraphique.flotteJoueur0.get(i).etat);
+                out.writeObject(JeuNGraphique.flotteJoueur0.get(i).nom);
+                out.writeInt(JeuNGraphique.flotteJoueur0.get(i).taille);
 
-                for (int j=0; j<Jeu.flotteJoueur0.get(i).taille; j++){
-                    out.writeInt(Jeu.flotteJoueur0.get(i).coordonnees[j][0]);
-                    out.writeInt(Jeu.flotteJoueur0.get(i).coordonnees[j][1]);
-                    out.writeInt(Jeu.flotteJoueur0.get(i).coordonnees[j][2]);
+                for (int j=0; j<JeuNGraphique.flotteJoueur0.get(i).taille; j++){
+                    out.writeInt(JeuNGraphique.flotteJoueur0.get(i).coordonnees[j][0]);
+                    out.writeInt(JeuNGraphique.flotteJoueur0.get(i).coordonnees[j][1]);
+                    out.writeInt(JeuNGraphique.flotteJoueur0.get(i).coordonnees[j][2]);
                 }
 
-                out.writeInt(Jeu.flotteJoueur0.get(i).direction);
-                out.writeInt(Jeu.flotteJoueur0.get(i).puissance);
-                out.writeChar(Jeu.flotteJoueur0.get(i).lRef);
-                out.writeInt(Jeu.flotteJoueur0.get(i).nRef);
-                out.writeBoolean(Jeu.flotteJoueur0.get(i).premierTire);
+                out.writeInt(JeuNGraphique.flotteJoueur0.get(i).direction);
+                out.writeInt(JeuNGraphique.flotteJoueur0.get(i).puissance);
+                out.writeChar(JeuNGraphique.flotteJoueur0.get(i).lRef);
+                out.writeInt(JeuNGraphique.flotteJoueur0.get(i).nRef);
+                out.writeBoolean(JeuNGraphique.flotteJoueur0.get(i).premierTire);
 
                 //On stock dans le fichier la flotte de l'IA
-                out.writeBoolean(Jeu.flotteJoueur1.get(i).etat);
-                out.writeObject(Jeu.flotteJoueur1.get(i).nom);
-                out.writeInt(Jeu.flotteJoueur1.get(i).taille);
+                out.writeBoolean(JeuNGraphique.flotteJoueur1.get(i).etat);
+                out.writeObject(JeuNGraphique.flotteJoueur1.get(i).nom);
+                out.writeInt(JeuNGraphique.flotteJoueur1.get(i).taille);
 
-                for (int j=0; j<Jeu.flotteJoueur1.get(i).taille; j++){
-                    out.writeInt(Jeu.flotteJoueur1.get(i).coordonnees[j][0]);
-                    out.writeInt(Jeu.flotteJoueur1.get(i).coordonnees[j][1]);
-                    out.writeInt(Jeu.flotteJoueur1.get(i).coordonnees[j][2]);
+                for (int j=0; j<JeuNGraphique.flotteJoueur1.get(i).taille; j++){
+                    out.writeInt(JeuNGraphique.flotteJoueur1.get(i).coordonnees[j][0]);
+                    out.writeInt(JeuNGraphique.flotteJoueur1.get(i).coordonnees[j][1]);
+                    out.writeInt(JeuNGraphique.flotteJoueur1.get(i).coordonnees[j][2]);
                 }
 
-                out.writeInt(Jeu.flotteJoueur1.get(i).direction);
-                out.writeInt(Jeu.flotteJoueur1.get(i).puissance);
-                out.writeChar(Jeu.flotteJoueur1.get(i).lRef);
-                out.writeInt(Jeu.flotteJoueur1.get(i).nRef);
-                out.writeBoolean(Jeu.flotteJoueur1.get(i).premierTire);
+                out.writeInt(JeuNGraphique.flotteJoueur1.get(i).direction);
+                out.writeInt(JeuNGraphique.flotteJoueur1.get(i).puissance);
+                out.writeChar(JeuNGraphique.flotteJoueur1.get(i).lRef);
+                out.writeInt(JeuNGraphique.flotteJoueur1.get(i).nRef);
+                out.writeBoolean(JeuNGraphique.flotteJoueur1.get(i).premierTire);
             }
             
 
@@ -115,8 +116,8 @@ public class Sauvegarde {
         List<Flotte> flotteJoueur0Copy;
         List<Flotte> flotteJoueur1Copy;   
 
-        flotteJoueur0Copy = Jeu.createFlotte();         
-        flotteJoueur1Copy = Jeu.createFlotte();         
+        flotteJoueur0Copy = JeuNGraphique.createFlotte();         
+        flotteJoueur1Copy = JeuNGraphique.createFlotte();         
         
         /*Récupération des données dans le fichier************************************/
         try (FileInputStream fichier = new FileInputStream(nomSauvegarde); ObjectInputStream in = new ObjectInputStream(fichier)) {
@@ -186,7 +187,7 @@ public class Sauvegarde {
                 flotteJoueur1Copy.get(i).premierTire = in.readBoolean();
             }
             
-            Jeu jeu2 = new Jeu(numeroJoueur, niveauIA, ia, premierTour, plateauDeJeuCopy, flotteJoueur0Copy, flotteJoueur1Copy, compteurTourHumain, compteurTourIA);            //On crée un objet de type Jeu a qui on affecte tout ce qu'on lui a donné
+            JeuNGraphique jeu2 = new JeuNGraphique(numeroJoueur, niveauIA, ia, premierTour, plateauDeJeuCopy, flotteJoueur0Copy, flotteJoueur1Copy, compteurTourHumain, compteurTourIA);            //On crée un objet de type Jeu a qui on affecte tout ce qu'on lui a donné
             
             jeu2.lancementJeu();            //On lance la partie
             
