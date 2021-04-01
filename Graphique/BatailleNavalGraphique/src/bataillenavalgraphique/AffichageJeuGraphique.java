@@ -5,14 +5,22 @@ import static bataillenavalgraphique.JeuGraphique.*;
 import bataillenavalgraphique.bataillenaval.view.Affichage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.*;
 import static javafx.geometry.Pos.CENTER;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
 
 /**
  *
@@ -21,6 +29,11 @@ import javafx.scene.layout.*;
 public class AffichageJeuGraphique {
 
     
+
+
+
+
+
     public AffichageJeuGraphique(){
         
     }
@@ -30,6 +43,7 @@ public class AffichageJeuGraphique {
 
         GrilleBoutons grilleBoutonNavire = new GrilleBoutons('N');
         GrilleBoutons grilleBoutonTirs = new GrilleBoutons('T');
+        compteurTourHumain++; 
         
         GridPane rootJeu = new GridPane();
         rootJeu.setPadding(new Insets(20));
@@ -38,6 +52,8 @@ public class AffichageJeuGraphique {
         
         grilleBoutonNavire.miseAJourAffichageNavire(plateauDeJeu);
         grilleBoutonTirs.miseAJourAffichageTirs(plateauDeJeu);
+        
+        rootJeu.add(menu(),0,0,3,5);
         
         rootJeu.add(grilleBoutonNavire.getRoot(),0,6,3,5);
         rootJeu.add(grilleBoutonTirs.getRoot(),3,6,3,5);
@@ -107,7 +123,7 @@ public class AffichageJeuGraphique {
                     + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
         });
         boutonTire.setOnAction((ActionEvent eventChargementPartie) -> {
-            //ajouter
+            selectionCaseTir(pListe);
         });
         
         
@@ -147,9 +163,9 @@ public class AffichageJeuGraphique {
         int tailleNavire= flotteJoueur0.get(pListe).taille;
         int directionNavire = flotteJoueur0.get(pListe).direction;
         List listeInformations = new ArrayList ();
-        listeInformations.add(pListe);
+        listeInformations.add(0, pListe);
         GrilleBoutons grilleBoutonTirs = new GrilleBoutons('B', listeInformations);
-        grilleBoutonTirs.miseAJourAffichageNavire(plateauDeJeu);
+        grilleBoutonTirs.miseAJourAffichageTirs(plateauDeJeu);
         
         VBox rootselectionCaseTir = new VBox(40);
         rootselectionCaseTir.setPadding(new Insets(90,300,20,300));
@@ -166,8 +182,93 @@ public class AffichageJeuGraphique {
         JeuGraphique.fenetreJeu.setScene(sceneSelectionNavire);
     }
 
-    
-    public void erreurCaseVide(){
+    public void tirEchec() throws InterruptedException{
+        
+        Timeline time = new Timeline();
+        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(2000),action -> {
+            VBox rootText = new VBox(25);
+            Label information = new Label ("Nous avons rien touché à ses coordonées");
+            Label information1 = new Label ("C'est au tour de l'IA");
+
+            rootText.getChildren().addAll(information, information1);
+            Scene sceneTirEchec = new Scene(rootText);
+            JeuGraphique.fenetreJeu.setScene(sceneTirEchec);
+        }));
+        time.play();
+        
+        tourIA();
     }
     
+    public void tourIA(){
+        
+    }
+
+    public void erreurCaseVide(){
+        
+    }
+    
+    public MenuBar menu(){
+        MenuBar menuBar = new MenuBar();
+        BorderPane rootMenuBar = new BorderPane();
+        menuBar.setUseSystemMenuBar(true);
+        rootMenuBar.setTop(menuBar);
+
+        Menu menuNouvellePartie = new Menu("Nouvelle Partie");
+        Menu menuSauvegarderPartie = new Menu("Sauvegarder Partie");
+        Menu menuChargerPartie = new Menu("Charger Partie");
+        Menu menuAide = new Menu("Aide");
+        Menu menuQuitterPartie = new Menu("Quitter");
+
+        MenuItem charger1 = new MenuItem("Charger la sauvegarde 1");
+        MenuItem charger2 = new MenuItem("Charger la sauvegarde 2");
+        MenuItem charger3 = new MenuItem("Charger la sauvegarde 3");
+
+        menuBar.getMenus().addAll(menuNouvellePartie,menuSauvegarderPartie,menuChargerPartie,menuAide,menuQuitterPartie);
+
+        menuChargerPartie.getItems().addAll(charger1,charger2,charger3);
+
+        menuNouvellePartie.setOnAction((ActionEvent e)-> {
+            System.out.println("on esr");
+            Alert boiteDialogue = new Alert(AlertType.CONFIRMATION);
+            boiteDialogue.setTitle("Attention !");
+            boiteDialogue.setHeaderText("Vous vous appretez à quitter cette partie ! ");
+            boiteDialogue.setContentText("Que voulez vous faire ? ");
+            ButtonType boutonSauvQuit = new ButtonType("Sauvegarder et quitter");
+            ButtonType boutonQuitSansSav = new ButtonType("Quitter sans sauvegarder");
+            ButtonType boutonAnnuler = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
+            boiteDialogue.getButtonTypes().setAll(boutonSauvQuit, boutonQuitSansSav, boutonAnnuler);
+            Optional<ButtonType> choix = boiteDialogue.showAndWait();
+            if (choix.get() == boutonSauvQuit) {
+                System.out.println("sauv quit");//Programme pour sauvegarder et quitter
+            }
+            else if (choix.get() == boutonQuitSansSav) {
+                System.out.println("quit 100 sauv");//Programme pour quitter sans sauvegarder
+            }
+            else {
+                System.out.println("go back bitch");//Je crois qu'on continue comme si de rien n'était
+            } 
+        });
+        menuSauvegarderPartie.setOnAction((ActionEvent e)-> {
+            //On lui demande si il veut vraiment sauvegarder et on saucvegarde 
+        });
+        menuAide.setOnAction((ActionEvent e)-> {
+            //On ouvre l'aide 
+        });
+        menuQuitterPartie.setOnAction((ActionEvent e)-> {
+            //On lui demande si il veut sauvegarder et on quitte 
+        });
+        charger1.setOnAction((ActionEvent e)-> {
+            //On lui demande si il veut sauvegarder et quitter la partie en cours et on charge la partie 1 
+        });
+        charger2.setOnAction((ActionEvent e)-> {
+            //On lui demande si il veut sauvegarder et quitter la partie en cours et on charge la partie 2 
+        });
+        charger3.setOnAction((ActionEvent e)-> {
+            //On lui demande si il veut sauvegarder et quitter la partie en cours et on charge la partie 3 
+        });
+
+
+        return menuBar;
+
+    }
 }

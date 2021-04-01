@@ -57,7 +57,7 @@ public class CaseBouton {
             if (plateauRef=='B'){
                 if (!JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals('0')){
                     try {
-                        JeuNGraphique.flotteJoueur0.get((int) listeInformations.get(0)).tir((int) listeInformations.get(1), (int) listeInformations.get(2));
+                        JeuGraphique.flotteJoueur0.get((int) listeInformations.get(0)).tir(x, y);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(CaseBouton.class.getName()).log(Level.SEVERE, null, ex);
                     }

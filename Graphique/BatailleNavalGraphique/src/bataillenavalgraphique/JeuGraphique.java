@@ -9,6 +9,7 @@ import java.util.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
         
@@ -28,6 +29,10 @@ public class JeuGraphique{
     
     public static Stage fenetreJeu = new Stage();
     public static boolean selectionJoueur=false;
+
+    ImageView croquette =new ImageView(getClass().getResource("/images/croquette.png").toString());
+    ImageView croquetteHover =new ImageView(getClass().getResource("/images/croquetteHover.png").toString());
+        
     
     public JeuGraphique(){
 
@@ -90,67 +95,17 @@ public class JeuGraphique{
         choixJoueur.affichageJoueur();
     }
         
-    public void effectuerUnTour(int retourMenu) throws InterruptedException{
+    public void tourIA() throws InterruptedException{
 
-        while (selectionJoueur==false){
-            if (numeroJoueur==0){            //Si le joueur est le joueur humain on affiche sa grille et son
-                switch (retourMenu) {
-                    case 1:            //Si le joueur souhaite tirer
-                        Object[] referencesNavire = new Object [2];         //On créé un tableau pour stocker les références du navire
-                        compteurTourHumain++;       //On rajouter 1 au nombre de tour du joueur
+        Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);         //Pour les test on affiche les plateaux de l'IA
+        System.out.println();
+        Affichage.afficher(numeroJoueur, 1, JeuGraphique.plateauDeJeu);
 
-                        //referencesNavire = menu.menuTirer ();            //On lance le menu pour tirer et on récupère les informations du navire sélectionné
+        compteurTourIA++;           //On rajoute 1 au compteur de tour de l'IA
 
-                        int pListe=Flotte.nPlateauToPListe((char) referencesNavire[0], (int) referencesNavire[1]);           //On trouve la position du navire dans la liste à l'aide de son numéro plateau et sa lettre de reférence
-                        /*if (flotteJoueur0.get(pListe).etat==true) retourMenu= flotteJoueur0.get(pListe).tir();          //On vérifie que le navire n'est pas coulé 
-                        else {
-                            //System.out.println(ROUGE + "Erreur!"+RESET +"\nCe navire à déjà été coulé et ne peut plus effectuer de tire");TimeUnit.SECONDS.sleep(3);           //Sinon, on affiche un message d'erreur
-                            retourMenu = 2;           //On relance le tour du joueur
-                        }*/
+        ia.jouer(niveauIA);            //On lance la méthode qui permet à l'IA de jouer
+        victoire();
 
-                        if (retourMenu==2 || retourMenu==3) compteurTourHumain--;           //Si on recommence le tour du joueur on retire 1 au tour du joueur
-
-                        break;
-                    case 5:         //Si le joueur souhaite déplacer son navire
-                        compteurTourHumain++;
-
-                        //if (numeroJoueur==0) retourMenu = bougerNavire (flotteJoueur0,numeroJoueur);            //On appel la méthode qui permet de bouger un navire
-
-                        if (retourMenu==2 || retourMenu==3) compteurTourHumain--;//Si on recommence le tour du joueur on retire 1 au tour du joueur
-
-                        break;
-                    case 2: retourMenu=2;           //On recommence le tour du joueur
-                    case 4: System.out.println("\nFermeture du jeu. \nA bientôt"); break;
-                    default:
-                        //System.out.println(ROUGE + "Erreur!"+RESET+ "Problème d'appelle du menuJoueur");            //En cas d'erreur on affiche un message d'erreur
-                        retourMenu=2;            //On relance le tour du joueur
-                        break;
-                }
-            }
-
-            if(numeroJoueur==1){
-                Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);         //Pour les test on affiche les plateaux de l'IA
-                System.out.println();
-                Affichage.afficher(numeroJoueur, 1, JeuGraphique.plateauDeJeu);
-
-                compteurTourIA++;           //On rajoute 1 au compteur de tour de l'IA
-
-                retourMenu = ia.jouer(niveauIA);            //On lance la méthode qui permet à l'IA de jouer
-
-                if (retourMenu==2) compteurTourIA--;            //Si l'IA recommence son tour on retire 1 au compteur
-            }
-
-            if (retourMenu==2) {            //Si le menu retourne 2 à la fin de la boucle
-                System.out.println("On relance votre tour");            //On affiche le message de relance de tour
-                //System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".\n");TimeUnit.SECONDS.sleep(1);
-                numeroJoueur--;             //On retire 1 au numéro du joueur pour recommencer le tour
-            }
-            if (retourMenu==3) numeroJoueur--;              //Si le menu retourne 3 à la fin de la boucle, ça signifie qu'on doit relancer le tour sans message
-            //if (retourMenu==4) tourSuivant=false;               //Si le menu retourne 4 à la fin de la boucle; ça signifie qu'on doit quitter le jeu
-            //if (jeu.victoire()==true) tourSuivant=false;                //On test à chaque tour la victoire d'un des 2 joueurs
-            if (numeroJoueur == 1) numeroJoueur=0;              //Si le numéro du joueur est 1 on le remet à 0
-            else numeroJoueur ++;            //Sinon on lui rajoute 1
-        }
     }
     
     
@@ -237,22 +192,22 @@ public class JeuGraphique{
     
 
     public void victoire(){
-        /*Button bontonVictoire = new Button ("SUPER !");
-        bontonVictoire.setGraphic(retourHomeHover);
+        Button bontonVictoire = new Button ("SUPER !");
+        bontonVictoire.setGraphic(croquetteHover);
         bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
         +                "-fx-font-size: 17pt;"
         +                "-fx-background-color: rgba(120,160,175,0.50);");
         bontonVictoire.setOnMouseEntered (e->
-        bontonVictoire.setGraphic(retourHome)); 
+        bontonVictoire.setGraphic(croquette)); 
         bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
                     +                "-fx-font-size: 13pt;"
                     +                "-fx-background-color: rgba(82,127,143,0.50);");
         bontonVictoire.setOnMouseExited (e-> 
-        bontonVictoire.setGraphic(retourHomeHover));
+        bontonVictoire.setGraphic(croquetteHover));
         bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
                     +                "-fx-font-size: 13pt;"
                     +                "-fx-background-color: rgba(120,160,175,0.50);");
-        bontonVictoire.setOnAction((ActionEvent eventLancementJeu) -> {
+        /*bontonVictoire.setOnAction((ActionEvent eventLancementJeu) -> {
             fenetreJeu.setScene(sceneLancementMenuPrincipal(fenetreJeu));
         });*/
 
@@ -291,14 +246,14 @@ public class JeuGraphique{
 
                 rootVictoire.add(labelAffichageVictoireIA,0,0);
                 rootVictoire.add(labelAffichageInfoPartie,0,1);
-                //rootVictoire.add(bontonVictoire,1,1);
+                rootVictoire.add(bontonVictoire,1,1);
                 /*System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);            //On affiche un message 
                 System.out.println("\nInformations sur la partie : ");
                 System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
                 System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
                 System.out.println("Nombre de tour de l'IA : "+compteurTourIA);*/
                 Scene sceneFlotteFct = new Scene(rootVictoire);
-                //nreturn true;            //On renvoie true si l'IA a gagné
+                //return true;            //On renvoie true si l'IA a gagné
             } 
         }
         
@@ -311,14 +266,14 @@ public class JeuGraphique{
             rootVictoire.add(labelAffichageVictoireIA,0,0);
             rootVictoire.add(labelAffichageVictoireSousMarin,0,1);
             rootVictoire.add(labelAffichageInfoPartie,0,2);
-            //rootVictoire.add(bontonVictoire,1,3);
+            rootVictoire.add(bontonVictoire,1,3);
             /*System.out.println("Vous n'avez plus de sous-marin");
             System.out.println("L'ordinateur gagne par fofait de votre part");
             System.out.println("\nInformations sur la partie : ");
             System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
             System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
             System.out.println("Nombre de tour de l'IA : "+compteurTourIA);*/
-            //Scene sceneFlotteFct = new Scene(rootFlotteFct);
+            Scene sceneFlotteFct = new Scene(rootVictoire);
             //return true;            //Renvoie true si l'un des deux joueurs a gagné
         }
 
@@ -330,13 +285,13 @@ public class JeuGraphique{
             if (i==9 && etat1!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
                 rootVictoire.add(labelAffichageVictoireJoueur,0,0);
                 rootVictoire.add(labelAffichageInfoPartie,0,1);
-                //rootVictoire.add(bontonVictoire,1,1);
+                rootVictoire.add(bontonVictoire,1,1);
                 /*System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);           //On affiche un message
                 System.out.println("\nInformations sur la partie : ");
                 System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
                 System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
                 System.out.println("Nombre de tour de l'IA : "+compteurTourIA); */
-                //Scene sceneFlotteFct = new Scene(rootFlotteFct);
+                Scene sceneFlotteFct = new Scene(rootVictoire);
                 //return true;            //On renvoie true si le joueur a gagné
             }
         }
@@ -349,7 +304,7 @@ public class JeuGraphique{
             rootVictoire.add(labelAffichageVictoireJoueur,0,0);
             rootVictoire.add(labelAffichageVictoireSousMarin,0,1);
             rootVictoire.add(labelAffichageInfoPartie,0,2);
-            //rootVictoire.add(bontonVictoire,1,3);
+            rootVictoire.add(bontonVictoire,1,3);
             /*System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);            //On affiche un message de victoire du joueur
             System.out.println("Vous avez détruit tout les sous-marin de l'ordinateur");
             System.out.println("Vous gagnez par forfait");
@@ -357,7 +312,7 @@ public class JeuGraphique{
             System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
             System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
             System.out.println("Nombre de tour de l'IA : "+compteurTourIA);*/
-            //Scene sceneFlotteFct = new Scene(rootFlotteFct);
+            Scene sceneFlotteFct = new Scene(rootVictoire);
             //return true;            //Renvoie true si l'un des deux joueurs a gagné
         }
     }

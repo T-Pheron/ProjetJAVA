@@ -17,7 +17,6 @@ public abstract class Flotte implements Serializable{
     public char lRef;               //Variable qui stock la lettre de référence du navire
     public int nRef;                //Variable qui stock le numéro de référence du navire
     public boolean premierTire = true;      //Variable utilisé pour savoir si c'est le premier tir d'un navire
-    public int pListe = 0;
 
     //**************************************************************************
     /**
@@ -29,7 +28,7 @@ public abstract class Flotte implements Serializable{
     
 
     //**************************************************************************
-    public abstract int tir(int xTire, int yTire) throws InterruptedException;
+    public abstract void tir(int xTire, int yTire) throws InterruptedException;
     public abstract int impact(int xTire, int yTire, int numeroJoueur) throws InterruptedException;
     public abstract void nRef (int pListe);
     

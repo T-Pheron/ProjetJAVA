@@ -1,8 +1,22 @@
 package bataillenavalgraphique.bataillenaval.model;
 
+import bataillenavalgraphique.AffichageJeuGraphique;
+import bataillenavalgraphique.JeuGraphique;
 import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 public class Croiseur extends Flotte {
 
@@ -25,7 +39,6 @@ public class Croiseur extends Flotte {
         puissance = 4;          //On stocke la puissance du navire 
         lRef = 'C';             //On stocke la lettre de référence du navire
         nRef =9;            //On donne un numéro de référence par défaut au navire
-        pListe = Flotte.nRefToPListe(lRef, nRef);
     }
     
 
@@ -49,17 +62,37 @@ public class Croiseur extends Flotte {
      * @throws InterruptedException 
      */
     @Override
-    public int tir(int xTire, int yTire) throws InterruptedException{
+    public void tir(int xTire, int yTire) throws InterruptedException{
         
-        
-        
+        if(JeuGraphique.plateauDeJeu.get(xTire,yTire,1,0).equals("1")){
+            Alert confirmationTir = new Alert(AlertType.CONFIRMATION);
+            confirmationTir.setTitle("Bataille Navale - Confirmation de tir");
+            confirmationTir.setHeaderText("La case que vous avez sélectionné à déjà été bombardée.");
+            confirmationTir.setContentText("Etes-vous sur de vouloir la bombarder à nouveau cette case ?");
+            
+            ButtonType boutonOui = new ButtonType("Oui");
+            ButtonType boutonNon = new ButtonType("Non");
+            confirmationTir.getButtonTypes().setAll(boutonOui, boutonNon);
+            
+            Optional<ButtonType> choix = confirmationTir.showAndWait();
 
-        //Ici nous affichons un semblant de chargement des données pour le tir ainsi que le résultat, c'est a dire si celui-ci a touché un navire ou pas
-        System.out.print("Ajustement des coordonnées");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);System.out.println(VERT+"OK"+RESET);
-        System.out.print("Armement de l'obus");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);System.out.println(VERT+"OK"+RESET);
-        TimeUnit.SECONDS.sleep(2);System.out.println(ROUGE_AR+BLANC+"FEU!!"+RESET+RESET_AR);TimeUnit.SECONDS.sleep(2);
+            if (choix.get() == boutonNon){
+                AffichageJeuGraphique affichage = new AffichageJeuGraphique();
+                affichage.selectionCaseTir(Flotte.nRefToPListe(lRef, nRef));
+            }
+        }
         
+        
+        VBox rootTexte = new VBox(25);
+        Label informationNavire = new Label("Vous avez décidez d'utilisaer un destroyer");
+        Label informationCalcul = new Label("Avec les informations fournis, on a calculé comme coordonnées de tir");
+        Label informationCoordones = new Label("16°02'58."+ yTire +"\"S ; 60°53'40."+ xTire+"\"E");
 
+        rootTexte.getChildren().addAll(informationNavire, informationCalcul, informationCoordones);
+        Scene sceneTir = new Scene(rootTexte);
+        JeuGraphique.fenetreJeu.setScene(sceneTir);
+        
+        
         /*Vérification qu'il y a un impacte********************************************/
         if (JeuNGraphique.plateauDeJeu.get(xTire,yTire,2,0) == (Object) 'S'){
             if (!JeuNGraphique.plateauDeJeu.get(xTire,yTire,1,0).equals("2")) JeuNGraphique.plateauDeJeu.modification(xTire,yTire,1,0,"5");
@@ -73,15 +106,33 @@ public class Croiseur extends Flotte {
             JeuNGraphique.flotteJoueur1.get(pListeAdv).coordonnees[0][2]=2;           //On met la coordonées sur 2 pour signifie, ce qui signifie que le sous-marin a été touché sans être coulé (il ne peux plus être déplacé)
 
             System.out.println("Nous avons détecté une structure mais n'avons pas pu la détruire");TimeUnit.SECONDS.sleep(4);           //Affichage d'un message disant qu'on est tombé sur un sous-marin
-            return 1;
+            //return 1;
         }
         else if (JeuNGraphique.plateauDeJeu.get(xTire,yTire,2,0) != (Object) '_'){             //Si la case contient un navire
-            return impact(xTire, yTire,0);          //On retourne la valeur d'impact
+            int retourImpacte = impact(xTire, yTire,0);          //On retourne la valeur d'impact
+            
+            if (retourImpacte==0){
+                System.out.println("On est la");
+            }
+            if (retourImpacte==0){
+                System.out.println("On est la1");
+            }
+            if (retourImpacte==0){
+                System.out.println("On est la2");
+            }
+            if (retourImpacte==0){
+                System.out.println("On est la3");
+            }
+            else{
+                System.out.println("On est la4");
+            }
         }
         else{
-            System.out.println("Nous n'avons rien touché");TimeUnit.SECONDS.sleep(4);           //On affiche un message comme quoi il n'a rien touché
+            AffichageJeuGraphique affichage = new AffichageJeuGraphique();
+            affichage.tirEchec();
+            System.out.println("Nous n'avons rien touché");          //On affiche un message comme quoi il n'a rien touché
             JeuNGraphique.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici
-            return 1;           //On a la justification que tout c'est bien passe
+            //return 1;           //On a la justification que tout c'est bien passe
         }  
     }
     
@@ -98,7 +149,7 @@ public class Croiseur extends Flotte {
      * @throws InterruptedException 
      */
     @Override
-    public int impact(int xTire, int yTire, int numeroJoueur) throws InterruptedException{
+    public int impact(int xTire, int yTire, int numeroJoueur) throws InterruptedException {
         JeuNGraphique.plateauDeJeu.modification(xTire,yTire,Plateau.numeroEtage(numeroJoueur,1),0,"2");           //On modifie le plateau et on met qu'on a tire ici et que le joueur a touché un navire
 
         int numeroJoueurAdv = -1;           //Le numéro du joueur mit à -1 par defaut
@@ -179,12 +230,9 @@ public class Croiseur extends Flotte {
                         JeuNGraphique.plateauDeJeu.modification(xTire+1,yTire,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }  
                 }
-                System.out.println("\n"+VERT+"TOUCHE !"+RESET);           //On affiche un message disant que le joueur a bien touché un navire
-                TimeUnit.SECONDS.sleep(3);
 
                 if(JeuNGraphique.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("Bravo ! T'as coulé un "+JeuNGraphique.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
-                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
+                    return 2;
                 }
                 return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
@@ -203,15 +251,11 @@ public class Croiseur extends Flotte {
                         JeuNGraphique.plateauDeJeu.modification(xTire,yTire+1,1,0,"2");           //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse
                     }
                 }
-                
-                System.out.println("\n"+VERT+"TOUCHE !"+RESET);           //On affiche un message disant que le joueur a bien touché un navire
-                TimeUnit.SECONDS.sleep(3);
 
                 if(JeuNGraphique.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("Bravo ! T'as coulé un "+JeuNGraphique.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
-                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer
+                    return pListeAdv;
                 }
-                return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
+                return 20;           //On retourne 1, ce qui signifie que tout c'est bien passé
             }
         
         }

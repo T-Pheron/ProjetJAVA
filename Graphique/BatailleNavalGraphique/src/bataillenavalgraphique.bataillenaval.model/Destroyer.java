@@ -47,11 +47,10 @@ public class Destroyer extends Flotte{
      * La méthode permet de demander des coordonnées de tir et d'effectuer un tir.
      * @param xTire
      * @param yTire
-     * @return 1 Si tout c'est bien déroulé, 0 en cas de problème
      * @throws InterruptedException 
      */
     @Override
-    public int tir(int xTire, int yTire)throws InterruptedException{
+    public void tir(int xTire, int yTire)throws InterruptedException{
         
         if (premierTire==true){
             char xTireFuseeChar='@';         //On declare la variable par defaut avec un @
@@ -227,7 +226,7 @@ public class Destroyer extends Flotte{
 
                 switch (choix){
                     case 1: break;           //On continue l'attaque
-                    case 2: return 2;           //On relance le tour
+                    //case 2: return 2;           //On relance le tour
                 }
             }
 
@@ -251,18 +250,18 @@ public class Destroyer extends Flotte{
 
                 System.out.println("Nous avons détecté une structure mais n'avons pas pu la détruire");TimeUnit.SECONDS.sleep(4);           //Affichage d'un message disant qu'on est tombé sur un sous-marin
            
-                return 1;
+                //return 1;
             }
             else if (JeuNGraphique.plateauDeJeu.get(xTire,yTire,2,0) != (Object) '_'){             //Si la case contient un navire
-                return impact(xTire, yTire,0);          //On retourne la valeur d'impact
+                //return impact(xTire, yTire,0);          //On retourne la valeur d'impact
             }
             else{
                 System.out.println("Nous n'avons rien touché");TimeUnit.SECONDS.sleep(4);           //On affiche un message comme quoi il n'a rien touché
                 JeuNGraphique.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici
-                return 1;           //On a la justification que tout c'est bien passe
+                //return 1;           //On a la justification que tout c'est bien passe
             }
         }
-        return 0;        
+        //return 0;        
     }
     
     

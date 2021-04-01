@@ -1,11 +1,15 @@
 package bataillenavalgraphique.bataillenaval.controller;
 
+import bataillenavalgraphique.JeuGraphique;
 import bataillenavalgraphique.bataillenaval.model.Plateau;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
 import bataillenavalgraphique.bataillenaval.view.Affichage;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -270,8 +274,8 @@ public class IA implements Serializable{
         }
         
         if (possibilite[0]==90 && possibilite[1]==90 && possibilite[2]==90 && possibilite[3]==90){          //On vérifie qu'il y un moyen de déplacer le navire
-            System.out.println("\nLe navire que j'ai choisie à une panne moteur.");           //Si c'est le cas on affiche un message d'erreur
-            System.out.println("Le temps de la réparation j'effectue une autre action.");TimeUnit.SECONDS.sleep(3);
+            panneMoteur();
+            TimeUnit.SECONDS.sleep(3);
             return 3;           //On retourne 2, ce qui signifie qu'on doit relancer le tour du joueur
         }
         
@@ -1003,6 +1007,21 @@ public class IA implements Serializable{
             }
         }
         return false;
+    }
+    
+    
+    
+    public void panneMoteur() throws InterruptedException{
+        
+        Label information = new Label("Le navire que j'ai choisis à un porblème moteur");
+        Label information2 = new Label("J'effectus un autre coup");
+        
+        VBox rootText = new VBox(25);
+        rootText.getChildren().addAll(information, information2);
+        Scene scenePanneMoteur = new Scene(rootText);
+        JeuGraphique.fenetreJeu.setScene(scenePanneMoteur);
+        
+        jouer(JeuGraphique.niveauIA);
     }
 }
 
