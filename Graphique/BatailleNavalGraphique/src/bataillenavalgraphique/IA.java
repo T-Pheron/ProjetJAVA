@@ -1,9 +1,10 @@
-package bataillenavalgraphique.bataillenaval.controller;
+package bataillenavalgraphique;
 
-import bataillenavalgraphique.JeuGraphique;
+
 import bataillenavalgraphique.bataillenaval.model.Plateau;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
 import bataillenavalgraphique.bataillenaval.view.Affichage;
+import bataillenavalgraphique.bataillenaval.controller.*;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
@@ -33,9 +34,12 @@ public class IA implements Serializable{
     private int pListe=0;           //Variable utilisée pour stocker la position 
     private boolean choixCoordonneesTir=true;           //Variable utilisé pour savoir si on peut sortir de la boucle de choix des coordonées
     private int nombreDeTirDestroyer=0;
+    private final int niveauIA;
 
-    public IA (){
-        
+    AffichageIA affichageIA = new AffichageIA();
+
+    public IA(int niveauIA){
+        this.niveauIA= niveauIA;
     }
     
     //**************************************************************************
@@ -88,11 +92,10 @@ public class IA implements Serializable{
      * Méthode qui permet de faire jouer l'IA.
      * La méthode affectue le tour de l'IA. D'après le niveau de dificulté choisie par l'utilisateur,
      * elle va mettre en place différent stratégie pour toucher et couler les navires du joueur humain
-     * @param niveauIA Le niveau de l'IA choisie
      * @return 1 Si tout c'est bien passé
      * @throws InterruptedException 
      */
-    public int jouer (int niveauIA) throws InterruptedException{
+    public int jouer() throws InterruptedException{
         
         System.out.println("\n\n"+GRIS_AR+BLANC+"                    Tour de l'IA                    "+RESET+RESET_AR);         //On affiche que c'est le tour de l'IA
 
@@ -100,6 +103,8 @@ public class IA implements Serializable{
             initialiseStockage();           //Toutes les variables sont mis par défaut
             premierTire=false;              //Le premier tir devient faux
         }
+        Affichage.afficher(1, 0, JeuGraphique.plateauDeJeu);
+        Affichage.afficher(1, 1, JeuGraphique.plateauDeJeu);
         
         switch(niveauIA){
             
@@ -131,8 +136,8 @@ public class IA implements Serializable{
         for (int i=0; i<15; i++){           //On créé des boucles pour parcourir toute la grille de tir
             for (int j=0; j<15; j++){
                 
-                if (JeuNGraphique.plateauDeJeu.get(i, j, 3, 0).equals("1")) JeuNGraphique.plateauDeJeu.modification(i, j, 3, 0, "0");            //Pour les cases les chiffre 1 (touché sans avoir touché de navire) on les remets à zéro
-                if (JeuNGraphique.plateauDeJeu.get(i, j, 3, 0).equals("2")) nombreDeCaseRestante++;            //Si on a déjà touché un navire à cette emplacement on ajoute 1 au nombre de case restante
+                if (JeuGraphique.plateauDeJeu.get(i, j, 3, 0).equals("1")) JeuGraphique.plateauDeJeu.modification(i, j, 3, 0, "0");            //Pour les cases les chiffre 1 (touché sans avoir touché de navire) on les remets à zéro
+                if (JeuGraphique.plateauDeJeu.get(i, j, 3, 0).equals("2")) nombreDeCaseRestante++;            //Si on a déjà touché un navire à cette emplacement on ajoute 1 au nombre de case restante
             }
         }
         
@@ -164,23 +169,23 @@ public class IA implements Serializable{
         /*Sélection du navire à bouger*****************************************/
             do {
                 pListeBougerNavire = (int) (Math.random()*10);          //On prend un nombre aléatoire entre 0 et 9
-            }while (JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).etat==false);         //Tant que l'IA n'a pas trouvé un navire qui n'a pas coulé
+            }while (JeuGraphique.flotteJoueur1.get(pListeBougerNavire).etat==false);         //Tant que l'IA n'a pas trouvé un navire qui n'a pas coulé
             
         /*Trouver toutes les posibilités de placement du navire****************/
         int  [] possibilite = new int[4];            //Tableau utilisé pour stocker les 4 posibilitées de placement du navire 
         
-        if (JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).direction == 0){         //Si la direction du navire est horizontale
+        if (JeuGraphique.flotteJoueur1.get(pListeBougerNavire).direction == 0){         //Si la direction du navire est horizontale
             
-            int xCord = JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0];           //On récupère la valeur du premier x dans les coordonées du navire
+            int xCord = JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0];           //On récupère la valeur du premier x dans les coordonées du navire
             if (xCord==0) possibilite[0]=90;         //Si x est égale à 0, un déplacement vers la gauche n'est pas possible. On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
             else possibilite[0]= xCord - 1;          //Sinon, on stock la coordonnées x de la case de gauche dans le tableau possibilité
             
-            xCord = JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille - 1][0];           //On récupère la valeur du dernier x dans les coordonées du navire
+            xCord = JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille - 1][0];           //On récupère la valeur du dernier x dans les coordonées du navire
             if (xCord==14) possibilite[1]=90;           //Si x est égale à 14, un déplacement vers la gauche n'est pas possible. On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
             else possibilite[1]= xCord + 1;             //Sinon, on stock la coordonnées x de la case de droite dans le tableau possibilité
             
             
-            int yCord = JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1];           //On récupère la valeur du premier y dans les coordonées du navire
+            int yCord = JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1];           //On récupère la valeur du premier y dans les coordonées du navire
             switch (yCord) {
                 case 0:             //Si y est égale à 0 un déplacement vers le haut n'est pas possible
                     possibilite[2]= 90;         //On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
@@ -197,18 +202,18 @@ public class IA implements Serializable{
             }
         }
         
-        if (JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).direction == 1){         //Si la direction du navire est vertical
+        if (JeuGraphique.flotteJoueur1.get(pListeBougerNavire).direction == 1){         //Si la direction du navire est vertical
             
-            int yCord = JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1];           //On récupère la valeur du premier y dans les coordonées du navire
+            int yCord = JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1];           //On récupère la valeur du premier y dans les coordonées du navire
             if (yCord==0) possibilite[2]= 90;           //Si y est égale à 0, un déplacement vers le haut n'est pas possible. On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
             else possibilite[2]= yCord - 1 ;            //Sinon, on stock la coordonnées y de la case au dessus dans le tableau possibilité
             
-            yCord = JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille - 1][1];
+            yCord = JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille - 1][1];
             if (yCord ==14) possibilite[3]= 90;         //Si y est égale à 0, un déplacement vers le bas n'est pas possible. On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
             else possibilite[3]= yCord + 1;             //Sinon, on stock la coordonnées y de la case en dessous dans le tableau possibilité
             
             
-            int xCord = JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0];           //On récupère la valeur du premier x dans les coordonées du navire
+            int xCord = JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0];           //On récupère la valeur du premier x dans les coordonées du navire
             switch (xCord) {
                 case 0:             //Si x est égale à 0 un déplacement vers la gauche n'est pas possible
                     possibilite[0]= 90;          //On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
@@ -226,48 +231,48 @@ public class IA implements Serializable{
         }
         
         /*Vérifier que le navire va pas chevocher un autre navire**************/
-        if (JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).direction==0){               //Si le navire est à l'horizontale
+        if (JeuGraphique.flotteJoueur1.get(pListeBougerNavire).direction==0){               //Si le navire est à l'horizontale
             if (possibilite[0]!= 90){           //On vérifie que la possibilité est possible
-                if (JeuNGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[0], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1], 0, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){          //On vérifie que le placement ne chevoche pas un autre navire
+                if (JeuGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1], 0, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){          //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[0]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
             if (possibilite[1]!= 90){
-                if (JeuNGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, ((possibilite[1] - JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille) + 1 ), JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1], 0, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){            //On vérifie que le placement ne chevoche pas un autre navire
+                if (JeuGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, ((possibilite[1] - JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille) + 1 ), JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1], 0, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){            //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[1]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
             if (possibilite[2]!= 90){
-                if (JeuNGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0], possibilite[2], 0, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                if (JeuGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0], possibilite[2], 0, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[2]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
             if (possibilite[3]!= 90){
-                if (JeuNGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0], possibilite[3], 0, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                if (JeuGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0], possibilite[3], 0, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[3]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
         }
         
-        if (JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).direction==1){           //Si le navire est à la vertical
+        if (JeuGraphique.flotteJoueur1.get(pListeBougerNavire).direction==1){           //Si le navire est à la vertical
             if (possibilite[0] != 90){          //On vérifie que la possibilité est possible
-                if(JeuNGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[0], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1], 1, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){            //On vérifie que le placement ne chevoche pas un autre navire
+                if(JeuGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1], 1, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){            //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[0]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
             if (possibilite[1] != 90){          //On vérifie que la possibilité est possible
-                if (JeuNGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[1], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1], 1, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                if (JeuGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[1], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][1], 1, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[1]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
             
             if (possibilite[2] != 90){          //On vérifie que la possibilité est possible
-                if (JeuNGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0], possibilite[2], 1, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                if (JeuGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0], possibilite[2], 1, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[2]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
             if (possibilite[3] != 90){          //On vérifie que la possibilité est possible
-                if (JeuNGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0],(( possibilite[3] -  JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille) + 1) , 1, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                if (JeuGraphique.plateauDeJeu.verifEmplacementVide(numeroJoueur, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[0][0],(( possibilite[3] -  JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille) + 1) , 1, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille, pListeBougerNavire, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
                     possibilite[3]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
                 }
             }
@@ -287,100 +292,100 @@ public class IA implements Serializable{
         
 
         
-        if (JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).direction==0){            //Si le navire est à l'horizontale
+        if (JeuGraphique.flotteJoueur1.get(pListeBougerNavire).direction==0){            //Si le navire est à l'horizontale
                 
             switch (selectionPossibilite) {
                 case 3:
                     //Possibilité de descendre
-                    for (int i=0; i<JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille;i++){          //On parcour toutes les cases du navire
-                        JeuNGraphique.plateauDeJeu.deplacement(JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] , JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1]+ 1, Plateau.numeroEtage(numeroJoueur, 0));         //Il déplace le navire
-                        JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] ++;         //L'IA corrige les nouvelles coordonnées du navire
+                    for (int i=0; i<JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille;i++){          //On parcour toutes les cases du navire
+                        JeuGraphique.plateauDeJeu.deplacement(JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] , JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1]+ 1, Plateau.numeroEtage(numeroJoueur, 0));         //Il déplace le navire
+                        JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] ++;         //L'IA corrige les nouvelles coordonnées du navire
                     }
                     System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");         //L'IA affiche un message qui confirme le déplacement
-                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);
-                    TimeUnit.SECONDS.sleep(5);
+                    affichageIA.manoeuvreSucces();
+                    Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);
                     return 1;
                 case 2:
                     //Possibilité de monter
-                    for (int i=0; i<JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille;i++){          //On parcour toutes les cases du navire
-                        JeuNGraphique.plateauDeJeu.deplacement(JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] - 1, Plateau.numeroEtage(numeroJoueur, 0));         //Il déplace le navire
-                        JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] --;         //L'IA corrige les nouvelles coordonnées du navire
+                    for (int i=0; i<JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille;i++){          //On parcour toutes les cases du navire
+                        JeuGraphique.plateauDeJeu.deplacement(JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] - 1, Plateau.numeroEtage(numeroJoueur, 0));         //Il déplace le navire
+                        JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] --;         //L'IA corrige les nouvelles coordonnées du navire
                     }
                     System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");         //L'IA affiche un message qui confirme le déplacement
-                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);
-                    TimeUnit.SECONDS.sleep(5);
+                    affichageIA.manoeuvreSucces();
+                    Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);
                     return 1;
                 case 1:
                     //Posibilité d'aller à gauche
-                    for (int i=JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille - 1; i>=0;i--){         //On parcour toutes les cases du navire
-                        JeuNGraphique.plateauDeJeu.deplacement(JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] + 1, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));         //Il déplace le navire
-                        JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] ++;         //L'IA corrige les nouvelles coordonnées du navire
+                    for (int i=JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille - 1; i>=0;i--){         //On parcour toutes les cases du navire
+                        JeuGraphique.plateauDeJeu.deplacement(JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] + 1, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));         //Il déplace le navire
+                        JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] ++;         //L'IA corrige les nouvelles coordonnées du navire
                     }
                     System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");         //L'IA affiche un message qui confirme le déplacement
-                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);
-                    TimeUnit.SECONDS.sleep(5);
+                    affichageIA.manoeuvreSucces();
+                    Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);
                     return 1;
                 case 0:
                     //Possibilité d'aller à droite
-                    for (int i=0; i<JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille;i++){          //On parcour toutes les cases du navire
-                        JeuNGraphique.plateauDeJeu.deplacement(JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] - 1,JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));         //Il déplace le navire
-                        JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] --;         //L'IA corrige les nouvelles coordonnées du navire
+                    for (int i=0; i<JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille;i++){          //On parcour toutes les cases du navire
+                        JeuGraphique.plateauDeJeu.deplacement(JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] - 1,JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));         //Il déplace le navire
+                        JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] --;         //L'IA corrige les nouvelles coordonnées du navire
                     }
                     System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");         //L'IA affiche un message qui confirme le déplacement
-                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);
-                    TimeUnit.SECONDS.sleep(5);
+                    affichageIA.manoeuvreSucces();
+                    Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);
                     return 1;       //On retourne 1 si tout c'est bien passé
                 default:
                     System.out.println(ROUGE +"Erreur_bougerNavireIA !"+RESET +"\nErreur de choix de déplacement");         //En cas d'erreur on renvoie un message d'erreur
+                    affichageIA.erreurIA("Erreur de choix de déplacement");
                     return 3;           //Recommence le tour de l'IA sans afficher de message 
             } 
         }
         
         
-        if (JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).direction==1){            //Si le navire est à la vertical
+        if (JeuGraphique.flotteJoueur1.get(pListeBougerNavire).direction==1){            //Si le navire est à la vertical
             switch (selectionPossibilite) {
                 case 3:
                     //Possibilité de descendre
-                    for (int i=JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille - 1; i>=0;i--){         //On parcour toutes les cases du navire
-                        JeuNGraphique.plateauDeJeu.deplacement(JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] , JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1]+1, Plateau.numeroEtage(numeroJoueur, 0));          //Il déplace le navire
-                        JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] ++;         //L'IA corrige les nouvelles coordonnées du navire
+                    for (int i=JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille - 1; i>=0;i--){         //On parcour toutes les cases du navire
+                        JeuGraphique.plateauDeJeu.deplacement(JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] , JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1]+1, Plateau.numeroEtage(numeroJoueur, 0));          //Il déplace le navire
+                        JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] ++;         //L'IA corrige les nouvelles coordonnées du navire
                     }
                     System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");         //L'IA affiche un message qui confirme le déplacement
-                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);
-                    TimeUnit.SECONDS.sleep(5);
+                    affichageIA.manoeuvreSucces();
+                    Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);
                     return 1;
                 case 2:
                     //Possibilité de monter
-                    for (int i=0; i<JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille;i++){          //On parcour toutes les cases du navire
-                        JeuNGraphique.plateauDeJeu.deplacement(JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1]- 1, Plateau.numeroEtage(numeroJoueur, 0));          //Il déplace le navire
-                        JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] --;         //L'IA corrige les nouvelles coordonnées du navire
+                    for (int i=0; i<JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille;i++){          //On parcour toutes les cases du navire
+                        JeuGraphique.plateauDeJeu.deplacement(JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1]- 1, Plateau.numeroEtage(numeroJoueur, 0));          //Il déplace le navire
+                        JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1] --;         //L'IA corrige les nouvelles coordonnées du navire
                     }
                     System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");         //L'IA affiche un message qui confirme le déplacement
-                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);
-                    TimeUnit.SECONDS.sleep(5);
+                    affichageIA.manoeuvreSucces();
+                    Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);
                     return 1;
                 case 1:
                     //Possibilité d'aller à gauche
-                    for (int i=0; i<JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille;i++){          //On parcour toutes les cases du navire
-                        JeuNGraphique.plateauDeJeu.deplacement(JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0]+1 , JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));          //Il déplace le navire
-                        JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] ++;         //L'IA corrige les nouvelles coordonnées du navire
+                    for (int i=0; i<JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille;i++){          //On parcour toutes les cases du navire
+                        JeuGraphique.plateauDeJeu.deplacement(JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0]+1 , JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));          //Il déplace le navire
+                        JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] ++;         //L'IA corrige les nouvelles coordonnées du navire
                     }
                     System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");         //L'IA affiche un message qui confirme le déplacement
-                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);
-                    TimeUnit.SECONDS.sleep(5);
-                    return 1;
+                    affichageIA.manoeuvreSucces();
+                    Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);
                 case 0:
                     //Possibilité d'aller à droite
-                    for (int i=0; i<JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).taille;i++){          //On parcour toutes les cases du navire
-                        JeuNGraphique.plateauDeJeu.deplacement(JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0]-1, JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));           //Il déplace le navire
-                        JeuNGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] --;         //L'IA corrige les nouvelles coordonnées du navire
+                    for (int i=0; i<JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille;i++){          //On parcour toutes les cases du navire
+                        JeuGraphique.plateauDeJeu.deplacement(JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0]-1, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));           //Il déplace le navire
+                        JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] --;         //L'IA corrige les nouvelles coordonnées du navire
                     }
                     System.out.println(VERT + "Manoeuvre réalisée avec succès"+RESET+"\n");         //L'IA affiche un message qui confirme le déplacement
-                    Affichage.afficher(numeroJoueur, 0, JeuNGraphique.plateauDeJeu);
-                    TimeUnit.SECONDS.sleep(5);
-                    return 1;
+                    affichageIA.manoeuvreSucces();
+                    Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);
                 default:
                     System.out.println(ROUGE +"Erreur_bougerNavireIA !"+RESET +"\nErreur de choix de déplacement");         //En cas d'erreur on renvoie un message d'erreur
+                    affichageIA.erreurIA("Erreur de choix de déplacement");
                     break;
             }
         }
@@ -393,7 +398,7 @@ public class IA implements Serializable{
     public int niveau1IA() throws InterruptedException{
         
         System.out.println("Veuillez patienter le temps que j'effectue mon tir");           
-        System.out.print("Je choisis les coordonnées, 4 sec!");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".\n");
+        System.out.print("Je choisis les coordonnées, 4 sec!");
 
 
         /*Génération des coordonées de tir et choix navire*************/
@@ -417,13 +422,13 @@ public class IA implements Serializable{
                 nPlateau = 1+ (int) (Math.random() * (nMaxNavire));         //On génère aléatoirement un numéros de navire
             }
             
-            Object retourPlateau = JeuNGraphique.plateauDeJeu.get(xTire, yTire, 3, 0);          //On récupère les informations du point ou on veut tirer
+            Object retourPlateau = JeuGraphique.plateauDeJeu.get(xTire, yTire, 3, 0);          //On récupère les informations du point ou on veut tirer
             if(retourPlateau.equals("0")) choixCoordonneesTir = true;           //Si le point n'a jamais été touché on autorise la sortie de la boucle de choix de coordonnées de tir
             else if (retourPlateau.equals("1") || retourPlateau.equals("2")) choixCoordonneesTir = false;           //Si le point à déja été touché on ne quitte pas la boucle pour avoir de nouvelle coordonnées
             else if (retourPlateau.equals("5")) {           //Si les coordonnées son celle d'un sous marin qui a été touché sans être coulé
                 lRef = 'S';         //On choix un sous marin pour tirer
                 int tourSousMarin =0;           //On initialise un compteur de tour
-                while (JeuNGraphique.flotteJoueur1.get(Flotte.nPlateauToPListe(lRef, nPlateau)).etat == false && tourSousMarin!=5){           //Tant que l'état du navire n'est pas true on cherche un autre sous marin. On vérifie aussi qu'on a pas parcourue tous les sous-marins
+                while (JeuGraphique.flotteJoueur1.get(Flotte.nPlateauToPListe(lRef, nPlateau)).etat == false && tourSousMarin!=5){           //Tant que l'état du navire n'est pas true on cherche un autre sous marin. On vérifie aussi qu'on a pas parcourue tous les sous-marins
                     nPlateau ++;            //On prend le sous-marin suivant
                     tourSousMarin++;            //On ajoute 1 au compteur
                     if (nPlateau==5) nPlateau=0;            //Si le numéros de plateau du navire arrive à 5, on le remet à 0 pour être sûr de parcourir tous les sous-marins
@@ -436,7 +441,7 @@ public class IA implements Serializable{
                 choixCoordonneesTir = true;         //On autorise la sortie de la boucle, si on a trouvé un sous marin
             }
             
-            if (JeuNGraphique.flotteJoueur1.get(Flotte.nPlateauToPListe(lRef, nPlateau)).etat == false) choixCoordonneesTir=false;             //on vérifie que le navire choisie n'est pas coulé
+            if (JeuGraphique.flotteJoueur1.get(Flotte.nPlateauToPListe(lRef, nPlateau)).etat == false) choixCoordonneesTir=false;             //on vérifie que le navire choisie n'est pas coulé
             
         }while(choixCoordonneesTir == false);           //On vérifie que la condition de sortie de la boucle est validée
         
@@ -446,21 +451,22 @@ public class IA implements Serializable{
 
         pListe=Flotte.nPlateauToPListe(lRef, nPlateau);
         
-        System.out.println("C'est bon. Je choisis un " + JeuNGraphique.flotteJoueur1.get(pListe).nom + " pour tirer sur les coordonnées :");         //On affiche qui dit qu'on a trouvé des coordonées de tir
-        System.out.println( B_BLEU_AR +BLANC+(char) (xTire + 65) + " " + (yTire+1) +RESET+RESET_AR +"\n");TimeUnit.SECONDS.sleep(2);          //On affiche de message avec les coordonnées de tir
-        System.out.print(ROUGE +"Attention ! \nJe TIRE!!"+RESET); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.println("."); TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(1);
+        affichageIA.niveau1TirRandom(xTire, yTire);
         
         
         /*Effectuer le tir*********************************************/
-        Object resultatEmplacement = JeuNGraphique.plateauDeJeu.get(xTire, yTire, 0, 0);            //On récupère les informations de la case qui est sur les coordonées de tir
+        Object resultatEmplacement = JeuGraphique.plateauDeJeu.get(xTire, yTire, 0, 0);            //On récupère les informations de la case qui est sur les coordonées de tir
         if(resultatEmplacement == (Object) '_'){            //Si la case ne contient pas de navire
-            JeuNGraphique.plateauDeJeu.modification(xTire, yTire, 3, 0, "1");           //On met sur la grille de tire de l'IA le chiffre 1 (ce qui signifie qu'on a tiré sur cette case sans rien touché)
+            JeuGraphique.plateauDeJeu.modification(xTire, yTire, 3, 0, "1");           //On met sur la grille de tire de l'IA le chiffre 1 (ce qui signifie qu'on a tiré sur cette case sans rien touché)
             nombreDeTir ++;         //On rajoute 1 au nombre de tir
+            
             System.out.println("\n\nC'est raté :(\nQuel échec!");           //On affiche un message qui dit que que l'IA n'a pas touché de navire 
-            System.out.println("Bonne chance!"); TimeUnit.SECONDS.sleep(3);
+            System.out.println("Bonne chance!");
+            affichageIA.tirRate();
         }
         else {          //Si la case contient un navire
-            JeuNGraphique.flotteJoueur1.get(pListe).impact(xTire, yTire, 1);           //On appel la méthode qui permet de rentrer les différentes informations lors d'un impacte
+            JeuGraphique.flotteJoueur1.get(pListe).impact(xTire, yTire, 1);           //On appel la méthode qui permet de rentrer les différentes informations lors d'un impacte
             nombreDeTir ++;         //On rajoute 1 au nombre de tir
             System.out.println("Et  c'est touché"); TimeUnit.SECONDS.sleep(10);
         }
@@ -487,19 +493,19 @@ public class IA implements Serializable{
                     yTire = (int) (Math.random() * 15);          //On stock un nombre aléatoire compris entre 0 et 14 dans y
 
                     for (int i=0; i<10;i++){
-                        if (JeuNGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
+                        if (JeuGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
                             pListe=i;            //On prend les coordonnées du bateau le plus puissant non coulé
                             i=10;           //Pour sortir de la boucle
                         }
                     }
                     
-                    Object retourPlateau = JeuNGraphique.plateauDeJeu.get(xTire, yTire, 3, 0);          //On récupère les informations du point ou on veut tirer
+                    Object retourPlateau = JeuGraphique.plateauDeJeu.get(xTire, yTire, 3, 0);          //On récupère les informations du point ou on veut tirer
                     if(retourPlateau.equals("0")) choixCoordonneesTir = true;           //Si le point n'a jamais été touché on autorise la sortie de la boucle de choix de coordonnées de tir
                     else if (retourPlateau.equals("1") || retourPlateau.equals("2")) choixCoordonneesTir = false;           //Si le point à déja été touché on ne quitte pas la boucle pour avoir de nouvelle coordonnées
                     else if (retourPlateau.equals("5")) {           //Si les coordonnées son celle d'un sous marin qui a été touché sans être coulé
                         lRef = 'S';         //On choix un sous marin pour tirer
                         int tourSousMarin =0;           //On initialise un compteur de tour
-                        while (JeuNGraphique.flotteJoueur1.get(pListe).etat == false && tourSousMarin!=5){           //Tant que l'état du navire n'est pas true on cherche un autre sous marin. On vérifie aussi qu'on a pas parcourue tous les sous-marins
+                        while (JeuGraphique.flotteJoueur1.get(pListe).etat == false && tourSousMarin!=5){           //Tant que l'état du navire n'est pas true on cherche un autre sous marin. On vérifie aussi qu'on a pas parcourue tous les sous-marins
                             nPlateau ++;            //On prend le sous-marin suivant
                             tourSousMarin++;            //On ajoute 1 au compteur
                             if (nPlateau==5) nPlateau=0;            //Si le numéros de plateau du navire arrive à 5, on le remet à 0 pour être sûr de parcourir tous les sous-marins
@@ -511,7 +517,7 @@ public class IA implements Serializable{
                         choixCoordonneesTir = true;         //On autorise la sortie de la boucle, si on a trouvé un sous marin
                     }
                     
-                    if (JeuNGraphique.flotteJoueur1.get(pListe).etat == false) choixCoordonneesTir=false;             //on vérifie que le navire choisie n'est pas coulé
+                    if (JeuGraphique.flotteJoueur1.get(pListe).etat == false) choixCoordonneesTir=false;             //on vérifie que le navire choisie n'est pas coulé
                     
                 }while(choixCoordonneesTir == false);           //On vérifie que la condition de sortie de la boucle est validée
             
@@ -521,17 +527,17 @@ public class IA implements Serializable{
 
             if (saveCoord[0]==true){            //Si il y a des coordonées de tir sauvegar dans la mémoir 1
 
-                if (JeuNGraphique.flotteJoueur1.get(stockSaveCoord[0][2]).etat !=true && JeuNGraphique.flotteJoueur1.get(stockSaveCoord[0][2]).lRef!= 'S') {            //On vérifie que le bateau sélecctionner pour le tir est toujours à flot et quelle est différente d'un sous-marin 
+                if (JeuGraphique.flotteJoueur1.get(stockSaveCoord[0][2]).etat !=true && JeuGraphique.flotteJoueur1.get(stockSaveCoord[0][2]).lRef!= 'S') {            //On vérifie que le bateau sélecctionner pour le tir est toujours à flot et quelle est différente d'un sous-marin 
                 for (int i=0; i<10;i++){
-                    if (JeuNGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
+                    if (JeuGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
                         stockSaveCoord[0][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
                         i=10;           //Pour sortir de la boucle
                     }
                 }
                 }
-                else if (JeuNGraphique.flotteJoueur1.get(stockSaveCoord[0][2]).etat!=true && JeuNGraphique.flotteJoueur1.get(stockSaveCoord[0][2]).lRef== 'S'){
+                else if (JeuGraphique.flotteJoueur1.get(stockSaveCoord[0][2]).etat!=true && JeuGraphique.flotteJoueur1.get(stockSaveCoord[0][2]).lRef== 'S'){
                     for (int i=6; i<10;i++){
-                        if (JeuNGraphique.flotteJoueur1.get(i).navireVivant()==true) {           //Si le navire n'est pas coulé
+                        if (JeuGraphique.flotteJoueur1.get(i).navireVivant()==true) {           //Si le navire n'est pas coulé
                                 stockSaveCoord[0][2]=i;          //On sélectionne un sous-marin
                                 i=10;           //Pour sortir de la boucle
                         }
@@ -541,14 +547,14 @@ public class IA implements Serializable{
                 xTire=stockSaveCoord[0][0];         //On attribue à chaque élément utilisé pour un tir les éléments sauvegardés
                 yTire=stockSaveCoord[0][1];
                 pListe=stockSaveCoord[0][2];
-                lRef=JeuNGraphique.flotteJoueur1.get(pListe).lRef;            
+                lRef=JeuGraphique.flotteJoueur1.get(pListe).lRef;            
                 saveCoord[0]=false;
             }
             else if (saveCoord[1]==true){
                 
-                if (JeuNGraphique.flotteJoueur1.get(stockSaveCoord[1][2]).etat!=true){            //On vérifie que le bateau sélectionner pour le tir est toujours à flot
+                if (JeuGraphique.flotteJoueur1.get(stockSaveCoord[1][2]).etat!=true){            //On vérifie que le bateau sélectionner pour le tir est toujours à flot
                     for (int i=0; i<10;i++){
-                        if (JeuNGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
+                        if (JeuGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
                             stockSaveCoord[1][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
                             i=10;           //Pour sortir de la boucle
                         }
@@ -558,14 +564,14 @@ public class IA implements Serializable{
                 xTire=stockSaveCoord[1][0];         //On attribue à chaque élément utilisé pour un tir les éléments sauvegardés
                 yTire=stockSaveCoord[1][1];
                 pListe=stockSaveCoord[1][2];
-                lRef=JeuNGraphique.flotteJoueur1.get(pListe).lRef;
+                lRef=JeuGraphique.flotteJoueur1.get(pListe).lRef;
                 saveCoord[1]=false;
             }
             else if (saveCoord[2]==true){
                 
-                if (JeuNGraphique.flotteJoueur1.get(stockSaveCoord[2][2]).etat!=true){            //On vérifie que le bateau sélectionner pour le tir est toujours à flot
+                if (JeuGraphique.flotteJoueur1.get(stockSaveCoord[2][2]).etat!=true){            //On vérifie que le bateau sélectionner pour le tir est toujours à flot
                     for (int i=0; i<10;i++){
-                        if (JeuNGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
+                        if (JeuGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
                             stockSaveCoord[2][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
                             i=10;           //Pour sortir de la boucle
                         }
@@ -575,14 +581,14 @@ public class IA implements Serializable{
                 xTire=stockSaveCoord[2][0];         //On attribue à chaque élément utilisé pour un tir les éléments sauvegardés
                 yTire=stockSaveCoord[2][1];
                 pListe=stockSaveCoord[2][2];
-                lRef=JeuNGraphique.flotteJoueur1.get(pListe).lRef;
+                lRef=JeuGraphique.flotteJoueur1.get(pListe).lRef;
                 saveCoord[2]=false;
             }
             else if (saveCoord[3]==true){
                 
-                if (JeuNGraphique.flotteJoueur1.get(stockSaveCoord[3][2]).etat!=true){            //On vérifie que le bateau sélectionner pour le tir est toujours à flot
+                if (JeuGraphique.flotteJoueur1.get(stockSaveCoord[3][2]).etat!=true){            //On vérifie que le bateau sélectionner pour le tir est toujours à flot
                     for (int i=0; i<10;i++){
-                        if (JeuNGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
+                        if (JeuGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
                             stockSaveCoord[3][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
                             i=10;           //Pour sortir de la boucle
                         }
@@ -592,7 +598,7 @@ public class IA implements Serializable{
                 xTire=stockSaveCoord[3][0];         //On attribue à chaque élément utilisé pour un tir les éléments sauvegardés
                 yTire=stockSaveCoord[3][1];
                 pListe=stockSaveCoord[3][2];
-                lRef=JeuNGraphique.flotteJoueur1.get(pListe).lRef;
+                lRef=JeuGraphique.flotteJoueur1.get(pListe).lRef;
                 saveCoord[3]=false;
             }
 
@@ -600,34 +606,34 @@ public class IA implements Serializable{
                 nombreDeTir = reinitialiserGrilleTrir();          //On remet les cases non touché à 0 et on stock dans nombre de tir le nombre de case déjà touché
             }
 
-            System.out.println("C'est bon. Je choisis un " + JeuNGraphique.flotteJoueur1.get(pListe).nom + " pour tirer sur les coordonnées :");         //On affiche qui dit qu'on a trouvé des coordonées de tir
+            System.out.println("C'est bon. Je choisis un " + JeuGraphique.flotteJoueur1.get(pListe).nom + " pour tirer sur les coordonnées :");         //On affiche qui dit qu'on a trouvé des coordonées de tir
             System.out.println( B_BLEU_AR +BLANC+(char) (xTire + 65) + " " + (yTire+1) +RESET+RESET_AR +"\n");TimeUnit.SECONDS.sleep(2);          //On affiche de message avec les coordonnées de tir
             System.out.print(ROUGE +"Attention ! \nJe TIRE!!"+RESET); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.println("."); TimeUnit.SECONDS.sleep(1);
             
             /*Effectuer le tir*********************************************/
-            if(JeuNGraphique.plateauDeJeu.get(xTire, yTire, 0, 0) == (Object) '_'){            //Si la case ne contient pas de navire
-                JeuNGraphique.plateauDeJeu.modification(xTire, yTire, 3, 0, "1");           //On met sur la grille de tire de l'IA le chiffre 1 (ce qui signifie qu'on a tiré sur cette case sans rien touché)
+            if(JeuGraphique.plateauDeJeu.get(xTire, yTire, 0, 0) == (Object) '_'){            //Si la case ne contient pas de navire
+                JeuGraphique.plateauDeJeu.modification(xTire, yTire, 3, 0, "1");           //On met sur la grille de tire de l'IA le chiffre 1 (ce qui signifie qu'on a tiré sur cette case sans rien touché)
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
                 System.out.println("\n\nC'est raté :(\nQuel échec!");           //On affiche un message qui dit que que l'IA n'a pas touché de navire 
                 System.out.println("Bonne chance!"); TimeUnit.SECONDS.sleep(3);
             }
-            else if (JeuNGraphique.plateauDeJeu.get(xTire, yTire, 0, 0) ==  (Object) 'S' && lRef!='S'){           //Si le navire touché est un sous-marin et que ce n'est pas un sous-marin qui a tiré
-                if (!JeuNGraphique.plateauDeJeu.get(xTire,yTire,3,0).equals("2")) JeuNGraphique.plateauDeJeu.modification(xTire,yTire,3,0,"5");
+            else if (JeuGraphique.plateauDeJeu.get(xTire, yTire, 0, 0) ==  (Object) 'S' && lRef!='S'){           //Si le navire touché est un sous-marin et que ce n'est pas un sous-marin qui a tiré
+                if (!JeuGraphique.plateauDeJeu.get(xTire,yTire,3,0).equals("2")) JeuGraphique.plateauDeJeu.modification(xTire,yTire,3,0,"5");
 
                 int nPlateauAdv;            //Le numéro du plateau du bateau adverse
                 int pListeAdv;              //La position dans la liste des navires de l'adversaire      
 
-                nPlateauAdv = (int) JeuNGraphique.plateauDeJeu.get(xTire,yTire,1,1);         //On récupère le numéro de plateau de l'adversaire aux coordonnées où le joueur veut tirer
+                nPlateauAdv = (int) JeuGraphique.plateauDeJeu.get(xTire,yTire,1,1);         //On récupère le numéro de plateau de l'adversaire aux coordonnées où le joueur veut tirer
                 pListeAdv=Flotte.nPlateauToPListe('S', nPlateauAdv);           //On en deduit la position dans la liste du navire de l'adversaire
 
-                JeuNGraphique.flotteJoueur1.get(pListeAdv).coordonnees[0][2]=2;           //On met la coordonées sur 2 pour signifie, ce qui signifie que le sous-marin a été touché sans être coulé (il ne peux plus être déplacé)
+                JeuGraphique.flotteJoueur1.get(pListeAdv).coordonnees[0][2]=2;           //On met la coordonées sur 2 pour signifie, ce qui signifie que le sous-marin a été touché sans être coulé (il ne peux plus être déplacé)
 
                 saveCoord[0]=true;          //On retient une coordonnées de tire pour le prochain tour
                 stockSaveCoord[0][0]=xTire;         //On stock les différents informations de tire
                 stockSaveCoord[0][1]=yTire;
                 stockSaveCoord[0][2]=0;
                 for (int i=6; i<10;i++){
-                    if (JeuNGraphique.flotteJoueur1.get(i).navireVivant()==true) {
+                    if (JeuGraphique.flotteJoueur1.get(i).navireVivant()==true) {
                             stockSaveCoord[0][2]=i;          //On sélectionne un sous-marin
                             i=10;           //Pour sortir de la boucle
                     }
@@ -645,19 +651,19 @@ public class IA implements Serializable{
             /*Impacte sur un navire adverse************************************************/
             else {          //Si les coordonées de tir coorespondent à un navire
                 System.out.println("Et  c'est touché!!");TimeUnit.SECONDS.sleep(2);
-                JeuNGraphique.flotteJoueur1.get(pListe).impact(xTire, yTire, 1);           //On appel la méthode qui permet de rentrer les différentes informations lors d'un impacte
+                JeuGraphique.flotteJoueur1.get(pListe).impact(xTire, yTire, 1);           //On appel la méthode qui permet de rentrer les différentes informations lors d'un impacte
                 TimeUnit.SECONDS.sleep(3);
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
 
 
                 /*Sauvegarde de coordonée pour les prochains tirs**************************/
                 if (xTire-2>=0){            //Si le tir 2 case à gauche est possible
-                    if (!JeuNGraphique.plateauDeJeu.get(xTire-2, yTire, 3, 0).equals("1") && !JeuNGraphique.plateauDeJeu.get(xTire-2, yTire, 3, 0).equals("2")){
+                    if (!JeuGraphique.plateauDeJeu.get(xTire-2, yTire, 3, 0).equals("1") && !JeuGraphique.plateauDeJeu.get(xTire-2, yTire, 3, 0).equals("2")){
                         saveCoord[0]=true;          //On est met l'emplacement sauvegarde sur true
                         stockSaveCoord[0][0]=xTire-2;           //On stock les informations de tir
                         stockSaveCoord[0][1]=yTire;
                         for (int i=0; i<10;i++){
-                            if (JeuNGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
+                            if (JeuGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
                                 stockSaveCoord[0][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
                                 i=10;           //Pour sortir de la boucle
                             }
@@ -665,12 +671,12 @@ public class IA implements Serializable{
                     }
                 }
                 if (xTire+2<15){        //Si le tir 2 case à doite est possible
-                    if (!JeuNGraphique.plateauDeJeu.get(xTire+2, yTire, 3, 0).equals("1") && !JeuNGraphique.plateauDeJeu.get(xTire+2, yTire, 3, 0).equals("2")){
+                    if (!JeuGraphique.plateauDeJeu.get(xTire+2, yTire, 3, 0).equals("1") && !JeuGraphique.plateauDeJeu.get(xTire+2, yTire, 3, 0).equals("2")){
                         saveCoord[1]=true;          //On est met l'emplacement sauvegarde sur true
                         stockSaveCoord[1][0]=xTire+2;           //On stock les informations de tir
                         stockSaveCoord[1][1]=yTire;
                         for (int i=0; i<10;i++){
-                            if (JeuNGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
+                            if (JeuGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
                                 stockSaveCoord[1][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
                                 i=10;           //Pour sortir de la boucle
                             }
@@ -678,12 +684,12 @@ public class IA implements Serializable{
                     }
                 }
                 if (yTire-2>=0){        //Si le tir 2 case en bas est possible
-                    if (!JeuNGraphique.plateauDeJeu.get(xTire, yTire-2, 3, 0).equals("1") && !JeuNGraphique.plateauDeJeu.get(xTire, yTire-2, 3, 0).equals("2")){
+                    if (!JeuGraphique.plateauDeJeu.get(xTire, yTire-2, 3, 0).equals("1") && !JeuGraphique.plateauDeJeu.get(xTire, yTire-2, 3, 0).equals("2")){
                         saveCoord[2]=true;          //On est met l'emplacement sauvegarde sur true
                         stockSaveCoord[2][0]=xTire;         //On stock les informations de tir
                         stockSaveCoord[2][1]=yTire-2;
                         for (int i=0; i<10;i++){
-                            if (JeuNGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
+                            if (JeuGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
                                 stockSaveCoord[2][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
                                 i=10;           //Pour sortir de la boucle
                             }
@@ -691,12 +697,12 @@ public class IA implements Serializable{
                     }
                 }
                 if (yTire+2<15){        //Si le tir 2 case en haut est possible
-                    if (!JeuNGraphique.plateauDeJeu.get(xTire, yTire+2, 3, 0).equals("1") && !JeuNGraphique.plateauDeJeu.get(xTire, yTire+2, 3, 0).equals("2")){
+                    if (!JeuGraphique.plateauDeJeu.get(xTire, yTire+2, 3, 0).equals("1") && !JeuGraphique.plateauDeJeu.get(xTire, yTire+2, 3, 0).equals("2")){
                         saveCoord[3]=true;          //On est met l'emplacement sauvegarde sur true
                         stockSaveCoord[3][0]=xTire;         //On stock les informations de tir
                         stockSaveCoord[3][1]=yTire+2;
                         for (int i=0; i<10;i++){
-                            if (JeuNGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
+                            if (JeuGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire n'est pas coulé
                                 stockSaveCoord[3][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
                                 i=10;           //Pour sortir de la boucle
                             }
@@ -736,7 +742,7 @@ public class IA implements Serializable{
         if (emplacementSave==false && nombreDeTirDestroyer <3){     //S'il a pas encore tiré sauvegarde sur cette case et qu'on a pas dépassé le nombre de destroyer maximum
             for (int i=3; i<6;i++)
             {
-                if (JeuNGraphique.flotteJoueur1.get(i).premierTire==true && JeuNGraphique.flotteJoueur1.get(i).etat==true){         //Si c'est le premier tire du destroyer et qu'il n'a pas été coulé   
+                if (JeuGraphique.flotteJoueur1.get(i).premierTire==true && JeuGraphique.flotteJoueur1.get(i).etat==true){         //Si c'est le premier tire du destroyer et qu'il n'a pas été coulé   
                     
                     System.out.println("J'effetue un tir avec mon destroyer");          //On affiche un message un message disant qu'il tire avec son destroyer
                     System.out.println("Veuillez patienter le temps du recueil des données");
@@ -757,8 +763,8 @@ public class IA implements Serializable{
 
                     for (int k=0; k<4 ; k++){           //On parcourt un coté d'un carré de 4 cases sur l'axe des abcsisses
                         for (int l=0; l<4; l++){            //On parcourt un coté d'un carré de 4 cases sur l'axe des ordonnées 
-                            if (JeuNGraphique.plateauDeJeu.get(xTireFusee+k,yTireFusee+l,0,0)!=(Object)'_') {         //Si la case contient 
-                                if (!JeuNGraphique.plateauDeJeu.get(xTireFusee+k,yTireFusee+l,3,0).equals("2")) JeuNGraphique.plateauDeJeu.modification(xTireFusee+k,yTireFusee+l,3,0,"4");         //Affiche sur la grille de tir du joueur les navires qui ont été touché par la fusée éclairante
+                            if (JeuGraphique.plateauDeJeu.get(xTireFusee+k,yTireFusee+l,0,0)!=(Object)'_') {         //Si la case contient 
+                                if (!JeuGraphique.plateauDeJeu.get(xTireFusee+k,yTireFusee+l,3,0).equals("2")) JeuGraphique.plateauDeJeu.modification(xTireFusee+k,yTireFusee+l,3,0,"4");         //Affiche sur la grille de tir du joueur les navires qui ont été touché par la fusée éclairante
                                 
                                 do{
                                     pSaveCoord=(int) (Math.random()*16);            //On prend aléatoirement un nombre entre 0 et 15
@@ -768,20 +774,20 @@ public class IA implements Serializable{
                                 stockSaveCoord[pSaveCoord][0]=xTireFusee+k;         //On stock les nouvelles coordonnées a cet emplacement
                                 stockSaveCoord[pSaveCoord][1]=yTireFusee+l;
                                 for (int m=0; m<10;m++){
-                                    if (JeuNGraphique.flotteJoueur1.get(m).etat==true) {          //Si le navire n'a pas coulé
+                                    if (JeuGraphique.flotteJoueur1.get(m).etat==true) {          //Si le navire n'a pas coulé
                                         stockSaveCoord[pSaveCoord][2]=m;            //On prend les références du bateau le plus puissant non coulé
                                         m=10;           //On sort de la boucle
                                     }
                                 }
                                 
                             }
-                            else JeuNGraphique.plateauDeJeu.modification(xTireFusee+k,yTireFusee+l,3,0,"3");          //Affiche sur la grille de tir du joueur là ou la fusée éclairante a touché
+                            else JeuGraphique.plateauDeJeu.modification(xTireFusee+k,yTireFusee+l,3,0,"3");          //Affiche sur la grille de tir du joueur là ou la fusée éclairante a touché
                         }
                     }
 
                     System.out.println("C'est intérésant ce que mes avions mon rapporté du terrain");           //On affiche un message disant que l'IA a bien effectué le tir de la fusée éclairante
                     System.out.println("Je prends note");TimeUnit.SECONDS.sleep(5);
-                    JeuNGraphique.flotteJoueur1.get(i).premierTire=false;         //le premier tir du destroyer choisi est mis à false
+                    JeuGraphique.flotteJoueur1.get(i).premierTire=false;         //le premier tir du destroyer choisi est mis à false
                     nombreDeTirDestroyer++;         //On rajoute 1 au nombre de tir du destroyer
                     return 1;           //On retourne 1 si tout c'est bien passé
                 }
@@ -801,17 +807,17 @@ public class IA implements Serializable{
                 for (int i=0; i<20;i++){
                     if (saveCoord[i]==true){            //Si il y a des coordonées de tir sauvegar dans la mémoir 1
 
-                        if (JeuNGraphique.flotteJoueur1.get(stockSaveCoord[i][2]).etat !=true && JeuNGraphique.flotteJoueur1.get(stockSaveCoord[i][2]).lRef!= 'S') {            //On vérifie que le navire sélecctionner pour le tir est toujours à flot et quelle est différente d'un sous-marin 
+                        if (JeuGraphique.flotteJoueur1.get(stockSaveCoord[i][2]).etat !=true && JeuGraphique.flotteJoueur1.get(stockSaveCoord[i][2]).lRef!= 'S') {            //On vérifie que le navire sélecctionner pour le tir est toujours à flot et quelle est différente d'un sous-marin 
                             for (int j=0; j<10;j++){            //Si le navire est coulé on sélectionner un nouveau navire qui n'est pas coulé
-                                if (JeuNGraphique.flotteJoueur1.get(j).etat==true) {
+                                if (JeuGraphique.flotteJoueur1.get(j).etat==true) {
                                     stockSaveCoord[i][2]=j;            //On prend les coordonnées du navire le plus puissant non coulé
                                     j =10;          //On sort de la boucle
                                 }
                             }
                         }
-                        else if (JeuNGraphique.flotteJoueur1.get(stockSaveCoord[i][2]).etat!=true && JeuNGraphique.flotteJoueur1.get(stockSaveCoord[i][2]).lRef== 'S'){         //Si le navire sélectionné est coulé et que c'est un sous-marin
+                        else if (JeuGraphique.flotteJoueur1.get(stockSaveCoord[i][2]).etat!=true && JeuGraphique.flotteJoueur1.get(stockSaveCoord[i][2]).lRef== 'S'){         //Si le navire sélectionné est coulé et que c'est un sous-marin
                             for (int k=6; k<10;k++){
-                                if (JeuNGraphique.flotteJoueur1.get(k).navireVivant()==true) {            //Si le navire n'a pas coulé
+                                if (JeuGraphique.flotteJoueur1.get(k).navireVivant()==true) {            //Si le navire n'a pas coulé
                                     stockSaveCoord[0][2]=k;          //On sélectionne un sous-marin
                                     k =10;          //On sort de la boucle
                                 }
@@ -821,11 +827,11 @@ public class IA implements Serializable{
                         xTire=stockSaveCoord[i][0];         //On attribue à chaque élément utilisé pour un tir les éléments sauvegardés
                         yTire=stockSaveCoord[i][1];
                         pListe=stockSaveCoord[i][2];
-                        lRef=JeuNGraphique.flotteJoueur1.get(pListe).lRef;
+                        lRef=JeuGraphique.flotteJoueur1.get(pListe).lRef;
                         saveCoord[i]=false;
                         
 
-                        if (!JeuNGraphique.plateauDeJeu.get(xTire, yTire, 3, 0).equals("1") && !JeuNGraphique.plateauDeJeu.get(xTire, yTire, 3, 0).equals("2") && !JeuNGraphique.plateauDeJeu.get(xTire, yTire, 3, 0).equals("3")){           //Si l'emplacement n'a pas été 
+                        if (!JeuGraphique.plateauDeJeu.get(xTire, yTire, 3, 0).equals("1") && !JeuGraphique.plateauDeJeu.get(xTire, yTire, 3, 0).equals("2") && !JeuGraphique.plateauDeJeu.get(xTire, yTire, 3, 0).equals("3")){           //Si l'emplacement n'a pas été 
                             emplacementSave=true;           //On met l'emplacement de sauvegarde sur true pour qu'il effectue le tir avec ces coordonées
                             i=20;           //On sort de la boucle
                         }
@@ -844,19 +850,19 @@ public class IA implements Serializable{
                     yTire = (int) (Math.random() * 15);          //On stock un nombre aléatoire compris entre 0 et 14 dans y
 
                     for (int i=0; i<10;i++){
-                        if (JeuNGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire de l'IA est encore à flot 
+                        if (JeuGraphique.flotteJoueur1.get(i).etat==true) {          //Si le navire de l'IA est encore à flot 
                             pListe=i;            //On prend les coordonnées du bateau le plus puissant non coulé
                             i=10;           //On sort de la boucle
                         }
                     }
                     
-                    Object retourPlateau = JeuNGraphique.plateauDeJeu.get(xTire, yTire, 3, 0);          //On récupère les informations du point où on veut tirer
+                    Object retourPlateau = JeuGraphique.plateauDeJeu.get(xTire, yTire, 3, 0);          //On récupère les informations du point où on veut tirer
                     if(retourPlateau.equals("0")) choixCoordonneesTir = true;           //Si le point n'a jamais été touché on autorise la sortie de la boucle de choix de coordonnées de tir
                     else if (retourPlateau.equals("1") || retourPlateau.equals("2") || retourPlateau.equals("3")) choixCoordonneesTir = false;           //Si le point à déja été touché on ne quitte pas la boucle pour avoir de nouvelle coordonnées
                     else if (retourPlateau.equals("5")) {           //Si les coordonnées son celle d'un sous marin qui a été touché sans être coulé
                         lRef = 'S';         //On choix un sous marin pour tirer
                         int tourSousMarin =0;           //On initialise un compteur de tour
-                        while (JeuNGraphique.flotteJoueur1.get(pListe).etat == false && tourSousMarin!=5){           //Tant que l'état du navire n'est pas true on cherche un autre sous marin. On vérifie aussi qu'on a pas parcourue tous les sous-marins
+                        while (JeuGraphique.flotteJoueur1.get(pListe).etat == false && tourSousMarin!=5){           //Tant que l'état du navire n'est pas true on cherche un autre sous marin. On vérifie aussi qu'on a pas parcourue tous les sous-marins
                             nPlateau ++;            //On prend le sous-marin suivant
                             tourSousMarin++;            //On ajoute 1 au compteur
                             if (nPlateau==5) nPlateau=0;            //Si le numéros de plateau du navire arrive à 5, on le remet à 0 pour être sûr de parcourir tous les sous-marins
@@ -868,7 +874,7 @@ public class IA implements Serializable{
                         choixCoordonneesTir = true;         //On autorise la sortie de la boucle, si on a trouvé un sous marin
                     }
                     
-                    if (JeuNGraphique.flotteJoueur1.get(pListe).etat == false) choixCoordonneesTir=false;             //on vérifie que le navire choisie n'est pas coulé
+                    if (JeuGraphique.flotteJoueur1.get(pListe).etat == false) choixCoordonneesTir=false;             //on vérifie que le navire choisie n'est pas coulé
                     
                 }while(choixCoordonneesTir == false);           //On vérifie que la condition de sortie de la boucle est validée
             
@@ -879,35 +885,35 @@ public class IA implements Serializable{
                 nombreDeTir = reinitialiserGrilleTrir();          //On remet les cases non touché à 0 et on stock dans nombre de tir le nombre de case déjà touché
             }
 
-            System.out.println("C'est bon. Je choisis un " + JeuNGraphique.flotteJoueur1.get(pListe).nom + " pour tirer sur les coordonnées :");         //On affiche qui dit qu'on a trouvé des coordonées de tir
+            System.out.println("C'est bon. Je choisis un " + JeuGraphique.flotteJoueur1.get(pListe).nom + " pour tirer sur les coordonnées :");         //On affiche qui dit qu'on a trouvé des coordonées de tir
             System.out.println( B_BLEU_AR +BLANC+(char) (xTire + 65) + " " + (yTire+1) +RESET+RESET_AR +"\n");TimeUnit.SECONDS.sleep(2);          //On affiche de message avec les coordonnées de tir
             System.out.print(ROUGE +"Attention ! \nJe TIRE!!"+RESET); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.println("."); TimeUnit.SECONDS.sleep(1);
             
 
             /*Effectuer le tir*********************************************/
-            if(JeuNGraphique.plateauDeJeu.get(xTire, yTire, 0, 0) == (Object) '_'){            //Si la case ne contient pas de navire
-                JeuNGraphique.plateauDeJeu.modification(xTire, yTire, 3, 0, "1");           //On met sur la grille de tire de l'IA le chiffre 1 (ce qui signifie qu'on a tiré sur cette case sans rien touché)
+            if(JeuGraphique.plateauDeJeu.get(xTire, yTire, 0, 0) == (Object) '_'){            //Si la case ne contient pas de navire
+                JeuGraphique.plateauDeJeu.modification(xTire, yTire, 3, 0, "1");           //On met sur la grille de tire de l'IA le chiffre 1 (ce qui signifie qu'on a tiré sur cette case sans rien touché)
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
                 System.out.println("\n\nC'est raté :(\nQuel échec!");           //On affiche un message qui dit que que l'IA n'a pas touché de navire 
                 System.out.println("Bonne chance!"); TimeUnit.SECONDS.sleep(3);
             }
-            else if (JeuNGraphique.plateauDeJeu.get(xTire, yTire, 0, 0) ==  (Object) 'S' && lRef!='S'){           //Si le navire touché est un sous-marin et que ce n'est pas un sous-marin qui a tiré
-                if (!JeuNGraphique.plateauDeJeu.get(xTire,yTire,3,0).equals("2")) JeuNGraphique.plateauDeJeu.modification(xTire,yTire,3,0,"5");
+            else if (JeuGraphique.plateauDeJeu.get(xTire, yTire, 0, 0) ==  (Object) 'S' && lRef!='S'){           //Si le navire touché est un sous-marin et que ce n'est pas un sous-marin qui a tiré
+                if (!JeuGraphique.plateauDeJeu.get(xTire,yTire,3,0).equals("2")) JeuGraphique.plateauDeJeu.modification(xTire,yTire,3,0,"5");
 
                 int nPlateauAdv;            //Le numéro du plateau du bateau adverse
                 int pListeAdv;              //La position dans la liste des navires de l'adversaire      
 
-                nPlateauAdv = (int) JeuNGraphique.plateauDeJeu.get(xTire,yTire,0,1);         //On récupère le numéro de plateau de l'adversaire aux coordonnées où le joueur veut tirer
+                nPlateauAdv = (int) JeuGraphique.plateauDeJeu.get(xTire,yTire,0,1);         //On récupère le numéro de plateau de l'adversaire aux coordonnées où le joueur veut tirer
                 pListeAdv=Flotte.nPlateauToPListe('S', nPlateauAdv);           //On en deduit la position dans la liste du navire de l'adversaire
 
-                JeuNGraphique.flotteJoueur1.get(pListeAdv).coordonnees[0][2]=2;           //On met la coordonées sur 2 pour signifie, ce qui signifie que le sous-marin a été touché sans être coulé (il ne peux plus être déplacé)
+                JeuGraphique.flotteJoueur1.get(pListeAdv).coordonnees[0][2]=2;           //On met la coordonées sur 2 pour signifie, ce qui signifie que le sous-marin a été touché sans être coulé (il ne peux plus être déplacé)
 
                 saveCoord[0]=true;          //On retient une coordonnées de tire pour le prochain tour
                 stockSaveCoord[0][0]=xTire;         //On stock les différents informations de tire
                 stockSaveCoord[0][1]=yTire;
                 stockSaveCoord[0][2]=0;
                 for (int i=6; i<10;i++){
-                    if (JeuNGraphique.flotteJoueur1.get(i).navireVivant()==true) {
+                    if (JeuGraphique.flotteJoueur1.get(i).navireVivant()==true) {
                         stockSaveCoord[0][2]=6;          //On sélectionne un sous-marin
                         i=10;           //On sort de la boucle
                     }
@@ -925,19 +931,19 @@ public class IA implements Serializable{
             /*Impacte sur un navire adverse************************************************/
             else {          //Si les coordonées de tir coorespondent à un navire
                 System.out.println("Et c'est touché!!");TimeUnit.SECONDS.sleep(2);
-                JeuNGraphique.flotteJoueur1.get(pListe).impact(xTire, yTire, 1);           //On appel la méthode qui permet de rentrer les différentes informations lors d'un impacte
+                JeuGraphique.flotteJoueur1.get(pListe).impact(xTire, yTire, 1);           //On appel la méthode qui permet de rentrer les différentes informations lors d'un impacte
                 TimeUnit.SECONDS.sleep(3);
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
 
 
                 /*Sauvegarde de coordonée pour les prochains tirs**************************/
                 if (xTire-2>=0){            //Si le tir 2 case à gauche est possible
-                    if (!JeuNGraphique.plateauDeJeu.get(xTire-2, yTire, 3, 0).equals("1") && !JeuNGraphique.plateauDeJeu.get(xTire-2, yTire, 3, 0).equals("2")){
+                    if (!JeuGraphique.plateauDeJeu.get(xTire-2, yTire, 3, 0).equals("1") && !JeuGraphique.plateauDeJeu.get(xTire-2, yTire, 3, 0).equals("2")){
                         saveCoord[16]=true;          //On est met l'emplacement sauvegarde sur true
                         stockSaveCoord[16][0]=xTire-2;           //On stock les informations de tir
                         stockSaveCoord[16][1]=yTire;
                         for (int i=0; i<10;i++){
-                            if (JeuNGraphique.flotteJoueur1.get(i).etat==true) {
+                            if (JeuGraphique.flotteJoueur1.get(i).etat==true) {
                                 stockSaveCoord[16][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
                                 i=10;           //On sort de la boucle
                             }
@@ -945,12 +951,12 @@ public class IA implements Serializable{
                     }
                 }
                 if (xTire+2<15){        //Si le tir 2 case à doite est possible
-                    if (!JeuNGraphique.plateauDeJeu.get(xTire+2, yTire, 3, 0).equals("1") && !JeuNGraphique.plateauDeJeu.get(xTire+2, yTire, 3, 0).equals("2")){
+                    if (!JeuGraphique.plateauDeJeu.get(xTire+2, yTire, 3, 0).equals("1") && !JeuGraphique.plateauDeJeu.get(xTire+2, yTire, 3, 0).equals("2")){
                         saveCoord[17]=true;          //On est met l'emplacement sauvegarde sur true
                         stockSaveCoord[17][0]=xTire+2;           //On stock les informations de tir
                         stockSaveCoord[17][1]=yTire;
                         for (int i=0; i<10;i++){
-                            if (JeuNGraphique.flotteJoueur1.get(i).etat==true) {
+                            if (JeuGraphique.flotteJoueur1.get(i).etat==true) {
                                 stockSaveCoord[17][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
                                 i=10;           //On sort de la boucle
                             }
@@ -958,12 +964,12 @@ public class IA implements Serializable{
                     }
                 }
                 if (yTire-2>=0){        //Si le tir 2 case en bas est possible
-                    if (!JeuNGraphique.plateauDeJeu.get(xTire, yTire-2, 3, 0).equals("1") && !JeuNGraphique.plateauDeJeu.get(xTire, yTire-2, 3, 0).equals("2")){
+                    if (!JeuGraphique.plateauDeJeu.get(xTire, yTire-2, 3, 0).equals("1") && !JeuGraphique.plateauDeJeu.get(xTire, yTire-2, 3, 0).equals("2")){
                         saveCoord[18]=true;          //On est met l'emplacement sauvegarde sur true
                         stockSaveCoord[18][0]=xTire;         //On stock les informations de tir
                         stockSaveCoord[18][1]=yTire-2;
                         for (int i=0; i<10;i++){
-                            if (JeuNGraphique.flotteJoueur1.get(i).etat==true) {
+                            if (JeuGraphique.flotteJoueur1.get(i).etat==true) {
                                 stockSaveCoord[18][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
                                 i=10;           //On sort de la boucle
                             }
@@ -972,12 +978,12 @@ public class IA implements Serializable{
                     
                 }
                 if (yTire+2<15){        //Si le tir 2 case en haut est possible
-                    if (!JeuNGraphique.plateauDeJeu.get(xTire, yTire+2, 3, 0).equals("1") && !JeuNGraphique.plateauDeJeu.get(xTire, yTire+2, 3, 0).equals("2")){
+                    if (!JeuGraphique.plateauDeJeu.get(xTire, yTire+2, 3, 0).equals("1") && !JeuGraphique.plateauDeJeu.get(xTire, yTire+2, 3, 0).equals("2")){
                         saveCoord[19]=true;          //On est met l'emplacement sauvegarde sur true
                         stockSaveCoord[19][0]=xTire;         //On stock les informations de tir
                         stockSaveCoord[19][1]=yTire+2;
                         for (int i=0; i<10;i++){
-                            if (JeuNGraphique.flotteJoueur1.get(i).etat==true) {
+                            if (JeuGraphique.flotteJoueur1.get(i).etat==true) {
                                 stockSaveCoord[19][2]=i;            //On prend les coordonnées du bateau le plus puissant non coulé
                                 i=10;           //On sort de la boucle
                             }
@@ -1001,7 +1007,7 @@ public class IA implements Serializable{
         
         for (int i=0; i<4 ; i++){           //On parcourt le carré de coté 4 cases
             for (int j=0; j<4; j++){
-                if (!JeuNGraphique.plateauDeJeu.get(xTireFusee+i,yTireFusee+j,3,0).equals("0")) {
+                if (!JeuGraphique.plateauDeJeu.get(xTireFusee+i,yTireFusee+j,3,0).equals("0")) {
                     return true;       //Inqique que ces  cases on déjà été exploré
                 }
             }
@@ -1021,7 +1027,7 @@ public class IA implements Serializable{
         Scene scenePanneMoteur = new Scene(rootText);
         JeuGraphique.fenetreJeu.setScene(scenePanneMoteur);
         
-        jouer(JeuGraphique.niveauIA);
+        jouer();
     }
 }
 

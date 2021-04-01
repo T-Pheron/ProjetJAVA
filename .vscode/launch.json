@@ -4,7 +4,13 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
+        {
+            "type": "java",
+            "name": "Launch BatailleNavalGraphique",
+            "request": "launch",
+            "mainClass": "bataillenavalgraphique.BatailleNavalGraphique",
+            "projectName": "ProjetJAVA_9a4c8ee0"
+        },
         {
             "type": "java",
             "name": "Debug (Launch)",
@@ -13,7 +19,6 @@
             "mainClass": "bataillenavalgraphique.main",
             "projectName": "bataillenavalgraphique"
         },
-
         {
             "type": "java",
             "name": "Launch Current File",

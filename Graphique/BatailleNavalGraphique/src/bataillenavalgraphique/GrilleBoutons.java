@@ -15,7 +15,7 @@ public final class GrilleBoutons {
     CaseBouton[][] grilleBoutons = new CaseBouton[15][15];
     VBox rootGrilleBoutons = new VBox();
     
-    public GrilleBoutons(char plateauRef, List listeInformations){
+    public GrilleBoutons(char plateauRef, List<Integer>  listeInformations){
         for (int y=0; y<15; y++){
             rootGrilleBoutons.getChildren().add(lignePlateau(y, grilleBoutons, plateauRef, listeInformations));
         }
@@ -28,7 +28,7 @@ public final class GrilleBoutons {
     }
     
     
-    public HBox lignePlateau(int y,CaseBouton[][] pableauBoutonNavireJoueur, char plateauRef, List listeInformations){
+    public HBox lignePlateau(int y,CaseBouton[][] pableauBoutonNavireJoueur, char plateauRef, List<Integer>  listeInformations){
         HBox rootAffichagePlateau = new HBox();
         
         for (int x=0; x<15;x++){
@@ -60,11 +60,11 @@ public final class GrilleBoutons {
             for (int i=0;i<15;i++){
                 if (plateau.get(i,j,0,0)!=(Object) '_'){
                     grilleBoutons[j][i].setTitle((String) (plateau.get(i,j,0,0).toString() + plateau.get(i,j,0,1).toString()));
-                    grilleBoutons[j][i].setColor((char) plateau.get(i,j,0,0));
+                    grilleBoutons[j][i].setColor((char) plateau.get(i,j,0,0),(int) plateau.get(i,j,0,1), (String) plateau.get(i, i, 3, 0));
                 }
                 else{
                     grilleBoutons[j][i].setTitle("");
-                    grilleBoutons[j][i].setColor((char) plateau.get(i,j,0,0));
+                    grilleBoutons[j][i].setColor((char) plateau.get(i,j,0,0),(int) plateau.get(i,j,0,1), (String) plateau.get(i, i, 3, 0));
                 }
             }
         }

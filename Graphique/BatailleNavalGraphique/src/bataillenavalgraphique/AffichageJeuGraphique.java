@@ -1,16 +1,18 @@
 package bataillenavalgraphique;
 
+import static bataillenavalgraphique.JeuGraphique.compteurTourHumain;
+import static bataillenavalgraphique.JeuGraphique.compteurTourIA;
+import static bataillenavalgraphique.JeuGraphique.flotteJoueur0;
+import static bataillenavalgraphique.JeuGraphique.flotteJoueur1;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
-import static bataillenavalgraphique.JeuGraphique.*;
 import bataillenavalgraphique.bataillenaval.view.Affichage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.*;
 import static javafx.geometry.Pos.CENTER;
 import javafx.scene.Scene;
@@ -28,11 +30,6 @@ import javafx.util.Duration;
  */
 public class AffichageJeuGraphique {
 
-    
-
-
-
-
 
     public AffichageJeuGraphique(){
         
@@ -41,17 +38,18 @@ public class AffichageJeuGraphique {
     
     public void affichageJoueur(){
 
+        victoire();
         GrilleBoutons grilleBoutonNavire = new GrilleBoutons('N');
         GrilleBoutons grilleBoutonTirs = new GrilleBoutons('T');
-        compteurTourHumain++; 
+        JeuGraphique.compteurTourHumain++; 
         
         GridPane rootJeu = new GridPane();
         rootJeu.setPadding(new Insets(20));
         rootJeu.setHgap(30);
         rootJeu.setVgap(20);
         
-        grilleBoutonNavire.miseAJourAffichageNavire(plateauDeJeu);
-        grilleBoutonTirs.miseAJourAffichageTirs(plateauDeJeu);
+        grilleBoutonNavire.miseAJourAffichageNavire(JeuGraphique.plateauDeJeu);
+        grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);
         
         rootJeu.add(menu(),0,0,3,5);
         
@@ -69,18 +67,19 @@ public class AffichageJeuGraphique {
         JeuGraphique.fenetreJeu.setScene(sceneJeu);
         JeuGraphique.fenetreJeu.show();
         
-        Affichage.afficher(0, 0, plateauDeJeu);
+        Affichage.afficher(0, 0, JeuGraphique.plateauDeJeu);
+        Affichage.afficher(0, 1, JeuGraphique.plateauDeJeu);
     }
     
     public void selectionNavire(int xPlateau, int yPlateau){
         
-        char lRef = (char) plateauDeJeu.get(xPlateau, yPlateau, 0,0);
-        int nPlateau = (int) plateauDeJeu.get(xPlateau, yPlateau, 0,1);
+        char lRef = (char) JeuGraphique.plateauDeJeu.get(xPlateau, yPlateau, 0,0);
+        int nPlateau = (int) JeuGraphique.plateauDeJeu.get(xPlateau, yPlateau, 0,1);
         int pListe = Flotte.nPlateauToPListe(lRef, nPlateau);
-        int tailleNavire= flotteJoueur0.get(pListe).taille;
-        int directionNavire = flotteJoueur0.get(pListe).direction;
+        int tailleNavire= JeuGraphique.flotteJoueur0.get(pListe).taille;
+        int directionNavire = JeuGraphique.flotteJoueur0.get(pListe).direction;
         GrilleBoutons grilleBoutonNavire = new GrilleBoutons('D');
-        grilleBoutonNavire.miseAJourAffichageNavire(plateauDeJeu);
+        grilleBoutonNavire.miseAJourAffichageNavire(JeuGraphique.plateauDeJeu);
         
         ImageView imageTir =new ImageView(getClass().getResource("/images/tir.png").toString());
         ImageView imageTirHover =new ImageView(getClass().getResource("/images/tirHover.png").toString());
@@ -102,7 +101,7 @@ public class AffichageJeuGraphique {
         
         
         rootAffichagePlateau.add(grilleBoutonNavire.getRoot(),0,0);
-        rootAffichagePlateau.add(affichageNavire.getRoot(directionNavire, lRef, nPlateau),1,0);
+        rootAffichagePlateau.add(affichageNavire.getRoot(directionNavire, lRef, nPlateau,(String) JeuGraphique.plateauDeJeu.get(xPlateau, yPlateau, 3, 0)),1,0);
         
         Label instruction = new Label ("Que souhaiter vous faire ?");
         instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"
@@ -160,12 +159,12 @@ public class AffichageJeuGraphique {
     
     public void selectionCaseTir(int pListe){
         
-        int tailleNavire= flotteJoueur0.get(pListe).taille;
-        int directionNavire = flotteJoueur0.get(pListe).direction;
-        List listeInformations = new ArrayList ();
+        //int tailleNavire= flotteJoueur0.get(pListe).taille;
+        //int directionNavire = flotteJoueur0.get(pListe).direction;
+        List<Integer> listeInformations = new ArrayList<Integer> ();
         listeInformations.add(0, pListe);
         GrilleBoutons grilleBoutonTirs = new GrilleBoutons('B', listeInformations);
-        grilleBoutonTirs.miseAJourAffichageTirs(plateauDeJeu);
+        grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);
         
         VBox rootselectionCaseTir = new VBox(40);
         rootselectionCaseTir.setPadding(new Insets(90,300,20,300));
@@ -177,7 +176,7 @@ public class AffichageJeuGraphique {
         rootselectionCaseTir.setAlignment(CENTER);
         rootselectionCaseTir.getChildren().addAll(instruction, grilleBoutonTirs.getRoot());
         instruction.setAlignment(CENTER);
-
+        System.out.println("On reviens bien la");
         Scene sceneSelectionNavire = new Scene(rootselectionCaseTir);
         JeuGraphique.fenetreJeu.setScene(sceneSelectionNavire);
     }
@@ -185,21 +184,141 @@ public class AffichageJeuGraphique {
     public void tirEchec() throws InterruptedException{
         
         Timeline time = new Timeline();
-        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(2000),action -> {
+        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {
             VBox rootText = new VBox(25);
-            Label information = new Label ("Nous avons rien touché à ses coordonées");
+            Label information = new Label ("Nous avons rien touché à ces coordonées");
+            information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 20pt;"
+            +                "-fx-background-color: rgba(120,160,175,0.50);"
+            +                "-fx-font-weight: bold;");
             Label information1 = new Label ("C'est au tour de l'IA");
+            information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 15pt;"
+            +                "-fx-font-weight: bold;");
 
             rootText.getChildren().addAll(information, information1);
+            rootText.setAlignment(Pos.CENTER);
             Scene sceneTirEchec = new Scene(rootText);
             JeuGraphique.fenetreJeu.setScene(sceneTirEchec);
         }));
         time.play();
         
-        tourIA();
+        try {
+            tourIA();
+        } catch (InterruptedException e) {
+            System.err.println("Erreur_exceptionIA");
+        }
     }
     
-    public void tourIA(){
+    public void tirSurSousMarin() throws InterruptedException{
+        
+        Timeline time = new Timeline();
+        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {
+            VBox rootText = new VBox(25);
+            Label information = new Label ("Nous avons détecté une structure mais n'avons pas pu la détruire");
+            information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 20pt;"
+            +                "-fx-background-color: rgba(120,160,175,0.50);"
+            +                "-fx-font-weight: bold;");
+            Label information1 = new Label ("C'est au tour de l'IA");
+            information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 15pt;"
+            +                "-fx-font-weight: bold;");
+
+            rootText.getChildren().addAll(information, information1);
+            rootText.setAlignment(Pos.CENTER);
+            Scene sceneTirEchec = new Scene(rootText);
+            JeuGraphique.fenetreJeu.setScene(sceneTirEchec);
+        }));
+        time.play();
+        
+        try {
+            tourIA();
+        } catch (InterruptedException e) {
+            System.err.println("Erreur_exceptionIA");
+        }
+    }
+    
+    
+    public void tirToucherNavire() throws InterruptedException{
+        
+        Timeline time = new Timeline();
+        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {
+            VBox rootText = new VBox(25);
+            Label information = new Label ("C'est touché, bien joué");
+            information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 25pt; "
+            +                "-fx-font-color: Color.GREEN;"
+            +                "-fx-background-color: rgba(120,160,175,0.50);"
+            +                "-fx-font-weight: bold;");
+            Label information1 = new Label ("\n\n Au tour de l'IA");
+            information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 15pt;"
+            +                "-fx-font-weight: bold;");
+
+            rootText.getChildren().addAll(information, information1);
+            rootText.setAlignment(Pos.CENTER);
+            Scene sceneTirEchec = new Scene(rootText);
+            JeuGraphique.fenetreJeu.setScene(sceneTirEchec);
+        }));
+        time.play();
+        
+        try {
+            tourIA();
+        } catch (InterruptedException e) {
+            System.err.println("Erreur_exceptionIA");
+        }
+    }
+    
+    
+    public void tirCoulerNavire(String nomNavireCoule) throws InterruptedException{
+        
+        Timeline time = new Timeline();
+        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {
+            VBox rootText = new VBox(25);
+            Label information = new Label ("C'est touché, bien joué");
+            information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 25pt; "
+            +                "-fx-font-color: Color.GREEN;"
+            +                "-fx-background-color: rgba(120,160,175,0.50);"
+            +                "-fx-font-weight: bold;");
+            Label information1 = new Label ("Vous avez coulé un "+nomNavireCoule);
+            information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 18pt;"
+            +                "-fx-font-weight: bold;");
+            
+            Label information2 = new Label ("\n\n Au tour de l'IA");
+            information2.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 15pt;"
+            +                "-fx-font-weight: bold;");
+
+            rootText.getChildren().addAll(information, information1,information2);
+            rootText.setAlignment(Pos.CENTER);
+            Scene sceneTirEchec = new Scene(rootText);
+            JeuGraphique.fenetreJeu.setScene(sceneTirEchec);
+        }));
+        time.play();
+        
+        try {
+            tourIA();
+        } catch (InterruptedException e) {
+            System.err.println("Erreur_exceptionIA");
+        }
+    }
+    
+    
+    
+    public void tourIA() throws InterruptedException{
+        victoire();
+        Timeline timeTourJoueur = new Timeline();
+        timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(12000),action -> {
+            try {
+                JeuGraphique.ia.jouer();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(AffichageJeuGraphique.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }));
+        timeTourJoueur.play();
         
     }
 
@@ -270,5 +389,135 @@ public class AffichageJeuGraphique {
 
         return menuBar;
 
+    }
+    
+    
+    public void victoire(){
+        ImageView croquette =new ImageView(getClass().getResource("/images/croquette.png").toString());
+        ImageView croquetteHover =new ImageView(getClass().getResource("/images/croquetteHover.png").toString());
+        
+        Button bontonVictoire = new Button ("SUPER !");
+        bontonVictoire.setGraphic(croquetteHover);
+        bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 17pt;"
+        +                "-fx-background-color: rgba(120,160,175,0.50);");
+        bontonVictoire.setOnMouseEntered (e->
+        bontonVictoire.setGraphic(croquette)); 
+        bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(82,127,143,0.50);");
+        bontonVictoire.setOnMouseExited (e-> 
+        bontonVictoire.setGraphic(croquetteHover));
+        bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+        /*bontonVictoire.setOnAction((ActionEvent eventLancementJeu) -> {
+            fenetreJeu.setScene(sceneLancementMenuPrincipal(fenetreJeu));
+        });*/
+
+        Label labelAffichageVictoireJoueur = new Label ("VICTOIRE DU JOUEUR !!");
+        labelAffichageVictoireJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+        Label labelAffichageVictoireIA = new Label ("VICTOIRE DE L'ORDINATEUR !!");
+        labelAffichageVictoireIA.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+        Label labelAffichageInfoPartie = new Label ("\nInformation sur la partie : "
+            +"\nNombre de tour : "+compteurTourHumain+compteurTourIA
+            +"\nNombre de tour du joueur : "+ compteurTourHumain
+            +"\nNombre de tour de l'IA : "+compteurTourIA);
+        labelAffichageInfoPartie.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+        Label labelAffichageVictoireSousMarin = new Label ("Vous n'avez plus de sous-marin"
+            +"L'ordinateur gagne par fofait de votre part");
+        labelAffichageVictoireSousMarin.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+
+        GridPane rootVictoire = new GridPane();
+        rootVictoire.setPadding(new javafx.geometry.Insets(20));
+        rootVictoire.setVgap(20);
+        
+
+        boolean etat0;          //On initialise un booléen
+        boolean etat0SousMarin=false;           //On initialise un booléen à false pour le sous-marin 
+        for (int i=0; i<10; i++){           //On parcourt la flotte du joueur 
+            etat0 = flotteJoueur0.get(i).etat;          //Pour chaque navire, on regarde si il a coulé ou pas
+            if (etat0==true) break;         //Si il est toujours à flot
+            if (i==9 && etat0!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
+
+                rootVictoire.add(labelAffichageVictoireIA,0,0);
+                rootVictoire.add(labelAffichageInfoPartie,0,1);
+                rootVictoire.add(bontonVictoire,1,1);
+                /*System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);            //On affiche un message 
+                System.out.println("\nInformations sur la partie : ");
+                System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
+                System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
+                System.out.println("Nombre de tour de l'IA : "+compteurTourIA);*/
+                //Scene sceneFlotteFct = new Scene(rootVictoire);
+                //return true;            //On renvoie true si l'IA a gagné
+            } 
+        }
+        
+        for (int i=6; i<10;i++){            //On parcourt les sous-marin
+            if (etat0SousMarin==false) etat0SousMarin=flotteJoueur0.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
+        }
+
+        if (etat0SousMarin==false){         //Si il y a plus aucun sous-marin
+            //System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);          //On affiche un message de victoire de l'IA
+            rootVictoire.add(labelAffichageVictoireIA,0,0);
+            rootVictoire.add(labelAffichageVictoireSousMarin,0,1);
+            rootVictoire.add(labelAffichageInfoPartie,0,2);
+            rootVictoire.add(bontonVictoire,1,3);
+            /*System.out.println("Vous n'avez plus de sous-marin");
+            System.out.println("L'ordinateur gagne par fofait de votre part");
+            System.out.println("\nInformations sur la partie : ");
+            System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
+            System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
+            System.out.println("Nombre de tour de l'IA : "+compteurTourIA);*/
+            //Scene sceneFlotteFct = new Scene(rootVictoire);
+            //return true;            //Renvoie true si l'un des deux joueurs a gagné
+        }
+
+        boolean etat1SousMarin=false;           //On initialise un booléen à false pour le sous-marin
+        boolean etat1;      //On initialise un booléen
+        for (int i=0; i<10; i++){           //On parcourt la flotte de l'IA
+            etat1 = flotteJoueur1.get(i).etat;          //Pour chaque navire, on regarde si il a coulé ou pas
+            if (etat1==true) break;         //Si il est toujours à flot
+            if (i==9 && etat1!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
+                rootVictoire.add(labelAffichageVictoireJoueur,0,0);
+                rootVictoire.add(labelAffichageInfoPartie,0,1);
+                rootVictoire.add(bontonVictoire,1,1);
+                /*System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);           //On affiche un message
+                System.out.println("\nInformations sur la partie : ");
+                System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
+                System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
+                System.out.println("Nombre de tour de l'IA : "+compteurTourIA); */
+                //Scene sceneFlotteFct = new Scene(rootVictoire);
+                //return true;            //On renvoie true si le joueur a gagné
+            }
+        }
+        
+        for (int i=6; i<10;i++){            //On parcourt les sous-marins
+            if (etat1SousMarin==false) etat1SousMarin=flotteJoueur0.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
+        }
+
+        if (etat1SousMarin==false){         //Si il y a plus aucun sous-marin
+            rootVictoire.add(labelAffichageVictoireJoueur,0,0);
+            rootVictoire.add(labelAffichageVictoireSousMarin,0,1);
+            rootVictoire.add(labelAffichageInfoPartie,0,2);
+            rootVictoire.add(bontonVictoire,1,3);
+            /*System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);            //On affiche un message de victoire du joueur
+            System.out.println("Vous avez détruit tout les sous-marin de l'ordinateur");
+            System.out.println("Vous gagnez par forfait");
+            System.out.println("\nInformations sur la partie : ");
+            System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
+            System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
+            System.out.println("Nombre de tour de l'IA : "+compteurTourIA);*/
+            //Scene sceneFlotteFct = new Scene(rootVictoire);
+            //return true;            //Renvoie true si l'un des deux joueurs a gagné
+        }
     }
 }

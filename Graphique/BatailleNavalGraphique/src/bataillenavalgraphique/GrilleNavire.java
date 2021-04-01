@@ -17,14 +17,14 @@ public class GrilleNavire{
          this.taille =taille;
     }
     
-    public Pane getRoot(int direction, char lRef, int nPlateau){
+    public Pane getRoot(int direction, char lRef,int nPlateau, String nTir){
         
         if (direction ==0){
             HBox rootNavireHorizontale = new HBox();
             for (int i=0; i<taille;i++){
                 grilleBoutons[i]= new CaseBouton('D');
                 grilleBoutons[i].setTitle((String)(lRef + String.valueOf(nPlateau)));
-                grilleBoutons[i].setColor(lRef);
+                grilleBoutons[i].setColor(lRef,nPlateau,nTir);
                 rootNavireHorizontale.getChildren().add(grilleBoutons[i].getButton());
             }
             AnchorPane rootNavire = new AnchorPane();
@@ -38,7 +38,7 @@ public class GrilleNavire{
             for (int i=0; i<taille; i++){
                 grilleBoutons[i]= new CaseBouton('D');
                 grilleBoutons[i].setTitle((String)(lRef + String.valueOf(nPlateau)));
-                grilleBoutons[i].setColor(lRef);
+                grilleBoutons[i].setColor(lRef,nPlateau,nTir);
                 rootNavireVertical.getChildren().add(grilleBoutons[i].getButton());
             }
             AnchorPane rootNavire = new AnchorPane();

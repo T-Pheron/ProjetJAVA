@@ -11,6 +11,7 @@
         "c:\\Program Files (x86)\\Java\\openjfx-11.0.2_windows-x64_bin-sdk\\javafx-sdk-11.0.2\\lib\\javafx-swt.jar",
         "c:\\Users\\Théric PHERON\\AppData\\Local\\SceneBuilder\\runtime\\lib\\javafx-swt.jar",
         "c:\\Users\\Théric PHERON\\AppData\\Local\\SceneBuilder\\app\\scenebuilder-16.0.0-all.jar",
-        "Non_Graphique/BatailleNaval/dist/BatailleNaval.jar"
+        "Non_Graphique/BatailleNaval/dist/BatailleNaval.jar",
+        "Graphique/BatailleNavalGraphique/dist/BatailleNavalGraphique.jar"
     ]
 }

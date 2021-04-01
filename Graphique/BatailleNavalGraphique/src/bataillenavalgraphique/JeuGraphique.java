@@ -1,12 +1,11 @@
 package bataillenavalgraphique;
 
+
 import bataillenavalgraphique.bataillenaval.view.Affichage;
-import bataillenavalgraphique.bataillenaval.controller.IA;
 import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
 import bataillenavalgraphique.bataillenaval.model.Plateau;
 import java.util.*;
-import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,7 +21,7 @@ public class JeuGraphique{
     
     public static int numeroJoueur;                 //Variable qui permet de connaître à quelle joueur c'est la tour
     public static int niveauIA=0;           //Variable qui permet de stoker le niveau de l'IA
-    public static IA ia = new IA();           //On initialise une variable qui permet de faire fonctionner l'IA
+    public static IA ia;           //On initialise une variable qui permet de faire fonctionner l'IA
     public static boolean premierTour = true;        //Variable utilisé pour savoir si c'est le premier tir
     public static int compteurTourIA;               //Variable qui compte le nombre de tour de l'IA
     public static int compteurTourHumain;           //variable qui compte le nombre de tour du joueur humain
@@ -30,8 +29,6 @@ public class JeuGraphique{
     public static Stage fenetreJeu = new Stage();
     public static boolean selectionJoueur=false;
 
-    ImageView croquette =new ImageView(getClass().getResource("/images/croquette.png").toString());
-    ImageView croquetteHover =new ImageView(getClass().getResource("/images/croquetteHover.png").toString());
         
     
     public JeuGraphique(){
@@ -55,6 +52,7 @@ public class JeuGraphique{
      public JeuGraphique(int niveauIA){
 
         JeuGraphique.niveauIA= niveauIA;
+        ia = new IA(niveauIA);
 
     }
 
@@ -70,7 +68,6 @@ public class JeuGraphique{
     public void lancementJeuGraphique() throws InterruptedException, ClassNotFoundException{
         
         /*Initialisation des variables*****************************************/
-        boolean tourSuivant = true;             //Variable qui permet de savoir si on passe au tour suivant
 
         if (premierTour==true){
             //Initialisation des flottes************************
@@ -96,15 +93,14 @@ public class JeuGraphique{
     }
         
     public void tourIA() throws InterruptedException{
-
+        
         Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);         //Pour les test on affiche les plateaux de l'IA
         System.out.println();
         Affichage.afficher(numeroJoueur, 1, JeuGraphique.plateauDeJeu);
 
         compteurTourIA++;           //On rajoute 1 au compteur de tour de l'IA
 
-        ia.jouer(niveauIA);            //On lance la méthode qui permet à l'IA de jouer
-        victoire();
+        ia.jouer();            //On lance la méthode qui permet à l'IA de jouer
 
     }
     
@@ -189,131 +185,45 @@ public class JeuGraphique{
         flotte.get(pListe).direction=direction;             //On stocke la direction du navire dans les informations du navire
     }
     
-    
 
-    public void victoire(){
-        Button bontonVictoire = new Button ("SUPER !");
-        bontonVictoire.setGraphic(croquetteHover);
-        bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-        +                "-fx-font-size: 17pt;"
-        +                "-fx-background-color: rgba(120,160,175,0.50);");
-        bontonVictoire.setOnMouseEntered (e->
-        bontonVictoire.setGraphic(croquette)); 
-        bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-                    +                "-fx-font-size: 13pt;"
-                    +                "-fx-background-color: rgba(82,127,143,0.50);");
-        bontonVictoire.setOnMouseExited (e-> 
-        bontonVictoire.setGraphic(croquetteHover));
-        bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-                    +                "-fx-font-size: 13pt;"
-                    +                "-fx-background-color: rgba(120,160,175,0.50);");
-        /*bontonVictoire.setOnAction((ActionEvent eventLancementJeu) -> {
-            fenetreJeu.setScene(sceneLancementMenuPrincipal(fenetreJeu));
-        });*/
 
-        Label labelAffichageVictoireJoueur = new Label ("VICTOIRE DU JOUEUR !!");
-        labelAffichageVictoireJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-                    +                "-fx-font-size: 13pt;"
-                    +                "-fx-background-color: rgba(120,160,175,0.50);");
-        Label labelAffichageVictoireIA = new Label ("VICTOIRE DE L'ORDINATEUR !!");
-        labelAffichageVictoireIA.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-                    +                "-fx-font-size: 13pt;"
-                    +                "-fx-background-color: rgba(120,160,175,0.50);");
-        Label labelAffichageInfoPartie = new Label ("\nInformation sur la partie : "
-            +"\nNombre de tour : "+compteurTourHumain+compteurTourIA
-            +"\nNombre de tour du joueur : "+ compteurTourHumain
-            +"\nNombre de tour de l'IA : "+compteurTourIA);
-        labelAffichageInfoPartie.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-                    +                "-fx-font-size: 13pt;"
-                    +                "-fx-background-color: rgba(120,160,175,0.50);");
-        Label labelAffichageVictoireSousMarin = new Label ("Vous n'avez plus de sous-marin"
-            +"L'ordinateur gagne par fofait de votre part");
-        labelAffichageVictoireSousMarin.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-                    +                "-fx-font-size: 13pt;"
-                    +                "-fx-background-color: rgba(120,160,175,0.50);");
 
-        GridPane rootVictoire = new GridPane();
-        rootVictoire.setPadding(new javafx.geometry.Insets(20));
-        rootVictoire.setVgap(20);
-        
 
-        boolean etat0;          //On initialise un booléen
-        boolean etat0SousMarin=false;           //On initialise un booléen à false pour le sous-marin 
-        for (int i=0; i<10; i++){           //On parcourt la flotte du joueur 
-            etat0 = flotteJoueur0.get(i).etat;          //Pour chaque navire, on regarde si il a coulé ou pas
-            if (etat0==true) break;         //Si il est toujours à flot
-            if (i==9 && etat0!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
 
-                rootVictoire.add(labelAffichageVictoireIA,0,0);
-                rootVictoire.add(labelAffichageInfoPartie,0,1);
-                rootVictoire.add(bontonVictoire,1,1);
-                /*System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);            //On affiche un message 
-                System.out.println("\nInformations sur la partie : ");
-                System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
-                System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
-                System.out.println("Nombre de tour de l'IA : "+compteurTourIA);*/
-                Scene sceneFlotteFct = new Scene(rootVictoire);
-                //return true;            //On renvoie true si l'IA a gagné
-            } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ////////////////////////////////A RETIRER///////////////////////////////////
+    //**************************************************************************
+    /**
+     * Converti les minuscules en majuscule.
+     * Cette méthode recois une lettre en majuscule ou en misnucule et la transforme
+     * si nécésaire en lettre majuscule.
+     * @param lettre La lettre à convertir
+     * @return La lettre en majuscule
+     */
+    public static char convertirMinuscules(char lettre){
+        if (lettre<65||lettre>90){                  //On vérifie que la lettre est une lettre minuscule
+            return lettre -= 'a'-'A';                   //Si c'est le cas on la convertie en majuscule en lui retirant la différence qu'il y a entre les minuscules et les majucules
         }
-        
-        for (int i=6; i<10;i++){            //On parcourt les sous-marin
-            if (etat0SousMarin==false) etat0SousMarin=flotteJoueur0.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
-        }
-
-        if (etat0SousMarin==false){         //Si il y a plus aucun sous-marin
-            //System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);          //On affiche un message de victoire de l'IA
-            rootVictoire.add(labelAffichageVictoireIA,0,0);
-            rootVictoire.add(labelAffichageVictoireSousMarin,0,1);
-            rootVictoire.add(labelAffichageInfoPartie,0,2);
-            rootVictoire.add(bontonVictoire,1,3);
-            /*System.out.println("Vous n'avez plus de sous-marin");
-            System.out.println("L'ordinateur gagne par fofait de votre part");
-            System.out.println("\nInformations sur la partie : ");
-            System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
-            System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
-            System.out.println("Nombre de tour de l'IA : "+compteurTourIA);*/
-            Scene sceneFlotteFct = new Scene(rootVictoire);
-            //return true;            //Renvoie true si l'un des deux joueurs a gagné
-        }
-
-        boolean etat1SousMarin=false;           //On initialise un booléen à false pour le sous-marin
-        boolean etat1;      //On initialise un booléen
-        for (int i=0; i<10; i++){           //On parcourt la flotte de l'IA
-            etat1 = flotteJoueur1.get(i).etat;          //Pour chaque navire, on regarde si il a coulé ou pas
-            if (etat1==true) break;         //Si il est toujours à flot
-            if (i==9 && etat1!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
-                rootVictoire.add(labelAffichageVictoireJoueur,0,0);
-                rootVictoire.add(labelAffichageInfoPartie,0,1);
-                rootVictoire.add(bontonVictoire,1,1);
-                /*System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);           //On affiche un message
-                System.out.println("\nInformations sur la partie : ");
-                System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
-                System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
-                System.out.println("Nombre de tour de l'IA : "+compteurTourIA); */
-                Scene sceneFlotteFct = new Scene(rootVictoire);
-                //return true;            //On renvoie true si le joueur a gagné
-            }
-        }
-        
-        for (int i=6; i<10;i++){            //On parcourt les sous-marins
-            if (etat1SousMarin==false) etat1SousMarin=flotteJoueur0.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
-        }
-
-        if (etat1SousMarin==false){         //Si il y a plus aucun sous-marin
-            rootVictoire.add(labelAffichageVictoireJoueur,0,0);
-            rootVictoire.add(labelAffichageVictoireSousMarin,0,1);
-            rootVictoire.add(labelAffichageInfoPartie,0,2);
-            rootVictoire.add(bontonVictoire,1,3);
-            /*System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);            //On affiche un message de victoire du joueur
-            System.out.println("Vous avez détruit tout les sous-marin de l'ordinateur");
-            System.out.println("Vous gagnez par forfait");
-            System.out.println("\nInformations sur la partie : ");
-            System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
-            System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
-            System.out.println("Nombre de tour de l'IA : "+compteurTourIA);*/
-            Scene sceneFlotteFct = new Scene(rootVictoire);
-            //return true;            //Renvoie true si l'un des deux joueurs a gagné
-        }
+        return lettre;              //On retourne la lettre en majuscule
     }
+
+    
 }

@@ -3,7 +3,8 @@ package bataillenavalgraphique.bataillenaval.controller;
 
 import java.io.*;
 import java.util.*;
-
+import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
+import bataillenavalgraphique.IA;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
 import bataillenavalgraphique.bataillenaval.model.Plateau;
 
@@ -187,9 +188,9 @@ public class Sauvegarde {
                 flotteJoueur1Copy.get(i).premierTire = in.readBoolean();
             }
             
-            JeuNGraphique jeu2 = new JeuNGraphique(numeroJoueur, niveauIA, ia, premierTour, plateauDeJeuCopy, flotteJoueur0Copy, flotteJoueur1Copy, compteurTourHumain, compteurTourIA);            //On crée un objet de type Jeu a qui on affecte tout ce qu'on lui a donné
+            //JeuGraphique jeu2 = new JeuNGraphique(numeroJoueur, niveauIA, ia, premierTour, plateauDeJeuCopy, flotteJoueur0Copy, flotteJoueur1Copy, compteurTourHumain, compteurTourIA);            //On crée un objet de type Jeu a qui on affecte tout ce qu'on lui a donné
             
-            jeu2.lancementJeu();            //On lance la partie
+            //jeu2.lancementJeuGraphique();            //On lance la partie
             
         } catch (IOException e) {
             System.out.println("Erreur_chargementPartie! "+"Le fichier n'a pas pu être ouvert.");           //On affiche un message d'erreur

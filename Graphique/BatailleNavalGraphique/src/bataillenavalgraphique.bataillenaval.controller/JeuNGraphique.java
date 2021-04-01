@@ -1,6 +1,7 @@
 package bataillenavalgraphique.bataillenaval.controller;
 
 import bataillenavalgraphique.bataillenaval.view.Affichage;
+import bataillenavalgraphique.bataillenaval.controller.*;
 import bataillenavalgraphique.bataillenaval.view.Menu;
 import bataillenavalgraphique.bataillenaval.model.*;
 import java.util.*;
@@ -19,7 +20,7 @@ public class JeuNGraphique {
     
     public static int numeroJoueur;                 //Variable qui permet de connaître à quelle joueur c'est la tour
     public static int niveauIA;           //Variable qui permet de stoker le niveau de l'IA
-    public static IA ia = new IA();           //On initialise une variable qui permet de faire fonctionner l'IA
+    public static IANGraphique ia = new IANGraphique();           //On initialise une variable qui permet de faire fonctionner l'IA
     public static boolean premierTour = true;        //Variable utilisé pour savoir si c'est le premier tir
     public static int compteurTourIA;               //Variable qui compte le nombre de tour de l'IA
     public static int compteurTourHumain;           //variable qui compte le nombre de tour du joueur humain
@@ -33,7 +34,7 @@ public class JeuNGraphique {
         
     }
     
-    public JeuNGraphique(int numeroJoueur, int niveauIA,IA ia, boolean premierTour, Plateau plateauDeJeu, List <Flotte> flotteJoueur0, List <Flotte> flotteJoueur1, int compteurTourIA, int compteurTourHumain){
+    public JeuNGraphique(int numeroJoueur, int niveauIA,IANGraphique ia, boolean premierTour, Plateau plateauDeJeu, List <Flotte> flotteJoueur0, List <Flotte> flotteJoueur1, int compteurTourIA, int compteurTourHumain){
         
         JeuNGraphique.numeroJoueur = numeroJoueur;
         JeuNGraphique.niveauIA= niveauIA;

@@ -114,7 +114,6 @@ public class MenuGraphique{
             boutonAide.setStyle ("-fx-background-color: rgba(163,198,211,0.50)");
         });
         boutonAide.setOnAction((ActionEvent eventChargementPartie) -> {
-            AideGraphique aide = new AideGraphique();
             stage.setScene(menuAide(stage));
         });
         
@@ -196,7 +195,7 @@ public class MenuGraphique{
         boutonDificile.setStyle ("-fx-background-color: rgba(120,160,175,0.50)");
         boutonDificile.setOnMouseEntered (e-> boutonDificile.setStyle ("-fx-background-color: rgba(82,127,143,0.50)"));
         boutonDificile.setOnMouseExited (e-> boutonDificile.setStyle ("-fx-background-color: rgba(120,160,175,0.50)"));
-        boutonFacile.setOnAction((ActionEvent eventLancementJeu) -> {
+        boutonDificile.setOnAction((ActionEvent eventLancementJeu) -> {
             try {
                 lancementChoixNiveauIA.close();
                 JeuGraphique jeuGraphique = new JeuGraphique(3);

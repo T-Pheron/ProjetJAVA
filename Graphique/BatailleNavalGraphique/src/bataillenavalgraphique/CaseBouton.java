@@ -1,7 +1,6 @@
 package bataillenavalgraphique;
 
 
-import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +20,7 @@ public class CaseBouton {
     String couleurDefaut = "-fx-background-color: rgba(120,160,175,0.50);";
     String couleurSurvol = "-fx-background-color: rgba(82,127,143,0.80);";
     String couleurText = "-fx-text-fill: BLACK ;";
-    List listeInformations;
+    List<Integer>   listeInformations;
     
     public CaseBouton(char plateauref){
         x=0;
@@ -30,7 +29,7 @@ public class CaseBouton {
     }
     
     
-    public CaseBouton(int y, int x, char plateauRef, List listeInformations ){
+    public CaseBouton(int y, int x, char plateauRef, List<Integer> listeInformations ){
         this.x=x;
         this.y=y;
         this.plateauRef = plateauRef;
@@ -45,7 +44,7 @@ public class CaseBouton {
 
         bouton.setOnAction((ActionEvent eventChargementPartie) -> {
             
-            AffichageJeuGraphique affichageJeuGraphique = new AffichageJeuGraphique();
+            //AffichageJeuGraphique affichageJeuGraphique = new AffichageJeuGraphique();
             
             if (plateauRef=='S'){
                 if (!JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals('_')){
@@ -128,58 +127,112 @@ public class CaseBouton {
         bouton.setText(titre);
     }
     
-    public void setColor(char lRef){
+    public void setColor(char lRef, int nPlateau, String nTir){
         if (plateauRef=='D'){
-            if (lRef =='U'){
+            if (nTir.equals("1") && lRef!='U'&& lRef!='C' && lRef!='D' && lRef!='S'){               //Si le joueur adversaire à tirer à cette emplacement mais n'a rien touché. On exclu aussi le faite que le joueur est bien pu déplacer son navire sur cette case à un tour n+1
+                bouton.setText("XX");              
+                couleurDefaut="-fx-background-color: rgba(50,255,215,0.50);";
+                couleurText="-fx-text-fill: rgba(160,206,197,0.80);";
+                couleurSurvol=couleurDefaut;
+                bouton.setStyle(couleurDefaut + couleurText);
+            }
+            else if (nTir.equals("2")){               //Si le joueur adversaire à tirer à cette emplacement et a touché un navire 
+                bouton.setText(lRef+ String.valueOf(nPlateau));              
+                couleurDefaut="-fx-background-color: rgba(136,0,0,0.50);";
+                couleurText="-fx-text-fill: rgba(253,197,197,0.80);";
+                couleurSurvol=couleurDefaut;
+                bouton.setStyle(couleurDefaut + couleurText);
+            }
+            else if (nTir.equals("5")){               //Si le joueur adversaire à tirer sur un sous marin mais ne la pas coulé parce-que le navire qu'il a tiré n'était pas un sous marin
+                bouton.setText(lRef+ String.valueOf(nPlateau));              
+                couleurDefaut="-fx-background-color: rgba(0,176,3,0.50);";
+                couleurSurvol=couleurDefaut;
+                couleurText="-fx-text-fill: rgba(191,255,192,0.80);";
+                bouton.setStyle(couleurDefaut + couleurText);
+            }
+            
+            else if (lRef =='U'){
                 couleurDefaut="-fx-background-color: rgba(221,13,13,0.50);";
+                couleurText = "-fx-text-fill: BLACK ;";
                 couleurSurvol=couleurDefaut;
                 bouton.setStyle(couleurDefaut + couleurText);
             }
-            if (lRef =='C'){
+            else if (lRef =='C'){
                 couleurDefaut="-fx-background-color: rgba(203,25,228,0.50);";
+                couleurText = "-fx-text-fill: BLACK ;";
                 couleurSurvol=couleurDefaut;
                 bouton.setStyle(couleurDefaut + couleurText);
             }
-            if (lRef =='D'){
+            else if (lRef =='D'){
                 couleurDefaut="-fx-background-color: rgba(15,141,214,0.50);";
+                couleurText = "-fx-text-fill: BLACK ;";
                 couleurSurvol=couleurDefaut;
                 bouton.setStyle(couleurDefaut + couleurText);
             }
-            if (lRef =='S'){
+            else if (lRef =='S'){
                 couleurDefaut="-fx-background-color: rgba(27,213,41,0.50);";
+                couleurText = "-fx-text-fill: BLACK ;";
                 couleurSurvol=couleurDefaut;
                 bouton.setStyle(couleurDefaut + couleurText);
             }
-            if (lRef =='_'){
+            else if (lRef =='_'){
                 couleurDefaut="-fx-background-color: rgba(120,160,175,0.50);";
+                couleurText = "-fx-text-fill: BLACK ;";
                 couleurSurvol=couleurDefaut;
                 bouton.setStyle(couleurDefaut + couleurText);
             }
         }
         else{
-            if (lRef =='U'){
+            System.out.println("char"+ lRef+ "int"+ nPlateau+ "String"+ nTir);
+            if (nTir.equals("1") && lRef!='U'&& lRef!='C' && lRef!='D' && lRef!='S'){               //Si le joueur adversaire à tirer à cette emplacement mais n'a rien touché. On exclu aussi le faite que le joueur est bien pu déplacer son navire sur cette case à un tour n+1
+                bouton.setText("XX");              
+                couleurDefaut="-fx-background-color: rgba(50,255,215,0.50);";
+                couleurSurvol="-fx-background-color: rgba(50,226,191,0.80);";
+                couleurText="-fx-text-fill: rgba(160,206,197,0.80);";
+                bouton.setStyle(couleurDefaut + couleurText);
+            }
+            else if (nTir.equals("2")){               //Si le joueur adversaire à tirer à cette emplacement et a touché un navire 
+                bouton.setText(lRef+ String.valueOf(nPlateau));              
+                couleurDefaut="-fx-background-color: rgba(136,0,0,0.50);";
+                couleurSurvol="-fx-background-color: rgba(93,0,0,0.80);";
+                couleurText="-fx-text-fill: rgba(253,197,197,0.80);";
+                bouton.setStyle(couleurDefaut + couleurText);
+            }
+            else if (nTir.equals("5")){               //Si le joueur adversaire à tirer sur un sous marin mais ne la pas coulé parce-que le navire qu'il a tiré n'était pas un sous marin
+                bouton.setText(lRef+ String.valueOf(nPlateau));              
+                couleurDefaut="-fx-background-color: rgba(0,176,3,0.50);";
+                couleurSurvol="-fx-background-color: rgba(82,135,2,0.80);";
+                couleurText="-fx-text-fill: rgba(191,255,192,0.80);";
+                bouton.setStyle(couleurDefaut + couleurText);
+            }
+            else if (lRef =='U'){
                 couleurDefaut="-fx-background-color: rgba(221,13,13,0.50);";
                 couleurSurvol="-fx-background-color: rgba(210,0,0,0.80);";
+                couleurText = "-fx-text-fill: BLACK ;";
                 bouton.setStyle(couleurDefaut + couleurText);
             }
-            if (lRef =='C'){
+            else if (lRef =='C'){
                 couleurDefaut="-fx-background-color: rgba(203,25,228,0.50);";
                 couleurSurvol="-fx-background-color: rgba(181,25,203,0.80);";
+                couleurText = "-fx-text-fill: BLACK ;";
                 bouton.setStyle(couleurDefaut + couleurText);
             }
-            if (lRef =='D'){
+            else if (lRef =='D'){
                 couleurDefaut="-fx-background-color: rgba(15,141,214,0.50);";
                 couleurSurvol="-fx-background-color: rgba(12,122,182,0.80);";
+                couleurText = "-fx-text-fill: BLACK ;";
                 bouton.setStyle(couleurDefaut + couleurText);
             }
-            if (lRef =='S'){
+            else if (lRef =='S'){
                 couleurDefaut="-fx-background-color: rgba(27,213,41,0.50);";
                 couleurSurvol="-fx-background-color: rgba(15,185,30,0.80);";
+                couleurText = "-fx-text-fill: BLACK ;";
                 bouton.setStyle(couleurDefaut + couleurText);
             }
             if (lRef =='_'){
                 couleurDefaut="-fx-background-color: rgba(120,160,175,0.50);";
                 couleurSurvol="-fx-background-color: rgba(82,127,143,0.80);";
+                couleurText = "-fx-text-fill: BLACK ;";
                 bouton.setStyle(couleurDefaut + couleurText);
             }
         }
