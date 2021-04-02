@@ -3,7 +3,6 @@ package bataillenavalgraphique.bataillenaval.controller;
 
 import java.io.*;
 import java.util.*;
-import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
 import bataillenavalgraphique.IA;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
 import bataillenavalgraphique.bataillenaval.model.Plateau;

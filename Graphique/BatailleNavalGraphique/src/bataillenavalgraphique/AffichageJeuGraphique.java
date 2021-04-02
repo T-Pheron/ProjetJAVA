@@ -361,7 +361,6 @@ public class AffichageJeuGraphique {
             Label information = new Label ("C'est touché, bien joué");
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 25pt; "
-            +                "-fx-font-color: Color.GREEN;"
             +                "-fx-background-color: rgba(120,160,175,0.50);"
             +                "-fx-font-weight: bold;");
             Label information1 = new Label ("\n\n Au tour de l'IA");
@@ -392,7 +391,6 @@ public class AffichageJeuGraphique {
             Label information = new Label ("C'est touché, bien joué");
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 25pt; "
-            +                "-fx-font-color: Color.GREEN;"
             +                "-fx-background-color: rgba(120,160,175,0.50);"
             +                "-fx-font-weight: bold;");
             Label information1 = new Label ("Vous avez coulé un "+nomNavireCoule);
@@ -483,18 +481,18 @@ public class AffichageJeuGraphique {
                 }
         }
         
-        boolean possible =false;
+        boolean possible=true;
         
         if (JeuGraphique.flotteJoueur0.get(pListe).direction==0){
            
-            //Cas gauche
+            //Cas droit
             int x = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[JeuGraphique.flotteJoueur0.get(pListe).taille-1][0] + 1 ;
             int y = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1];
             if (x+1<=14){
                 if (JeuGraphique.plateauDeJeu.get(x,y,0,0).equals('_'))return true;
             }
             
-            //Cas droit
+            //Cas gauche
             x = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0] -1 ;
             y = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1];
             if (x-1>=0){
@@ -502,22 +500,28 @@ public class AffichageJeuGraphique {
             }
 
             
-
+            //Cas bas
             int xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0];
             int yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1]+1;
             for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){
-                if (!JeuGraphique.plateauDeJeu.get(xStart+i, yStart,0,0).equals('_')){
+                if (!JeuGraphique.plateauDeJeu.get(xStart+i, yStart,0,0).equals('_')){          //Si il y a un navire
                     possible=false;
+                    i=10;           //On sort de la boucle
                 }
             }
+            if (possible=true) return true;
             
+            possible = true;
+            //Cas haut
             xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0];
             yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1]-1;
             for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){
                 if (!JeuGraphique.plateauDeJeu.get(xStart+i, yStart,0,0).equals('_')){
-                    if (possible==false) possible=false;
+                    possible=false;
+                    i=10;
                 }
             }
+            return possible;
         }
         else{
             int xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0]+1;
@@ -525,16 +529,21 @@ public class AffichageJeuGraphique {
             for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){
                 if (!JeuGraphique.plateauDeJeu.get(xStart, yStart+i,0,0).equals('_')){
                     possible=false;
+                    i=10;
                 }
             }
+            if (possible=true) return true;
             
+            possible=true;
             xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0]-1;
             yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1];
             for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){
                 if (!JeuGraphique.plateauDeJeu.get(xStart, yStart+i,0,0).equals('_')){
                     if (possible==false) possible=false;
+                    i=10;
                 }
             }
+            if (possible=true) return true;
 
             int x = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0];
             int y = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[JeuGraphique.flotteJoueur0.get(pListe).taille-1][1]+1;
@@ -548,7 +557,7 @@ public class AffichageJeuGraphique {
                 if (JeuGraphique.plateauDeJeu.get(x,y,0,0).equals('_'))return true;
             }
         }
-        return possible;
+        return false;
         
     }
     

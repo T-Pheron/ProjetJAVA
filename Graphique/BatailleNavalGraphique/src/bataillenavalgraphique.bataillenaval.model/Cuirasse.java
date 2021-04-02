@@ -114,7 +114,6 @@ public class Cuirasse extends Flotte{
 
             nPlateauAdv = (int) JeuGraphique.plateauDeJeu.get(xTire,yTire,2,1);         //On récupère le numéro de plateau de l'adversaire aux coordonnées où le joueur veut tirer
             pListeAdv=nPlateauToPListe('S', nPlateauAdv);           //On en deduit la position dans la liste du navire de l'adversaire
-
             JeuGraphique.flotteJoueur1.get(pListeAdv).coordonnees[0][2]=2;           //On met la coordonées sur 2 pour signifie, ce qui signifie que le sous-marin a été touché sans être coulé (il ne peux plus être déplacé)
 
             AffichageJeuGraphique affichageEchec = new AffichageJeuGraphique();
