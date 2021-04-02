@@ -78,7 +78,7 @@ public class Croiseur extends Flotte {
         
         
         VBox rootTexte = new VBox(25);
-        Label informationNavire = new Label("Vous avez décidez d'utiliser un croiseur");
+        Label informationNavire = new Label("Vous avez décidez d'utiliser un "+nom);
         informationNavire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
                 +                "-fx-font-size: 15pt;"
                 +                "-fx-background-color: rgba(120,160,175,0.50);"
@@ -120,17 +120,14 @@ public class Croiseur extends Flotte {
             
             AffichageJeuGraphique affichageEchec = new AffichageJeuGraphique();
             affichageEchec.tirSurSousMarin();
-
         }
         else if (JeuGraphique.plateauDeJeu.get(xTire,yTire,2,0) != (Object) '_'){             //Si la case contient un navire
-            impact(xTire, yTire,0);          //On retourne la valeur d'impact
+            impact(xTire, yTire,0);
         }
         else{
             AffichageJeuGraphique affichageEchec = new AffichageJeuGraphique();
             affichageEchec.tirEchec();
-            System.out.println("Nous n'avons rien touché");          //On affiche un message comme quoi il n'a rien touché
             JeuGraphique.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici
-            //return 1;           //On a la justification que tout c'est bien passe
         }  
     }
     
@@ -213,8 +210,6 @@ public class Croiseur extends Flotte {
                 }
             }
         }
-        
-
         if (numeroJoueurAdv==1){           //Si c'est le joueur humain qui joue 
             
             JeuGraphique.plateauDeJeu.modification(xTire,yTire,1,0,"2");         //On met 2, ça signifie que le joueur a tiré et qu'il a touché un navire adverse

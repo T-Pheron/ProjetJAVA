@@ -60,11 +60,11 @@ public final class GrilleBoutons {
             for (int i=0;i<15;i++){
                 if (plateau.get(i,j,0,0)!=(Object) '_'){
                     grilleBoutons[j][i].setTitle((String) (plateau.get(i,j,0,0).toString() + plateau.get(i,j,0,1).toString()));
-                    grilleBoutons[j][i].setColor((char) plateau.get(i,j,0,0),(int) plateau.get(i,j,0,1), (String) plateau.get(i, i, 3, 0));
+                    grilleBoutons[j][i].setColor((char) plateau.get(i,j,0,0),(int) plateau.get(i,j,0,1), (String) plateau.get(i, j, 3, 0));
                 }
                 else{
                     grilleBoutons[j][i].setTitle("");
-                    grilleBoutons[j][i].setColor((char) plateau.get(i,j,0,0),(int) plateau.get(i,j,0,1), (String) plateau.get(i, i, 3, 0));
+                    grilleBoutons[j][i].setColor((char) plateau.get(i,j,0,0),(int) plateau.get(i,j,0,1), (String) plateau.get(i, j, 3, 0));
                 }
             }
         }
@@ -85,4 +85,36 @@ public final class GrilleBoutons {
         }
     }
     
+    public void miseAJourAffichageNavire(Plateau plateau, int pListe){
+        
+        for (int j=0; j<15; j++){
+            for (int i=0;i<15;i++){
+                if (plateau.get(i,j,0,0)!=(Object) '_'){
+                    grilleBoutons[j][i].setTitle((String) (plateau.get(i,j,0,0).toString() + plateau.get(i,j,0,1).toString()));
+                    grilleBoutons[j][i].setColor((char) plateau.get(i,j,0,0),(int) plateau.get(i,j,0,1), (String) plateau.get(i, j, 3, 0));
+                }
+                else{
+                    grilleBoutons[j][i].setTitle("");
+                    grilleBoutons[j][i].setColor((char) plateau.get(i,j,0,0),(int) plateau.get(i,j,0,1), (String) plateau.get(i, j, 3, 0));
+                }
+            }
+        }
+    }
+    
+    
+    public void miseAJourAffichageBouger(Plateau plateau, int pListe, char lRef){
+        
+        for (int j=0; j<15; j++){
+            for (int i=0;i<15;i++){
+                if (plateau.get(i,j,0,0)!=(Object) '_'){
+                    grilleBoutons[j][i].setTitle((String) (plateau.get(i,j,0,0).toString() + plateau.get(i,j,0,1).toString()));
+                    grilleBoutons[j][i].setColor(pListe, (String) plateau.get(i, j, 3, 0), lRef);
+                }
+                else{
+                    grilleBoutons[j][i].setTitle("");
+                    grilleBoutons[j][i].setColor(pListe, (String) plateau.get(i, j, 3, 0), lRef);
+                }
+            }
+        }
+    }
 }

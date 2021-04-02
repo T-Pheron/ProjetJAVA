@@ -466,9 +466,7 @@ public class IA implements Serializable{
             affichageIA.tirRate();
         }
         else {          //Si la case contient un navire
-            JeuGraphique.flotteJoueur1.get(pListe).impact(xTire, yTire, 1);           //On appel la méthode qui permet de rentrer les différentes informations lors d'un impacte
-            nombreDeTir ++;         //On rajoute 1 au nombre de tir
-            System.out.println("Et  c'est touché"); TimeUnit.SECONDS.sleep(10);
+            JeuGraphique.flotteJoueur1.get(pListe).impact(xTire, yTire, 1);
         }
         return 1;
     }
