@@ -22,6 +22,7 @@ public class Jeu {
     public static boolean premierTour = true;        //Variable utilisé pour savoir si c'est le premier tir
     public static int compteurTourIA;               //Variable qui compte le nombre de tour de l'IA
     public static int compteurTourHumain;           //variable qui compte le nombre de tour du joueur humain
+    public static Chrono chrono = new Chrono();           //Variable utiliser pour le fonctionnement du chronomètre 
     
     //**************************************************************************
     /**
@@ -32,11 +33,12 @@ public class Jeu {
         
     }
     
-    public Jeu(int numeroJoueur, int niveauIA,IA ia, boolean premierTour, Plateau plateauDeJeu, List <Flotte> flotteJoueur0, List <Flotte> flotteJoueur1, int compteurTourIA, int compteurTourHumain){
+    public Jeu(int numeroJoueur, int niveauIA,IA ia, boolean premierTour, Chrono chrono, Plateau plateauDeJeu, List <Flotte> flotteJoueur0, List <Flotte> flotteJoueur1, int compteurTourIA, int compteurTourHumain){
         
         Jeu.numeroJoueur = numeroJoueur;
         Jeu.niveauIA= niveauIA;
         Jeu.ia = ia;
+        Jeu.chrono = chrono;
         Jeu.premierTour= premierTour;
         Jeu.compteurTourHumain =compteurTourHumain;
         Jeu.compteurTourIA = compteurTourIA;
@@ -84,7 +86,6 @@ public class Jeu {
     private Scanner scJeu = new Scanner(System.in);
     private Scanner scJeuLine = new Scanner(System.in);
     
-    
      
     //**************************************************************************
     /**
@@ -114,7 +115,10 @@ public class Jeu {
             /*Choix du niveau de l'IA******************************************/
             niveauIA = menu.choixNiveauIA();
             premierTour=false;
+            chrono.start();
         }
+        else chrono.resume();
+        
         
         
         /*Boucle de jeu********************************************************/
@@ -738,11 +742,13 @@ public class Jeu {
             etat0 = flotteJoueur0.get(i).etat;          //Pour chaque navire, on regarde si il a coulé ou pas
             if (etat0==true) break;         //Si il est toujours à flot
             if (i==9 && etat0!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
+                chrono.stop();          //On arrête le chronomètre
                 System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);            //On affiche un message 
                 System.out.println("\nInformations sur la partie : ");
                 System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
                 System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
                 System.out.println("Nombre de tour de l'IA : "+compteurTourIA);
+                System.out.println("Durée de la partie : "+chrono.getDureeTxt());
                 return true;            //On renvoie true si l'IA a gagné
             } 
         }
@@ -752,6 +758,7 @@ public class Jeu {
         }
 
         if (etat0SousMarin==false){         //Si il y a plus aucun sous-marin
+            chrono.stop();          //On arrête le chronomètre
             System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);          //On affiche un message de victoire de l'IA
             System.out.println("Vous n'avez plus de sous-marin");
             System.out.println("L'ordinateur gagne par fofait de votre part");
@@ -759,6 +766,7 @@ public class Jeu {
             System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
             System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
             System.out.println("Nombre de tour de l'IA : "+compteurTourIA);
+            System.out.println("Durée de la partie : "+chrono.getDureeTxt());
             return true;            //Renvoie true si l'un des deux joueurs a gagné
         }
 
@@ -768,20 +776,23 @@ public class Jeu {
             etat1 = flotteJoueur1.get(i).etat;          //Pour chaque navire, on regarde si il a coulé ou pas
             if (etat1==true) break;         //Si il est toujours à flot
             if (i==9 && etat1!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
+                chrono.stop();          //On arrête le chronomètre
                 System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);           //On affiche un message
                 System.out.println("\nInformations sur la partie : ");
                 System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
                 System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
-                System.out.println("Nombre de tour de l'IA : "+compteurTourIA); 
+                System.out.println("Nombre de tour de l'IA : "+compteurTourIA);
+                System.out.println("Durée de la partie : "+chrono.getDureeTxt());
                 return true;            //On renvoie true si le joueur a gagné
             }
         }
         
         for (int i=6; i<10;i++){            //On parcourt les sous-marins
-            if (etat1SousMarin==false) etat1SousMarin=flotteJoueur0.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
+            if (etat1SousMarin==false) etat1SousMarin=flotteJoueur1.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
         }
 
         if (etat1SousMarin==false){         //Si il y a plus aucun sous-marin
+            chrono.stop();          //On arrête le chronomètre
             System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);            //On affiche un message de victoire du joueur
             System.out.println("Vous avez détruit tout les sous-marin de l'ordinateur");
             System.out.println("Vous gagnez par forfait");
@@ -789,6 +800,7 @@ public class Jeu {
             System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
             System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
             System.out.println("Nombre de tour de l'IA : "+compteurTourIA);
+            System.out.println("Durée de la partie : "+chrono.getDureeTxt());
             return true;            //Renvoie true si l'un des deux joueurs a gagné
         }
         return false;           //Si aucun des joueurs a gagné

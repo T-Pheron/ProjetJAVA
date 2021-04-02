@@ -15,6 +15,8 @@ public class Sauvegarde {
 
     public int savePartie(int emplacementSauvegarde, String nomPartie){
 
+        Jeu.chrono.pause();
+        
         String nomSauvegarde="A";           //On initialise par défaut le nom de la sauvegarde à A
         if (emplacementSauvegarde==1) nomSauvegarde="saveFiles/save1";          //Si le joueur a choisi l'emplacement 1
         if (emplacementSauvegarde==2) nomSauvegarde="saveFiles/save2";          //Si le joueur a choisi l'emplacement 2
@@ -32,6 +34,7 @@ public class Sauvegarde {
             out.writeBoolean(Jeu.premierTour);
             out.writeInt(Jeu.compteurTourHumain);
             out.writeInt(Jeu.compteurTourIA);
+            out.writeObject(Jeu.chrono);
 
 
             //On stock dans le fichier le plateau
@@ -110,6 +113,7 @@ public class Sauvegarde {
         boolean premierTour;
         int compteurTourHumain;
         int compteurTourIA;
+        Chrono chrono;
 
         Plateau plateauDeJeuCopy = new Plateau();
         List<Flotte> flotteJoueur0Copy;
@@ -130,6 +134,7 @@ public class Sauvegarde {
             premierTour = (Boolean) in.readBoolean();
             compteurTourHumain = in.readInt();
             compteurTourIA = in.readInt();
+            chrono = (Chrono) in.readObject();
 
 
             //On stock dans le fichier le plateau
@@ -186,7 +191,7 @@ public class Sauvegarde {
                 flotteJoueur1Copy.get(i).premierTire = in.readBoolean();
             }
             
-            Jeu jeu2 = new Jeu(numeroJoueur, niveauIA, ia, premierTour, plateauDeJeuCopy, flotteJoueur0Copy, flotteJoueur1Copy, compteurTourHumain, compteurTourIA);            //On crée un objet de type Jeu a qui on affecte tout ce qu'on lui a donné
+            Jeu jeu2 = new Jeu(numeroJoueur, niveauIA, ia, premierTour, chrono, plateauDeJeuCopy, flotteJoueur0Copy, flotteJoueur1Copy, compteurTourHumain, compteurTourIA);            //On crée un objet de type Jeu a qui on affecte tout ce qu'on lui a donné
             
             jeu2.lancementJeu();            //On lance la partie
             

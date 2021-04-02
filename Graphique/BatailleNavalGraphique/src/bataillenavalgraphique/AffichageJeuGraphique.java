@@ -126,6 +126,7 @@ public class AffichageJeuGraphique {
         });
         
         
+        
         Button boutonBouger = new Button("Bouger Navire");
         boutonBouger.setGraphic(imageBouger);
         boutonBouger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"
@@ -141,7 +142,9 @@ public class AffichageJeuGraphique {
                 + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
         });
         boutonBouger.setOnAction((ActionEvent eventChargementPartie) -> {
-            //ajouter
+            boolean verif = verificationDeplacementPossible(pListe);
+            System.out.println(verif);
+            if (verif==true)selectionCaseBouger(pListe, lRef);
         });
         
         HBox boutonSelectionNavire = new HBox(80);
@@ -158,28 +161,134 @@ public class AffichageJeuGraphique {
     }
     
     public void selectionCaseTir(int pListe){
+        if (JeuGraphique.flotteJoueur0.get(pListe).lRef=='D' && JeuGraphique.flotteJoueur0.get(pListe).premierTire==true){
+            List<Integer> listeInformations = new ArrayList<Integer> ();
+            listeInformations.add(0, pListe);
+            GrilleBoutons grilleBoutonTirs = new GrilleBoutons('B', listeInformations);
+            grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);
+
+            VBox rootselectionCaseTir = new VBox(40);
+            rootselectionCaseTir.setPadding(new Insets(90,300,20,300));
+
+            Label instruction = new Label ("Il s'agit d'u premier du de ce Destroyer !");
+            instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt; -fx-font-color: Color.RED;"
+                    + "-fx-font-weight: bold;");
+            
+            Label instruction2 = new Label ("Il s'agit donc d'une fussée éclairante ?");
+            instruction2.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 15pt;"
+                    + "-fx-font-weight: bold;");
+            
+            Label instruction3 = new Label ("Où souhaitez vous la tirer ?");
+            instruction3.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 15;"
+                    + "-fx-font-weight: bold;");
+
+            rootselectionCaseTir.setAlignment(CENTER);
+            rootselectionCaseTir.getChildren().addAll(instruction, instruction2, instruction3, grilleBoutonTirs.getRoot());
+            instruction.setAlignment(CENTER);
+            Scene sceneSelectionNavire = new Scene(rootselectionCaseTir);
+            JeuGraphique.fenetreJeu.setScene(sceneSelectionNavire);
+        }
+        else{
+            List<Integer> listeInformations = new ArrayList<Integer> ();
+            listeInformations.add(0, pListe);
+            GrilleBoutons grilleBoutonTirs = new GrilleBoutons('B', listeInformations);
+            grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);
+
+            VBox rootselectionCaseTir = new VBox(40);
+            rootselectionCaseTir.setPadding(new Insets(90,300,20,300));
+
+            Label instruction = new Label ("Où souhaitez vous tirer ?");
+            instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"
+                    + "-fx-font-weight: bold;");
+
+            rootselectionCaseTir.setAlignment(CENTER);
+            rootselectionCaseTir.getChildren().addAll(instruction, grilleBoutonTirs.getRoot());
+            instruction.setAlignment(CENTER);
+            Scene sceneSelectionNavire = new Scene(rootselectionCaseTir);
+            JeuGraphique.fenetreJeu.setScene(sceneSelectionNavire);
+        }
+    }
+    
+    
+    public void selectionCaseBouger(int pListe, char lRef){
         
-        //int tailleNavire= flotteJoueur0.get(pListe).taille;
-        //int directionNavire = flotteJoueur0.get(pListe).direction;
         List<Integer> listeInformations = new ArrayList<Integer> ();
         listeInformations.add(0, pListe);
-        GrilleBoutons grilleBoutonTirs = new GrilleBoutons('B', listeInformations);
-        grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);
-        
+        GrilleBoutons grilleBoutonTirs = new GrilleBoutons('C', listeInformations);
+        grilleBoutonTirs.miseAJourAffichageBouger(JeuGraphique.plateauDeJeu, pListe, lRef);
+
         VBox rootselectionCaseTir = new VBox(40);
         rootselectionCaseTir.setPadding(new Insets(90,300,20,300));
 
-        Label instruction = new Label ("Que souhaiter vous faire ?");
+        Label instruction = new Label ("Où souhaitez vous bougez votre navire ?");
         instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"
                 + "-fx-font-weight: bold;");
-        
+
         rootselectionCaseTir.setAlignment(CENTER);
         rootselectionCaseTir.getChildren().addAll(instruction, grilleBoutonTirs.getRoot());
         instruction.setAlignment(CENTER);
-        System.out.println("On reviens bien la");
         Scene sceneSelectionNavire = new Scene(rootselectionCaseTir);
         JeuGraphique.fenetreJeu.setScene(sceneSelectionNavire);
+        
     }
+    
+    public void bougerNavire(int x, int y, int pListe){
+        
+        
+        VBox rootText = new VBox(25);
+        Label information = new Label ("La manoeuvre est en cours");
+        information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 20pt;"
+        +                "-fx-background-color: rgba(120,160,175,0.50);"
+        +                "-fx-font-weight: bold;");
+        Label information1 = new Label ("Veuillez patientez");
+        information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 15pt;"
+        +                "-fx-font-weight: bold;");
+
+        rootText.getChildren().addAll(information, information1);
+        rootText.setAlignment(Pos.CENTER);
+        Scene sceneTirEchec = new Scene(rootText);
+        JeuGraphique.fenetreJeu.setScene(sceneTirEchec);
+        
+        JeuGraphique.bougerNavire(pListe, x, y);
+    }
+    
+    
+    public void deplacementEffectueNavire(){
+        
+        Timeline time = new Timeline();
+        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {
+            GrilleBoutons grilleBoutonNavire = new GrilleBoutons('D');
+            grilleBoutonNavire.miseAJourAffichageNavire(JeuGraphique.plateauDeJeu);
+            
+            VBox rootText = new VBox(25);
+            rootText.setPadding(new Insets(5,300,20,300));
+            Label information = new Label ("La manoeuvre a bien été effectuée");
+            information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 20pt;"
+            +                "-fx-background-color: rgba(120,160,175,0.50);"
+            +                "-fx-font-weight: bold;");
+            Label information1 = new Label ("\n\nC'est au tour de l'IA");
+            information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 15pt;"
+            +                "-fx-font-weight: bold;");
+
+            rootText.getChildren().addAll(information, grilleBoutonNavire.getRoot(),information1);
+            rootText.setAlignment(Pos.CENTER);
+            Scene sceneTirEchec = new Scene(rootText);
+            JeuGraphique.fenetreJeu.setScene(sceneTirEchec);
+        }));
+        time.play();    
+        
+        try {
+            tourIA();
+        } catch (InterruptedException e) {
+            System.err.println("Erreur_exceptionIA");
+        }
+    }
+    
+    
 
     public void tirEchec() throws InterruptedException{
         
@@ -321,6 +430,127 @@ public class AffichageJeuGraphique {
         timeTourJoueur.play();
         
     }
+    
+    public void zoneTirFusee(int xTire, int yTire, int surplusX, int surplusY){
+        
+        Timeline timeZoneTirFusee = new Timeline();
+        timeZoneTirFusee.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {
+            GrilleBoutons grilleBoutonTirs = new GrilleBoutons('D');
+            grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);
+
+            VBox rootselectionCaseTir = new VBox(40);
+            rootselectionCaseTir.setPadding(new Insets(90,300,20,300));
+
+            Label instruction2 = new Label ("Voici les information qui ont été rapporté");
+            instruction2.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"
+                    + "-fx-font-weight: bold;");
+
+            rootselectionCaseTir.setAlignment(CENTER);
+            rootselectionCaseTir.getChildren().addAll(instruction2, grilleBoutonTirs.getRoot());
+            instruction2.setAlignment(CENTER);
+            Scene sceneSelectionNavire = new Scene(rootselectionCaseTir);
+            JeuGraphique.fenetreJeu.setScene(sceneSelectionNavire);
+            
+            
+            Timeline timeTourJoueur = new Timeline();
+            timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(12000),e -> {
+                
+                for (int i=0; i<4-surplusX ; i++){
+                    for (int j=0; j<4-surplusY; j++){
+                        JeuGraphique.plateauDeJeu.modification(xTire+i,yTire+j,1,0,"0");         //Affiche sur la grille de tir du joueur les navires qui ont été touché par la fusée éclairante
+                    }
+                }
+                
+                try {
+                    JeuGraphique.ia.jouer();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(AffichageJeuGraphique.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }));
+            timeTourJoueur.play();
+            
+        }));
+        timeZoneTirFusee.play();
+    }
+    
+    public boolean verificationDeplacementPossible(int pListe){
+        
+        for (int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){                //On fait une boucle pour vérifier toutes les coordonnées du navire
+                if (JeuGraphique.flotteJoueur0.get(pListe).coordonnees[i][2]==0){
+                    return false;
+                }
+        }
+        
+        boolean possible =false;
+        
+        if (JeuGraphique.flotteJoueur0.get(pListe).direction==0){
+           
+            //Cas gauche
+            int x = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[JeuGraphique.flotteJoueur0.get(pListe).taille-1][0] + 1 ;
+            int y = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1];
+            if (x+1<=14){
+                if (JeuGraphique.plateauDeJeu.get(x,y,0,0).equals('_'))return true;
+            }
+            
+            //Cas droit
+            x = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0] -1 ;
+            y = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1];
+            if (x-1>=0){
+                if (JeuGraphique.plateauDeJeu.get(x,y,0,0).equals('_'))return true;
+            }
+
+            
+
+            int xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0];
+            int yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1]+1;
+            for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){
+                if (!JeuGraphique.plateauDeJeu.get(xStart+i, yStart,0,0).equals('_')){
+                    possible=false;
+                }
+            }
+            
+            xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0];
+            yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1]-1;
+            for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){
+                if (!JeuGraphique.plateauDeJeu.get(xStart+i, yStart,0,0).equals('_')){
+                    if (possible==false) possible=false;
+                }
+            }
+        }
+        else{
+            int xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0]+1;
+            int yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1];
+            for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){
+                if (!JeuGraphique.plateauDeJeu.get(xStart, yStart+i,0,0).equals('_')){
+                    possible=false;
+                }
+            }
+            
+            xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0]-1;
+            yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1];
+            for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){
+                if (!JeuGraphique.plateauDeJeu.get(xStart, yStart+i,0,0).equals('_')){
+                    if (possible==false) possible=false;
+                }
+            }
+
+            int x = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0];
+            int y = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[JeuGraphique.flotteJoueur0.get(pListe).taille-1][1]+1;
+            if (y+1<=14){
+                if (JeuGraphique.plateauDeJeu.get(x,y,0,0).equals('_'))return true;
+            }
+            
+            x = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0];
+            y = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1]-1;
+            if (y-1>=0){
+                if (JeuGraphique.plateauDeJeu.get(x,y,0,0).equals('_'))return true;
+            }
+        }
+        return possible;
+        
+    }
+    
+    
 
     public void erreurCaseVide(){
         

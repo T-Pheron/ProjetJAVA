@@ -69,7 +69,7 @@ public class AffichageIA {
     
     public void toucherNavire(){
         Timeline timeNiveau1TirRandom = new Timeline();
-        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),action -> {
+        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),e -> {
             VBox rootText = new VBox(25);
             Label information0 = new Label ("Et c'est touché !!");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"

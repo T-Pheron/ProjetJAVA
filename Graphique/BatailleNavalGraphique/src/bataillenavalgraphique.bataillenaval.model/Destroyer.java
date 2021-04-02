@@ -3,8 +3,15 @@ package bataillenavalgraphique.bataillenaval.model;
 import bataillenavalgraphique.*;
 import bataillenavalgraphique.bataillenaval.view.Affichage;
 import java.util.InputMismatchException;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 
 
@@ -53,188 +60,99 @@ public class Destroyer extends Flotte{
     public void tir(int xTire, int yTire)throws InterruptedException{
         
         if (premierTire==true){
-            char xTireFuseeChar='@';         //On declare la variable par defaut avec un @
-            int yTireFusee;
-            yTireFusee= -1;          //On declare la variable par defaut avec un -1
-            System.out.println("Il s'agit du premier tir de ce destroyer");
-            System.out.println("La munition tiré est donc une fusée éclairante");
-            /*Récupération des coordonées***********************************************/
-            //Coordonées x
-            System.out.println("Où voulez vous la vous tirer ?");           //On demande à l'utilisateur de saisir les coordonnées du tire
-            System.out.println("Veuillez rentrer la colonne :");           //On demande à l'utilisateur de rentrer la colonne
-            try{
-                xTireFuseeChar= scDestroyer.next().charAt(0);          //On stock la saisie de l'utilisateur
-            }
-            catch(InputMismatchException e){            //Si ce n'est pas un caractère
-                System.out.println(ROUGE +"Erreur! "+ RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
-                xTireFuseeChar='@';          //On remet la variable par defaut 
-            }
-            xTireFuseeChar=JeuGraphique.convertirMinuscules(xTireFuseeChar);           //On convertir sa saisie en majuscule
-            while ((xTireFuseeChar<'A')||(xTireFuseeChar>'O')){           //On blinde, en vérifiant que sa saisie fait partie des choix possible
-                System.out.println(ROUGE + "Erreur!"+RESET);           //Sinon on affiche un message d'erreur
-                System.out.println("Veuillez entrer la lettre de la colonne d'où vous voulez tirer :");           //On lui demande de ressaisir
-                try{
-                    xTireFuseeChar= scDestroyer.next().charAt(0);          //On stock la saisie de l'utilisateur
-                }
-                catch(InputMismatchException e){            //Si ce n'est pas un caractère
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                    scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
-                    xTireFuseeChar='@';          //On remet la variable par defaut
-                }
-                xTireFuseeChar=JeuGraphique.convertirMinuscules(xTireFuseeChar);           //On convertir sa saisie en majuscule
-            }
-            //Coordonées y
-            System.out.println("Veuillez rentrer la ligne :");         //On lui demande de saisir
-            try{
-                yTireFusee = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
-            }
-            catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
-                yTireFusee=-1;           //On remet la variable par defaut 
-            }
-            while ((yTireFusee<0)||(yTireFusee>16)){          //On blinde, en vérifiant que la saisie fait partie des choix
-                System.out.println(ROUGE + "Erreur!"+ RESET +"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur
-                System.out.println("Veuillez entrer le numero de la ligne a laquelle vous voulez tirer : :");           //Et on demande la ressaisie
-                try{
-                    yTireFusee = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
-                }
-                catch(InputMismatchException e){            //Si ce n'est pas un entier
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
-                    yTireFusee=-1;           //On remet la variable par defaut
-                }
-
-            }
-            
-            yTireFusee--;            //On retire 1 au yTire
-            int xTireFusee = (int) (xTireFuseeChar - 65);             //On convertie la saisie en un entier
-            
-            System.out.print("Envoie de la fusée éclairante en cours");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);
             /*Tire de la fusée éclairante***********************************************/
             int surplusX=0;
             int surplusY=0;
             
-            if (xTireFusee>10) surplusX=xTireFusee-11;          //On calcule le surplus en cas de dépassement sur la coordonnee X
-            if(yTireFusee>10) surplusY=yTireFusee-11;           //On calcule le surplus en cas de dépassement sur la coordonnee Y
-
+            if (xTire>10) surplusX=xTire-11;          //On calcule le surplus en cas de dépassement sur la coordonnee X
+            if(yTire>10) surplusY=yTire-11;           //On calcule le surplus en cas de dépassement sur la coordonnee Y
 
             //On parcourt le carré d'une surface de 4*4 en affichant s'il y a des navires ou si y'a rien
             for (int i=0; i<4-surplusX ; i++){
                 for (int j=0; j<4-surplusY; j++){
-                    if (JeuGraphique.plateauDeJeu.get(xTireFusee+i,yTireFusee+j,2,0)!=(Object)'_' && !JeuGraphique.plateauDeJeu.get(xTireFusee+i,yTireFusee+j,1,0).equals("2") && !JeuGraphique.plateauDeJeu.get(xTireFusee+i,yTireFusee+j,1,0).equals("5")) {
-                        JeuGraphique.plateauDeJeu.modification(xTireFusee+i,yTireFusee+j,1,0,"4");         //Affiche sur la grille de tir du joueur les navires qui ont été touché par la fusée éclairante
+                    if (JeuGraphique.plateauDeJeu.get(xTire+i,yTire+j,2,0)!=(Object)'_' && !JeuGraphique.plateauDeJeu.get(xTire+i,yTire+j,1,0).equals("2") && !JeuGraphique.plateauDeJeu.get(xTire+i,yTire+j,1,0).equals("5")) {
+                        JeuGraphique.plateauDeJeu.modification(xTire+i,yTire+j,1,0,"4");         //Affiche sur la grille de tir du joueur les navires qui ont été touché par la fusée éclairante
                     }
-                    else JeuGraphique.plateauDeJeu.modification(xTireFusee+i,yTireFusee+j,1,0,"3");          //Affiche sur la grille de tir du joueur là ou la fusée éclairante a touché
+                    else JeuGraphique.plateauDeJeu.modification(xTire+i,yTire+j,1,0,"3");          //Affiche sur la grille de tir du joueur là ou la fusée éclairante a touché
                 }
             }
             
-            System.out.println(VERT+"La fusée à bien été envoyée."+ RESET+ "\nNous envoyons un avion pour la prise d'information");
-            System.out.println("Vous aurez ces informations dans quelques secondes");TimeUnit.SECONDS.sleep(5);
+            VBox rootTexte = new VBox(25);
 
-            System.out.println("\n\n    "+GRIS_AR+ "     CARTE ACTUALISÉE    "+RESET_AR);
-            Affichage.afficher(0, 1, JeuGraphique.plateauDeJeu);TimeUnit.SECONDS.sleep(10);
+            Label information = new Label("Envoie de la fusée effectué");
+            information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 25pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);"
+                    +                "-fx-font-weight: bold;");
+            
+            Label informationAvion = new Label("\n\nNous envoyons un avion pour récupérer les informations");
+            informationAvion.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-font-weight: bold;");
 
-            for (int i=0; i<4-surplusX ; i++){
-                for (int j=0; j<4-surplusY; j++){
-                    JeuGraphique.plateauDeJeu.modification(xTireFusee+i,yTireFusee+j,1,0,"0");         //Affiche sur la grille de tir du joueur les navires qui ont été touché par la fusée éclairante
-                }
-            }
+            Label informationTir = new Label("Patienter ...");
+            informationTir.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-font-weight: bold;");
+
+            rootTexte.getChildren().addAll(information, informationAvion, informationTir);
+            rootTexte.setAlignment(Pos.CENTER);
+            Scene sceneTir = new Scene(rootTexte);
+            JeuGraphique.fenetreJeu.setScene(sceneTir);
+            
+            AffichageJeuGraphique affichage = new AffichageJeuGraphique();
+            affichage.zoneTirFusee(xTire, yTire, surplusX, surplusY);
             //On met le premier tire sur false pour ne plus rentrer dans l'option du premier tire
             premierTire=false;
         }
 
         /*Si c'est pas le premier tir du navire***********************************************/
         else {
-            char xTireChar='@';         //On declare la variable par defaut avec un @
-            System.out.println("Où voulez vous tirer ?");           //On demande à l'utilisateur de saisir les coordonnées du tire
-            System.out.println("Veuillez rentrer la colonne :");           //On demande à l'utilisateur de rentrer la colonne
-            try{
-                xTireChar= scDestroyer.next().charAt(0);          //On stock la saisie de l'utilisateur
-            }
-            catch(InputMismatchException e){            //Si ce n'est pas un caractère
-                System.out.println(ROUGE +"Erreur! "+ RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
-                xTireChar='@';          //On remet la variable par defaut 
-            }
-            xTireChar=JeuGraphique.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
-                        
-            while ((xTireChar<'A')||(xTireChar>'O')){           //On blinde, en vérifiant que sa saisie fait partie des choix possible
-                System.out.println(ROUGE + "Erreur !"+RESET);           //Sinon on affiche un message d'erreur
-                System.out.println("Veuillez entrer la lettre de la colonne d'où vous voulez tirer :");           //On lui demande de ressaisir
-                try{
-                    xTireChar= scDestroyer.next().charAt(0);          //On stock la saisie de l'utilisateur
-                }
-                catch(InputMismatchException e){            //Si ce n'est pas un caractère
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un caractère");            //On affiche un message d'erreur
-                    scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
-                    xTireChar='@';          //On remet la variable par defaut 
-                }
-                xTireChar=JeuGraphique.convertirMinuscules(xTireChar);           //On convertir sa saisie en majuscule
-            }
+            if(JeuGraphique.plateauDeJeu.get(xTire,yTire,1,0).equals("1")){
+                Alert confirmationTir = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmationTir.setTitle("Bataille Navale - Confirmation de tir");
+                confirmationTir.setHeaderText("La case que vous avez sélectionné à déjà été bombardée.");
+                confirmationTir.setContentText("Etes-vous sur de vouloir la bombarder à nouveau cette case ?");
 
-            System.out.println("Veuillez rentrer la ligne :");         //On lui demande de saisir 
-            try{
-                yTire = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
-            }
-            catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
-                yTire=-1;           //On remet la variable par defaut 
-            }
+                ButtonType boutonOui = new ButtonType("Oui");
+                ButtonType boutonNon = new ButtonType("Non");
+                confirmationTir.getButtonTypes().setAll(boutonOui, boutonNon);
 
+                Optional<ButtonType> choix = confirmationTir.showAndWait();
 
-            while ((yTire<0)||(yTire>16)){          //On blinde, en vérifiant que la saisie fait partie des choix
-                System.out.println(ROUGE + "Erreur!"+ RESET +"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur
-                System.out.println("Veuillez entrer le numero de la ligne a laquelle vous voulez tirer :");           //Et on demande la ressaisie
-                try{
-                    yTire = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
-                }
-                catch(InputMismatchException e){            //Si ce n'est pas un entier
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
-                    yTire=-1;           //On remet la variable par defaut 
-                }
-                
-            }
-            yTire--;            //On retire 1 au yTire
-
-            /*Confirmation du tir sur une case qui a déjà été touchée****************************/
-            if ( JeuGraphique.plateauDeJeu.get(xTire,yTire,1,0).equals("1")){            //Si la case choisie a deja ete touche
-                int choix=0;            //On declare une variable qui stock le choix du joueur 
-                System.out.println("Voulez vous vraiment tirer sur cette case ? Elle à deja été bombardée");            //On lui demande si il veut vraiment tirer sur cette case
-                System.out.println("1.OUI \n2.NON");           //On affiche les choix du joueur 
-                try{
-                    choix = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
-                }
-                catch(InputMismatchException e){            //Si ce n'est pas un entier
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                    scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
-                }
-                
-                while ((choix<1)||(choix>2)){           //On blinde en vérifiant que la saisie fait partie des choix
-                    System.out.println(ROUGE+"Erreur! "+ RESET +"Veuillez saisir à nouveau votre choix :");           //Sinon, on affiche un message d'erreur et demande la ressaisie
-                    try{
-                        choix = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
-                    }
-                    catch(InputMismatchException e){            //Si ce n'est pas un entier
-                        System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
-                        scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
-                    }
-                }
-
-                switch (choix){
-                    case 1: break;           //On continue l'attaque
-                    //case 2: return 2;           //On relance le tour
+                if (choix.get() == boutonNon){
+                    AffichageJeuGraphique affichage = new AffichageJeuGraphique();
+                    affichage.selectionCaseTir(Flotte.nRefToPListe(lRef, nRef));
                 }
             }
 
-            //Ici nous affichons un semblant de chargement des données pour le tir ainsi que le résultat, c'est a dire si celui-ci a touché un navire ou pas
-            System.out.print("Ajustement des coordonnées");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);System.out.println(VERT+"OK"+RESET);
-            System.out.print("Armement de l'obus");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);System.out.println(VERT+"OK"+RESET);
-            TimeUnit.SECONDS.sleep(2);System.out.println(ROUGE_AR+BLANC+"FEU!!"+RESET+RESET_AR);TimeUnit.SECONDS.sleep(2);
-            
+            VBox rootTexte = new VBox(25);
+            Label informationNavire = new Label("Vous avez décidez d'utiliser un "+nom);
+            informationNavire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 15pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);"
+                    +                "-fx-font-weight: bold;");
+
+            Label informationCalcul = new Label("Avec les informations fournis, on a calculé comme coordonnées de tir");
+            informationCalcul.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-font-weight: bold;");
+            Label informationCoordones = new Label("16°02'58."+ yTire +"\"S ; 60°53'40."+ xTire+"\"E");
+            informationCoordones.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 25pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);"
+                    +                "-fx-font-weight: bold;");
+
+            Label informationTir = new Label("\n\nOn effectu le tir, patienter...");
+            informationTir.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-font-weight: bold;");
+
+            rootTexte.getChildren().addAll(informationNavire, informationCalcul, informationCoordones, informationTir);
+            rootTexte.setAlignment(Pos.CENTER);
+            Scene sceneTir = new Scene(rootTexte);
+            JeuGraphique.fenetreJeu.setScene(sceneTir);
+
 
             /*Vérification qu'il y a un impacte********************************************/
             if (JeuGraphique.plateauDeJeu.get(xTire,yTire,2,0) == (Object) 'S'){
@@ -248,20 +166,18 @@ public class Destroyer extends Flotte{
 
                 JeuGraphique.flotteJoueur1.get(pListeAdv).coordonnees[0][2]=2;           //On met la coordonées sur 2 pour signifie, ce qui signifie que le sous-marin a été touché sans être coulé (il ne peux plus être déplacé)
 
-                System.out.println("Nous avons détecté une structure mais n'avons pas pu la détruire");TimeUnit.SECONDS.sleep(4);           //Affichage d'un message disant qu'on est tombé sur un sous-marin
-           
-                //return 1;
+                AffichageJeuGraphique affichageEchec = new AffichageJeuGraphique();
+                affichageEchec.tirSurSousMarin();
             }
             else if (JeuGraphique.plateauDeJeu.get(xTire,yTire,2,0) != (Object) '_'){             //Si la case contient un navire
-                //return impact(xTire, yTire,0);          //On retourne la valeur d'impact
+                impact(xTire, yTire,0);
             }
             else{
-                System.out.println("Nous n'avons rien touché");TimeUnit.SECONDS.sleep(4);           //On affiche un message comme quoi il n'a rien touché
+                AffichageJeuGraphique affichageEchec = new AffichageJeuGraphique();
+                affichageEchec.tirEchec();
                 JeuGraphique.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici
-                //return 1;           //On a la justification que tout c'est bien passe
             }
-        }
-        //return 0;        
+        }   
     }
     
     
@@ -301,10 +217,13 @@ public class Destroyer extends Flotte{
                     }
                 }
                 if(JeuGraphique.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("Yes! J'ai coulé un "+JeuGraphique.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
-                    TimeUnit.SECONDS.sleep(3);   
+                    AffichageIA affichageIA = new AffichageIA();
+                    affichageIA.coulerNavire(JeuGraphique.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                 }
-                //return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
+                else{
+                    AffichageIA affichageIA = new AffichageIA();
+                    affichageIA.toucherNavire();
+                }
             }
             else{           //Si le navire est à la vertical
                 
@@ -314,10 +233,13 @@ public class Destroyer extends Flotte{
                     }
                 }
                 if(JeuGraphique.flotteJoueur0.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("Yes ! J'ai coulé un "+JeuGraphique.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
-                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
+                    AffichageIA affichageIA = new AffichageIA();
+                    affichageIA.coulerNavire(JeuGraphique.flotteJoueur0.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
                 }
-                //return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
+                else{
+                    AffichageIA affichageIA = new AffichageIA();
+                    affichageIA.toucherNavire();
+                }
             }
         }
 
@@ -330,35 +252,33 @@ public class Destroyer extends Flotte{
 
                     if(JeuGraphique.flotteJoueur1.get(pListeAdv).coordonnees[i][0]==xTire){          //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
                         JeuGraphique.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        System.out.println("\n"+VERT+"TOUCHE ! \n!"+RESET);           //On affiche un message disant que le joueur a bien touché un navire
-                        TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
-                        
                     }
                 }
                 if(JeuGraphique.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("Bravo ! T'as coulé un "+JeuGraphique.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
-                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
+                    AffichageJeuGraphique affichageTouche = new AffichageJeuGraphique();
+                    affichageTouche.tirCoulerNavire(JeuGraphique.flotteJoueur1.get(pListeAdv).nom);   
                 }
-                //return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
+                else {
+                    AffichageIA affichageIA = new AffichageIA();
+                    affichageIA.toucherNavire();
+                }
             }
             else{           //Si le navire est à la vertical
-                
                 for (int i=0; i<JeuGraphique.flotteJoueur1.get(pListeAdv).taille; i++){          //On parcourt tout le navire
 
                     if(JeuGraphique.flotteJoueur1.get(pListeAdv).coordonnees[i][1]==yTire){          //Si la coordonnée de la case du navire correspond à la colonne de coordonnee du tire 
                         JeuGraphique.flotteJoueur1.get(pListeAdv).coordonnees[i][2]=0;            //On met que cette case du navire a été touchée
-                        System.out.println("\n"+VERT+"TOUCHE !"+RESET);           //On affiche un message disant que le joueur a bien touché un navire
-                        TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
-                       
                     }
                 }
                 if(JeuGraphique.flotteJoueur1.get(pListeAdv).navireVivant()==false){         //On verifie si le navire est encore vivant ou pas à l'aide de la méthode navireVivant
-                    System.out.println("Bien joué ! T'as coulé un"+JeuGraphique.flotteJoueur1.get(pListeAdv).nom);           //On affiche un message disant qu'il a coulé le navire adverse avec le nom du navire qu'il a coulé
-                    TimeUnit.SECONDS.sleep(3);              //On patient pendant 3 seconde avant de continuer   
+                    AffichageJeuGraphique affichageTouche = new AffichageJeuGraphique();
+                    affichageTouche.tirCoulerNavire(JeuGraphique.flotteJoueur1.get(pListeAdv).nom);            //On patient pendant 3 seconde avant de continuer   
                 }
-                //return 1;           //On retourne 1, ce qui signifie que tout c'est bien passé
+                else{
+                    AffichageIA affichageIA = new AffichageIA();
+                    affichageIA.toucherNavire();
+                }
             }
-        }
-        //return 0;           //On retourne 0 si il y a un problème 
+        } 
     }
 }

@@ -6,10 +6,8 @@ import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
 import bataillenavalgraphique.bataillenaval.model.Plateau;
 import java.util.*;
-import javafx.scene.control.*;
+import java.util.concurrent.TimeUnit;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
         
 public class JeuGraphique{
@@ -187,25 +185,222 @@ public class JeuGraphique{
     
 
 
+//**************************************************************************
+    /**
+     * Méhode qui permet à l'utilisateur de bouger un de ses navires.
+     * Elle permet de vérifier si toutes les conditions sont réunis pour bouger un navire et le déplace.
+     * @param pListe
+     * @param xBouge
+     * @param yBouge
+     */
+    public static void bougerNavire(int pListe, int xBouge, int yBouge){
+        
+        List<Flotte> flotte = JeuGraphique.flotteJoueur0;
+
+        /*Trouver toutes les posibilités de placement du navire****************/
+        int  [] possibilite = new int[4];            //Tableau utilisé pour stocker les 4 posibilitées de placement du navire 
+        
+        if (flotte.get(pListe).direction == 0){         //Si la direction du navire est horizontale
+            
+            int xCord = flotte.get(pListe).coordonnees[0][0];           //On récupère la valeur du premier x dans les coordonées du navire
+            if (xCord==0) possibilite[0]=90;         //Si x est égale à 0, un déplacement vers la gauche n'est pas possible. On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
+            else possibilite[0]= xCord - 1;          //Sinon, on stock la coordonnées x de la case de gauche dans le tableau possibilité
+            
+            xCord = flotte.get(pListe).coordonnees[flotte.get(pListe).taille - 1][0];           //On récupère la valeur du dernier x dans les coordonées du navire
+            if (xCord==14) possibilite[1]=90;           //Si x est égale à 14, un déplacement vers la gauche n'est pas possible. On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
+            else possibilite[1]= xCord + 1;             //Sinon, on stock la coordonnées x de la case de droite dans le tableau possibilité
+            
+            
+            int yCord = flotte.get(pListe).coordonnees[0][1];           //On récupère la valeur du premier y dans les coordonées du navire
+            switch (yCord) {
+                case 0:             //Si y est égale à 0 un déplacement vers le haut n'est pas possible
+                    possibilite[2]= 90;         //On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
+                    possibilite[3]= yCord +1;           //Et on stock la coordonées y de la ligne en dessous dans le tableau possibilité
+                    break;
+                case 14:            //Si y est égale à 14 un déplacement vers le bas n'est pas possible
+                    possibilite[3]= 90;         //On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
+                    possibilite[2]= yCord -1;           //Et on stock la coordonées y de la ligne au dessus dans le tableau possibilité
+                    break;
+                default:            //Sinon aucun des cas est vérifié
+                    possibilite[3]= yCord +1;           //On stock la coordonées y de la ligne en dessous dans le tableau possibilité
+                    possibilite[2]= yCord -1;           //On stock la coordonées y de la ligne au dessus dans le tableau possibilité
+                    break;
+            }
+        }
+        
+        if (flotte.get(pListe).direction == 1){         //Si la direction du navire est vertical
+            
+            int yCord = flotte.get(pListe).coordonnees[0][1];           //On récupère la valeur du premier y dans les coordonées du navire
+            if (yCord==0) possibilite[2]= 90;           //Si y est égale à 0, un déplacement vers le haut n'est pas possible. On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
+            else possibilite[2]= yCord - 1 ;            //Sinon, on stock la coordonnées y de la case au dessus dans le tableau possibilité
+            
+            yCord = flotte.get(pListe).coordonnees[flotte.get(pListe).taille - 1][1];
+            if (yCord ==14) possibilite[3]= 90;         //Si y est égale à 0, un déplacement vers le bas n'est pas possible. On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
+            else possibilite[3]= yCord + 1;             //Sinon, on stock la coordonnées y de la case en dessous dans le tableau possibilité
+            
+            
+            int xCord = flotte.get(pListe).coordonnees[0][0];           //On récupère la valeur du premier x dans les coordonées du navire
+            switch (xCord) {
+                case 0:             //Si x est égale à 0 un déplacement vers la gauche n'est pas possible
+                    possibilite[0]= 90;          //On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
+                    possibilite[1]= xCord + 1;          //Et on stock la coordonées x de la colonne à droite dans le tableau possibilité
+                    break;
+                case 14:            //Si x est égale à 14 un déplacement vers la droite n'est pas possible
+                    possibilite[1]= 90;          //On met donc cette possibilité à 90 (ce qui siginifie qu'elle n'est pas possible)
+                    possibilite[0]= xCord - 1;          //Et on stock la coordonées x de la colonne à gauche dans le tableau possibilité
+                    break;
+                default:
+                    possibilite[1]= xCord + 1;          //On stock la coordonées x de la colonne à droite dans le tableau possibilité
+                    possibilite[0]= xCord - 1;          //On stock la coordonées x de la colonne à gauche dans le tableau possibilité
+                    break;
+            }
+        }
+        
+        /*Vérifier que le navire va pas chevocher un autre navire**************/
+        if (flotte.get(pListe).direction==0){               //Si le navire est à l'horizontale
+            if (possibilite[0]!= 90){           //On vérifie que la possibilité est possible
+                if (plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[0], flotte.get(pListe).coordonnees[0][1], 0, flotte.get(pListe).taille, pListe, flotte.get(pListe).lRef)==false){          //On vérifie que le placement ne chevoche pas un autre navire
+                    possibilite[0]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
+                }
+            }
+            if (possibilite[1]!= 90){
+                if (plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[1]- flotte.get(pListe).taille +1 , flotte.get(pListe).coordonnees[0][1], 0, flotte.get(pListe).taille, pListe, flotte.get(pListe).lRef)==false){            //On vérifie que le placement ne chevoche pas un autre navire
+                    possibilite[1]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
+                }
+            }
+            if (possibilite[2]!= 90){
+                if (plateauDeJeu.verifEmplacementVide(numeroJoueur, flotte.get(pListe).coordonnees[0][0], possibilite[2], 0, flotte.get(pListe).taille, pListe, flotte.get(pListe).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                    possibilite[2]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
+                }
+            }
+            if (possibilite[3]!= 90){
+                if (plateauDeJeu.verifEmplacementVide(numeroJoueur, flotte.get(pListe).coordonnees[0][0], possibilite[3], 0, flotte.get(pListe).taille, pListe, flotte.get(pListe).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                    possibilite[3]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
+                }
+            }
+        }
+        
+        if (flotte.get(pListe).direction==1){           //Si le navire est à la vertical
+            if (possibilite[0] != 90){          //On vérifie que la possibilité est possible
+                if(plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[0], flotte.get(pListe).coordonnees[0][1], 1, flotte.get(pListe).taille, pListe, flotte.get(pListe).lRef)==false){            //On vérifie que le placement ne chevoche pas un autre navire
+                    possibilite[0]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
+                }
+            }
+            if (possibilite[1] != 90){          //On vérifie que la possibilité est possible
+                if (plateauDeJeu.verifEmplacementVide(numeroJoueur, possibilite[1], flotte.get(pListe).coordonnees[0][1], 1, flotte.get(pListe).taille, pListe, flotte.get(pListe).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                    possibilite[1]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
+                }
+            }
+            
+            if (possibilite[2] != 90){          //On vérifie que la possibilité est possible
+                if (plateauDeJeu.verifEmplacementVide(numeroJoueur, flotte.get(pListe).coordonnees[0][0], possibilite[2], 1, flotte.get(pListe).taille, pListe, flotte.get(pListe).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                    possibilite[2]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
+                }
+            }
+            if (possibilite[3] != 90){          //On vérifie que la possibilité est possible
+                if (plateauDeJeu.verifEmplacementVide(numeroJoueur, flotte.get(pListe).coordonnees[0][0], possibilite[3]-  flotte.get(pListe).taille +1 , 1, flotte.get(pListe).taille, pListe, flotte.get(pListe).lRef)==false){           //On vérifie que le placement ne chevoche pas un autre navire
+                    possibilite[3]=90;          //Si c'est la cas on met la possibilité à 90 (ce qui siginifie qu'elle n'est pas possible
+                }
+            }
+        }
+        
+        if (possibilite[0]==90 && possibilite[1]==90 && possibilite[2]==90 && possibilite[3]==90){          //On vérifie qu'il y un moyen de déplacer le navire, pour éviter que le joueur ne trouve pas un moyen de quitter la boucle
+            System.out.println("Ce navire de ne peut pas être déplacé. \n");           //Si c'est le cas on affiche un message d'erreur
+            AffichageJeuGraphique affichageJoueur = new AffichageJeuGraphique();
+        }
+        
+        possibilite[0]+=65;
+        possibilite[1]+=65;
+        
+        if (flotte.get(pListe).direction==0){           //Si le navire est à l'horizontale
+
+            if (yBouge==possibilite[3]){         //possibilité de desecendre
+                for (int i=0; i<flotte.get(pListe).taille;i++){         //On parcourt la taille du navire
+                    plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0] , flotte.get(pListe).coordonnees[i][1]+ 1, Plateau.numeroEtage(numeroJoueur, 0));         //On déplace le navire
+                    flotte.get(pListe).coordonnees[i][1] ++;            //On change les coordonnées 
+                }
+                AffichageJeuGraphique affichageJoueur = new AffichageJeuGraphique();
+                affichageJoueur.deplacementEffectueNavire();
+            }
+            else if (yBouge==possibilite[2]){            //possibilité de monter
+                for (int i=0; i<flotte.get(pListe).taille;i++){         //On parcourt la taille du navire
+                    plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1] - 1, Plateau.numeroEtage(numeroJoueur, 0));          //On déplace le navire
+                    flotte.get(pListe).coordonnees[i][1] --;            //On change les coordonnées 
+                }
+                AffichageJeuGraphique affichageJoueur = new AffichageJeuGraphique();
+                affichageJoueur.deplacementEffectueNavire();
+            }
+                
+            else if (xBouge +65 == possibilite[1] ){              //Possibilité d'aller à gauche 
+                for (int i=flotte.get(pListe).taille - 1; i>=0;i--){            //On parcourt la taille du navire
+                    plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0] + 1, flotte.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));          //On déplace le navire
+                    flotte.get(pListe).coordonnees[i][0] ++;            //On change les coordonnées 
+                }
+                AffichageJeuGraphique affichageJoueur = new AffichageJeuGraphique();
+                affichageJoueur.deplacementEffectueNavire();
+            }
+            else if (xBouge +65 ==  possibilite[0]){          //Possibilité d'aller à droite
+                for (int i=0; i<flotte.get(pListe).taille;i++){         //On parcourt la taille du navire
+                    plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0] - 1, flotte.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));          //On déplace le navire
+                    flotte.get(pListe).coordonnees[i][0] --;            //On change les coordonnées 
+                }
+                AffichageJeuGraphique affichageJoueur = new AffichageJeuGraphique();
+                affichageJoueur.deplacementEffectueNavire();
+            }
+        }
+        
+    
+        if (flotte.get(pListe).direction==1){
+            
+            if (yBouge==possibilite[3]){         //possibilité de desecendre
+                for (int i=flotte.get(pListe).taille - 1; i>=0;i--){            //On parcourt la taille du navire
+                    plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1] , flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1]+1, Plateau.numeroEtage(numeroJoueur, 0));          //On déplace le navire
+                    flotte.get(pListe).coordonnees[i][1] ++;            //On change les coordonnées 
+                }
+                AffichageJeuGraphique affichageJoueura = new AffichageJeuGraphique();
+                affichageJoueura.deplacementEffectueNavire();
+            }
+            else if (yBouge==possibilite[2]){            //possibilité de monter
+                for (int i=0; i<flotte.get(pListe).taille;i++){         //On parcourt la taille du navire
+                    plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1]- 1, Plateau.numeroEtage(numeroJoueur, 0));          //On déplace le navire
+                    flotte.get(pListe).coordonnees[i][1] --;            //On change les coordonnées
+                }
+                AffichageJeuGraphique affichageJoueura = new AffichageJeuGraphique();
+                affichageJoueura.deplacementEffectueNavire();
+            }
+
+            else if (xBouge +65 == possibilite[1]){          //Possibilité d'aller à gauche
+                for (int i=0; i<flotte.get(pListe).taille;i++){         //On parcourt la taille du navire
+                    plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0]+1 , flotte.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));          //On déplace le navire
+                    flotte.get(pListe).coordonnees[i][0] ++;            //On change les coordonnées
+                }
+                AffichageJeuGraphique affichageJoueura = new AffichageJeuGraphique();
+                affichageJoueura.deplacementEffectueNavire();
+            }
+            else if (xBouge +65  == possibilite[0]){          //Possibilité d'aller à droite
+                for (int i=0; i<flotte.get(pListe).taille;i++){         //On parcourt la taille du navire
+                    plateauDeJeu.deplacement(flotte.get(pListe).coordonnees[i][0], flotte.get(pListe).coordonnees[i][1], flotte.get(pListe).coordonnees[i][0]-1, flotte.get(pListe).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));           //On déplace le navire
+                    flotte.get(pListe).coordonnees[i][0] --;            //On change les coordonnées
+                }
+                AffichageJeuGraphique affichageJoueura = new AffichageJeuGraphique();
+                affichageJoueura.deplacementEffectueNavire();
+            }
+        } 
+    }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 
