@@ -422,7 +422,7 @@ public class AffichageJeuGraphique {
     
     
     public void tourIA() throws InterruptedException{
-        victoire();
+    victoire();
         Timeline timeTourJoueur = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(12000),action -> {            //On met un temps d'attente de 12s
             try {
@@ -435,7 +435,7 @@ public class AffichageJeuGraphique {
     
     public void zoneTirFusee(int xTire, int yTire, int surplusX, int surplusY){
         
-        Timeline timeZoneTirFusee = new Timeline();
+        Timeline timeZoneTirFusee = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         timeZoneTirFusee.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {
             GrilleBoutons grilleBoutonTirs = new GrilleBoutons('D');
             grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);
