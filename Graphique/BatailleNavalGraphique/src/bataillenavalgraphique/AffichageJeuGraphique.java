@@ -51,17 +51,26 @@ public class AffichageJeuGraphique {
         grilleBoutonNavire.miseAJourAffichageNavire(JeuGraphique.plateauDeJeu);         //On fait la mise à jour de la grille des navires
         grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);         //On fait la mise à jour de la grille de tirs
         
-        rootJeu.add(menu(),0,0,3,5);            //On place le menu en haut à gauche dans la fenêtre
+        //rootJeu.add(menu(),0,0,3,5);            //On place le menu en haut à gauche dans la fenêtre
         
         rootJeu.add(grilleBoutonNavire.getRoot(),0,6,3,5);           //On place la grille des navires à gauche
         rootJeu.add(grilleBoutonTirs.getRoot(),3,6,3,5);            //On place la grille des tirs à droite 
         
-        Label instructionsJoueur = new Label("Veuillez sélectionner un navire");            //On informe le joueur des instructions à suivre
-        rootJeu.add(instructionsJoueur,2,12,3,1);           //On place les instructions 
+        Label instructionsJoueur = new Label("Veuillez sélectionner un bateau ou une case");            //On informe le joueur des instructions à suivre
+        instructionsJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 18pt;"
+        +                "-fx-background-color: rgba(120,160,175,0.50);"
+        +                "-fx-font-weight: bold;");
+        rootJeu.add(instructionsJoueur,2,12,5,1);           //On place les instructions 
         Label titreGrilleNavire = new Label("Voici la grille de vos bateaux :");            //On informe le joueur que c'est la grille de ses navires
+        titreGrilleNavire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 15pt;");
         rootJeu.add(titreGrilleNavire,0,5,3,1);         //On place les instructions
         Label titreGrilleTirs = new Label("Voici la grille de vos tirs :");             //On informe le joueur que c'est la grille des tirs
+        titreGrilleTirs.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 15pt;");
         rootJeu.add(titreGrilleTirs,3,5,3,1);           //On place les instructions
+        rootJeu.setAlignment(CENTER);
         
         Scene sceneJeu = new Scene(rootJeu);            //On met le root dans la scène 
         JeuGraphique.fenetreJeu.setScene(sceneJeu);         //On modifie la scène
@@ -126,16 +135,9 @@ public class AffichageJeuGraphique {
         });
         
         
-<<<<<<< HEAD
-        
-        Button boutonBouger = new Button("Bouger Navire");
-        boutonBouger.setGraphic(imageBouger);
-        boutonBouger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"
-=======
         Button boutonBouger = new Button("Bouger Navire");          //On déclare un bouton déplacer
         boutonBouger.setGraphic(imageBouger);           //On l'illustre par une petite image
         boutonBouger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"            //On change les caractéristiques d'écriture
->>>>>>> main
                 + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
         boutonBouger.setOnMouseEntered ((MouseEvent event) -> {          //Si le joueur met son curseur sur le bouton
             boutonBouger.setGraphic(imageBougerHover);
@@ -147,15 +149,10 @@ public class AffichageJeuGraphique {
             boutonBouger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"            //On change les caractéristiques d'écriture
                 + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
         });
-<<<<<<< HEAD
         boutonBouger.setOnAction((ActionEvent eventChargementPartie) -> {
             boolean verif = verificationDeplacementPossible(pListe);
             System.out.println(verif);
             if (verif==true)selectionCaseBouger(pListe, lRef);
-=======
-        boutonBouger.setOnAction((ActionEvent eventChargementPartie) -> {           //Action si le joueur click sur le bouton
-            //ajouter           //On appelle la méthode qui va lui demander où déplacer le navire
->>>>>>> main
         });
         
         HBox boutonSelectionNavire = new HBox(80);          //On déclare un affichage horizontal avec les éléments qui sont espacés de 80 pixels
@@ -178,11 +175,11 @@ public class AffichageJeuGraphique {
             GrilleBoutons grilleBoutonTirs = new GrilleBoutons('B', listeInformations);
             grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);
 
-            VBox rootselectionCaseTir = new VBox(40);
-            rootselectionCaseTir.setPadding(new Insets(90,300,20,300));
+            VBox rootselectionCaseTir = new VBox(20);
+            rootselectionCaseTir.setPadding(new Insets(20,300,20,300));
 
             Label instruction = new Label ("Il s'agit d'u premier du de ce Destroyer !");
-            instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt; -fx-font-color: Color.RED;"
+            instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"
                     + "-fx-font-weight: bold;");
             
             Label instruction2 = new Label ("Il s'agit donc d'une fussée éclairante ?");
@@ -223,7 +220,6 @@ public class AffichageJeuGraphique {
     
     public void selectionCaseBouger(int pListe, char lRef){
         
-<<<<<<< HEAD
         List<Integer> listeInformations = new ArrayList<Integer> ();
         listeInformations.add(0, pListe);
         GrilleBoutons grilleBoutonTirs = new GrilleBoutons('C', listeInformations);
@@ -281,12 +277,8 @@ public class AffichageJeuGraphique {
             +                "-fx-font-size: 20pt;"
             +                "-fx-background-color: rgba(120,160,175,0.50);"
             +                "-fx-font-weight: bold;");
-            Label information1 = new Label ("\n\nC'est au tour de l'IA");
-            information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-            +                "-fx-font-size: 15pt;"
-            +                "-fx-font-weight: bold;");
 
-            rootText.getChildren().addAll(information, grilleBoutonNavire.getRoot(),information1);
+            rootText.getChildren().addAll(information, grilleBoutonNavire.getRoot());
             rootText.setAlignment(Pos.CENTER);
             Scene sceneTirEchec = new Scene(rootText);
             JeuGraphique.fenetreJeu.setScene(sceneTirEchec);
@@ -298,28 +290,6 @@ public class AffichageJeuGraphique {
         } catch (InterruptedException e) {
             System.err.println("Erreur_exceptionIA");
         }
-=======
-        //int tailleNavire= flotteJoueur0.get(pListe).taille;
-        //int directionNavire = flotteJoueur0.get(pListe).direction;
-        List<Integer> listeInformations = new ArrayList<Integer> ();            //On déclare un liste qui contiendra des informations qui concerne le bateau
-        listeInformations.add(0, pListe);           //On rajoute ces deux éléments a la liste
-        GrilleBoutons grilleBoutonTirs = new GrilleBoutons('B', listeInformations);         //On déclare un grille de bouton 
-        grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);         //On met à jour la grille 
-        
-        VBox rootselectionCaseTir = new VBox(40);           //On déclare un affichage verticale dont les éléments sont espacés de 40 pixels
-        rootselectionCaseTir.setPadding(new Insets(90,300,20,300));         //On paramètre ce root
-
-        Label instruction = new Label ("Que souhaiter vous faire ?");           //On demande au joueur ce qu'il voudrait faire
-        instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"            //On change les caractéristiques d'écriture
-                + "-fx-font-weight: bold;");
-        
-        rootselectionCaseTir.setAlignment(CENTER);          //On positionne les éléments du root au centre
-        rootselectionCaseTir.getChildren().addAll(instruction, grilleBoutonTirs.getRoot());         //On rajoute des éléments a ce root
-        instruction.setAlignment(CENTER);           //On positionne les éléments du root au centre
-        System.out.println("On reviens bien la");
-        Scene sceneSelectionNavire = new Scene(rootselectionCaseTir);           //On met le root dans la scène
-        JeuGraphique.fenetreJeu.setScene(sceneSelectionNavire);         //On modifie la scène
->>>>>>> main
     }
     
     
@@ -457,7 +427,7 @@ public class AffichageJeuGraphique {
         timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(12000),action -> {            //On met un temps d'attente de 12s
             try {
                 JeuGraphique.ia.jouer();            //On essaye de lancer le tour de l'IA
-            } catch (InterruptedException ex)
+            } catch (InterruptedException ex){}
         }));
         timeTourJoueur.play();            //On démarre le temps de décalage dès que le programme le lit
         

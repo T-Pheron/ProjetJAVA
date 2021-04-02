@@ -447,7 +447,7 @@ public class IANGraphique implements Serializable{
 
         pListe=Flotte.nPlateauToPListe(lRef, nPlateau);
         
-        affichageIA.niveau1TirRandom(xTire, yTire);
+        affichageIA.tirRandomIA(xTire, yTire);
 
         
         /*Effectuer le tir*********************************************/

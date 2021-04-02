@@ -4,13 +4,18 @@ package bataillenavalgraphique;
 import bataillenavalgraphique.bataillenaval.model.Plateau;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
 import bataillenavalgraphique.bataillenaval.view.Affichage;
-import bataillenavalgraphique.bataillenaval.controller.*;
+import static bataillenavalgraphique.bataillenaval.model.Flotte.nPlateauToPListe;
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 /**
  *
@@ -280,7 +285,6 @@ public class IA implements Serializable{
         
         if (possibilite[0]==90 && possibilite[1]==90 && possibilite[2]==90 && possibilite[3]==90){          //On vérifie qu'il y un moyen de déplacer le navire
             panneMoteur();
-            TimeUnit.SECONDS.sleep(3);
             return 3;           //On retourne 2, ce qui signifie qu'on doit relancer le tour du joueur
         }
         
@@ -434,7 +438,6 @@ public class IA implements Serializable{
                     if (nPlateau==5) nPlateau=0;            //Si le numéros de plateau du navire arrive à 5, on le remet à 0 pour être sûr de parcourir tous les sous-marins
                 }
                 if (tourSousMarin==5){          //Si tous les sous-marins de l'IA a été coulé et qu'il reste un sous-marin à l'autre joueur, il a gagné
-                    System.out.println("Je ne peux plus couler vos sous-marin car vous avez détruit tous mes sous marin");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
                     return 1;
                 }
                 
@@ -452,7 +455,7 @@ public class IA implements Serializable{
         pListe=Flotte.nPlateauToPListe(lRef, nPlateau);
         
         TimeUnit.SECONDS.sleep(1);
-        affichageIA.niveau1TirRandom(xTire, yTire);
+        affichageIA.tirRandomIA(xTire, yTire);
         
         
         /*Effectuer le tir*********************************************/
@@ -462,8 +465,20 @@ public class IA implements Serializable{
             nombreDeTir ++;         //On rajoute 1 au nombre de tir
             
             System.out.println("\n\nC'est raté :(\nQuel échec!");           //On affiche un message qui dit que que l'IA n'a pas touché de navire 
-            System.out.println("Bonne chance!");
             affichageIA.tirRate();
+        }
+        if (JeuGraphique.plateauDeJeu.get(xTire,yTire,0,0) == (Object) 'S'){
+            if (!JeuGraphique.plateauDeJeu.get(xTire,yTire,3,0).equals("2")) JeuGraphique.plateauDeJeu.modification(xTire,yTire,3,0,"5");
+
+            int nPlateauAdv;            //Le numéro du plateau du navire adverse
+            int pListeAdv;              //La position dans la liste des navires de l'adversaire      
+
+            nPlateauAdv = (int) JeuGraphique.plateauDeJeu.get(xTire,yTire,0,1);         //On récupère le numéro de plateau de l'adversaire aux coordonnées où le joueur veut tirer
+            pListeAdv=nPlateauToPListe('S', nPlateauAdv);           //On en deduit la position dans la liste du navire de l'adversaire
+
+            JeuGraphique.flotteJoueur1.get(pListeAdv).coordonnees[0][2]=2;           //On met la coordonées sur 2 pour signifie, ce qui signifie que le sous-marin a été touché sans être coulé (il ne peux plus être déplacé)
+
+            affichageIA.toucherSousMarin();
         }
         else {          //Si la case contient un navire
             JeuGraphique.flotteJoueur1.get(pListe).impact(xTire, yTire, 1);
@@ -481,9 +496,8 @@ public class IA implements Serializable{
         if ((bougerNavire2==false) && (saveCoord[0] ==false) && (saveCoord[1] ==false) && (saveCoord[2] == false) && (saveCoord[3] == false) ){
             
             
-            System.out.println("Veuillez patienter le temps que j'effectue mon tir");
-            System.out.print("Je choisis les coordonnées, 4 sec!");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".\n");
-
+            System.out.println("J'effectue mon tir");
+            
             /*Génération des coordonées de tir et choix navire*********/
             if ( (saveCoord[0] ==false) && (saveCoord[1] ==false) && (saveCoord[2] ==false) && (saveCoord[3] ==false) ){//On vérifie qu'il y a pas des emplacements de tir déjà enregistré
                 do{ 
@@ -509,7 +523,6 @@ public class IA implements Serializable{
                             if (nPlateau==5) nPlateau=0;            //Si le numéros de plateau du navire arrive à 5, on le remet à 0 pour être sûr de parcourir tous les sous-marins
                         }
                         if (tourSousMarin==5){          //Si tous les sous-marins de l'IA a été coulé et qu'il reste un sous-marin à l'autre joueur, il a gagné
-                            System.out.println("Je ne peux plus couler vos sous-marin car vous avez détruit tous mes sous marin");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
                             return 1;
                         }
                         choixCoordonneesTir = true;         //On autorise la sortie de la boucle, si on a trouvé un sous marin
@@ -520,6 +533,7 @@ public class IA implements Serializable{
                 }while(choixCoordonneesTir == false);           //On vérifie que la condition de sortie de la boucle est validée
             
             }
+            
             
             
 
@@ -604,16 +618,14 @@ public class IA implements Serializable{
                 nombreDeTir = reinitialiserGrilleTrir();          //On remet les cases non touché à 0 et on stock dans nombre de tir le nombre de case déjà touché
             }
 
-            System.out.println("C'est bon. Je choisis un " + JeuGraphique.flotteJoueur1.get(pListe).nom + " pour tirer sur les coordonnées :");         //On affiche qui dit qu'on a trouvé des coordonées de tir
-            System.out.println( B_BLEU_AR +BLANC+(char) (xTire + 65) + " " + (yTire+1) +RESET+RESET_AR +"\n");TimeUnit.SECONDS.sleep(2);          //On affiche de message avec les coordonnées de tir
-            System.out.print(ROUGE +"Attention ! \nJe TIRE!!"+RESET); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.println("."); TimeUnit.SECONDS.sleep(1);
+            TimeUnit.SECONDS.sleep(1);
+            affichageIA.tirRandomIA(xTire, yTire);
             
             /*Effectuer le tir*********************************************/
             if(JeuGraphique.plateauDeJeu.get(xTire, yTire, 0, 0) == (Object) '_'){            //Si la case ne contient pas de navire
                 JeuGraphique.plateauDeJeu.modification(xTire, yTire, 3, 0, "1");           //On met sur la grille de tire de l'IA le chiffre 1 (ce qui signifie qu'on a tiré sur cette case sans rien touché)
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
-                System.out.println("\n\nC'est raté :(\nQuel échec!");           //On affiche un message qui dit que que l'IA n'a pas touché de navire 
-                System.out.println("Bonne chance!"); TimeUnit.SECONDS.sleep(3);
+                affichageIA.tirRate();
             }
             else if (JeuGraphique.plateauDeJeu.get(xTire, yTire, 0, 0) ==  (Object) 'S' && lRef!='S'){           //Si le navire touché est un sous-marin et que ce n'est pas un sous-marin qui a tiré
                 if (!JeuGraphique.plateauDeJeu.get(xTire,yTire,3,0).equals("2")) JeuGraphique.plateauDeJeu.modification(xTire,yTire,3,0,"5");
@@ -637,20 +649,17 @@ public class IA implements Serializable{
                     }
                 }
                 if (stockSaveCoord[0][2]==0){           //Si l'IA n'a plus de sous-marin le joueur adverse à gagner
-                    System.out.println("Je ne peux plus couler vos sous-marin car vous avez détruit tous mes sous marin");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
                     return 1;           //On retourne 1 pour que le programme confirme la victoire du joueur
                 }
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
-                System.out.println("J'ai touché un objet non identifié");
-                System.out.println("Je retient...");TimeUnit.SECONDS.sleep(5);
+                affichageIA.toucherSousMarin();
 
             }
 
             /*Impacte sur un navire adverse************************************************/
             else {          //Si les coordonées de tir coorespondent à un navire
-                System.out.println("Et  c'est touché!!");TimeUnit.SECONDS.sleep(2);
+                System.out.println("Et  c'est touché!!");
                 JeuGraphique.flotteJoueur1.get(pListe).impact(xTire, yTire, 1);           //On appel la méthode qui permet de rentrer les différentes informations lors d'un impacte
-                TimeUnit.SECONDS.sleep(3);
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
 
 
@@ -710,11 +719,8 @@ public class IA implements Serializable{
             }
         }
         else {              //Si l'IA déplace un navire
-            System.out.println("Je décide de déplacer un de mes navires.");         //On affiche un message
-            System.out.println("Veuillez patienter le temps que j'effectue la manoeuvre");
-            TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".\n");
+            affichageIA.deplacemmentNavire();
             bougerNavireIA();           //On appel la méthode qui déplace un bateau aléatoirement
-            TimeUnit.SECONDS.sleep(5);
         }
         return 1;
     }
@@ -742,10 +748,10 @@ public class IA implements Serializable{
             {
                 if (JeuGraphique.flotteJoueur1.get(i).premierTire==true && JeuGraphique.flotteJoueur1.get(i).etat==true){         //Si c'est le premier tire du destroyer et qu'il n'a pas été coulé   
                     
-                    System.out.println("J'effetue un tir avec mon destroyer");          //On affiche un message un message disant qu'il tire avec son destroyer
-                    System.out.println("Veuillez patienter le temps du recueil des données");
-                    TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".\n");
                     
+                    TimeUnit.SECONDS.sleep(1);
+                    affichageIA.tirDestroyer();
+                            
                     int xTireFusee = 0;         //Coordonnée de tir de la fusée par défaut
                     int yTireFusee = 0;
 
@@ -783,8 +789,7 @@ public class IA implements Serializable{
                         }
                     }
 
-                    System.out.println("C'est intérésant ce que mes avions mon rapporté du terrain");           //On affiche un message disant que l'IA a bien effectué le tir de la fusée éclairante
-                    System.out.println("Je prends note");TimeUnit.SECONDS.sleep(5);
+                    affichageIA.toucherSousMarin();
                     JeuGraphique.flotteJoueur1.get(i).premierTire=false;         //le premier tir du destroyer choisi est mis à false
                     nombreDeTirDestroyer++;         //On rajoute 1 au nombre de tir du destroyer
                     return 1;           //On retourne 1 si tout c'est bien passé
@@ -795,9 +800,6 @@ public class IA implements Serializable{
         /*Si l'IA tir**************************************************/
         if (bougerNavire3==false){
             
-            
-            System.out.println("Veuillez patienter le temps que j'effectue mon tir");
-            System.out.print("Je choisis les coordonnées, 4 sec!");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".\n");
             
             /*Récupération des coordonées enregistrée*****************/
             if (emplacementSave==true){
@@ -866,7 +868,6 @@ public class IA implements Serializable{
                             if (nPlateau==5) nPlateau=0;            //Si le numéros de plateau du navire arrive à 5, on le remet à 0 pour être sûr de parcourir tous les sous-marins
                         }
                         if (tourSousMarin==5){          //Si tous les sous-marins de l'IA a été coulé et qu'il reste un sous-marin à l'autre joueur, il a gagné
-                            System.out.println("Je ne peux plus couler vos sous-marin car vous avez détruit tous mes sous marin");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
                             return 1;
                         }
                         choixCoordonneesTir = true;         //On autorise la sortie de la boucle, si on a trouvé un sous marin
@@ -883,17 +884,15 @@ public class IA implements Serializable{
                 nombreDeTir = reinitialiserGrilleTrir();          //On remet les cases non touché à 0 et on stock dans nombre de tir le nombre de case déjà touché
             }
 
-            System.out.println("C'est bon. Je choisis un " + JeuGraphique.flotteJoueur1.get(pListe).nom + " pour tirer sur les coordonnées :");         //On affiche qui dit qu'on a trouvé des coordonées de tir
-            System.out.println( B_BLEU_AR +BLANC+(char) (xTire + 65) + " " + (yTire+1) +RESET+RESET_AR +"\n");TimeUnit.SECONDS.sleep(2);          //On affiche de message avec les coordonnées de tir
-            System.out.print(ROUGE +"Attention ! \nJe TIRE!!"+RESET); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.print("."); TimeUnit.SECONDS.sleep(1);System.out.println("."); TimeUnit.SECONDS.sleep(1);
-            
+            TimeUnit.SECONDS.sleep(1);
+            affichageIA.tirRandomIA(xTire, yTire);
 
             /*Effectuer le tir*********************************************/
             if(JeuGraphique.plateauDeJeu.get(xTire, yTire, 0, 0) == (Object) '_'){            //Si la case ne contient pas de navire
                 JeuGraphique.plateauDeJeu.modification(xTire, yTire, 3, 0, "1");           //On met sur la grille de tire de l'IA le chiffre 1 (ce qui signifie qu'on a tiré sur cette case sans rien touché)
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
-                System.out.println("\n\nC'est raté :(\nQuel échec!");           //On affiche un message qui dit que que l'IA n'a pas touché de navire 
-                System.out.println("Bonne chance!"); TimeUnit.SECONDS.sleep(3);
+                System.out.println("\n\nC'est raté :(\nQuel échec!");           //On affiche un message qui dit que que l'IA n'a pas touché de navire
+                affichageIA.tirRate();
             }
             else if (JeuGraphique.plateauDeJeu.get(xTire, yTire, 0, 0) ==  (Object) 'S' && lRef!='S'){           //Si le navire touché est un sous-marin et que ce n'est pas un sous-marin qui a tiré
                 if (!JeuGraphique.plateauDeJeu.get(xTire,yTire,3,0).equals("2")) JeuGraphique.plateauDeJeu.modification(xTire,yTire,3,0,"5");
@@ -917,20 +916,16 @@ public class IA implements Serializable{
                     }
                 }
                 if (stockSaveCoord[0][2]==0){           //Si l'IA n'a plus de sous-marin le joueur adverse à gagner
-                    System.out.println("Je ne peux plus couler vos sous-marin car vous avez détruit tous mes sous marin");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
                     return 1;           //On retourne 1 pour que le programme confirme la victoire du joueur
                 }
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
-                System.out.println("J'ai touché un objet non identifié.");
-                System.out.println("Je retient...");TimeUnit.SECONDS.sleep(5);
+                affichageIA.toucherSousMarin();
 
             }
 
             /*Impacte sur un navire adverse************************************************/
             else {          //Si les coordonées de tir coorespondent à un navire
-                System.out.println("Et c'est touché!!");TimeUnit.SECONDS.sleep(2);
                 JeuGraphique.flotteJoueur1.get(pListe).impact(xTire, yTire, 1);           //On appel la méthode qui permet de rentrer les différentes informations lors d'un impacte
-                TimeUnit.SECONDS.sleep(3);
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
 
 
@@ -992,11 +987,8 @@ public class IA implements Serializable{
             }
         }
         else {              //Si l'IA déplace un navire
-            System.out.println("Je décide de déplacer un de mes navires.");         //On affiche un message
-            System.out.println("Veuillez patienter le temps que j'effectue la manoeuvre");
-            TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".\n");
+            affichageIA.deplacemmentNavire();
             bougerNavireIA();           //On appel la méthode qui déplace un bateau aléatoirement
-            TimeUnit.SECONDS.sleep(5);
         }
         return 1;
     }
@@ -1017,15 +1009,26 @@ public class IA implements Serializable{
     
     public void panneMoteur() throws InterruptedException{
         
-        Label information = new Label("Le navire que j'ai choisis à un porblème moteur");
-        Label information2 = new Label("J'effectus un autre coup");
+        Timeline timeTourJoueur = new Timeline();
+        timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(5000),action -> {
+            Label information = new Label("Le navire que j'ai choisis à un porblème moteur");
+            Label information2 = new Label("\nJ'effectus un autre coup");
+
+            VBox rootText = new VBox(25);
+            rootText.getChildren().addAll(information, information2);
+            Scene scenePanneMoteur = new Scene(rootText);
+            JeuGraphique.fenetreJeu.setScene(scenePanneMoteur);
+
+            try {
+                jouer();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(IA.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }));
+        timeTourJoueur.play();
         
-        VBox rootText = new VBox(25);
-        rootText.getChildren().addAll(information, information2);
-        Scene scenePanneMoteur = new Scene(rootText);
-        JeuGraphique.fenetreJeu.setScene(scenePanneMoteur);
         
-        jouer();
+        
     }
 }
 

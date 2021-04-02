@@ -43,7 +43,7 @@ public class AffichageIA {
         time.play();
     }
     
-    public void niveau1TirRandom(int xTire, int yTire){
+    public void tirRandomIA(int xTire, int yTire){
         
         VBox rootText = new VBox(25);
         Label information = new Label ("Tour IA");
@@ -58,6 +58,30 @@ public class AffichageIA {
         Label information1 = new Label ("18°05'57."+ yTire +"\"S ; 53°43'30."+ xTire+"\"E");
         information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
         +                "-fx-font-size: 18pt;"
+        +                "-fx-font-weight: bold;");
+
+        rootText.getChildren().addAll(information,information0, information1);
+        rootText.setAlignment(Pos.CENTER);
+        Scene sceneNiveau1TirRandom = new Scene(rootText);
+        JeuGraphique.fenetreJeu.setScene(sceneNiveau1TirRandom);
+    }
+    
+    
+    public void tirDestroyer(){
+        
+        VBox rootText = new VBox(25);
+        Label information = new Label ("Tour IA");
+        information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 30pt;"
+        +                "-fx-background-color: rgba(120,160,175,0.50);"
+        +                "-fx-font-weight: bold;");
+        Label information0 = new Label ("\n\nJe décide de tirer une fussée avec mon destroyer");
+        information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 18pt;"
+        +                "-fx-font-weight: bold;");
+        Label information1 = new Label ("Veuillez patienter...");
+        information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 15pt;"
         +                "-fx-font-weight: bold;");
 
         rootText.getChildren().addAll(information,information0, information1);
@@ -92,6 +116,61 @@ public class AffichageIA {
         timeNiveau1TirRandom.play();
     }
     
+    
+    
+    public void toucherSousMarin(){
+        Timeline timeNiveau1TirRandom = new Timeline();
+        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),e -> {
+            VBox rootText = new VBox(25);
+            Label information0 = new Label ("On a touché une structure mais n'avons pas pu la coulé");
+            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 25pt;"
+            +                "-fx-font-weight: bold;");
+            
+            Label information1 = new Label ("Intéréssant...");
+            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 15pt;"
+            +                "-fx-font-weight: bold;");
+            
+            
+            Label information2 = new Label ("\n\nA votre tour");
+            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 18pt;"
+            +                "-fx-font-weight: bold;");
+
+
+            rootText.getChildren().addAll(information0, information1, information2);
+            rootText.setAlignment(Pos.CENTER);
+            Scene sceneNiveau1TirRandom = new Scene(rootText);
+            JeuGraphique.fenetreJeu.setScene(sceneNiveau1TirRandom);
+            
+            tourJoueur();
+        }));
+        timeNiveau1TirRandom.play();
+    }
+    
+    
+    public void deplacemmentNavire(){
+        VBox rootText = new VBox(25);
+        Label information = new Label ("Tour IA");
+        information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 30pt;"
+        +                "-fx-background-color: rgba(120,160,175,0.50);"
+        +                "-fx-font-weight: bold;");
+        Label information0 = new Label ("\n\nJe décide de déplacer mon navire");
+        information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 15pt;"
+        +                "-fx-font-weight: bold;");
+        Label information1 = new Label ("Patientez...");
+        information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 18pt;"
+        +                "-fx-font-weight: bold;");
+
+        rootText.getChildren().addAll(information,information0, information1);
+        rootText.setAlignment(Pos.CENTER);
+        Scene sceneNiveau1TirRandom = new Scene(rootText);
+        JeuGraphique.fenetreJeu.setScene(sceneNiveau1TirRandom);
+    }
     
     
     public void coulerNavire(String nomNavireCoule){
