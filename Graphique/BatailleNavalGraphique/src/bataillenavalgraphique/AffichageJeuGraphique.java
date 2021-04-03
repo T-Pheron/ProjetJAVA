@@ -18,7 +18,6 @@ import static javafx.geometry.Pos.CENTER;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -39,8 +38,8 @@ public class AffichageJeuGraphique {
     public void affichageJoueur(){
 
         victoire();         //On appelle le méthode Victoire pour vérifier si il y a un gagnant ou pas
-        GrilleBoutons grilleBoutonNavire = new GrilleBoutons('N');          //On déclare la grille des boutons pour les navires 
-        GrilleBoutons grilleBoutonTirs = new GrilleBoutons('T');            //On déclare la grille des boutons pour les tirs
+        GrilleBoutons grilleBoutonNavire = new GrilleBoutons('N','A');          //On déclare la grille des boutons pour les navires 
+        GrilleBoutons grilleBoutonTirs = new GrilleBoutons('T', 'A');            //On déclare la grille des boutons pour les tirs
         JeuGraphique.compteurTourHumain++;          //On rajoute 1 au nombre de tour du joueur 
         
         GridPane rootJeu = new GridPane();          //On déclare un root de type GridPane et on le paramètre
@@ -307,17 +306,19 @@ public class AffichageJeuGraphique {
         int pListe = Flotte.nPlateauToPListe(lRef, nPlateau);           //On déclare la variable qui stocke la position du navire dans la liste
         int tailleNavire= JeuGraphique.flotteJoueur0.get(pListe).taille;            //On déclare la variable qui stocke la taille du navire
         int directionNavire = JeuGraphique.flotteJoueur0.get(pListe).direction;         //On déclare la variable qui stoke la direction du navire
-        GrilleBoutons grilleBoutonNavire = new GrilleBoutons('D');          //On déclare une grille de bouton pour la grille des navires
+        GrilleBoutons grilleBoutonNavire = new GrilleBoutons('D', lRef);          //On déclare une grille de bouton pour la grille des navires
         grilleBoutonNavire.miseAJourAffichageNavire(JeuGraphique.plateauDeJeu);         //On le met à jour
         
         ImageView imageTir =new ImageView(getClass().getResource("/images/tir.png").toString());            //On donne l'emplacement de l'image
         ImageView imageTirHover =new ImageView(getClass().getResource("/images/tirHover.png").toString());
         ImageView imageBouger =new ImageView(getClass().getResource("/images/bouger.png").toString());
         ImageView imageBougerHover =new ImageView(getClass().getResource("/images/bougerHover.png").toString());
-        
+        ImageView retourImage = new ImageView ("/images/retourImage.png");
+        ImageView retourImageHover = new ImageView ("/images/retourImageHover.png");
+
         VBox rootselectionNavire = new VBox(40);            //On déclare un affichage vertical avec des éléments espacés de 40 pixels
         
-        rootselectionNavire.setPadding(new Insets(90,100,20,90));           //On donne les dimensions du root pour la sélection des navires
+        rootselectionNavire.setPadding(new Insets(90,20,20,70));           //On donne les dimensions du root pour la sélection des navires
 
         
         GrilleNavire affichageNavire = new GrilleNavire(tailleNavire);          //On déclare une grille de boutons qui fait la taille du navire sélectionné
@@ -328,9 +329,30 @@ public class AffichageJeuGraphique {
         colonneContrainte.setHalignment(HPos.CENTER);       
         rootAffichagePlateau.getColumnConstraints().add(colonneContrainte);         
         
+
         
-        rootAffichagePlateau.add(grilleBoutonNavire.getRoot(),0,0);         //On place la grille des boutons dans le root
-        rootAffichagePlateau.add(affichageNavire.getRoot(directionNavire, lRef, nPlateau,(String) JeuGraphique.plateauDeJeu.get(xPlateau, yPlateau, 3, 0)),1,0);            //On place le navire dans le root
+        Button boutonRetour = new Button("Retour");            //On déclare un bouton tirer
+        boutonRetour.setGraphic(retourImage);            //On l'illustre par une petite image
+        boutonRetour.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"          //On change les caractéristiques d'écriture
+                + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
+        boutonRetour.setOnMouseEntered ((MouseEvent event) -> {           //Si le joueur met son curseur sur le bouton
+            boutonRetour.setGraphic(retourImageHover);
+            boutonRetour.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"          //On change les caractéristiques d'écriture
+                    + "-fx-font-weight: bold;-fx-background-color: rgba(90,170,182,0.80)");
+        });
+        boutonRetour.setOnMouseExited ((MouseEvent event) -> {            //Si le joueur enlève son curseur du bouton
+            boutonRetour.setGraphic(retourImage);
+            boutonRetour.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"          //On change les caractéristiques d'écriture
+                    + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
+        });
+        boutonRetour.setOnAction((ActionEvent eventChargementPartie) -> {         
+            affichageJoueur();
+        });
+        rootAffichagePlateau.add(boutonRetour,0,0);
+
+        
+        rootAffichagePlateau.add(grilleBoutonNavire.getRoot(),0,1);         //On place la grille des boutons dans le root
+        rootAffichagePlateau.add(affichageNavire.getRoot(directionNavire, lRef, nPlateau,(String) JeuGraphique.plateauDeJeu.get(xPlateau, yPlateau, 3, 0)),1,1);            //On place le navire dans le root
         
         Label instruction = new Label ("Que souhaiter vous faire ?");           //On demande au joueur ce qu'il veut faire
         instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"      //On change les caractéristiques d'écriture   
@@ -489,7 +511,7 @@ public class AffichageJeuGraphique {
         
         Timeline time = new Timeline();
         time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {
-            GrilleBoutons grilleBoutonNavire = new GrilleBoutons('D');
+            GrilleBoutons grilleBoutonNavire = new GrilleBoutons('D', 'V');
             grilleBoutonNavire.miseAJourAffichageNavire(JeuGraphique.plateauDeJeu);
             
             VBox rootText = new VBox(25);
@@ -657,7 +679,7 @@ public class AffichageJeuGraphique {
         
         Timeline timeZoneTirFusee = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         timeZoneTirFusee.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {
-            GrilleBoutons grilleBoutonTirs = new GrilleBoutons('D');
+            GrilleBoutons grilleBoutonTirs = new GrilleBoutons('D', 'F');
             grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);
 
             VBox rootselectionCaseTir = new VBox(40);
@@ -791,71 +813,6 @@ public class AffichageJeuGraphique {
 
     public void erreurCaseVide(){
         
-    }
-    
-    public MenuBar menu(){
-        MenuBar menuBar = new MenuBar();            //On déclare une variable de type MenuBar
-        BorderPane rootMenuBar = new BorderPane();          //On déclare une variable de type BorderPane
-        menuBar.setUseSystemMenuBar(true);          //On met le menuBar visible
-        rootMenuBar.setTop(menuBar);            //On rajoute le menuBar dans le root
-
-        Menu menuNouvellePartie = new Menu("Nouvelle Partie");          //On déclare différenets parties
-        Menu menuSauvegarderPartie = new Menu("Sauvegarder Partie");
-        Menu menuChargerPartie = new Menu("Charger Partie");
-        Menu menuAide = new Menu("Aide");
-        Menu menuQuitterPartie = new Menu("Quitter");
-
-        MenuItem charger1 = new MenuItem("Charger la sauvegarde 1");            //On déclare plusieurs items dans la partie qui iront dans la partie Charger du menuBar
-        MenuItem charger2 = new MenuItem("Charger la sauvegarde 2");
-        MenuItem charger3 = new MenuItem("Charger la sauvegarde 3");
-
-        menuBar.getMenus().addAll(menuNouvellePartie,menuSauvegarderPartie,menuChargerPartie,menuAide,menuQuitterPartie);           //On ajoute toutes les parties au menuBar
-
-        menuChargerPartie.getItems().addAll(charger1,charger2,charger3);            //On rajoute les items dans la partie de Charger partie
-
-        menuNouvellePartie.setOnAction((ActionEvent e)-> {
-            System.out.println("on est la");
-            Alert boiteDialogue = new Alert(AlertType.CONFIRMATION);            //On déclare une boîte de dialogue
-            boiteDialogue.setTitle("Attention !");          //On informe l'utilisateur sur les conséquences de son action
-            boiteDialogue.setHeaderText("Vous vous appretez à quitter cette partie ! ");
-            boiteDialogue.setContentText("Que voulez vous faire ? ");           //On lui demande sce qu'il veut faire parmis tout les choix possibles
-            ButtonType boutonSauvQuit = new ButtonType("Sauvegarder et quitter");           
-            ButtonType boutonQuitSansSav = new ButtonType("Quitter sans sauvegarder");
-            ButtonType boutonAnnuler = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);          //On déclare un bouton qui fermera la fenetre si l'utilisateur clique dessus 
-            boiteDialogue.getButtonTypes().setAll(boutonSauvQuit, boutonQuitSansSav, boutonAnnuler);            //On ajoute à la boîte de dialogue les boutons
-            Optional<ButtonType> choix = boiteDialogue.showAndWait();           //On prend le choix de l'utilisateur dans une variable choix
-            if (choix.get() == boutonSauvQuit) {            //Si il a cliqué sur le bouton sauvegarder et quitter
-                System.out.println("sauv quit");//Programme pour sauvegarder et quitter
-            }
-            else if (choix.get() == boutonQuitSansSav) {            //Si il a quitter sur le bouton quitter sans sauvegarder
-                System.out.println("quit 100 sauv");//Programme pour quitter sans sauvegarder
-            }
-            else {          //Si il a cliqué sur annuler
-                System.out.println("go back bitch");//Je crois qu'on continue comme si de rien n'était
-            } 
-        });
-        menuSauvegarderPartie.setOnAction((ActionEvent e)-> {
-            //On lui demande si il veut vraiment sauvegarder et on saucvegarde 
-        });
-        menuAide.setOnAction((ActionEvent e)-> {
-            //On ouvre l'aide 
-        });
-        menuQuitterPartie.setOnAction((ActionEvent e)-> {
-            //On lui demande si il veut sauvegarder et on quitte 
-        });
-        charger1.setOnAction((ActionEvent e)-> {
-            //On lui demande si il veut sauvegarder et quitter la partie en cours et on charge la partie 1 
-        });
-        charger2.setOnAction((ActionEvent e)-> {
-            //On lui demande si il veut sauvegarder et quitter la partie en cours et on charge la partie 2 
-        });
-        charger3.setOnAction((ActionEvent e)-> {
-            //On lui demande si il veut sauvegarder et quitter la partie en cours et on charge la partie 3 
-        });
-
-
-        return menuBar;
-
     }
     
     

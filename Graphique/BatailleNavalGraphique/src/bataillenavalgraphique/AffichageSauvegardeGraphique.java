@@ -594,8 +594,8 @@ public class AffichageSauvegardeGraphique {
         ImageView imageRetourHover = new ImageView ("/images/retourImageHover.png");
         
         
-        GrilleBoutons grilleBoutonNavire = new GrilleBoutons('D');          //On déclare la grille des boutons pour les navires 
-        GrilleBoutons grilleBoutonTirs = new GrilleBoutons('D');            //On déclare la grille des boutons pour les tirs
+        GrilleBoutons grilleBoutonNavire = new GrilleBoutons('D', 'A');          //On déclare la grille des boutons pour les navires 
+        GrilleBoutons grilleBoutonTirs = new GrilleBoutons('D', 'A');            //On déclare la grille des boutons pour les tirs
         
         grilleBoutonNavire.miseAJourAffichageNavire(plateauDeJeuCopy);         //On fait la mise à jour de la grille des navires
         grilleBoutonTirs.miseAJourAffichageTirs(plateauDeJeuCopy);         //On fait la mise à jour de la grille de tirs
@@ -749,8 +749,8 @@ public class AffichageSauvegardeGraphique {
         ImageView imageRetourHover = new ImageView ("/images/retourImageHover.png");
         
         
-        GrilleBoutons grilleBoutonNavire = new GrilleBoutons('D');          //On déclare la grille des boutons pour les navires 
-        GrilleBoutons grilleBoutonTirs = new GrilleBoutons('D');            //On déclare la grille des boutons pour les tirs
+        GrilleBoutons grilleBoutonNavire = new GrilleBoutons('D', 'A');          //On déclare la grille des boutons pour les navires 
+        GrilleBoutons grilleBoutonTirs = new GrilleBoutons('D', 'A');            //On déclare la grille des boutons pour les tirs
         
         grilleBoutonNavire.miseAJourAffichageNavire(plateauDeJeuCopy);         //On fait la mise à jour de la grille des navires
         grilleBoutonTirs.miseAJourAffichageTirs(plateauDeJeuCopy);         //On fait la mise à jour de la grille de tirs
@@ -794,6 +794,8 @@ public class AffichageSauvegardeGraphique {
                 System.err.println("Erreur! Problème sur le retour");
             }
         });
+
+        
         Button transparent = new Button();            //On déclare un bouton tirer
         transparent.setPrefSize(75,10);
         transparent.setStyle ("-fx-background-color: transparent;");          //On change les caractéristiques d'écriture
