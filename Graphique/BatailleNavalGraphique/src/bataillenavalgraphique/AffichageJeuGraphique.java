@@ -481,12 +481,21 @@ public class AffichageJeuGraphique {
                 }
         }
         
+<<<<<<< HEAD
+        boolean possible =false;            //On met un booléan à false
+=======
         boolean possible=true;
+>>>>>>> main
         
-        if (JeuGraphique.flotteJoueur0.get(pListe).direction==0){
+        if (JeuGraphique.flotteJoueur0.get(pListe).direction==0){           //Si le navire est à l'horizontal
            
+<<<<<<< HEAD
+            //Cas gauche
+            int x = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[JeuGraphique.flotteJoueur0.get(pListe).taille-1][0] + 1 ;            //x prend la valeur 
+=======
             //Cas droit
             int x = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[JeuGraphique.flotteJoueur0.get(pListe).taille-1][0] + 1 ;
+>>>>>>> main
             int y = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1];
             if (x+1<=14){
                 if (JeuGraphique.plateauDeJeu.get(x,y,0,0).equals('_'))return true;
@@ -589,22 +598,22 @@ public class AffichageJeuGraphique {
 
         menuNouvellePartie.setOnAction((ActionEvent e)-> {
             System.out.println("on est la");
-            Alert boiteDialogue = new Alert(AlertType.CONFIRMATION);
-            boiteDialogue.setTitle("Attention !");
+            Alert boiteDialogue = new Alert(AlertType.CONFIRMATION);            //On déclare une boîte de dialogue
+            boiteDialogue.setTitle("Attention !");          //On informe l'utilisateur sur les conséquences de son action
             boiteDialogue.setHeaderText("Vous vous appretez à quitter cette partie ! ");
-            boiteDialogue.setContentText("Que voulez vous faire ? ");
-            ButtonType boutonSauvQuit = new ButtonType("Sauvegarder et quitter");
+            boiteDialogue.setContentText("Que voulez vous faire ? ");           //On lui demande sce qu'il veut faire parmis tout les choix possibles
+            ButtonType boutonSauvQuit = new ButtonType("Sauvegarder et quitter");           
             ButtonType boutonQuitSansSav = new ButtonType("Quitter sans sauvegarder");
-            ButtonType boutonAnnuler = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
-            boiteDialogue.getButtonTypes().setAll(boutonSauvQuit, boutonQuitSansSav, boutonAnnuler);
-            Optional<ButtonType> choix = boiteDialogue.showAndWait();
-            if (choix.get() == boutonSauvQuit) {
+            ButtonType boutonAnnuler = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);          //On déclare un bouton qui fermera la fenetre si l'utilisateur clique dessus 
+            boiteDialogue.getButtonTypes().setAll(boutonSauvQuit, boutonQuitSansSav, boutonAnnuler);            //On ajoute à la boîte de dialogue les boutons
+            Optional<ButtonType> choix = boiteDialogue.showAndWait();           //On prend le choix de l'utilisateur dans une variable choix
+            if (choix.get() == boutonSauvQuit) {            //Si il a cliqué sur le bouton sauvegarder et quitter
                 System.out.println("sauv quit");//Programme pour sauvegarder et quitter
             }
-            else if (choix.get() == boutonQuitSansSav) {
+            else if (choix.get() == boutonQuitSansSav) {            //Si il a quitter sur le bouton quitter sans sauvegarder
                 System.out.println("quit 100 sauv");//Programme pour quitter sans sauvegarder
             }
-            else {
+            else {          //Si il a cliqué sur annuler
                 System.out.println("go back bitch");//Je crois qu'on continue comme si de rien n'était
             } 
         });
@@ -634,21 +643,21 @@ public class AffichageJeuGraphique {
     
     
     public void victoire(){
-        ImageView croquette =new ImageView(getClass().getResource("/images/croquette.png").toString());
-        ImageView croquetteHover =new ImageView(getClass().getResource("/images/croquetteHover.png").toString());
+        ImageView croquette =new ImageView(getClass().getResource("/images/croquette.png").toString());         //On indique la position de l'image 
+        ImageView croquetteHover =new ImageView(getClass().getResource("/images/croquetteHover.png").toString());         //On indique la position de l'image 
         
-        Button bontonVictoire = new Button ("SUPER !");
-        bontonVictoire.setGraphic(croquetteHover);
+        Button bontonVictoire = new Button ("SUPER !");         //On déclare un bouton 
+        bontonVictoire.setGraphic(croquetteHover);          //On l'illustre par une image
         bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
         +                "-fx-font-size: 17pt;"
         +                "-fx-background-color: rgba(120,160,175,0.50);");
         bontonVictoire.setOnMouseEntered (e->
-        bontonVictoire.setGraphic(croquette)); 
+        bontonVictoire.setGraphic(croquette));           //On l'illustre par une image
         bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
                     +                "-fx-font-size: 13pt;"
                     +                "-fx-background-color: rgba(82,127,143,0.50);");
         bontonVictoire.setOnMouseExited (e-> 
-        bontonVictoire.setGraphic(croquetteHover));
+        bontonVictoire.setGraphic(croquetteHover));          //On l'illustre par une image
         bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
                     +                "-fx-font-size: 13pt;"
                     +                "-fx-background-color: rgba(120,160,175,0.50);");
@@ -656,28 +665,28 @@ public class AffichageJeuGraphique {
             fenetreJeu.setScene(sceneLancementMenuPrincipal(fenetreJeu));
         });*/
 
-        Label labelAffichageVictoireJoueur = new Label ("VICTOIRE DU JOUEUR !!");
+        Label labelAffichageVictoireJoueur = new Label ("VICTOIRE DU JOUEUR !!");           //On informe le joueur qu'il a gagné
         labelAffichageVictoireJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
                     +                "-fx-font-size: 13pt;"
                     +                "-fx-background-color: rgba(120,160,175,0.50);");
-        Label labelAffichageVictoireIA = new Label ("VICTOIRE DE L'ORDINATEUR !!");
+        Label labelAffichageVictoireIA = new Label ("VICTOIRE DE L'ORDINATEUR !!");         //On informe le joueur que l'IA a gagné
         labelAffichageVictoireIA.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
                     +                "-fx-font-size: 13pt;"
                     +                "-fx-background-color: rgba(120,160,175,0.50);");
-        Label labelAffichageInfoPartie = new Label ("\nInformation sur la partie : "
-            +"\nNombre de tour : "+compteurTourHumain+compteurTourIA
-            +"\nNombre de tour du joueur : "+ compteurTourHumain
+        Label labelAffichageInfoPartie = new Label ("\nInformation sur la partie : "            //On donne les caractéristiques de la partie
+            +"\nNombre de tour : "+compteurTourHumain+compteurTourIA            //Le nombre de tour que l'IA a effecuté
+            +"\nNombre de tour du joueur : "+ compteurTourHumain            //Le nombre de tour que le joueur a effectué
             +"\nNombre de tour de l'IA : "+compteurTourIA);
         labelAffichageInfoPartie.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
                     +                "-fx-font-size: 13pt;"
                     +                "-fx-background-color: rgba(120,160,175,0.50);");
-        Label labelAffichageVictoireSousMarin = new Label ("Vous n'avez plus de sous-marin"
+        Label labelAffichageVictoireSousMarin = new Label ("Vous n'avez plus de sous-marin"         //On informe le joueur qu'il a perdu car il a plus de sous-marin
             +"L'ordinateur gagne par fofait de votre part");
         labelAffichageVictoireSousMarin.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
                     +                "-fx-font-size: 13pt;"
                     +                "-fx-background-color: rgba(120,160,175,0.50);");
 
-        GridPane rootVictoire = new GridPane();
+        GridPane rootVictoire = new GridPane();         //On déclare et paramêtre un root 
         rootVictoire.setPadding(new javafx.geometry.Insets(20));
         rootVictoire.setVgap(20);
         
