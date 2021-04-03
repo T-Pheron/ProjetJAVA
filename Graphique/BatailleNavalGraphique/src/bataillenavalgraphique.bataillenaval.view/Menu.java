@@ -3,7 +3,7 @@ package bataillenavalgraphique.bataillenaval.view;
 
 
 import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
-import bataillenavalgraphique.bataillenaval.controller.Sauvegarde;
+import bataillenavalgraphique.bataillenaval.controller.SauvegardeNGraphique;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -316,7 +316,7 @@ public class Menu {
             }
         } while (selectionEmplacement == true);
         
-        Sauvegarde sauvegarde = new Sauvegarde();
+        SauvegardeNGraphique sauvegarde = new SauvegardeNGraphique();
 
         switch (choix){
             case 1:  return sauvegarde.savePartie(1, nomPartie[0]);
@@ -402,7 +402,7 @@ public class Menu {
         }while(selectionEmplacement==true);
 
 
-        Sauvegarde sauvegarde = new Sauvegarde();
+        SauvegardeNGraphique sauvegarde = new SauvegardeNGraphique();
 
         switch (choix){
             case 1: 
