@@ -23,10 +23,8 @@ import javafx.util.Duration;
  */
 public class IA implements Serializable{
     
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8187468013304872508L;
+
+    private static final long serialVersionUID = -8187468013304877808L;
     private int nombreDeTir = 0;            //Variable utilisée pour stocker le nombre de tir
     private boolean premierTire = true;         //Variable utilisée pour stocker 
     private  boolean[] saveCoord = new boolean [20];            //Variable utilisée pour stocker
@@ -46,6 +44,22 @@ public class IA implements Serializable{
     public IA(int niveauIA){
         this.niveauIA= niveauIA;
     }
+    
+    public IA(Object[] informationsIA){
+        nombreDeTir=(int) informationsIA[0];
+        premierTire=(boolean) informationsIA[1];
+        saveCoord=(boolean[]) informationsIA[2];
+        stockSaveCoord=(int[][]) informationsIA[3];
+        xTire=(int) informationsIA[4];
+        yTire=(int) informationsIA[5];
+        nPlateau=(int) informationsIA[6];
+        lRef=(char) informationsIA[7];
+        pListe=(int) informationsIA[8];
+        choixCoordonneesTir=(boolean) informationsIA[9];
+        nombreDeTirDestroyer=(int) informationsIA[10];
+        niveauIA=(int) informationsIA[11];
+    }
+    
     
     //**************************************************************************
     /*Variables utilisées pour modifier les couleurs du texte*/
@@ -1026,9 +1040,25 @@ public class IA implements Serializable{
             }
         }));
         timeTourJoueur.play();
+    }
+    
+    public Object[] getInfoIA(){
+        Object[] informationsIA = new Object[12];
         
+        informationsIA[0]=nombreDeTir;
+        informationsIA[1]=premierTire;
+        informationsIA[2]=saveCoord;
+        informationsIA[3]=stockSaveCoord;
+        informationsIA[4]=xTire;
+        informationsIA[5]=yTire;
+        informationsIA[6]=nPlateau;
+        informationsIA[7]=lRef;
+        informationsIA[8]=pListe;
+        informationsIA[9]=choixCoordonneesTir;
+        informationsIA[10]=nombreDeTirDestroyer;
+        informationsIA[11]=niveauIA;
         
-        
+        return informationsIA;
     }
 }
 
