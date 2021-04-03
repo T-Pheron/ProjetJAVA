@@ -64,6 +64,7 @@ public class AffichageIA {
         rootText.setAlignment(Pos.CENTER);          //On positionne les éléments du root au centre 
         Scene sceneNiveau1TirRandom = new Scene(rootText);           //On met le root dans une scène
         JeuGraphique.fenetreJeu.setScene(sceneNiveau1TirRandom);         //On affiche la scène qui est dans la fenêtre
+<<<<<<< HEAD
     }
     
     
@@ -98,6 +99,22 @@ public class AffichageIA {
             VBox rootText = new VBox(25);
             Label information = new Label ("Mes avions mon rapporté des informations intéréssantes");
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+=======
+    }
+    
+    
+    public void toucherNavire(){
+        Timeline timeNiveau1TirRandom = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
+        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),action -> {           //On met un temps d'attente de 8s
+            VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
+            Label information0 = new Label ("Et c'est touché !!");
+            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
+            +                "-fx-font-size: 30pt;"
+            +                "-fx-font-weight: bold;");
+            
+            Label information1 = new Label ("\n\nA votre tour");
+            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
+>>>>>>> 6700daba6f6b41650ede56cf1a7f9f3b3c10d100
             +                "-fx-font-size: 20pt;"
             +                "-fx-background-color: rgba(120,160,175,0.50);"
             +                "-fx-font-weight: bold;");
@@ -106,6 +123,7 @@ public class AffichageIA {
             +                "-fx-font-size: 15pt;"
             +                "-fx-font-weight: bold;");
 
+<<<<<<< HEAD
             rootText.getChildren().addAll(information, information1);
             rootText.setAlignment(Pos.CENTER);
             Scene sceneManoeuvreSucces = new Scene(rootText);
@@ -144,6 +162,8 @@ public class AffichageIA {
             +                "-fx-font-size: 20pt;"
             +                "-fx-font-weight: bold;");
 
+=======
+>>>>>>> 6700daba6f6b41650ede56cf1a7f9f3b3c10d100
 
             rootText.getChildren().addAll(information0, information1);          //On rajoute les deux label au root
             rootText.setAlignment(Pos.CENTER);          //On positionne les éléments du root au centre 
