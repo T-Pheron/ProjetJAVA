@@ -803,16 +803,11 @@ public class IA implements Serializable{
                         }
                     }
 
-                    affichageIA.toucherSousMarin();
                     JeuGraphique.flotteJoueur1.get(i).premierTire=false;         //le premier tir du destroyer choisi est mis à false
                     nombreDeTirDestroyer++;         //On rajoute 1 au nombre de tir du destroyer
-<<<<<<< HEAD
-<<<<<<< HEAD
+                    
                     affichageIA.tirEffectueDestroyer();
-=======
->>>>>>> 6700daba6f6b41650ede56cf1a7f9f3b3c10d100
-=======
->>>>>>> 6700daba6f6b41650ede56cf1a7f9f3b3c10d100
+
                     return 1;           //On retourne 1 si tout c'est bien passé
                 }
             }

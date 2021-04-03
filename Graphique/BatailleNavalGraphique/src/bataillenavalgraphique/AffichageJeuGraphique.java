@@ -481,21 +481,16 @@ public class AffichageJeuGraphique {
                 }
         }
         
-<<<<<<< HEAD
-        boolean possible =false;            //On met un booléan à false
-=======
+
         boolean possible=true;
->>>>>>> main
+
         
         if (JeuGraphique.flotteJoueur0.get(pListe).direction==0){           //Si le navire est à l'horizontal
            
-<<<<<<< HEAD
-            //Cas gauche
-            int x = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[JeuGraphique.flotteJoueur0.get(pListe).taille-1][0] + 1 ;            //x prend la valeur 
-=======
+
             //Cas droit
             int x = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[JeuGraphique.flotteJoueur0.get(pListe).taille-1][0] + 1 ;
->>>>>>> main
+
             int y = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1];
             if (x+1<=14){
                 if (JeuGraphique.plateauDeJeu.get(x,y,0,0).equals('_'))return true;

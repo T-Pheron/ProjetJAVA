@@ -14,9 +14,6 @@ public class AffichageIA {
     public AffichageIA(){   
     }
     
-    public void entrerIA(){
-        
-    }
     
     public void manoeuvreSucces(){
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
@@ -43,30 +40,28 @@ public class AffichageIA {
         time.play();            //On démarre le temps de décalage dès que le programme le lit 
     }
     
-    public void niveau1TirRandom(int xTire, int yTire){
+    public void tirRandomIA(int xTire, int yTire){
         
-        VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
-        Label information = new Label ("Tour IA");          //On informe l'utilisateur que c'est le tour de l'IA
-        information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
+        VBox rootText = new VBox(25);
+        Label information = new Label ("Tour IA");
+        information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
         +                "-fx-font-size: 30pt;"
         +                "-fx-background-color: rgba(120,160,175,0.50);"
         +                "-fx-font-weight: bold;");
         Label information0 = new Label ("\n\nJe vais effectuer un tir sur les coordonnées :");
-        information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
+        information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
         +                "-fx-font-size: 15pt;"
         +                "-fx-font-weight: bold;");
-        Label information1 = new Label ("18°05'57."+ yTire +"\"S ; 53°43'30."+ xTire+"\"E");            //On informe l'utilisateur des coordonnées de tir
-        information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
+        Label information1 = new Label ("18°05'57."+ yTire +"\"S ; 53°43'30."+ xTire+"\"E");
+        information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
         +                "-fx-font-size: 18pt;"
         +                "-fx-font-weight: bold;");
 
-        rootText.getChildren().addAll(information,information0, information1);          //On rajoute les deux label au root
-        rootText.setAlignment(Pos.CENTER);          //On positionne les éléments du root au centre 
-        Scene sceneNiveau1TirRandom = new Scene(rootText);           //On met le root dans une scène
-        JeuGraphique.fenetreJeu.setScene(sceneNiveau1TirRandom);         //On affiche la scène qui est dans la fenêtre
-<<<<<<< HEAD
+        rootText.getChildren().addAll(information,information0, information1);
+        rootText.setAlignment(Pos.CENTER);
+        Scene sceneNiveau1TirRandom = new Scene(rootText);
+        JeuGraphique.fenetreJeu.setScene(sceneNiveau1TirRandom);
     }
-    
     
     public void tirDestroyer(){
         
@@ -92,50 +87,64 @@ public class AffichageIA {
     }
     
     
-
     public void tirEffectueDestroyer(){
-        Timeline time = new Timeline();
-        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {
+        Timeline timeNiveau1TirRandom = new Timeline();
+        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),e -> {
             VBox rootText = new VBox(25);
-            Label information = new Label ("Mes avions mon rapporté des informations intéréssantes");
-            information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-=======
+            Label information0 = new Label ("Mes avions m'ont rapportés des informations intéréssants");
+            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 20pt;"
+            +                "-fx-font-weight: bold;");
+            
+            Label information1 = new Label ("Je prends note");
+            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 15pt;"
+            +                "-fx-font-weight: bold;");
+            
+            Label information2 = new Label ("\n\nA votre tour");
+            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 20pt;"
+            +                "-fx-font-weight: bold;");
+
+
+            rootText.getChildren().addAll(information0, information1,information2);
+            rootText.setAlignment(Pos.CENTER);
+            Scene sceneNiveau1TirRandom = new Scene(rootText);
+            JeuGraphique.fenetreJeu.setScene(sceneNiveau1TirRandom);
+            
+            tourJoueur();
+        }));
+        timeNiveau1TirRandom.play();
     }
     
     
+    
+    
+    
     public void toucherNavire(){
-        Timeline timeNiveau1TirRandom = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),action -> {           //On met un temps d'attente de 8s
-            VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
+        Timeline timeNiveau1TirRandom = new Timeline();
+        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),e -> {
+            VBox rootText = new VBox(25);
             Label information0 = new Label ("Et c'est touché !!");
-            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
+            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
             +                "-fx-font-size: 30pt;"
             +                "-fx-font-weight: bold;");
             
             Label information1 = new Label ("\n\nA votre tour");
-            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
->>>>>>> 6700daba6f6b41650ede56cf1a7f9f3b3c10d100
+            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
             +                "-fx-font-size: 20pt;"
-            +                "-fx-background-color: rgba(120,160,175,0.50);"
-            +                "-fx-font-weight: bold;");
-            Label information1 = new Label ("\n\nJe prends note...");
-            information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-            +                "-fx-font-size: 15pt;"
             +                "-fx-font-weight: bold;");
 
-<<<<<<< HEAD
-            rootText.getChildren().addAll(information, information1);
+
+            rootText.getChildren().addAll(information0, information1);
             rootText.setAlignment(Pos.CENTER);
-            Scene sceneManoeuvreSucces = new Scene(rootText);
-            JeuGraphique.fenetreJeu.setScene(sceneManoeuvreSucces);
+            Scene sceneNiveau1TirRandom = new Scene(rootText);
+            JeuGraphique.fenetreJeu.setScene(sceneNiveau1TirRandom);
             
             tourJoueur();
-            
         }));
-        time.play();
+        timeNiveau1TirRandom.play();
     }
-
-    
     
     
     public void toucherSousMarin(){
@@ -143,36 +152,54 @@ public class AffichageIA {
         timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),e -> {
             VBox rootText = new VBox(25);
             Label information0 = new Label ("On a touché une structure mais n'avons pas pu la coulé");
+            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 25pt;"
             +                "-fx-font-weight: bold;");
             
             Label information1 = new Label ("Intéréssant...");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
             +                "-fx-font-size: 15pt;"
-    public void toucherNavire(){
-        Timeline timeNiveau1TirRandom = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),action -> {           //On met un temps d'attente de 8s
-            VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
-            Label information0 = new Label ("Et c'est touché !!");
-            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
-            +                "-fx-font-size: 30pt;"
             +                "-fx-font-weight: bold;");
             
-            Label information1 = new Label ("\n\nA votre tour");
-            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
-            +                "-fx-font-size: 20pt;"
+            
+            Label information2 = new Label ("\n\nA votre tour");
+            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 18pt;"
             +                "-fx-font-weight: bold;");
 
-=======
->>>>>>> 6700daba6f6b41650ede56cf1a7f9f3b3c10d100
 
-            rootText.getChildren().addAll(information0, information1);          //On rajoute les deux label au root
-            rootText.setAlignment(Pos.CENTER);          //On positionne les éléments du root au centre 
-            Scene sceneNiveau1TirRandom = new Scene(rootText);           //On met le root dans une scène
-            JeuGraphique.fenetreJeu.setScene(sceneNiveau1TirRandom);         //On affiche la scène qui est dans la fenêtre
+            rootText.getChildren().addAll(information0, information1, information2);
+            rootText.setAlignment(Pos.CENTER);
+            Scene sceneNiveau1TirRandom = new Scene(rootText);
+            JeuGraphique.fenetreJeu.setScene(sceneNiveau1TirRandom);
             
-            tourJoueur();           //On lance le tour du joueur
+            tourJoueur();
         }));
-        timeNiveau1TirRandom.play();            //On démarre le temps de décalage dès que le programme le lit 
+        timeNiveau1TirRandom.play();
+    }
+    
+    
+    
+    public void deplacemmentNavire(){
+        VBox rootText = new VBox(25);
+        Label information = new Label ("Tour IA");
+        information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 30pt;"
+        +                "-fx-background-color: rgba(120,160,175,0.50);"
+        +                "-fx-font-weight: bold;");
+        Label information0 = new Label ("\n\nJe décide de déplacer mon navire");
+        information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 15pt;"
+        +                "-fx-font-weight: bold;");
+        Label information1 = new Label ("Patientez...");
+        information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+        +                "-fx-font-size: 18pt;"
+        +                "-fx-font-weight: bold;");
+
+        rootText.getChildren().addAll(information,information0, information1);
+        rootText.setAlignment(Pos.CENTER);
+        Scene sceneNiveau1TirRandom = new Scene(rootText);
+        JeuGraphique.fenetreJeu.setScene(sceneNiveau1TirRandom);
     }
     
     
@@ -236,8 +263,6 @@ public class AffichageIA {
         time.play();            //On démarre le temps de décalage dès que le programme le lit 
         
     }
-    
-    
     
     
     
