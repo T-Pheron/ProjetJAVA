@@ -25,6 +25,7 @@ public class JeuGraphique{
     
     public static Stage fenetreJeu = new Stage();
     public static boolean selectionJoueur=false;
+    public static boolean partieSauvegarde=false;
 
         
     
@@ -43,6 +44,7 @@ public class JeuGraphique{
         JeuGraphique.plateauDeJeu = plateauDeJeu;
         JeuGraphique.flotteJoueur0 = flotteJoueur0;
         JeuGraphique.flotteJoueur1 = flotteJoueur1;
+        partieSauvegarde=true;
     }
     
     
@@ -50,7 +52,6 @@ public class JeuGraphique{
 
         JeuGraphique.niveauIA= niveauIA;
         ia = new IA(niveauIA);
-
     }
 
      

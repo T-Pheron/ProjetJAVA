@@ -21,11 +21,10 @@ public class Sauvegarde {
     }
     
 
-    public int savePartie(int emplacementSauvegarde, String nomPartie){
+    public int savePartie(String nomSauvegarde, String nomPartie, boolean sauvegardeEtQuitter){
 
  
-        String nomSauvegarde = "saveFiles/save"+String.valueOf(emplacementSauvegarde);          //On met le nom du fichier en fonction de l'emplacement
-
+        JeuGraphique.partieSauvegarde=true;
         AffichageSauvegardeGraphique affichageSauvegarde = new AffichageSauvegardeGraphique();
         affichageSauvegarde.sauvegardeEnCours();
         
@@ -95,7 +94,12 @@ public class Sauvegarde {
                 out.writeBoolean(JeuGraphique.flotteJoueur1.get(i).premierTire);
             }
             
-            affichageSauvegarde.sauvegardeEffectuee();
+            if (sauvegardeEtQuitter ==true){
+                affichageSauvegarde.sauvegardeEffectuee();
+            }
+            else {
+                affichageSauvegarde.sauvegardeEffectueeSauvegardeSimple();
+            }
             return 4;
         
         } catch (IOException e) {
