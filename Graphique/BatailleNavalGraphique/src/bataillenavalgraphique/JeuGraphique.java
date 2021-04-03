@@ -6,7 +6,6 @@ import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
 import bataillenavalgraphique.bataillenaval.model.Plateau;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
         
@@ -102,15 +101,6 @@ public class JeuGraphique{
 
     }
     
-    
-    
-    
-    
-    
-    public void affichagePlateauGraphique() {
-
-        
-    }
 
     
         //**************************************************************************
@@ -305,8 +295,7 @@ public class JeuGraphique{
         }
         
         if (possibilite[0]==90 && possibilite[1]==90 && possibilite[2]==90 && possibilite[3]==90){          //On vérifie qu'il y un moyen de déplacer le navire, pour éviter que le joueur ne trouve pas un moyen de quitter la boucle
-            System.out.println("Ce navire de ne peut pas être déplacé. \n");           //Si c'est le cas on affiche un message d'erreur
-            AffichageJeuGraphique affichageJoueur = new AffichageJeuGraphique();
+            System.out.println("Erreur! Ce navire ne peut pas être déplacé. \n");           //Si c'est le cas on affiche un message d'erreur
         }
         
         possibilite[0]+=65;
