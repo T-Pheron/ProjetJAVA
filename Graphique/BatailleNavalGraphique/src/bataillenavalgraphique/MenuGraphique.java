@@ -96,7 +96,12 @@ public class MenuGraphique{
             boutonChargementPartie.setStyle ("-fx-background-color: rgba(163,198,211,0.50)");
         });
         boutonChargementPartie.setOnAction((ActionEvent eventChargementPartie) -> {
-            System.out.println("On est la c'est la rue");
+            AffichageSauvegardeGraphique affichageSauvegarde = new AffichageSauvegardeGraphique();
+            try {
+                affichageSauvegarde.lancementChargement(stage);
+            } catch (ClassNotFoundException ex) {
+                System.out.println("Erreur! Lancement chargement partie échoué");
+            }
         });
 
         

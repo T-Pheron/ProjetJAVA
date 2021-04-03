@@ -1,7 +1,6 @@
 package bataillenavalgraphique.bataillenaval.controller;
 
 import bataillenavalgraphique.bataillenaval.view.Affichage;
-import bataillenavalgraphique.bataillenaval.controller.*;
 import bataillenavalgraphique.bataillenaval.view.Menu;
 import bataillenavalgraphique.bataillenaval.model.*;
 import java.util.*;
@@ -292,6 +291,8 @@ public class JeuNGraphique {
      * Elle permet de vérifier si toutes les conditions sont réunis pour bouger un navire et le déplace.
      * @param flotte La flotte du joueur
      * @param numeroJoueur Le numéro de joueur qui souhaite déplacer le navire
+     * @return 
+     * @throws java.lang.InterruptedException
      */
     public int bougerNavire(List<Flotte> flotte,int numeroJoueur) throws InterruptedException{
         

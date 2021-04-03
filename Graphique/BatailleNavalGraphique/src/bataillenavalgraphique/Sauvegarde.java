@@ -1,12 +1,13 @@
-package bataillenavalgraphique.bataillenaval.controller;
+package bataillenavalgraphique;
 
 
+
+import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
 import java.io.*;
 import java.util.*;
-import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
-import bataillenavalgraphique.IA;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
 import bataillenavalgraphique.bataillenaval.model.Plateau;
+import javafx.stage.Stage;
 
 public class Sauvegarde {
 
@@ -14,81 +15,88 @@ public class Sauvegarde {
     public Sauvegarde(){
 
     }
+    
+    public void lancementChargement(){
+        
+    }
+    
 
     public int savePartie(int emplacementSauvegarde, String nomPartie){
 
-        String nomSauvegarde="A";           //On initialise par défaut le nom de la sauvegarde à A
-        if (emplacementSauvegarde==1) nomSauvegarde="saveFiles/save1";          //Si le joueur a choisi l'emplacement 1
-        if (emplacementSauvegarde==2) nomSauvegarde="saveFiles/save2";          //Si le joueur a choisi l'emplacement 2
-        if (emplacementSauvegarde==3) nomSauvegarde="saveFiles/save3";          //Si le joueur a choisi l'emplacement 3
+ 
+        String nomSauvegarde = "saveFiles/save"+String.valueOf(emplacementSauvegarde);          //On met le nom du fichier en fonction de l'emplacement
 
-
+        AffichageSauvegardeGraphique affichageSauvegarde = new AffichageSauvegardeGraphique();
+        affichageSauvegarde.sauvegardeEnCours();
         
         try (FileOutputStream fichier = new FileOutputStream(nomSauvegarde); ObjectOutputStream out = new ObjectOutputStream(fichier)) {
 
             //On stock les informations nécéssaires pour recommencer à jouer plus tard
             out.writeObject(nomPartie);
-            out.writeInt(JeuNGraphique.numeroJoueur);
-            out.writeInt(JeuNGraphique.niveauIA);
-            out.writeObject(JeuNGraphique.ia);
-            out.writeBoolean(JeuNGraphique.premierTour);
-            out.writeInt(JeuNGraphique.compteurTourHumain);
-            out.writeInt(JeuNGraphique.compteurTourIA);
+            out.writeInt(JeuGraphique.numeroJoueur);
+            out.writeInt(JeuGraphique.niveauIA);
+            
+            //On stock les informations de l'IA
+            out.writeObject(JeuGraphique.ia.getInfoIA());           
+            
+            out.writeBoolean(JeuGraphique.premierTour);
+            out.writeInt(JeuGraphique.compteurTourHumain);
+            out.writeInt(JeuGraphique.compteurTourIA);
 
 
             //On stock dans le fichier le plateau
             for(int x=0; x<15 ; x++){
                 for (int y=0; y<15 ;y++){
-                    out.writeChar((char) JeuNGraphique.plateauDeJeu.get(x, y, 0, 0));
-                    out.writeInt((int) JeuNGraphique.plateauDeJeu.get(x, y, 0, 1));
-                    out.writeObject((String) JeuNGraphique.plateauDeJeu.get(x, y, 1, 0));
-                    out.writeObject((String) JeuNGraphique.plateauDeJeu.get(x, y, 1, 1));
+                    out.writeChar((char) JeuGraphique.plateauDeJeu.get(x, y, 0, 0));
+                    out.writeInt((int) JeuGraphique.plateauDeJeu.get(x, y, 0, 1));
+                    out.writeObject((String) JeuGraphique.plateauDeJeu.get(x, y, 1, 0));
+                    out.writeObject((String) JeuGraphique.plateauDeJeu.get(x, y, 1, 1));
 
-                    out.writeChar((char) JeuNGraphique.plateauDeJeu.get(x, y, 2, 0));
-                    out.writeInt((int) JeuNGraphique.plateauDeJeu.get(x, y, 2, 1));
-                    out.writeObject((String) JeuNGraphique.plateauDeJeu.get(x, y, 3, 0));
-                    out.writeObject((String) JeuNGraphique.plateauDeJeu.get(x, y, 3, 1));
+                    out.writeChar((char) JeuGraphique.plateauDeJeu.get(x, y, 2, 0));
+                    out.writeInt((int) JeuGraphique.plateauDeJeu.get(x, y, 2, 1));
+                    out.writeObject((String) JeuGraphique.plateauDeJeu.get(x, y, 3, 0));
+                    out.writeObject((String) JeuGraphique.plateauDeJeu.get(x, y, 3, 1));
                 }
             }
             
             //On stock dans le fichier la flotte du joueur
             for (int i=0; i<10; i++){
-                out.writeBoolean(JeuNGraphique.flotteJoueur0.get(i).etat);
-                out.writeObject(JeuNGraphique.flotteJoueur0.get(i).nom);
-                out.writeInt(JeuNGraphique.flotteJoueur0.get(i).taille);
+                out.writeBoolean(JeuGraphique.flotteJoueur0.get(i).etat);
+                out.writeObject(JeuGraphique.flotteJoueur0.get(i).nom);
+                out.writeInt(JeuGraphique.flotteJoueur0.get(i).taille);
 
-                for (int j=0; j<JeuNGraphique.flotteJoueur0.get(i).taille; j++){
-                    out.writeInt(JeuNGraphique.flotteJoueur0.get(i).coordonnees[j][0]);
-                    out.writeInt(JeuNGraphique.flotteJoueur0.get(i).coordonnees[j][1]);
-                    out.writeInt(JeuNGraphique.flotteJoueur0.get(i).coordonnees[j][2]);
+                for (int j=0; j<JeuGraphique.flotteJoueur0.get(i).taille; j++){
+                    out.writeInt(JeuGraphique.flotteJoueur0.get(i).coordonnees[j][0]);
+                    out.writeInt(JeuGraphique.flotteJoueur0.get(i).coordonnees[j][1]);
+                    out.writeInt(JeuGraphique.flotteJoueur0.get(i).coordonnees[j][2]);
                 }
 
-                out.writeInt(JeuNGraphique.flotteJoueur0.get(i).direction);
-                out.writeInt(JeuNGraphique.flotteJoueur0.get(i).puissance);
-                out.writeChar(JeuNGraphique.flotteJoueur0.get(i).lRef);
-                out.writeInt(JeuNGraphique.flotteJoueur0.get(i).nRef);
-                out.writeBoolean(JeuNGraphique.flotteJoueur0.get(i).premierTire);
+                out.writeInt(JeuGraphique.flotteJoueur0.get(i).direction);
+                out.writeInt(JeuGraphique.flotteJoueur0.get(i).puissance);
+                out.writeChar(JeuGraphique.flotteJoueur0.get(i).lRef);
+                out.writeInt(JeuGraphique.flotteJoueur0.get(i).nRef);
+                out.writeBoolean(JeuGraphique.flotteJoueur0.get(i).premierTire);
 
                 //On stock dans le fichier la flotte de l'IA
-                out.writeBoolean(JeuNGraphique.flotteJoueur1.get(i).etat);
-                out.writeObject(JeuNGraphique.flotteJoueur1.get(i).nom);
-                out.writeInt(JeuNGraphique.flotteJoueur1.get(i).taille);
+                out.writeBoolean(JeuGraphique.flotteJoueur1.get(i).etat);
+                out.writeObject(JeuGraphique.flotteJoueur1.get(i).nom);
+                out.writeInt(JeuGraphique.flotteJoueur1.get(i).taille);
 
-                for (int j=0; j<JeuNGraphique.flotteJoueur1.get(i).taille; j++){
-                    out.writeInt(JeuNGraphique.flotteJoueur1.get(i).coordonnees[j][0]);
-                    out.writeInt(JeuNGraphique.flotteJoueur1.get(i).coordonnees[j][1]);
-                    out.writeInt(JeuNGraphique.flotteJoueur1.get(i).coordonnees[j][2]);
+                for (int j=0; j<JeuGraphique.flotteJoueur1.get(i).taille; j++){
+                    out.writeInt(JeuGraphique.flotteJoueur1.get(i).coordonnees[j][0]);
+                    out.writeInt(JeuGraphique.flotteJoueur1.get(i).coordonnees[j][1]);
+                    out.writeInt(JeuGraphique.flotteJoueur1.get(i).coordonnees[j][2]);
                 }
 
-                out.writeInt(JeuNGraphique.flotteJoueur1.get(i).direction);
-                out.writeInt(JeuNGraphique.flotteJoueur1.get(i).puissance);
-                out.writeChar(JeuNGraphique.flotteJoueur1.get(i).lRef);
-                out.writeInt(JeuNGraphique.flotteJoueur1.get(i).nRef);
-                out.writeBoolean(JeuNGraphique.flotteJoueur1.get(i).premierTire);
+                out.writeInt(JeuGraphique.flotteJoueur1.get(i).direction);
+                out.writeInt(JeuGraphique.flotteJoueur1.get(i).puissance);
+                out.writeChar(JeuGraphique.flotteJoueur1.get(i).lRef);
+                out.writeInt(JeuGraphique.flotteJoueur1.get(i).nRef);
+                out.writeBoolean(JeuGraphique.flotteJoueur1.get(i).premierTire);
             }
             
-
-            return 4; //La partie a bien été sauvegardé
+            affichageSauvegarde.sauvegardeEffectuee();
+            return 4;
         
         } catch (IOException e) {
             System.out.println("Erreur_save! "+"Le fichier n'a pas pu être créé.");
@@ -97,13 +105,26 @@ public class Sauvegarde {
         return 2;           //La partie n'a pas été sauvegardé 
     }
 
-    public void chargementPartie( int emplacementSauvegarde) throws ClassNotFoundException, InterruptedException{
+    public int supprimerPartie(String nomSauvegarde, Stage stage){
 
-        /*Sélection de la sauvegarde*************************/
-        String nomSauvegarde="A";           //On initialise par défaut le nom de la sauvegarde à A
-        if (emplacementSauvegarde==1) nomSauvegarde="saveFiles/save1";          //Si le joueur a choisi l'emplacement 1
-        if (emplacementSauvegarde==2) nomSauvegarde="saveFiles/save2";          //Si le joueur a choisi l'emplacement 2
-        if (emplacementSauvegarde==3) nomSauvegarde="saveFiles/save3";          //Si le joueur a choisi l'emplacement 3
+        AffichageSauvegardeGraphique affichageSauvegarde = new AffichageSauvegardeGraphique();
+        affichageSauvegarde.suppressionEffectue(stage);
+        
+        try (FileOutputStream fichier = new FileOutputStream(nomSauvegarde); ObjectOutputStream out = new ObjectOutputStream(fichier)) {
+
+            //On stock les informations nécéssaires pour recommencer à jouer plus tard
+            out.writeObject(null);
+            
+            return 4;
+        
+        } catch (IOException e) {
+            System.out.println("Erreur_save! "+"Le fichier n'a pas pu être créé.");
+        }
+
+        return 2;           //La partie n'a pas été sauvegardé 
+    }
+
+    public void chargementPartie( String nomSauvegarde) throws ClassNotFoundException, InterruptedException{
         
         //On initialise des variables pour stocker toutes les données du jeu
         int numeroJoueur;                  
@@ -128,7 +149,7 @@ public class Sauvegarde {
             //On lit et stock toutes les informations comprises dans le fichier
             numeroJoueur = (int) in.readInt();
             niveauIA = (int) in.readInt();
-            ia = (IA) in.readObject();
+            ia = new IA((Object[]) in.readObject());
             premierTour = (Boolean) in.readBoolean();
             compteurTourHumain = in.readInt();
             compteurTourIA = in.readInt();
@@ -188,9 +209,9 @@ public class Sauvegarde {
                 flotteJoueur1Copy.get(i).premierTire = in.readBoolean();
             }
             
-            //JeuGraphique jeu2 = new JeuNGraphique(numeroJoueur, niveauIA, ia, premierTour, plateauDeJeuCopy, flotteJoueur0Copy, flotteJoueur1Copy, compteurTourHumain, compteurTourIA);            //On crée un objet de type Jeu a qui on affecte tout ce qu'on lui a donné
+            JeuGraphique jeu = new JeuGraphique(numeroJoueur, niveauIA, ia, premierTour, plateauDeJeuCopy, flotteJoueur0Copy, flotteJoueur1Copy, compteurTourHumain, compteurTourIA);            //On crée un objet de type Jeu a qui on affecte tout ce qu'on lui a donné
             
-            //jeu2.lancementJeuGraphique();            //On lance la partie
+            jeu.lancementJeuGraphique();            //On lance la partie
             
         } catch (IOException e) {
             System.out.println("Erreur_chargementPartie! "+"Le fichier n'a pas pu être ouvert.");           //On affiche un message d'erreur
