@@ -1,9 +1,12 @@
-package bataillenavalgraphique;
+package bataillenavalgraphique.view;
 
-import static bataillenavalgraphique.JeuGraphique.compteurTourHumain;
-import static bataillenavalgraphique.JeuGraphique.compteurTourIA;
-import static bataillenavalgraphique.JeuGraphique.flotteJoueur0;
-import static bataillenavalgraphique.JeuGraphique.flotteJoueur1;
+import bataillenavalgraphique.model.GrilleNavire;
+import bataillenavalgraphique.controller.JeuGraphique;
+import bataillenavalgraphique.model.GrilleBoutons;
+import static bataillenavalgraphique.controller.JeuGraphique.compteurTourHumain;
+import static bataillenavalgraphique.controller.JeuGraphique.compteurTourIA;
+import static bataillenavalgraphique.controller.JeuGraphique.flotteJoueur0;
+import static bataillenavalgraphique.controller.JeuGraphique.flotteJoueur1;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
 import bataillenavalgraphique.bataillenaval.view.Affichage;
 import java.util.ArrayList;

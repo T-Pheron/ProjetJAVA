@@ -1,7 +1,8 @@
-package bataillenavalgraphique;
+package bataillenavalgraphique.controller;
 
 
 
+import bataillenavalgraphique.view.AffichageSauvegardeGraphique;
 import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
 import java.io.*;
 import java.util.*;

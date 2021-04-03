@@ -1,6 +1,8 @@
-package bataillenavalgraphique;
+package bataillenavalgraphique.model;
 
 
+import bataillenavalgraphique.view.AffichageJeuGraphique;
+import bataillenavalgraphique.controller.JeuGraphique;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
 import java.util.List;
 import java.util.logging.Level;

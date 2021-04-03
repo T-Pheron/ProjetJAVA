@@ -1,5 +1,6 @@
-package bataillenavalgraphique;
+package bataillenavalgraphique.model;
 
+import bataillenavalgraphique.model.CaseBouton;
 import javafx.scene.layout.*;
 
 /**

@@ -1,4 +1,4 @@
-package bataillenavalgraphique;
+package bataillenavalgraphique.model;
 
 import bataillenavalgraphique.bataillenaval.model.Plateau;
 import java.util.List;

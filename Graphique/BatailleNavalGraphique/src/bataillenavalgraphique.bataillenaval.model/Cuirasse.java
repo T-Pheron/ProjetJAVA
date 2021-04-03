@@ -1,8 +1,8 @@
 package bataillenavalgraphique.bataillenaval.model;
 
-import bataillenavalgraphique.AffichageIA;
-import bataillenavalgraphique.AffichageJeuGraphique;
-import bataillenavalgraphique.JeuGraphique;
+import bataillenavalgraphique.view.AffichageIA;
+import bataillenavalgraphique.view.AffichageJeuGraphique;
+import bataillenavalgraphique.controller.JeuGraphique;
 import java.util.Optional;
 import java.util.Scanner;
 import javafx.geometry.Pos;

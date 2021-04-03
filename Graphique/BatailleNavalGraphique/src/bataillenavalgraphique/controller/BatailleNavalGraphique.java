@@ -1,6 +1,7 @@
-package bataillenavalgraphique;
+package bataillenavalgraphique.controller;
 
 
+import bataillenavalgraphique.view.MenuGraphique;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

@@ -1,5 +1,6 @@
-package bataillenavalgraphique;
+package bataillenavalgraphique.view;
 
+import bataillenavalgraphique.controller.JeuGraphique;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;

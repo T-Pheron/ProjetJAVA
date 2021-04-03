@@ -1,13 +1,10 @@
 package bataillenavalgraphique.bataillenaval.model;
 
-import bataillenavalgraphique.AffichageIA;
-import bataillenavalgraphique.AffichageJeuGraphique;
-import bataillenavalgraphique.JeuGraphique;
-import bataillenavalgraphique.bataillenaval.view.Menu;
-import java.util.InputMismatchException;
+import bataillenavalgraphique.view.AffichageIA;
+import bataillenavalgraphique.view.AffichageJeuGraphique;
+import bataillenavalgraphique.controller.JeuGraphique;
 import java.util.Optional;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;

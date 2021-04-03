@@ -1,5 +1,7 @@
-package bataillenavalgraphique;
+package bataillenavalgraphique.view;
 
+import bataillenavalgraphique.controller.JeuGraphique;
+import bataillenavalgraphique.view.AffichageSauvegardeGraphique;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.*;

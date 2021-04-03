@@ -1,5 +1,8 @@
-package bataillenavalgraphique;
+package bataillenavalgraphique.view;
 
+import bataillenavalgraphique.controller.JeuGraphique;
+import bataillenavalgraphique.controller.Sauvegarde;
+import bataillenavalgraphique.model.GrilleBoutons;
 import bataillenavalgraphique.bataillenaval.model.Plateau;
 import bataillenavalgraphique.bataillenaval.view.Affichage;
 import java.io.FileInputStream;

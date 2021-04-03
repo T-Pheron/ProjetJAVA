@@ -1,6 +1,7 @@
-package bataillenavalgraphique;
+package bataillenavalgraphique.controller;
 
 
+import bataillenavalgraphique.view.AffichageJeuGraphique;
 import bataillenavalgraphique.bataillenaval.view.Affichage;
 import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
