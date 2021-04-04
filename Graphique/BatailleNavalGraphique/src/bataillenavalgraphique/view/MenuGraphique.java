@@ -1,7 +1,6 @@
 package bataillenavalgraphique.view;
 
 import bataillenavalgraphique.controller.JeuGraphique;
-import bataillenavalgraphique.view.AffichageSauvegardeGraphique;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.*;
@@ -322,7 +321,9 @@ public class MenuGraphique{
                     +                "-fx-font-size: 13pt;"
                     +                "-fx-background-color: rgba(120,160,175,0.50);"
                     +                "-fx-font-weight: bold;"));
-        //boutonFase2Tir.setOnAction((ActionEvent eventLancementJeu) -> {});
+        boutonFase2Tir.setOnAction((ActionEvent eventLancementJeu) -> {
+            stage.setScene(sceneFaz2Tir(stage));
+        });
         
         
         boutonFlotteFct.setPrefWidth(1000);
@@ -343,7 +344,7 @@ public class MenuGraphique{
                     +                "-fx-background-color: rgba(120,160,175,0.50); "
                     +                "-fx-font-weight: bold;"));
         boutonFlotteFct.setOnAction((ActionEvent eventLancementJeu) -> {
- 
+            stage.setScene(sceneFlotteFct(stage));
         });
         
         
@@ -364,7 +365,9 @@ public class MenuGraphique{
                     +                "-fx-font-size: 13pt;"
                     +                "-fx-background-color: rgba(120,160,175,0.50);"
                     +                "-fx-font-weight: bold;"));
-        boutonLegendSymb.setOnAction((ActionEvent eventLancementJeu) -> {});     
+        boutonLegendSymb.setOnAction((ActionEvent eventLancementJeu) -> {
+            stage.setScene(sceneLegendSymb(stage));
+        });     
 
         
         boutonGagnerAstuce.setPrefWidth(1000);
@@ -387,7 +390,9 @@ public class MenuGraphique{
         boutonGagnerAstuce.setOnAction((ActionEvent eventLancementJeu) -> {
 
         }); 
-        //boutonGagnerAstuce.setOnAction((ActionEvent eventLancementJeu) -> {});
+        boutonGagnerAstuce.setOnAction((ActionEvent eventLancementJeu) -> {
+            stage.setScene(sceneGagnerAstuce(stage));
+        });
 
         
 
@@ -572,10 +577,13 @@ public class MenuGraphique{
         +"\n"
         +"Dans votre flotte, vous avez 10 navires: 1 cuirassé, 2 croiseurs, 3 destroyers et 4 sous-marins.\n");
 
-            labelFlotteFct.setStyle (
+        labelFlotteFct.setStyle (
                 "-fx-font-police: 'Tw Cen MT Condensed' ;"
               + " -fx-font-size: 13pt; "
-              + "-fx-text-fill: BLACK; ");
+              + "-fx-text-fill: BLACK;"
+              + "-fx-background-color: transparent; ");
+        ScrollPane scrollPaneF = new ScrollPane();
+        scrollPaneF.setContent(labelFlotteFct);
 
         GridPane rootFlotteFct = new GridPane();
         rootFlotteFct.setPadding(new javafx.geometry.Insets(20));
@@ -583,7 +591,7 @@ public class MenuGraphique{
         rootFlotteFct.add(labelTitreFlotteFct ,0,0);
         HBox rootRetour = new HBox(5); rootRetour.getChildren().addAll(boutonRetour(stage, menuAide(stage)),boutonRetourMenuPrincipal);
         rootFlotteFct.add(rootRetour,0,1);
-        rootFlotteFct.add(labelFlotteFct,0,2,3,1);
+        rootFlotteFct.add(scrollPaneF,0,2);
         rootFlotteFct.setBackground( new Background(fondEcranMenuPrincipal));
         Scene sceneFlotteFct = new Scene(rootFlotteFct);
         return sceneFlotteFct;
@@ -655,13 +663,16 @@ public class MenuGraphique{
               + " -fx-font-size: 13pt; "
               + "-fx-text-fill: BLACK; ");
 
+        ScrollPane scrollPaneF = new ScrollPane();
+        scrollPaneF.setContent(labelLegendSymb);
+
         GridPane rootLegendSymb = new GridPane();
         rootLegendSymb.setPadding(new javafx.geometry.Insets(20));
         rootLegendSymb.setVgap(20);
         rootLegendSymb.add(labelTitreLegendSymb,0,0);
         HBox rootRetour = new HBox(5); rootRetour.getChildren().addAll(boutonRetour(stage, menuAide(stage)),boutonRetourMenuPrincipal);
         rootLegendSymb.add(rootRetour,0,1);
-        rootLegendSymb.add(labelLegendSymb,0,2,3,1);
+        rootLegendSymb.add(scrollPaneF,0,2);
         rootLegendSymb.setBackground( new Background(fondEcranMenuPrincipal));
         Scene sceneLegendSymb = new Scene(rootLegendSymb);
         return sceneLegendSymb;

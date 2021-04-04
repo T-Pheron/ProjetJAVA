@@ -98,9 +98,9 @@ public abstract class Flotte implements Serializable{
     public static int nRefToPListe(char lRef, int nRef){
         
         if (lRef=='U') return 0;           //Déduit la position dans la liste
-        if (lRef=='C') return nRef-9;
-        if (lRef=='D') return nRef-17;
-        if (lRef=='S') return nRef-34;
+        if (lRef=='C') return nRef-8;
+        if (lRef=='D') return nRef-16;
+        if (lRef=='S') return nRef-36;
         return -1;
     }
     

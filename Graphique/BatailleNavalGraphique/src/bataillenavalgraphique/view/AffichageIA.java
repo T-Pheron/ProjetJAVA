@@ -98,12 +98,12 @@ public class AffichageIA {
             +                "-fx-font-weight: bold;");
             
             Label information1 = new Label ("Je prends note");
-            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
             +                "-fx-font-size: 15pt;"
             +                "-fx-font-weight: bold;");
             
             Label information2 = new Label ("\n\nA votre tour");
-            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            information2.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
             +                "-fx-font-size: 20pt;"
             +                "-fx-font-weight: bold;");
 
@@ -216,8 +216,8 @@ public class AffichageIA {
             +                "-fx-font-weight: bold;");
             
             Label information1 = new Label ("\n\nA votre tour");
-            information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
-            +                "-fx-font-size: 20pt;"
+            information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
+            +                "-fx-font-size: 15pt;"
             +                "-fx-font-weight: bold;");
 
 
@@ -287,7 +287,7 @@ public class AffichageIA {
             +                "-fx-font-size: 12pt;"
             +                "-fx-background-color: RED;"
             +                "-fx-font-weight: bold;");
-            Label information1 = new Label ("\n\nC'est à votre tour");
+            Label information1 = new Label ("\n\nJe recommance mon tour");
             information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 15pt;"
             +                "-fx-font-weight: bold;");
@@ -297,7 +297,11 @@ public class AffichageIA {
             Scene sceneManoeuvreSucces = new Scene(rootText);           //On met le root dans une scène
             JeuGraphique.fenetreJeu.setScene(sceneManoeuvreSucces);         //On affiche la scène qui est dans la fenêtre
             
-            tourJoueur();           //On lance le tour du joueur
+            try {
+                JeuGraphique.ia.jouer();            //Lance jouer 
+            } catch (InterruptedException e) {
+                System.err.println("Erreur!_ Lancement tour IA");           //Affiche un message d'erreur 
+            }           //On lance le tour du joueur
             
         }));
         time.play();            //On démarre le temps de décalage dès que le programme le lit 

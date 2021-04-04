@@ -158,10 +158,17 @@ public class IA implements Serializable{
         int numeroJoueur=1;         //Le numéro joueur de l'IA est 1
         
         /*Sélection du navire à bouger*****************************************/
-            do {
-                pListeBougerNavire = (int) (Math.random()*10);          //On prend un nombre aléatoire entre 0 et 9
-            }while (Jeu.flotteJoueur1.get(pListeBougerNavire).etat==false);         //Tant que l'IA n'a pas trouvé un navire qui n'a pas coulé
-            
+        boolean sortieChoix=true;
+        do {
+           pListeBougerNavire = (int) (Math.random()*10);          //On prend un nombre aléatoire entre 0 et 9
+           sortieChoix=true;
+           for (int i=0; i<Jeu.flotteJoueur1.get(pListeBougerNavire).taille; i++){                //On fait une boucle pour vérifier toutes les coordonnées du navire
+               if (Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][2]==0 || Jeu.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][2]==2){            //On vérifie que le bateau n'est pas touché
+                   sortieChoix=false;
+               }
+           }
+       }while (Jeu.flotteJoueur1.get(pListeBougerNavire).etat==false && sortieChoix==true);         //Tant que l'IA n'a pas trouvé un navire qui n'a pas coulé
+
         /*Trouver toutes les posibilités de placement du navire****************/
         int  [] possibilite = new int[4];            //Tableau utilisé pour stocker les 4 posibilitées de placement du navire 
         

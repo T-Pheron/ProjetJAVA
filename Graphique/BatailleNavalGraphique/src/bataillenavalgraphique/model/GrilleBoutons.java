@@ -123,8 +123,8 @@ public final class GrilleBoutons {
         for (int j=0; j<15; j++){           //On parcourt l'axe des ordonnées
             for (int i=0;i<15;i++){            //On parcourt l'axe des abscisses
                 if (plateau.get(i,j,0,0)!=(Object) '_'){            //Si la case du plateau est different de '_'
-                    grilleBoutons[j][i].setTitle((String) (plateau.get(i,j,0,0).toString() + plateau.get(i,j,0,1).toString()));
-                    grilleBoutons[j][i].setColor((char) plateau.get(i,j,0,0),(int) plateau.get(i,j,0,1), (String) plateau.get(i, j, 3, 0));
+                    grilleBoutons[j][i].setTitle((String) (plateau.get(i,j,0,0).toString() + plateau.get(i,j,0,1).toString()));         //On paramètre le texte du bouton en fonction des élément présent dans le tableau
+                    grilleBoutons[j][i].setColor((char) plateau.get(i,j,0,0),(int) plateau.get(i,j,0,1), (String) plateau.get(i, j, 3, 0));         //On paramètre la couleur en fonction de ce qui est présent dans le plateau
                 }
                 else{
                     grilleBoutons[j][i].setTitle("");
@@ -153,44 +153,44 @@ public final class GrilleBoutons {
 
     public String couleurBord(char plateauRef, char lRef){
         
-        if (lRef=='A'){
-            switch (plateauRef) {
-                case'N':
+        if (lRef=='A'){         //Si la lettre de référence est 'A' par défaut
+            switch (plateauRef) {           //On va retourner une couleur pour le bord du plateau suivant la situation
+                case'N':            //Le plateau de sélection des navire
                     return "-fx-background-color: rgba(234,213,0,0.80);";
                 
-                case'T':
+                case'T':            //Le plateau de sélection d'une case de tir
                     return "-fx-background-color: rgba(0,220,230,0.80);";
                 
-                case'S':
+                case'S':            //Le plateau de sélection d'un navire après avoir sélectionner une case de tir
                     return "-fx-background-color: rgba(245,17,17,0.80);";
     
-                case'B':
+                case'B':            //Le plateau de sélection d'une case de tir après sélection du navire
                     return "-fx-background-color: rgba(245,17,17,0.80);";
     
-                case'C':
+                case'C':            //Le plateau de sélection d'une case pour bouger un navire
                     return "-fx-background-color: rgba(200,0,0,0.80);";                    
     
                 default: return "-fx-background-color: rgba(120,160,175,0.80);";
             }
         }
         else{
-            switch (lRef) {
-                case'U':
+            switch (lRef) {         //La lettre de référence du navire
+                case'U':            //Cas où le bateau selctionné est un cuirassé
                     return "-fx-background-color: rgba(221,13,13,0.80);";
                 
-                case'C':
+                case'C':            //Cas où le bateau sélectionner est un croisseur
                     return "-fx-background-color: rgba(203,25,228,0.80);";
                 
-                case'D':
+                case'D':            //Cas où le bateau sélectionner est un destroyer
                     return "-fx-background-color: rgba(15,141,214,0.80);";
     
-                case'S':
+                case'S':            //Cas où le bateau sélectionner est un sous-marin
                     return "-fx-background-color: rgba(27,213,41,0.80);"; 
                 
-                case'V':
+                case'V':            //La plateau quand une tache à bien été exécuté
                     return "-fx-background-color: rgba(19,222,19,0.80);";
     
-                case'F':
+                case'F':            //Le plateau pour le tir d'une fussée éclairante
                     return "-fx-background-color: rgba(255,195,0,0.80);";              
     
                 default: return "-fx-background-color: rgba(120,160,175,0.80);";

@@ -46,7 +46,7 @@ public class IA implements Serializable{
         this.niveauIA= niveauIA;
     }
     
-    public IA(Object[] informationsIA){
+    public IA(Object[] informationsIA){         //On initialise l'IA avec les informations sauvegardés
         nombreDeTir=(int) informationsIA[0];
         premierTire=(boolean) informationsIA[1];
         saveCoord=(boolean[]) informationsIA[2];
@@ -186,11 +186,20 @@ public class IA implements Serializable{
         int pListeBougerNavire;         //Variable qui stocke la position du navire dans la liste
         int numeroJoueur=1;         //Le numéro joueur de l'IA est 1
         
+        boolean sortieChoix = true;
         /*Sélection du navire à bouger*****************************************/
             do {
                 pListeBougerNavire = (int) (Math.random()*10);          //On prend un nombre aléatoire entre 0 et 9
-            }while (JeuGraphique.flotteJoueur1.get(pListeBougerNavire).etat==false);         //Tant que l'IA n'a pas trouvé un navire qui n'a pas coulé
-            
+                sortieChoix=true;
+                for (int i=0; i<JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille; i++){                //On fait une boucle pour vérifier toutes les coordonnées du navire
+                    if (JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][2]==0 || JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][2]==2){            //On vérifie que le bateau n'est pas touché
+                        sortieChoix=false;
+                    }
+                }
+            }while (JeuGraphique.flotteJoueur1.get(pListeBougerNavire).etat==false && sortieChoix==true);         //Tant que l'IA n'a pas trouvé un navire qui n'a pas coulé
+        
+
+        
         /*Trouver toutes les posibilités de placement du navire****************/
         int  [] possibilite = new int[4];            //Tableau utilisé pour stocker les 4 posibilitées de placement du navire 
         
@@ -1026,27 +1035,33 @@ public class IA implements Serializable{
     
     public void panneMoteur() throws InterruptedException{
         
-        Timeline timeTourJoueur = new Timeline();
-        timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(5000),action -> {
-            Label information = new Label("Le navire que j'ai choisis à un porblème moteur");
+        Timeline timeTourJoueur = new Timeline();                    //Variable qui permet de déclencher une action en décaler par rapport au programme
+        timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(5000),action -> {           //On met un temps d'attente de 5s
+            Label information = new Label("Le navire que j'ai choisis à un porblème moteur");           //On informe au joueur que l'IA relance son tour car il ne peut pas déplacer le navire qu'elle a sélectionné
             Label information2 = new Label("\nJ'effectus un autre coup");
 
-            VBox rootText = new VBox(25);
-            rootText.getChildren().addAll(information, information2);
-            Scene scenePanneMoteur = new Scene(rootText);
-            JeuGraphique.fenetreJeu.setScene(scenePanneMoteur);
+            VBox rootText = new VBox(25);           //On déclare un affichage vertical où les éléments sont espacés de 25 pixels
+            rootText.getChildren().addAll(information, information2);           //On ajoute les label au root
+            Scene scenePanneMoteur = new Scene(rootText);           //On met le root dans la scène
+            JeuGraphique.fenetreJeu.setScene(scenePanneMoteur);         //On modifie la scène  
+    
 
             try {
-                jouer();
+                jouer();            //On lance le programme jouer 
             } catch (InterruptedException ex) {
-                Logger.getLogger(IA.class.getName()).log(Level.SEVERE, null, ex);
+                System.err.println("Erreur! Le lancement du tour du l'IA n'a pas pu être effectuer");         //On affiche un message d'erreur
             }
         }));
-        timeTourJoueur.play();
+        timeTourJoueur.play();            //On démarre le temps de décalage dès que le programme le lit 
     }
     
-    public Object[] getInfoIA(){
-        Object[] informationsIA = new Object[12];
+    /**
+     * Méthode qui permet de renvoyer les informations de l'IA.
+     * La méthode stock et renvoie dans un tableau l'ensemble des informations nécésaires à la sauvegarde de l'IA.
+     * @return Un tableau de type Object avec toutes les informations de l'IA.
+     */
+    public Object[] getInfoIA(){            
+        Object[] informationsIA = new Object[12];           //On stocke dans un tableau object toute les informations sur l'IA
         
         informationsIA[0]=nombreDeTir;
         informationsIA[1]=premierTire;
@@ -1061,7 +1076,7 @@ public class IA implements Serializable{
         informationsIA[10]=nombreDeTirDestroyer;
         informationsIA[11]=niveauIA;
         
-        return informationsIA;
+        return informationsIA;              //On renvoit ce tableau pour le stocker
     }
 }
 

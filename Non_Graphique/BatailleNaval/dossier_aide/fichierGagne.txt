@@ -6,4 +6,4 @@ PETITE ASTUCE:
 Pour gagner plus rapidement, vous pouvez jouer vos tirs en croix,
 étant donné que le plus petit navire fait une case alors vous ne 
 pourrez éviter aucun autre bateau sur votre chemin. 
-Cette méthode est infaillible car elle est purement logique
+Cette méthode est infaillible car elle est purement logique.

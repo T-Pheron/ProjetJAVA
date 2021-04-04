@@ -40,185 +40,190 @@ public class AffichageJeuGraphique {
     
     public void affichageJoueur(){
 
-        victoire();         //On appelle le méthode Victoire pour vérifier si il y a un gagnant ou pas
-        GrilleBoutons grilleBoutonNavire = new GrilleBoutons('N','A');          //On déclare la grille des boutons pour les navires 
-        GrilleBoutons grilleBoutonTirs = new GrilleBoutons('T', 'A');            //On déclare la grille des boutons pour les tirs
-        JeuGraphique.compteurTourHumain++;          //On rajoute 1 au nombre de tour du joueur 
-        
-        GridPane rootJeu = new GridPane();          //On déclare un root de type GridPane et on le paramètre
-        rootJeu.setPadding(new Insets(20));         
-        rootJeu.setHgap(30);
-        rootJeu.setVgap(20);
+        if (victoire()==false){ //On appelle le méthode Victoire pour vérifier si il y a un gagnant ou pas
 
-        ImageView imageNouvellePartie =new ImageView(getClass().getResource("/images/imageNouvellePartie.png").toString());            //On donne l'emplacement de l'image
-        ImageView imageNouvellePartieHover =new ImageView(getClass().getResource("/images/imageNouvellePartieHover.png").toString());
-        ImageView imageSauvegarder =new ImageView(getClass().getResource("/images/imageSauvegarde.png").toString());
-        ImageView imageSauvegarderHover =new ImageView(getClass().getResource("/images/imageSauvegardeHover.png").toString());
-        ImageView imageChargerPartie =new ImageView(getClass().getResource("/images/chargerPetit.png").toString());            
-        ImageView imageChargerPartieHover =new ImageView(getClass().getResource("/images/chargerPetitHover.png").toString());
-        ImageView imageQuitter =new ImageView(getClass().getResource("/images/imageQuitter.png").toString());
-        ImageView imageQuitterHover =new ImageView(getClass().getResource("/images/imageQuitterHover.png").toString());
+            GrilleBoutons grilleBoutonNavire = new GrilleBoutons('N','A');          //On déclare la grille des boutons pour les navires 
+            GrilleBoutons grilleBoutonTirs = new GrilleBoutons('T', 'A');            //On déclare la grille des boutons pour les tirs
+            JeuGraphique.compteurTourHumain++;          //On rajoute 1 au nombre de tour du joueur 
+            
+            GridPane rootJeu = new GridPane();          //On déclare un root de type GridPane et on le paramètre
+            rootJeu.setPadding(new Insets(20));         
+            rootJeu.setHgap(30);
+            rootJeu.setVgap(20);
+
+            ImageView imageNouvellePartie =new ImageView(getClass().getResource("/images/imageNouvellePartie.png").toString());            //On donne l'emplacement de l'image
+            ImageView imageNouvellePartieHover =new ImageView(getClass().getResource("/images/imageNouvellePartieHover.png").toString());
+            ImageView imageSauvegarder =new ImageView(getClass().getResource("/images/imageSauvegarde.png").toString());
+            ImageView imageSauvegarderHover =new ImageView(getClass().getResource("/images/imageSauvegardeHover.png").toString());
+            ImageView imageChargerPartie =new ImageView(getClass().getResource("/images/chargerPetit.png").toString());            
+            ImageView imageChargerPartieHover =new ImageView(getClass().getResource("/images/chargerPetitHover.png").toString());
+            ImageView imageQuitter =new ImageView(getClass().getResource("/images/imageQuitter.png").toString());
+            ImageView imageQuitterHover =new ImageView(getClass().getResource("/images/imageQuitterHover.png").toString());
 
 
 
-        HBox boxBarreMenu = new HBox();
-        Button boutonNouvellePartie = new Button("Nouvelle Partie");
-        boutonNouvellePartie.setGraphic(imageNouvellePartie);            //On l'illustre par une petite image
-        boutonNouvellePartie.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 8pt;"          //On change les caractéristiques d'écriture
-                + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
-        boutonNouvellePartie.setOnMouseEntered ((MouseEvent event) -> {           //Si le joueur met son curseur sur le bouton
-            boutonNouvellePartie.setGraphic(imageNouvellePartieHover);
-            boutonNouvellePartie.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"          //On change les caractéristiques d'écriture
-                    + "-fx-font-weight: bold;-fx-background-color: rgba(90,170,182,0.80)");
-        });
-        boutonNouvellePartie.setOnMouseExited ((MouseEvent event) -> {            //Si le joueur enlève son curseur du bouton
-            boutonNouvellePartie.setGraphic(imageNouvellePartie);
+            HBox boxBarreMenu = new HBox();
+            Button boutonNouvellePartie = new Button("Nouvelle Partie");
+            boutonNouvellePartie.setGraphic(imageNouvellePartie);            //On l'illustre par une petite image
             boutonNouvellePartie.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 8pt;"          //On change les caractéristiques d'écriture
                     + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
-        });
-        boutonNouvellePartie.setOnAction((ActionEvent eventChargementPartie) -> {         //Action si le joueur click sur le bouton
-            if (JeuGraphique.partieSauvegarde==true){
-                JeuGraphique.fenetreJeu.close();
-                MenuGraphique menuGraphique= new MenuGraphique();
-                menuGraphique.choixNiveauIAGraphique();
-            }
-            else {
-                Alert boiAlert = new Alert(AlertType.CONFIRMATION);
-                boiAlert.setTitle("Bataille Naval - Confirmation");
-                boiAlert.setHeaderText("Cette partie n'est pas sauvegarder !");
-                boiAlert.setContentText("Voulez vous lancer une nouvelle partie sans sauvegarder ?");
-
-                ButtonType boutonOui = new ButtonType("Oui");
-                ButtonType boutonNon = new ButtonType("Non");
-                boiAlert.getButtonTypes().setAll(boutonOui, boutonNon);
-                
-                Optional<ButtonType> choix = boiAlert.showAndWait();
-                if (choix.get() == boutonOui) {
+            boutonNouvellePartie.setOnMouseEntered ((MouseEvent event) -> {           //Si le joueur met son curseur sur le bouton
+                boutonNouvellePartie.setGraphic(imageNouvellePartieHover);
+                boutonNouvellePartie.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"          //On change les caractéristiques d'écriture
+                        + "-fx-font-weight: bold;-fx-background-color: rgba(90,170,182,0.80)");
+            });
+            boutonNouvellePartie.setOnMouseExited ((MouseEvent event) -> {            //Si le joueur enlève son curseur du bouton
+                boutonNouvellePartie.setGraphic(imageNouvellePartie);
+                boutonNouvellePartie.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 8pt;"          //On change les caractéristiques d'écriture
+                        + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
+            });
+            boutonNouvellePartie.setOnAction((ActionEvent eventChargementPartie) -> {         //Action si le joueur click sur le bouton
+                if (JeuGraphique.partieSauvegarde==true){
                     JeuGraphique.fenetreJeu.close();
                     MenuGraphique menuGraphique= new MenuGraphique();
                     menuGraphique.choixNiveauIAGraphique();
                 }
-            }
-        });
+                else {
+                    Alert boiAlert = new Alert(AlertType.CONFIRMATION);
+                    boiAlert.setTitle("Bataille Naval - Confirmation");
+                    boiAlert.setHeaderText("Cette partie n'est pas sauvegarder !");
+                    boiAlert.setContentText("Voulez vous lancer une nouvelle partie sans sauvegarder ?");
 
-        Button boutonSauvegarde = new Button("Sauvegarder");
-        boutonSauvegarde.setGraphic(imageSauvegarder);            //On l'illustre par une petite image
-        boutonSauvegarde.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 8pt;"          //On change les caractéristiques d'écriture
-                + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
-        boutonSauvegarde.setOnMouseEntered ((MouseEvent event) -> {           //Si le joueur met son curseur sur le bouton
-            boutonSauvegarde.setGraphic(imageSauvegarderHover);
-            boutonSauvegarde.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 12pt;"          //On change les caractéristiques d'écriture
-                    + "-fx-font-weight: bold;-fx-background-color: rgba(90,170,182,0.80)");
-        });
-        boutonSauvegarde.setOnMouseExited ((MouseEvent event) -> {            //Si le joueur enlève son curseur du bouton
-            boutonSauvegarde.setGraphic(imageSauvegarder);
+                    ButtonType boutonOui = new ButtonType("Oui");
+                    ButtonType boutonNon = new ButtonType("Non");
+                    boiAlert.getButtonTypes().setAll(boutonOui, boutonNon);
+                    
+                    Optional<ButtonType> choix = boiAlert.showAndWait();
+                    if (choix.get() == boutonOui) {
+                        JeuGraphique.fenetreJeu.close();
+                        MenuGraphique menuGraphique= new MenuGraphique();
+                        menuGraphique.choixNiveauIAGraphique();
+                    }
+                }
+            });
+
+            Button boutonSauvegarde = new Button("Sauvegarder");
+            boutonSauvegarde.setGraphic(imageSauvegarder);            //On l'illustre par une petite image
             boutonSauvegarde.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 8pt;"          //On change les caractéristiques d'écriture
                     + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
-        });
-        boutonSauvegarde.setOnAction((ActionEvent eventChargementPartie) -> {         //Action si le joueur click sur le bouton
-            AffichageSauvegardeGraphique sauvegarde = new AffichageSauvegardeGraphique();
-            try {
-                sauvegarde.sauvegarde(false);
-            } catch (ClassNotFoundException e) {
-                System.out.println("Erreur! Lancement sauvegarde");
-            }
-        });
+            boutonSauvegarde.setOnMouseEntered ((MouseEvent event) -> {           //Si le joueur met son curseur sur le bouton
+                boutonSauvegarde.setGraphic(imageSauvegarderHover);
+                boutonSauvegarde.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 12pt;"          //On change les caractéristiques d'écriture
+                        + "-fx-font-weight: bold;-fx-background-color: rgba(90,170,182,0.80)");
+            });
+            boutonSauvegarde.setOnMouseExited ((MouseEvent event) -> {            //Si le joueur enlève son curseur du bouton
+                boutonSauvegarde.setGraphic(imageSauvegarder);
+                boutonSauvegarde.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 8pt;"          //On change les caractéristiques d'écriture
+                        + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
+            });
+            boutonSauvegarde.setOnAction((ActionEvent eventChargementPartie) -> {         //Action si le joueur click sur le bouton
+                AffichageSauvegardeGraphique sauvegarde = new AffichageSauvegardeGraphique();
+                try {
+                    sauvegarde.sauvegarde(false);
+                } catch (ClassNotFoundException e) {
+                    System.out.println("Erreur! Lancement sauvegarde");
+                }
+            });
 
-        Button boutonCharger = new Button("Charger une partie");
-        boutonCharger.setGraphic(imageChargerPartie);            //On l'illustre par une petite image
-        boutonCharger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 8pt;"          //On change les caractéristiques d'écriture
-                + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
-        boutonCharger.setOnMouseEntered ((MouseEvent event) -> {           //Si le joueur met son curseur sur le bouton
-            boutonCharger.setGraphic(imageChargerPartieHover);
-            boutonCharger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 12pt;"          //On change les caractéristiques d'écriture
-                    + "-fx-font-weight: bold;-fx-background-color: rgba(90,170,182,0.80)");
-        });
-        boutonCharger.setOnMouseExited ((MouseEvent event) -> {            //Si le joueur enlève son curseur du bouton
-            boutonCharger.setGraphic(imageChargerPartie);
+            Button boutonCharger = new Button("Charger une partie");
+            boutonCharger.setGraphic(imageChargerPartie);            //On l'illustre par une petite image
             boutonCharger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 8pt;"          //On change les caractéristiques d'écriture
                     + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
-        });
-        boutonCharger.setOnAction((ActionEvent eventChargementPartie) -> {         //Action si le joueur click sur le bouton
-            if (JeuGraphique.partieSauvegarde==true){
-                AffichageSauvegardeGraphique affichageSauvegardeGraphique = new AffichageSauvegardeGraphique();
-                try {
-                    affichageSauvegardeGraphique.lancementChargementMenuJoueur();
-                } catch (ClassNotFoundException ex) {
-                    System.err.println("Erreu! Le chargement n'as pas pu etre effectué.");
+            boutonCharger.setOnMouseEntered ((MouseEvent event) -> {           //Si le joueur met son curseur sur le bouton
+                boutonCharger.setGraphic(imageChargerPartieHover);
+                boutonCharger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 12pt;"          //On change les caractéristiques d'écriture
+                        + "-fx-font-weight: bold;-fx-background-color: rgba(90,170,182,0.80)");
+            });
+            boutonCharger.setOnMouseExited ((MouseEvent event) -> {            //Si le joueur enlève son curseur du bouton
+                boutonCharger.setGraphic(imageChargerPartie);
+                boutonCharger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 8pt;"          //On change les caractéristiques d'écriture
+                        + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
+            });
+            boutonCharger.setOnAction((ActionEvent eventChargementPartie) -> {         //Action si le joueur click sur le bouton
+                if (JeuGraphique.partieSauvegarde==true){
+                    AffichageSauvegardeGraphique affichageSauvegardeGraphique = new AffichageSauvegardeGraphique();
+                    try {
+                        affichageSauvegardeGraphique.lancementChargementMenuJoueur();
+                    } catch (ClassNotFoundException ex) {
+                        System.err.println("Erreu! Le chargement n'as pas pu etre effectué.");
+                    }
                 }
-            }
-            else {
-                Alert boiAlert = new Alert(AlertType.CONFIRMATION);
-                boiAlert.setTitle("Bataille Naval - Confirmation");
-                boiAlert.setHeaderText("Cette partie n'est pas sauvegarder !");
-                boiAlert.setContentText("Voulez vous charger une nouvelle partie sans sauvegarder ?");
+                else {
+                    Alert boiAlert = new Alert(AlertType.CONFIRMATION);
+                    boiAlert.setTitle("Bataille Naval - Confirmation");
+                    boiAlert.setHeaderText("Cette partie n'est pas sauvegarder !");
+                    boiAlert.setContentText("Voulez vous charger une nouvelle partie sans sauvegarder ?");
 
-                ButtonType boutonOui = new ButtonType("Oui");
-                ButtonType boutonNon = new ButtonType("Non");
-                boiAlert.getButtonTypes().setAll(boutonOui, boutonNon);
-                
-                Optional<ButtonType> choix = boiAlert.showAndWait();
-                if (choix.get() == boutonOui) {
-                    //Lancer une charger partie
+                    ButtonType boutonOui = new ButtonType("Oui");
+                    ButtonType boutonNon = new ButtonType("Non");
+                    boiAlert.getButtonTypes().setAll(boutonOui, boutonNon);
+                    
+                    Optional<ButtonType> choix = boiAlert.showAndWait();
+                    if (choix.get() == boutonOui) {
+                        //Lancer une charger partie
+                    }
                 }
-            }
-        });
+            });
 
-        Button boutonQuitter = new Button("Quitter");
-        boutonQuitter.setGraphic(imageQuitter);            //On l'illustre par une petite image
-        boutonQuitter.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 8pt;"          //On change les caractéristiques d'écriture
-                + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
-        boutonQuitter.setOnMouseEntered ((MouseEvent event) -> {           //Si le joueur met son curseur sur le bouton
-            boutonQuitter.setGraphic(imageQuitterHover);
-            boutonQuitter.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 12pt;"          //On change les caractéristiques d'écriture
-                    + "-fx-font-weight: bold;-fx-background-color: rgba(90,170,182,0.80)");
-        });
-        boutonQuitter.setOnMouseExited ((MouseEvent event) -> {            //Si le joueur enlève son curseur du bouton
-            boutonQuitter.setGraphic(imageQuitter);
+            Button boutonQuitter = new Button("Quitter");
+            boutonQuitter.setGraphic(imageQuitter);            //On l'illustre par une petite image
             boutonQuitter.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 8pt;"          //On change les caractéristiques d'écriture
                     + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
-        });
-        boutonQuitter.setOnAction((ActionEvent eventChargementPartie) -> {         //Action si le joueur click sur le bouton
-            quiiterJeu();
-        });
+            boutonQuitter.setOnMouseEntered ((MouseEvent event) -> {           //Si le joueur met son curseur sur le bouton
+                boutonQuitter.setGraphic(imageQuitterHover);
+                boutonQuitter.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 12pt;"          //On change les caractéristiques d'écriture
+                        + "-fx-font-weight: bold;-fx-background-color: rgba(90,170,182,0.80)");
+            });
+            boutonQuitter.setOnMouseExited ((MouseEvent event) -> {            //Si le joueur enlève son curseur du bouton
+                boutonQuitter.setGraphic(imageQuitter);
+                boutonQuitter.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 8pt;"          //On change les caractéristiques d'écriture
+                        + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
+            });
+            boutonQuitter.setOnAction((ActionEvent eventChargementPartie) -> {         //Action si le joueur click sur le bouton
+                quiiterJeu();
+            });
 
-        boxBarreMenu.getChildren().addAll(boutonNouvellePartie, boutonSauvegarde, boutonCharger, boutonQuitter);
-
-
-        
-        grilleBoutonNavire.miseAJourAffichageNavire(JeuGraphique.plateauDeJeu);         //On fait la mise à jour de la grille des navires
-        grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);         //On fait la mise à jour de la grille de tirs
-        
-        
-        rootJeu.add(grilleBoutonNavire.getRoot(),0,6,3,5);           //On place la grille des navires à gauche
-        rootJeu.add(grilleBoutonTirs.getRoot(),3,6,3,5);            //On place la grille des tirs à droite 
-        
-        Label instructionsJoueur = new Label("Veuillez sélectionner un bateau ou une case");            //On informe le joueur des instructions à suivre
-        instructionsJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-        +                "-fx-font-size: 18pt;"
-        +                "-fx-background-color: rgba(120,160,175,0.50);"
-        +                "-fx-font-weight: bold;");
-        rootJeu.add(instructionsJoueur,2,12,5,1);           //On place les instructions 
-        Label titreGrilleNavire = new Label("Voici la grille de vos bateaux :");            //On informe le joueur que c'est la grille de ses navires
-        titreGrilleNavire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-        +                "-fx-font-size: 15pt;");
-        rootJeu.add(titreGrilleNavire,0,5,3,1);         //On place les instructions
-        Label titreGrilleTirs = new Label("Voici la grille de vos tirs :");             //On informe le joueur que c'est la grille des tirs
-        titreGrilleTirs.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-        +                "-fx-font-size: 15pt;");
-        rootJeu.add(titreGrilleTirs,3,5,3,1);           //On place les instructions
-        rootJeu.setAlignment(CENTER);
-        
-        VBox allElements = new VBox();
-        allElements.getChildren().addAll(boxBarreMenu, rootJeu);
+            boxBarreMenu.getChildren().addAll(boutonNouvellePartie, boutonSauvegarde, boutonCharger, boutonQuitter);
 
 
-        Scene sceneJeu = new Scene(allElements);            //On met le root dans la scène 
-        JeuGraphique.fenetreJeu.setScene(sceneJeu);         //On modifie la scène
-        JeuGraphique.fenetreJeu.show();         //On affiche la scène 
-        
-        Affichage.afficher(0, 0, JeuGraphique.plateauDeJeu);            
-        Affichage.afficher(0, 1, JeuGraphique.plateauDeJeu);
+            
+            grilleBoutonNavire.miseAJourAffichageNavire(JeuGraphique.plateauDeJeu);         //On fait la mise à jour de la grille des navires
+            grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);         //On fait la mise à jour de la grille de tirs
+            
+            
+            rootJeu.add(grilleBoutonNavire.getRoot(),0,6,3,5);           //On place la grille des navires à gauche
+            rootJeu.add(grilleBoutonTirs.getRoot(),3,6,3,5);            //On place la grille des tirs à droite 
+            
+            Label instructionsJoueur = new Label("Veuillez sélectionner un bateau ou une case");            //On informe le joueur des instructions à suivre
+            instructionsJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 18pt;"
+            +                "-fx-background-color: rgba(120,160,175,0.50);"
+            +                "-fx-font-weight: bold;");
+            Label titreGrilleNavire = new Label("Voici la grille de vos bateaux :");            //On informe le joueur que c'est la grille de ses navires
+            titreGrilleNavire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 15pt;");
+            rootJeu.add(titreGrilleNavire,0,5,3,1);         //On place les instructions
+            Label titreGrilleTirs = new Label("Voici la grille de vos tirs :");             //On informe le joueur que c'est la grille des tirs
+            titreGrilleTirs.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+            +                "-fx-font-size: 15pt;");
+            rootJeu.add(titreGrilleTirs,3,5,3,1);           //On place les instructions
+            rootJeu.setAlignment(CENTER);
+            
+            VBox allElements = new VBox();
+            allElements.setPadding(new Insets(0,0,20,0));
+            allElements.getChildren().addAll(boxBarreMenu, rootJeu, instructionsJoueur);
+            instructionsJoueur.setAlignment(Pos.CENTER);
+
+            Scene sceneJeu = new Scene(allElements);            //On met le root dans la scène 
+            JeuGraphique.fenetreJeu.setScene(sceneJeu);         //On modifie la scène
+            JeuGraphique.fenetreJeu.show();         //On ouvre la stage 
+            
+            Affichage.afficher(0, 0, JeuGraphique.plateauDeJeu);            
+            Affichage.afficher(0, 1, JeuGraphique.plateauDeJeu);
+        }
+        else{
+            victoire();
+        }
     }
 
 
@@ -321,7 +326,7 @@ public class AffichageJeuGraphique {
 
         VBox rootselectionNavire = new VBox(40);            //On déclare un affichage vertical avec des éléments espacés de 40 pixels
         
-        rootselectionNavire.setPadding(new Insets(90,20,20,70));           //On donne les dimensions du root pour la sélection des navires
+        rootselectionNavire.setPadding(new Insets(10,20,20,70));           //On donne les dimensions du root pour la sélection des navires
 
         
         GrilleNavire affichageNavire = new GrilleNavire(tailleNavire);          //On déclare une grille de boutons qui fait la taille du navire sélectionné
@@ -330,7 +335,8 @@ public class AffichageJeuGraphique {
         ColumnConstraints  colonneContrainte = new ColumnConstraints (); 
         colonneContrainte.setPercentWidth(50);
         colonneContrainte.setHalignment(HPos.CENTER);       
-        rootAffichagePlateau.getColumnConstraints().add(colonneContrainte);         
+        rootAffichagePlateau.getColumnConstraints().add(colonneContrainte);
+        rootAffichagePlateau.setVgap(20);        
         
 
         
@@ -383,21 +389,40 @@ public class AffichageJeuGraphique {
         
         Button boutonBouger = new Button("Bouger Navire");          //On déclare un bouton déplacer
         boutonBouger.setGraphic(imageBouger);           //On l'illustre par une petite image
-        boutonBouger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"            //On change les caractéristiques d'écriture
-                + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
-        boutonBouger.setOnMouseEntered ((MouseEvent event) -> {          //Si le joueur met son curseur sur le bouton
-            boutonBouger.setGraphic(imageBougerHover);
+        if (verificationDeplacementPossible(pListe)==true){
             boutonBouger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"            //On change les caractéristiques d'écriture
-                    + "-fx-font-weight: bold;-fx-background-color: rgba(90,170,182,0.80)");
+                + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
+        }
+        else {
+            boutonBouger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"            //On change les caractéristiques d'écriture
+                + "-fx-font-weight: bold;-fx-background-color: rgba(14,61,68,0.20)");
+        }
+        boutonBouger.setOnMouseEntered ((MouseEvent event) -> {          //Si le joueur met son curseur sur le bouton
+            if(verificationDeplacementPossible(pListe)==true){
+                boutonBouger.setGraphic(imageBougerHover);
+                boutonBouger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"            //On change les caractéristiques d'écriture
+                        + "-fx-font-weight: bold;-fx-background-color: rgba(90,170,182,0.80)");
+            }
         });
         boutonBouger.setOnMouseExited ((MouseEvent event) -> {          //Si le joueur enlève son curseur du bouton
-            boutonBouger.setGraphic(imageBouger);
-            boutonBouger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"            //On change les caractéristiques d'écriture
-                + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
+            if (verificationDeplacementPossible(pListe)==true){
+                boutonBouger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"            //On change les caractéristiques d'écriture
+                    + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
+            }
+            else {
+                boutonBouger.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"            //On change les caractéristiques d'écriture
+                    + "-fx-font-weight: bold;-fx-background-color: rgba(14,61,68,0.20)");
+            }
         });
         boutonBouger.setOnAction((ActionEvent eventChargementPartie) -> {
             boolean verif = verificationDeplacementPossible(pListe);
             if (verif==true)selectionCaseBouger(pListe, lRef);
+            else {
+                Alert dialogueNePeuxPasBouger = new Alert(AlertType.ERROR);
+                dialogueNePeuxPasBouger.setTitle("Bataille Naval - Bouger Navire");
+                dialogueNePeuxPasBouger.setHeaderText("Le navire sélectionné n'a aucunes options de déplacement");
+                dialogueNePeuxPasBouger.showAndWait();
+            }
         });
         
         HBox boutonSelectionNavire = new HBox(80);          //On déclare un affichage horizontal avec les éléments qui sont espacés de 80 pixels
@@ -408,6 +433,7 @@ public class AffichageJeuGraphique {
         instruction.setAlignment(CENTER);           //On positionne les éléments du root au centre
         boutonSelectionNavire.setAlignment(CENTER);         //On positionne les éléments du root au centre
         
+
         
         Scene sceneSelectionNavire = new Scene(rootselectionNavire);            //On met le root dans la scène
         JeuGraphique.fenetreJeu.setScene(sceneSelectionNavire);         //On modifie la scène
@@ -423,7 +449,7 @@ public class AffichageJeuGraphique {
             VBox rootselectionCaseTir = new VBox(20);
             rootselectionCaseTir.setPadding(new Insets(20,300,20,300));
 
-            Label instruction = new Label ("Il s'agit d'u premier du de ce Destroyer !");
+            Label instruction = new Label ("Il s'agit du premier du de ce Destroyer !");
             instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"
                     + "-fx-font-weight: bold;");
             
@@ -442,23 +468,23 @@ public class AffichageJeuGraphique {
             JeuGraphique.fenetreJeu.setScene(sceneSelectionNavire);
         }
         else{
-            List<Integer> listeInformations = new ArrayList<Integer> ();
-            listeInformations.add(0, pListe);
-            GrilleBoutons grilleBoutonTirs = new GrilleBoutons('B', listeInformations);
-            grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);
+            List<Integer> listeInformations = new ArrayList<Integer> ();            //On déclare une liste qui va contenir les informations de tirs
+            listeInformations.add(0, pListe);               //On ajoute dedans la possition du bateau dans la liste de la flotte
+            GrilleBoutons grilleBoutonTirs = new GrilleBoutons('B', listeInformations);         //On initialiser une grille de bouton avec la référence B - Cela signifie que c'est une grille de bouton pour la sélection de l'emplacement de tir
+            grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);         //On met a jour les couleur et les texte de la grille 
 
-            VBox rootselectionCaseTir = new VBox(40);
-            rootselectionCaseTir.setPadding(new Insets(90,300,20,300));
+            VBox rootselectionCaseTir = new VBox(40);           //On crée un root de stockage vertival pour stocker les navires
+            rootselectionCaseTir.setPadding(new Insets(90,300,20,300));         //On le pararmètre
 
-            Label instruction = new Label ("Où souhaitez vous tirer ?");
-            instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"
+            Label instruction = new Label ("Où souhaitez vous tirer ?");            //On affiche les instruction
+            instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"         //On donner le style au instruction
                     + "-fx-font-weight: bold;");
 
-            rootselectionCaseTir.setAlignment(CENTER);
-            rootselectionCaseTir.getChildren().addAll(instruction, grilleBoutonTirs.getRoot());
-            instruction.setAlignment(CENTER);
-            Scene sceneSelectionNavire = new Scene(rootselectionCaseTir);
-            JeuGraphique.fenetreJeu.setScene(sceneSelectionNavire);
+            rootselectionCaseTir.setAlignment(CENTER);          //On met les élément au centre 
+            rootselectionCaseTir.getChildren().addAll(instruction, grilleBoutonTirs.getRoot());         //On ajoute les élément au root
+            instruction.setAlignment(CENTER);           //On les possition au centre
+            Scene sceneSelectionNavire = new Scene(rootselectionCaseTir);           //On rajoute les root à une scene
+            JeuGraphique.fenetreJeu.setScene(sceneSelectionNavire);         //Et on affiche cette scène
         }
     }
     
@@ -667,15 +693,19 @@ public class AffichageJeuGraphique {
     
     
     public void tourIA() throws InterruptedException{
-    victoire();
-        Timeline timeTourJoueur = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(12000),action -> {            //On met un temps d'attente de 12s
-            try {
-                JeuGraphique.ia.jouer();            //On essaye de lancer le tour de l'IA
-            } catch (InterruptedException ex){}
-        }));
-        timeTourJoueur.play();            //On démarre le temps de décalage dès que le programme le lit
-        
+    
+        if(victoire()==false){
+            Timeline timeTourJoueur = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
+            timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(12000),action -> {            //On met un temps d'attente de 12s
+                try {
+                    JeuGraphique.ia.jouer();            //On essaye de lancer le tour de l'IA
+                } catch (InterruptedException ex){}
+            }));
+            timeTourJoueur.play();            //On démarre le temps de décalage dès que le programme le lit
+        }
+        else{
+            victoire();
+        }
     }
     
     public void zoneTirFusee(int xTire, int yTire, int surplusX, int surplusY){
@@ -727,17 +757,13 @@ public class AffichageJeuGraphique {
                     return false;
                 }
         }
-        
-
         boolean possible=true;
 
         
         if (JeuGraphique.flotteJoueur0.get(pListe).direction==0){           //Si le navire est à l'horizontal
-           
 
             //Cas droit
             int x = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[JeuGraphique.flotteJoueur0.get(pListe).taille-1][0] + 1 ;
-
             int y = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1];
             if (x+1<=14){
                 if (JeuGraphique.plateauDeJeu.get(x,y,0,0).equals('_'))return true;
@@ -760,7 +786,7 @@ public class AffichageJeuGraphique {
                     i=10;           //On sort de la boucle
                 }
             }
-            if (possible=true) return true;
+            if (possible==true) return true;
             
             possible = true;
             //Cas haut
@@ -772,7 +798,7 @@ public class AffichageJeuGraphique {
                     i=10;
                 }
             }
-            return possible;
+            if (possible==true) return true;
         }
         else{
             int xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0]+1;
@@ -783,18 +809,18 @@ public class AffichageJeuGraphique {
                     i=10;
                 }
             }
-            if (possible=true) return true;
+            if (possible==true) return true;
             
             possible=true;
             xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0]-1;
             yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1];
             for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){
                 if (!JeuGraphique.plateauDeJeu.get(xStart, yStart+i,0,0).equals('_')){
-                    if (possible==false) possible=false;
+                    possible=false;
                     i=10;
                 }
             }
-            if (possible=true) return true;
+            if (possible==true) return true;
 
             int x = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0];
             int y = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[JeuGraphique.flotteJoueur0.get(pListe).taille-1][1]+1;
@@ -812,79 +838,167 @@ public class AffichageJeuGraphique {
         
     }
     
-    
+    public void selectionTir(int xTire, int yTire){
+        List<Integer> listeInformations = new ArrayList<Integer> ();            //On déclare une liste qui va contenir les informations de tirs
+        listeInformations.add(0, 0); 
+        listeInformations.add(1, xTire);               //On ajoute dedans la coordonees x de tir dans la liste de la flotte
+        listeInformations.add(2, yTire);               //On ajoute dedans la coordonees y de tir dans la liste de la flotte
 
-    public void erreurCaseVide(){
-        
+        GrilleBoutons grilleBoutonNavire = new GrilleBoutons('S', listeInformations);         //On initialiser une grille de bouton avec la référence B - Cela signifie que c'est une grille de bouton pour la sélection de l'emplacement de tir
+        grilleBoutonNavire.miseAJourAffichageNavire(JeuGraphique.plateauDeJeu);         //On met a jour les couleur et les texte de la grille 
+
+        VBox rootselectionTir = new VBox(40);           //On crée un root de stockage vertival pour stocker les navires
+        rootselectionTir.setPadding(new Insets(10,300,20,300));         //On le pararmètre
+
+        Label instruction = new Label ("Avec quel bateau souhaiter vous tirer?");            //On affiche les instruction
+        instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"         //On donner le style au instruction
+                + "-fx-font-weight: bold;");
+
+
+        ImageView retourImage = new ImageView ("/images/retourImage.png");
+        ImageView retourImageHover = new ImageView ("/images/retourImageHover.png");
+
+        Button boutonRetour = new Button("Retour");            //On déclare un bouton tirer
+        boutonRetour.setGraphic(retourImage);            //On l'illustre par une petite image
+        boutonRetour.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"          //On change les caractéristiques d'écriture
+                + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
+        boutonRetour.setOnMouseEntered ((MouseEvent event) -> {           //Si le joueur met son curseur sur le bouton
+            boutonRetour.setGraphic(retourImageHover);
+            boutonRetour.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"          //On change les caractéristiques d'écriture
+                    + "-fx-font-weight: bold;-fx-background-color: rgba(90,170,182,0.80)");
+        });
+        boutonRetour.setOnMouseExited ((MouseEvent event) -> {            //Si le joueur enlève son curseur du bouton
+            boutonRetour.setGraphic(retourImage);
+            boutonRetour.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"          //On change les caractéristiques d'écriture
+                    + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
+        });
+        boutonRetour.setOnAction((ActionEvent eventChargementPartie) -> {         
+            affichageJoueur();
+        });
+
+        rootselectionTir.setAlignment(CENTER);          //On met les élément au centre 
+        rootselectionTir.getChildren().addAll(boutonRetour,instruction, grilleBoutonNavire.getRoot());         //On ajoute les élément au root
+        instruction.setAlignment(CENTER);           //On les possition au centre
+        Scene sceneSelectionNavire = new Scene(rootselectionTir);           //On rajoute les root à une scene
+        JeuGraphique.fenetreJeu.setScene(sceneSelectionNavire);         //Et on affiche cette scène
+    }
+
+
+    public void erreurCaseVideN(){
+        Alert alertCaserVide = new Alert(AlertType.INFORMATION);
+        alertCaserVide.setTitle("Bataille Naval - Sélection");
+        alertCaserVide.setHeaderText("La case sélectionnées est vide.");
+        alertCaserVide.setContentText("Veuillez sélectionner une case contenant un navire ou une case de tir.");
+
+        alertCaserVide.showAndWait();
+    }
+
+    public void erreurCaseVideS(){
+        Alert alertCaserVide = new Alert(AlertType.INFORMATION);
+        alertCaserVide.setTitle("Bataille Naval - Sélection");
+        alertCaserVide.setHeaderText("La case sélectionnées est vide.");
+        alertCaserVide.setContentText("Veuillez sélectionner une case contenant un navire");
+
+        alertCaserVide.showAndWait();
     }
     
     
-    public void victoire(){
-        ImageView croquette =new ImageView(getClass().getResource("/images/croquette.png").toString());         //On indique la position de l'image 
-        ImageView croquetteHover =new ImageView(getClass().getResource("/images/croquetteHover.png").toString());         //On indique la position de l'image 
+    public boolean victoire(){
+        ImageView victoireGif =new ImageView(getClass().getResource("/images/victoire.gif").toString());         //On indique la position de l'image 
         
-        Button bontonVictoire = new Button ("SUPER !");         //On déclare un bouton 
-        bontonVictoire.setGraphic(croquetteHover);          //On l'illustre par une image
-        bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
-        +                "-fx-font-size: 17pt;"
-        +                "-fx-background-color: rgba(120,160,175,0.50);");
-        bontonVictoire.setOnMouseEntered (e->
-        bontonVictoire.setGraphic(croquette));           //On l'illustre par une image
-        bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
-                    +                "-fx-font-size: 13pt;"
-                    +                "-fx-background-color: rgba(82,127,143,0.50);");
-        bontonVictoire.setOnMouseExited (e-> 
-        bontonVictoire.setGraphic(croquetteHover));          //On l'illustre par une image
-        bontonVictoire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
-                    +                "-fx-font-size: 13pt;"
-                    +                "-fx-background-color: rgba(120,160,175,0.50);");
-        /*bontonVictoire.setOnAction((ActionEvent eventLancementJeu) -> {
-            fenetreJeu.setScene(sceneLancementMenuPrincipal(fenetreJeu));
-        });*/
 
         Label labelAffichageVictoireJoueur = new Label ("VICTOIRE DU JOUEUR !!");           //On informe le joueur qu'il a gagné
         labelAffichageVictoireJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
-                    +                "-fx-font-size: 13pt;"
-                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+                    +                           "-fx-font-size: 20pt;"
+                    +                           "-fx-background-color: rgba(120,160,175,0.50);");
+        Label labelForfaitDeLIA = new Label ("Vous avez coulé tous les sous marin de l'ordinateur\n"         //On informe le joueur qu'il a perdu car il a plus de sous-marin
+                    +                                       "Vous gagnez par fofait");
+        labelForfaitDeLIA.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
+                    +                           "-fx-font-size: 15pt;");
+
+        
+
+
         Label labelAffichageVictoireIA = new Label ("VICTOIRE DE L'ORDINATEUR !!");         //On informe le joueur que l'IA a gagné
         labelAffichageVictoireIA.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
-                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-font-size: 20pt;"
                     +                "-fx-background-color: rgba(120,160,175,0.50);");
-        Label labelAffichageInfoPartie = new Label ("\nInformation sur la partie : "            //On donne les caractéristiques de la partie
+        Label labelForfaitDuJoueur = new Label ("Vous n'avez plus de sous-marin\n"         //On informe le joueur qu'il a perdu car il a plus de sous-marin
+                    +                           "L'ordinateur gagne par fofait de votre part");
+        labelForfaitDuJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
+                        +                "-fx-font-size: 15pt;");
+
+
+        Label labelAffichageInfoPartie = new Label ("\nInformations sur la partie : "            //On donne les caractéristiques de la partie
             +"\nNombre de tour : "+compteurTourHumain+compteurTourIA            //Le nombre de tour que l'IA a effecuté
             +"\nNombre de tour du joueur : "+ compteurTourHumain            //Le nombre de tour que le joueur a effectué
             +"\nNombre de tour de l'IA : "+compteurTourIA);
         labelAffichageInfoPartie.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
-                    +                "-fx-font-size: 13pt;"
-                    +                "-fx-background-color: rgba(120,160,175,0.50);");
-        Label labelAffichageVictoireSousMarin = new Label ("Vous n'avez plus de sous-marin"         //On informe le joueur qu'il a perdu car il a plus de sous-marin
-            +"L'ordinateur gagne par fofait de votre part");
-        labelAffichageVictoireSousMarin.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
-                    +                "-fx-font-size: 13pt;"
-                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+                    +                "-fx-font-size: 15pt;");
+        
+        
 
-        GridPane rootVictoire = new GridPane();         //On déclare et paramêtre un root 
-        rootVictoire.setPadding(new javafx.geometry.Insets(20));
-        rootVictoire.setVgap(20);
+
+        
+        Button bontonVictoireJoueur = new Button ("SUPER !");         //On déclare un bouton
+        bontonVictoireJoueur.setContentDisplay(ContentDisplay.TOP); 
+        bontonVictoireJoueur.setGraphic(victoireGif);          //On l'illustre par une image
+        bontonVictoireJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
+        +                "-fx-font-size: 17pt;"
+        +                "-fx-background-color: rgba(120,160,175,0.50);");
+        bontonVictoireJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
+                    +                "-fx-font-size: 17pt;"
+                    +                "-fx-background-color: rgba(82,127,143,0.50);");
+        bontonVictoireJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
+                    +                "-fx-font-size: 17pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+                    bontonVictoireJoueur.setOnAction((ActionEvent eventLancementJeu) -> {
+            MenuGraphique menuGraphique = new MenuGraphique();
+            menuGraphique.menuPrincipalGraphique();
+        });
+
+
+        Button bontonVictoireIA = new Button ("Bien joué !");         //On déclare un bouton 
+        bontonVictoireIA.setGraphic(victoireGif);          //On l'illustre par une image
+        bontonVictoireIA.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
+        +                "-fx-font-size: 17pt;"
+        +                "-fx-background-color: rgba(120,160,175,0.50);");
+        bontonVictoireIA.setOnMouseEntered (e->
+        bontonVictoireIA.setGraphic(victoireGif));           //On l'illustre par une image
+        bontonVictoireIA.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
+                    +                "-fx-font-size: 17pt;"
+                    +                "-fx-background-color: rgba(82,127,143,0.50);");
+        bontonVictoireIA.setOnMouseExited (e-> 
+        bontonVictoireIA.setGraphic(victoireGif));          //On l'illustre par une image
+        bontonVictoireIA.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
+                    +                "-fx-font-size: 17pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);");
+        bontonVictoireIA.setOnAction((ActionEvent eventLancementJeu) -> {
+            MenuGraphique menuGraphique = new MenuGraphique();
+            menuGraphique.menuPrincipalGraphique();
+        });
+
+
+        VBox rootVictoire = new VBox(25);         //On déclare et paramêtre un root
+        rootVictoire.setAlignment(Pos.CENTER);
+        rootVictoire.setPadding(new Insets (20,30,10,30));
+        
+        VBox rootVictoireForfait = new VBox(25);         //On déclare et paramêtre un root
+        rootVictoire.setAlignment(Pos.CENTER);
+        rootVictoire.setPadding(new Insets (20,30,10,30));
         
 
         boolean etat0;          //On initialise un booléen
         boolean etat0SousMarin=false;           //On initialise un booléen à false pour le sous-marin 
         for (int i=0; i<10; i++){           //On parcourt la flotte du joueur 
             etat0 = flotteJoueur0.get(i).etat;          //Pour chaque navire, on regarde si il a coulé ou pas
-            if (etat0==true) break;         //Si il est toujours à flot
+            if (etat0==true) i=10;         //Si il est toujours à flot
             if (i==9 && etat0!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
-
-                rootVictoire.add(labelAffichageVictoireIA,0,0);
-                rootVictoire.add(labelAffichageInfoPartie,0,1);
-                rootVictoire.add(bontonVictoire,1,1);
-                /*System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);            //On affiche un message 
-                System.out.println("\nInformations sur la partie : ");
-                System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
-                System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
-                System.out.println("Nombre de tour de l'IA : "+compteurTourIA);*/
-                //Scene sceneFlotteFct = new Scene(rootVictoire);
-                //return true;            //On renvoie true si l'IA a gagné
+                rootVictoire.getChildren().addAll(labelAffichageVictoireIA,labelAffichageInfoPartie, bontonVictoireIA);
+                rootVictoire.setAlignment(Pos.CENTER);
+                Scene sceneVictoire = new Scene(rootVictoire);
+                JeuGraphique.fenetreJeu.setScene(sceneVictoire);
+                return true;
             } 
         }
         
@@ -893,58 +1007,39 @@ public class AffichageJeuGraphique {
         }
 
         if (etat0SousMarin==false){         //Si il y a plus aucun sous-marin
-            //System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);          //On affiche un message de victoire de l'IA
-            rootVictoire.add(labelAffichageVictoireIA,0,0);
-            rootVictoire.add(labelAffichageVictoireSousMarin,0,1);
-            rootVictoire.add(labelAffichageInfoPartie,0,2);
-            rootVictoire.add(bontonVictoire,1,3);
-            /*System.out.println("Vous n'avez plus de sous-marin");
-            System.out.println("L'ordinateur gagne par fofait de votre part");
-            System.out.println("\nInformations sur la partie : ");
-            System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
-            System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
-            System.out.println("Nombre de tour de l'IA : "+compteurTourIA);*/
-            //Scene sceneFlotteFct = new Scene(rootVictoire);
-            //return true;            //Renvoie true si l'un des deux joueurs a gagné
+            rootVictoireForfait.getChildren().addAll(labelAffichageVictoireIA,labelForfaitDeLIA ,labelAffichageInfoPartie, bontonVictoireIA);
+            rootVictoireForfait.setAlignment(Pos.CENTER);
+            Scene sceneVictoire = new Scene(rootVictoireForfait);
+            JeuGraphique.fenetreJeu.setScene(sceneVictoire);
+            return true;
         }
 
         boolean etat1SousMarin=false;           //On initialise un booléen à false pour le sous-marin
         boolean etat1;      //On initialise un booléen
         for (int i=0; i<10; i++){           //On parcourt la flotte de l'IA
             etat1 = flotteJoueur1.get(i).etat;          //Pour chaque navire, on regarde si il a coulé ou pas
-            if (etat1==true) break;         //Si il est toujours à flot
+            if (etat1==true) i=10;         //Si il est toujours à flot
             if (i==9 && etat1!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
-                rootVictoire.add(labelAffichageVictoireJoueur,0,0);
-                rootVictoire.add(labelAffichageInfoPartie,0,1);
-                rootVictoire.add(bontonVictoire,1,1);
-                /*System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);           //On affiche un message
-                System.out.println("\nInformations sur la partie : ");
-                System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
-                System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
-                System.out.println("Nombre de tour de l'IA : "+compteurTourIA); */
-                //Scene sceneFlotteFct = new Scene(rootVictoire);
-                //return true;            //On renvoie true si le joueur a gagné
+                rootVictoire.getChildren().addAll(labelAffichageVictoireJoueur,labelAffichageInfoPartie, bontonVictoireJoueur);
+                rootVictoire.setAlignment(Pos.CENTER);
+                Scene sceneVictoire = new Scene(rootVictoire);
+                JeuGraphique.fenetreJeu.setScene(sceneVictoire);
+                return true;
             }
         }
         
         for (int i=6; i<10;i++){            //On parcourt les sous-marins
             if (etat1SousMarin==false) etat1SousMarin=flotteJoueur1.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
+            return true;
         }
 
         if (etat1SousMarin==false){         //Si il y a plus aucun sous-marin
-            rootVictoire.add(labelAffichageVictoireJoueur,0,0);
-            rootVictoire.add(labelAffichageVictoireSousMarin,0,1);
-            rootVictoire.add(labelAffichageInfoPartie,0,2);
-            rootVictoire.add(bontonVictoire,1,3);
-            /*System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);            //On affiche un message de victoire du joueur
-            System.out.println("Vous avez détruit tout les sous-marin de l'ordinateur");
-            System.out.println("Vous gagnez par forfait");
-            System.out.println("\nInformations sur la partie : ");
-            System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
-            System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
-            System.out.println("Nombre de tour de l'IA : "+compteurTourIA);*/
-            //Scene sceneFlotteFct = new Scene(rootVictoire);
-            //return true;            //Renvoie true si l'un des deux joueurs a gagné
+            rootVictoireForfait.getChildren().addAll(labelAffichageVictoireJoueur,labelForfaitDeLIA ,labelAffichageInfoPartie, bontonVictoireJoueur);
+            rootVictoireForfait.setAlignment(Pos.CENTER);
+            Scene sceneVictoire = new Scene(rootVictoireForfait);
+            JeuGraphique.fenetreJeu.setScene(sceneVictoire);
+            return true;
         }
+        return false;
     }
 }

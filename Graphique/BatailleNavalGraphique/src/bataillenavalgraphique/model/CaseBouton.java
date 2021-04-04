@@ -5,8 +5,6 @@ import bataillenavalgraphique.view.AffichageJeuGraphique;
 import bataillenavalgraphique.controller.JeuGraphique;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 
@@ -51,22 +49,32 @@ public class CaseBouton {
             
             if (plateauRef=='S'){           //Si la lettre référence du plateau est égale à S
                 if (!JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals('_')){            //Si le bouton qui se trouve au coordonnée x et y est différent de '_'
+                    JeuGraphique.partieSauvegarde=false;
+                    int pListe = Flotte.nPlateauToPListe((char) JeuGraphique.plateauDeJeu.get(x, y, 0, 0), (int) JeuGraphique.plateauDeJeu.get(x, y, 0, 1));
+                    try {
+                        JeuGraphique.flotteJoueur0.get(pListe).tir(listeInformations.get(1), listeInformations.get(2));
+                    } catch (InterruptedException e1) {
+                        System.err.println("Erreur! .Le tir n'a pas pu être effectué");
+                    }
                 }
                 if (JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals('_')){            //Si le bouton qui se trouve au coordonnée x et y est égal à '_'
+                    affichageJeuGraphique.erreurCaseVideS();
                 }
             }
             
             if (plateauRef=='B'){           //Si la lettre référence du plateau est égale à S
                 if (!JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals('0')){            //Si le bouton qui se trouve au coordonnée x est différent de '0'
-                    try {
+                JeuGraphique.partieSauvegarde=false;    
+                try {
                         JeuGraphique.flotteJoueur0.get(listeInformations.get(0)).tir(x, y);         //On tire et on rajoute dans la liste qu'on a tiré a cet emplacement
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(CaseBouton.class.getName()).log(Level.SEVERE, null, ex);           //On informe qu'il y a eu une erreur
+                        System.err.println("Erreur! La sélection du navire à échoué");
                     }
                 }
             }
             
-            if (plateauRef=='C'&&nouvellePositionPossible(x,y,listeInformations.get(0))==true){         //Si la lettre référence du plateau est C et qu'il qu'il y a une nouvelle position possible
+            if (plateauRef=='C' && nouvellePositionPossible(x,y,listeInformations.get(0))==true){         //Si la lettre référence du plateau est C et qu'il qu'il y a une nouvelle position possible
+                JeuGraphique.partieSauvegarde=false;    
                 affichageJeuGraphique.bougerNavire(x,y, listeInformations.get(0));          //On bouge le navire et on rajoute ces informations dans la lsite
             }
             
@@ -96,21 +104,12 @@ public class CaseBouton {
                     affichageJeuGraphique.selectionNavire(x,y);
                 }
                 if (JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals('_')){            //Si le bouton qui se trouve au coordonnée x et y est égal à '_'
-                    affichageJeuGraphique.erreurCaseVide();
+                    affichageJeuGraphique.erreurCaseVideN();
                 }
             }
             
             if (plateauRef=='T'){           //Si la lettre référence du plateau est égale à T
-                if (!JeuGraphique.plateauDeJeu.get(x, y, 1, 0).equals('0')){            //Si le bouton qui se trouve au coordonnée x et y est différent de '0'
-                }
-            }
-            
-            
-            if (plateauRef=='S'){           //Si la lettre référence du plateau est égale à S
-                if (!JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals('_')){            //Si le bouton qui se trouve au coordonnée x et y est différent de '_'
-                }
-                if (JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals('_')){            //Si le bouton qui se trouve au coordonnée x et y est égal à '_'
-                }
+                affichageJeuGraphique.selectionTir(x, y);
             }
             
         });
@@ -394,26 +393,26 @@ public class CaseBouton {
     }
     
     public boolean nouvellePositionPossible(int x, int y, int pListe){
-        for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){            //On parcourt le navire
-            if (JeuGraphique.flotteJoueur0.get(pListe).coordonnees[i][0]+1==x &&
+        for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){            //Pour une case donner on vérifier si le navire peut etre déplacer dessus
+            if (JeuGraphique.flotteJoueur0.get(pListe).coordonnees[i][0]+1==x &&            //Si la case les a cotés d'une case du navire et qu'elle est vide on rentre dans la boucle 
                     JeuGraphique.flotteJoueur0.get(pListe).coordonnees[i][1]==y && 
-                       JeuGraphique.plateauDeJeu.get(x,y,0,0).equals('_')){         //Si
-                return verificationColonne( x+1, y, pListe,'D')==true;
+                       JeuGraphique.plateauDeJeu.get(x,y,0,0).equals('_')){         
+                return verificationColonne( x+1, y, pListe,'D')==true;          //On vérifie, si c'est nécésaire, que toute la colonne où est situé cette case contient assez de case vide pour déplacer le navire
             }
-            if (JeuGraphique.flotteJoueur0.get(pListe).coordonnees[i][0]-1==x &&
+            if (JeuGraphique.flotteJoueur0.get(pListe).coordonnees[i][0]-1==x &&            //Si la case les a cotés d'une case du navire et qu'elle est vide on rentre dans la boucle
                     JeuGraphique.flotteJoueur0.get(pListe).coordonnees[i][1]==y && 
                        JeuGraphique.plateauDeJeu.get(x,y,0,0).equals('_')){
-                return verificationColonne( x-1, y, pListe,'G')==true;
+                return verificationColonne( x-1, y, pListe,'G')==true;          //On vérifie, si c'est nécésaire, que toute la colonne où est situé cette case contient assez de case vide pour déplacer le navire
             }
-            if (JeuGraphique.flotteJoueur0.get(pListe).coordonnees[i][0]==x &&
+            if (JeuGraphique.flotteJoueur0.get(pListe).coordonnees[i][0]==x &&            //Si la case les a cotés d'une case du navire et qu'elle est vide on rentre dans la boucle
                     JeuGraphique.flotteJoueur0.get(pListe).coordonnees[i][1]+1==y && 
                        JeuGraphique.plateauDeJeu.get(x,y,0,0).equals('_')){
-                return verificationColonne( x, y+1, pListe,'B')==true;
+                return verificationColonne( x, y+1, pListe,'B')==true;          //On vérifie, si c'est nécésaire, que toute la colonne où est situé cette case contient assez de case vide pour déplacer le navire
             }
-            if (JeuGraphique.flotteJoueur0.get(pListe).coordonnees[i][0]==x &&
+            if (JeuGraphique.flotteJoueur0.get(pListe).coordonnees[i][0]==x &&            //Si la case les a cotés d'une case du navire et qu'elle est vide on rentre dans la boucle
                     JeuGraphique.flotteJoueur0.get(pListe).coordonnees[i][1]-1==y && 
                        JeuGraphique.plateauDeJeu.get(x,y,0,0).equals('_')){
-                return verificationColonne( x, y-1, pListe,'H')==true;
+                return verificationColonne( x, y-1, pListe,'H')==true;          //On vérifie, si c'est nécésaire, que toute la colonne où est situé cette case contient assez de case vide pour déplacer le navire
             }
         }
         return false;
@@ -421,60 +420,60 @@ public class CaseBouton {
     
     public boolean verificationColonne(int x, int y, int pListe, char emplacement){
         
-        if (JeuGraphique.flotteJoueur0.get(pListe).direction==0){
-            if (emplacement == 'D'){
-                return true;
+        if (JeuGraphique.flotteJoueur0.get(pListe).direction==0){           //Si le navire est à l'horizontal
+            if (emplacement == 'D'){            //Si l'emplacement est situé à droite
+                return true;            //On return true
             }
-            if (emplacement == 'G'){
-                return true;
+            if (emplacement == 'G'){            //Si l'emplacement est situé à gauche
+                return true;            //On return true
             }
-            if (emplacement == 'B'){
-                int xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0];
-                int yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1]+1;
-                for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){
-                    if (!JeuGraphique.plateauDeJeu.get(xStart+i, yStart,0,0).equals('_')){
-                        return false;
+            if (emplacement == 'B'){            //Si l'emplacement est situé en bas
+                int xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0];          //On déclare une variable qui stocke la coordonnée de x
+                int yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1]+1;            //On déclare une variable qui stocke la coordonnée de y+1
+                for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){         //On parcourt la taille du bateau
+                    if (!JeuGraphique.plateauDeJeu.get(xStart+i, yStart,0,0).equals('_')){          //Si la case est différent de vide
+                        return false;           //On return false
                     }
                 }
-                return true;
+                return true;            //On renvoie true sinon
             }
-            if (emplacement == 'H'){
-                int xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0];
-                int yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1]-1;
-                for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){
-                    if (!JeuGraphique.plateauDeJeu.get(xStart+i, yStart,0,0).equals('_')){
-                        return false;
+            if (emplacement == 'H'){            //Si l'emplacment est situé en haut
+                int xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0];          //On déclare une variable qui stocke la coordonnée de x
+                int yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1]-1;            //On déclare une variable qui stocke la coordonnée de y-1
+                for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){         //On parcourt la taille du bateau
+                    if (!JeuGraphique.plateauDeJeu.get(xStart+i, yStart,0,0).equals('_')){          //Si la case est différent de vide
+                        return false;           //On return false
                     }
                 }
-                return true;
+                return true;            //On renvoie true sinon
             }
         }
-        else{
-            if (emplacement == 'D'){
-                int xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0]+1;
-                int yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1];
-                for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){
-                    if (!JeuGraphique.plateauDeJeu.get(xStart, yStart+i,0,0).equals('_')){
-                        return false;
+        else{           //Si le navire est à la vertical
+            if (emplacement == 'D'){            //Si l'emplacement est situé à droite
+                int xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0]+1;          //On déclare une variable qui stocke la coordonnée de x+1
+                int yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1];          //On déclare une variable qui stocke la coordonnée de y
+                for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){         //On parcourt la taille du bateau
+                    if (!JeuGraphique.plateauDeJeu.get(xStart, yStart+i,0,0).equals('_')){          //Si la case est différente
+                        return false;           //On return false
                     }
                 }
-                return true;
+                return true;            //On renvoie true sinon
             }
-            if (emplacement == 'G'){
-                int xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0]-1;
-                int yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1];
-                for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){
-                    if (!JeuGraphique.plateauDeJeu.get(xStart, yStart+i,0,0).equals('_')){
-                        return false;
+            if (emplacement == 'G'){            //Si l'emplacement est situé à gauche
+                int xStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][0]-1;          //On déclare une variable qui stocke la coordonnée de x-1
+                int yStart = JeuGraphique.flotteJoueur0.get(pListe).coordonnees[0][1];          //On déclare une variable qui stocke la coordonnée de y
+                for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){         //On parcourt la taille du bateau
+                    if (!JeuGraphique.plateauDeJeu.get(xStart, yStart+i,0,0).equals('_')){          //Si la case est différente
+                        return false;           //On return false
                     }
                 }
-                return true;
+                return true;            //On renvoie true sinon
             }
-            if (emplacement == 'B'){
-                return true;
+            if (emplacement == 'B'){            //Si l'emplacement est situé en bas
+                return true;            //On return true
             }
-            if (emplacement == 'H'){
-                return true;
+            if (emplacement == 'H'){            //Si l'emplacement est situé en haut
+                return true;            //On return true
             }
         }
         return false;

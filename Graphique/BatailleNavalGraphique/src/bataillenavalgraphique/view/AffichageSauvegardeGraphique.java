@@ -82,17 +82,29 @@ public class AffichageSauvegardeGraphique {
                                 +                "-fx-background-color: rgba(120,160,175,0.50);");
                 });
                 boutonLancementPartie.setOnAction((ActionEvent eventLancementJeu) -> {
-                    TextInputDialog boiteSaisie = new TextInputDialog("Nom Partie");
-                    boiteSaisie.setTitle("Bataille Navale - Nom Partie");
-                    boiteSaisie.setHeaderText("Veuillez saisir le nom de la partie :");
-                    boiteSaisie.setContentText("Nom de la partie :");
-
-                    Optional<String> nomPartieSaisie = boiteSaisie.showAndWait();
-                    if (nomPartieSaisie.isPresent()){
-                        Sauvegarde sauvegarde = new Sauvegarde();
-                        sauvegarde.savePartie(nomSauvegarde, nomPartieSaisie.get(), sauvegardeEtQuitter);
-                    }
                     
+                    Alert confirmation = new Alert(AlertType.CONFIRMATION);
+                    confirmation.setTitle("Bataille Naval - Confiramation");
+                    confirmation.setHeaderText("Vous aller supprimer la partie déjà présente.");
+                    confirmation.setContentText("Etes vous sur de vouloir supprimer la partie déjà présente ?");
+
+                    ButtonType boutonOui = new ButtonType("Oui");
+                    ButtonType boutonNon = new ButtonType("Non");
+                    confirmation.getButtonTypes().setAll(boutonOui, boutonNon);
+
+                    Optional<ButtonType> choix = confirmation.showAndWait();
+                    if (choix.get() == boutonOui) {
+                        TextInputDialog boiteSaisie = new TextInputDialog("Nom Partie");
+                        boiteSaisie.setTitle("Bataille Navale - Nom Partie");
+                        boiteSaisie.setHeaderText("Veuillez saisir le nom de la partie :");
+                        boiteSaisie.setContentText("Nom de la partie :");
+
+                        Optional<String> nomPartieSaisie = boiteSaisie.showAndWait();
+                        if (nomPartieSaisie.isPresent()){
+                            Sauvegarde sauvegarde = new Sauvegarde();
+                            sauvegarde.savePartie(nomSauvegarde, nomPartieSaisie.get(), sauvegardeEtQuitter);
+                        }
+                    }
                 });
                 
                 vBoxBouton.getChildren().add(boutonLancementPartie);
@@ -125,7 +137,7 @@ public class AffichageSauvegardeGraphique {
         ImageView imageNouveau = new ImageView ("/images/new.png");
         ImageView imageNouveauHover = new ImageView ("/images/newHover.png"); 
         
-        Button boutonRetour = new Button ();
+        Button boutonRetour = new Button ("Retour");
         boutonRetour.setGraphic(imageRetour);
         boutonRetour.setStyle ("-fx-background-color: rgba(120,160,175,0.50)");
         boutonRetour.setOnMouseEntered (e-> {
@@ -612,7 +624,7 @@ public class AffichageSauvegardeGraphique {
         
         
         rootNavire.add(grilleBoutonNavire.getRoot(),0,0);           //On place la grille des navires à gauche
-        rootNavire.add(grilleBoutonTirs.getRoot(),2,0);            //On place la grille des tirs à droite 
+        rootNavire.add(grilleBoutonTirs.getRoot(),1,0);            //On place la grille des tirs à droite 
         
         Label instructionsJoueur = new Label("Que souhaitez vous faire ?");            //On informe le joueur des instructions à suivre
         instructionsJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
@@ -635,14 +647,14 @@ public class AffichageSauvegardeGraphique {
             boutonRetour.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 13pt;"          //On change les caractéristiques d'écriture
                     + "-fx-font-weight: bold;-fx-background-color: rgba(163,198,211,0.50)");
         });
-        boutonRetour.setOnAction((ActionEvent eventChargementPartie) -> {         try {         //Action si le joueur click sur le bouton
+        boutonRetour.setOnAction((ActionEvent eventChargementPartie) -> {         
+        try {         //Action si le joueur click sur le bouton
             lancementChargement(stage);
-            } catch (ClassNotFoundException ex) {
-                System.err.println("Erreur! Problème sur le retour");
-            }
+        } catch (ClassNotFoundException ex) {
+            System.err.println("Erreur! Problème sur le retour");            }
         });
         Button transparent = new Button();            //On déclare un bouton tirer
-        transparent.setPrefSize(75,10);
+        transparent.setPrefSize(75,5);
         transparent.setStyle ("-fx-background-color: transparent;");          //On change les caractéristiques d'écriture
         
         
@@ -702,8 +714,8 @@ public class AffichageSauvegardeGraphique {
         boutonSelectionOption.getChildren().addAll(boutonRetour,transparent, instructionsJoueur, boutonCharger,boutonSupprimer);
         boutonSelectionOption.setAlignment(Pos.CENTER);
         
-        VBox rootAllElement = new VBox(15);
-        rootAllElement.setPadding(new Insets(15,15,15,10));   
+        VBox rootAllElement = new VBox(8);
+        rootAllElement.setPadding(new Insets(0,4,10,4));   
         rootAllElement.getChildren().addAll(rootNavire, boutonSelectionOption);
         
         Scene sceneJeu = new Scene(rootAllElement);            //On met le root dans la scène 

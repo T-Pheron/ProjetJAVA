@@ -1,12 +1,9 @@
 package bataillenavalgraphique.model;
 
-import bataillenavalgraphique.model.CaseBouton;
 import javafx.scene.layout.*;
 
-/**
- *
- * @author Théric PHERON
- */
+
+
 public class GrilleNavire{
     
     CaseBouton[] grilleBoutons;         //On déclare une case de bouton ?

@@ -4,7 +4,6 @@ import bataillenavalgraphique.view.AffichageIA;
 import bataillenavalgraphique.view.AffichageJeuGraphique;
 import bataillenavalgraphique.controller.JeuGraphique;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -48,6 +47,7 @@ public class Croiseur extends Flotte {
         nRef += pListe;         //On ajoute la position de la liste au 
     }
     
+    
      /**
      * Méthode à un navire d'effectuer un tir.
      * La méthode permet de demander des coordonnées de tir et d'effectuer un tir.
@@ -57,6 +57,8 @@ public class Croiseur extends Flotte {
      */
     @Override
     public void tir(int xTire, int yTire) throws InterruptedException{
+        
+        boolean tirNonInterompue=true;
         
         if(JeuGraphique.plateauDeJeu.get(xTire,yTire,1,0).equals("1")){
             Alert confirmationTir = new Alert(AlertType.CONFIRMATION);
@@ -71,64 +73,66 @@ public class Croiseur extends Flotte {
             Optional<ButtonType> choix = confirmationTir.showAndWait();
 
             if (choix.get() == boutonNon){
+                tirNonInterompue=false;
                 AffichageJeuGraphique affichage = new AffichageJeuGraphique();
                 affichage.selectionCaseTir(Flotte.nRefToPListe(lRef, nRef));
             }
         }
-        
-        
-        VBox rootTexte = new VBox(25);
-        Label informationNavire = new Label("Vous avez décidez d'utiliser un "+nom);
-        informationNavire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-                +                "-fx-font-size: 15pt;"
-                +                "-fx-background-color: rgba(120,160,175,0.50);"
-                +                "-fx-font-weight: bold;");
+        if (tirNonInterompue==true ){
+           
+            VBox rootTexte = new VBox(25);
+            Label informationNavire = new Label("Vous avez décidez d'utiliser un "+nom);
+            informationNavire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 15pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);"
+                    +                "-fx-font-weight: bold;");
 
-        Label informationCalcul = new Label("Avec les informations fournis, on a calculé comme coordonnées de tir");
-        informationCalcul.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-                +                "-fx-font-size: 13pt;"
-                +                "-fx-font-weight: bold;");
-        System.out.println(yTire+","+xTire);
-        Label informationCoordones = new Label("16°02'58."+ yTire +"\"S ; 60°53'40."+ xTire+"\"E");
-        informationCoordones.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-                +                "-fx-font-size: 25pt;"
-                +                "-fx-background-color: rgba(120,160,175,0.50);"
-                +                "-fx-font-weight: bold;");
+            Label informationCalcul = new Label("Avec les informations fournis, on a calculé comme coordonnées de tir");
+            informationCalcul.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-font-weight: bold;");
+            System.out.println(yTire+","+xTire);
+            Label informationCoordones = new Label("16°02'58."+ yTire +"\"S ; 60°53'40."+ xTire+"\"E");
+            informationCoordones.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 25pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);"
+                    +                "-fx-font-weight: bold;");
 
-        Label informationTir = new Label("\n\nOn effectu le tir, patienter...");
-        informationTir.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-                +                "-fx-font-size: 13pt;"
-                +                "-fx-font-weight: bold;");
+            Label informationTir = new Label("\n\nOn effectu le tir, patienter...");
+            informationTir.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-font-weight: bold;");
 
-        rootTexte.getChildren().addAll(informationNavire, informationCalcul, informationCoordones, informationTir);
-        rootTexte.setAlignment(Pos.CENTER);
-        Scene sceneTir = new Scene(rootTexte);
-        JeuGraphique.fenetreJeu.setScene(sceneTir);
-        
-        
-        /*Vérification qu'il y a un impacte********************************************/
-        if (JeuGraphique.plateauDeJeu.get(xTire,yTire,2,0) == (Object) 'S'){
-            if (!JeuGraphique.plateauDeJeu.get(xTire,yTire,1,0).equals("2")) JeuGraphique.plateauDeJeu.modification(xTire,yTire,1,0,"5");
+            rootTexte.getChildren().addAll(informationNavire, informationCalcul, informationCoordones, informationTir);
+            rootTexte.setAlignment(Pos.CENTER);
+            Scene sceneTir = new Scene(rootTexte);
+            JeuGraphique.fenetreJeu.setScene(sceneTir);
 
-            int nPlateauAdv;            //Le numéro du plateau du navire adverse
-            int pListeAdv;              //La position dans la liste des navires de l'adversaire      
 
-            nPlateauAdv = (int) JeuGraphique.plateauDeJeu.get(xTire,yTire,2,1);         //On récupère le numéro de plateau de l'adversaire aux coordonnées où le joueur veut tirer
-            pListeAdv=nPlateauToPListe('S', nPlateauAdv);           //On en deduit la position dans la liste du navire de l'adversaire
+            /*Vérification qu'il y a un impacte********************************************/
+            if (JeuGraphique.plateauDeJeu.get(xTire,yTire,2,0) == (Object) 'S'){
+                if (!JeuGraphique.plateauDeJeu.get(xTire,yTire,1,0).equals("2")) JeuGraphique.plateauDeJeu.modification(xTire,yTire,1,0,"5");
 
-            JeuGraphique.flotteJoueur1.get(pListeAdv).coordonnees[0][2]=2;           //On met la coordonées sur 2 pour signifie, ce qui signifie que le sous-marin a été touché sans être coulé (il ne peux plus être déplacé)
-            
-            AffichageJeuGraphique affichageEchec = new AffichageJeuGraphique();
-            affichageEchec.tirSurSousMarin();
+                int nPlateauAdv;            //Le numéro du plateau du navire adverse
+                int pListeAdv;              //La position dans la liste des navires de l'adversaire      
+
+                nPlateauAdv = (int) JeuGraphique.plateauDeJeu.get(xTire,yTire,2,1);         //On récupère le numéro de plateau de l'adversaire aux coordonnées où le joueur veut tirer
+                pListeAdv=nPlateauToPListe('S', nPlateauAdv);           //On en deduit la position dans la liste du navire de l'adversaire
+
+                JeuGraphique.flotteJoueur1.get(pListeAdv).coordonnees[0][2]=2;           //On met la coordonées sur 2 pour signifie, ce qui signifie que le sous-marin a été touché sans être coulé (il ne peux plus être déplacé)
+
+                AffichageJeuGraphique affichageEchec = new AffichageJeuGraphique();
+                affichageEchec.tirSurSousMarin();
+            }
+            else if (JeuGraphique.plateauDeJeu.get(xTire,yTire,2,0) != (Object) '_'){             //Si la case contient un navire
+                impact(xTire, yTire,0);
+            }
+            else{
+                AffichageJeuGraphique affichageEchec = new AffichageJeuGraphique();
+                affichageEchec.tirEchec();
+                JeuGraphique.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici
+            }  
         }
-        else if (JeuGraphique.plateauDeJeu.get(xTire,yTire,2,0) != (Object) '_'){             //Si la case contient un navire
-            impact(xTire, yTire,0);
-        }
-        else{
-            AffichageJeuGraphique affichageEchec = new AffichageJeuGraphique();
-            affichageEchec.tirEchec();
-            JeuGraphique.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici
-        }  
     }
     
     

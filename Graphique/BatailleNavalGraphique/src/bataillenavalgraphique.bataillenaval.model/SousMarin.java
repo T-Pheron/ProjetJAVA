@@ -56,6 +56,8 @@ public class SousMarin extends Flotte{
     @Override
     public void tir(int xTire, int yTire)throws InterruptedException{
         
+        boolean tirNonInterompue=true;
+        
         if(JeuGraphique.plateauDeJeu.get(xTire,yTire,1,0).equals("1")){
             Alert confirmationTir = new Alert(Alert.AlertType.CONFIRMATION);
             confirmationTir.setTitle("Bataille Navale - Confirmation de tir");
@@ -69,49 +71,51 @@ public class SousMarin extends Flotte{
             Optional<ButtonType> choix = confirmationTir.showAndWait();
 
             if (choix.get() == boutonNon){
+                tirNonInterompue=false;
                 AffichageJeuGraphique affichage = new AffichageJeuGraphique();
                 affichage.selectionCaseTir(Flotte.nRefToPListe(lRef, nRef));
             }
         }
         
-        
-        VBox rootTexte = new VBox(25);
-        Label informationNavire = new Label("Vous avez décidez d'utiliser un "+nom);
-        informationNavire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-                +                "-fx-font-size: 15pt;"
-                +                "-fx-background-color: rgba(120,160,175,0.50);"
-                +                "-fx-font-weight: bold;");
+        if(tirNonInterompue==true){
+            VBox rootTexte = new VBox(25);
+            Label informationNavire = new Label("Vous avez décidez d'utiliser un "+nom);
+            informationNavire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 15pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);"
+                    +                "-fx-font-weight: bold;");
 
-        Label informationCalcul = new Label("Avec les informations fournis, on a calculé comme coordonnées de tir");
-        informationCalcul.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-                +                "-fx-font-size: 13pt;"
-                +                "-fx-font-weight: bold;");
-        System.out.println(yTire+","+xTire);
-        Label informationCoordones = new Label("16°02'58."+ yTire +"\"S ; 60°53'40."+ xTire+"\"E");
-        informationCoordones.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-                +                "-fx-font-size: 25pt;"
-                +                "-fx-background-color: rgba(120,160,175,0.50);"
-                +                "-fx-font-weight: bold;");
+            Label informationCalcul = new Label("Avec les informations fournis, on a calculé comme coordonnées de tir");
+            informationCalcul.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-font-weight: bold;");
+            System.out.println(yTire+","+xTire);
+            Label informationCoordones = new Label("16°02'58."+ yTire +"\"S ; 60°53'40."+ xTire+"\"E");
+            informationCoordones.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 25pt;"
+                    +                "-fx-background-color: rgba(120,160,175,0.50);"
+                    +                "-fx-font-weight: bold;");
 
-        Label informationTir = new Label("\n\nOn effectu le tir, patienter...");
-        informationTir.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
-                +                "-fx-font-size: 13pt;"
-                +                "-fx-font-weight: bold;");
+            Label informationTir = new Label("\n\nOn effectu le tir, patienter...");
+            informationTir.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
+                    +                "-fx-font-size: 13pt;"
+                    +                "-fx-font-weight: bold;");
 
-        rootTexte.getChildren().addAll(informationNavire, informationCalcul, informationCoordones, informationTir);
-        rootTexte.setAlignment(Pos.CENTER);
-        Scene sceneTir = new Scene(rootTexte);
-        JeuGraphique.fenetreJeu.setScene(sceneTir);
+            rootTexte.getChildren().addAll(informationNavire, informationCalcul, informationCoordones, informationTir);
+            rootTexte.setAlignment(Pos.CENTER);
+            Scene sceneTir = new Scene(rootTexte);
+            JeuGraphique.fenetreJeu.setScene(sceneTir);
 
-        
-        /*Vérification qu'il y a un impacte************************************/
-        if (JeuGraphique.plateauDeJeu.get(xTire,yTire,2,0) != (Object) '_'){             //Si la case contient un navire
-            impact(xTire, yTire,0);
-        }
-        else{
-            AffichageJeuGraphique affichageEchec = new AffichageJeuGraphique();
-            affichageEchec.tirEchec();
-            JeuGraphique.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici
+
+            /*Vérification qu'il y a un impacte************************************/
+            if (JeuGraphique.plateauDeJeu.get(xTire,yTire,2,0) != (Object) '_'){             //Si la case contient un navire
+                impact(xTire, yTire,0);
+            }
+            else{
+                AffichageJeuGraphique affichageEchec = new AffichageJeuGraphique();
+                affichageEchec.tirEchec();
+                JeuGraphique.plateauDeJeu.modification(xTire,yTire,1,0,"1");         //On modifie le plateau et on met qu'on a tire ici
+            }
         }
     }
 

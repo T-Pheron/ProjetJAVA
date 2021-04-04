@@ -384,7 +384,7 @@ public class Jeu {
             else sortieChoixNavire=true;        //Si le navire n'est pas coulé on continue et on autorise la sortie de la boucle de choix
             
             for (int i=0; i<flotte.get(pListe).taille; i++){                //On fait une boucle pour vérifier toutes les coordonnées du navire
-                if (flotte.get(pListe).coordonnees[i][2]==0 && sortieChoixNavire==true){               //On vérifie pour chaque coordonnées qu'elles ont pas déjà été touchées et que pour l'instant on a les autorisations de quitter la boucle de choix du navire  
+                if ((flotte.get(pListe).coordonnees[i][2]==0||flotte.get(pListe).coordonnees[i][2]==0) && sortieChoixNavire==true){               //On vérifie pour chaque coordonnées qu'elles ont pas déjà été touchées et que pour l'instant on a les autorisations de quitter la boucle de choix du navire  
 
                     System.out.println(B_JAUNE + "Echec!"+RESET+ " Ce navire a déjà été touché!");         //Si ce n'est pas le cas, on affiche un message d'échec de l'opération
                     System.out.println("Voulez vous tenter de déplacer un autre navire ?");         //On demande à l'utilisateur ce qu'il souhaite faire

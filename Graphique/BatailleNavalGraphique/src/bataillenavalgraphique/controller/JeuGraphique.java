@@ -7,6 +7,10 @@ import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
 import bataillenavalgraphique.bataillenaval.model.Plateau;
 import java.util.*;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
         
@@ -28,15 +32,22 @@ public class JeuGraphique{
     public static boolean selectionJoueur=false;
     public static boolean partieSauvegarde=false;
 
-        
-    
-    public JeuGraphique(){
-
-    }
-    
+    /**
+     * Constructeur de la classe JeuGraphique qui permt de lancer une partie sauvegarder.
+     * On donne en paramètre toutes les informations sauvegardées dans un fichier au constructeur pour relancer une partie sauvegardé.
+     * @param numeroJoueur Le numéro du joueur
+     * @param niveauIA Le niveau de l'IA
+     * @param ia L'IA
+     * @param premierTour La variable qui dit si c'est le premier tour
+     * @param plateauDeJeu Le plateau de jeu
+     * @param flotteJoueur0 La flotte du joueur humain 
+     * @param flotteJoueur1 La flotte de l'IA
+     * @param compteurTourIA Le compteur de tour de l'IA
+     * @param compteurTourHumain Le compteur de tour du joueur humain
+     */
     public JeuGraphique(int numeroJoueur, int niveauIA,IA ia, boolean premierTour, Plateau plateauDeJeu, List <Flotte> flotteJoueur0, List <Flotte> flotteJoueur1, int compteurTourIA, int compteurTourHumain){
         
-        JeuGraphique.numeroJoueur = numeroJoueur;
+        JeuGraphique.numeroJoueur = numeroJoueur;               //On affecte les informations sauvegardé à la partie de jeu
         JeuGraphique.niveauIA= niveauIA;
         JeuGraphique.ia = ia;
         JeuGraphique.premierTour= premierTour;
@@ -48,11 +59,25 @@ public class JeuGraphique{
         partieSauvegarde=true;
     }
     
+    /**
+     * Constructeur de la classe JeuGraphique pour la lancement de nouvelle partie.
+     * Ce constructeur est utilisé pour la création d'une nouvelle partie de jeu.
+     */
+    public JeuGraphique(int niveauIA){
+        JeuGraphique.niveauIA= niveauIA;                //on créé une nouvelle partie et on met tous les éléments à leurs valeur par défaut
+        JeuGraphique.ia = new IA(niveauIA);
+        JeuGraphique.plateauDeJeu = new Plateau();
+        JeuGraphique.flotteJoueur0 =null;
+        JeuGraphique.flotteJoueur1 =null;
     
-     public JeuGraphique(int niveauIA){
-
-        JeuGraphique.niveauIA= niveauIA;
-        ia = new IA(niveauIA);
+        JeuGraphique.numeroJoueur=0;
+        JeuGraphique.premierTour = true;
+        JeuGraphique.compteurTourIA =0;
+        JeuGraphique.compteurTourHumain = 0;
+    
+        JeuGraphique.fenetreJeu = new Stage();
+        JeuGraphique.selectionJoueur=false;
+        JeuGraphique.partieSauvegarde=false;
     }
 
      
@@ -80,11 +105,32 @@ public class JeuGraphique{
             premierTour=false;
         }
 
-        JeuGraphique.fenetreJeu.setTitle("Bataille Navale - Jeu");
-        JeuGraphique.fenetreJeu.setWidth(1400);
+        JeuGraphique.fenetreJeu.setTitle("Bataille Navale - Jeu");          //On donne un titre à la fenètre
+        JeuGraphique.fenetreJeu.setWidth(1400);         //On lui donne une dimension
         JeuGraphique.fenetreJeu.setHeight(900);
-        JeuGraphique.fenetreJeu.setResizable(false);
-        JeuGraphique.fenetreJeu.getIcons().add(new Image("/images/iconNaval.png")); 
+        JeuGraphique.fenetreJeu.setResizable(false);            //On met qu'on peut pas rédimensionner la fenêtre de jeu
+        JeuGraphique.fenetreJeu.setOnCloseRequest(event -> {            //Si l'utilisateur décide de fermé la fenêtre de jeu
+            if (partieSauvegarde==false){           //Si la partie ne sort pas d'une sauvegarde
+                event.consume();            //
+                Alert boiteDeFermetureUrgente = new Alert(AlertType.CONFIRMATION);          //On déclare un pop up qui viendra demander confirmation
+                boiteDeFermetureUrgente.setTitle("Bataille Navale - Fermeture");            //On lui donne un titre
+                boiteDeFermetureUrgente.setHeaderText("La partie n'est pas sauvegardée!");
+                boiteDeFermetureUrgente.setContentText("Etes vous sûr de vouloir quitter sans sauvegarder ?");
+                ButtonType boutonOui = new ButtonType("Oui");           //On déclare deux boutons qui sont les possibilités du joueur
+                ButtonType boutonNon = new ButtonType("Non");
+                boiteDeFermetureUrgente.getButtonTypes().setAll(boutonOui, boutonNon);          //On les ajoute à la boite de dialogue
+
+                Optional<ButtonType>choix = boiteDeFermetureUrgente.showAndWait();          //On affiche et on attend
+                if (choix.get() == boutonOui) {         
+                    JeuGraphique.fenetreJeu.close();            //On ferme la fenètre pop up
+                }
+                else if (choix.get() == boutonNon) {
+                    AffichageJeuGraphique affichageJeuGraphique = new AffichageJeuGraphique();          //On déclare un objet de type AffichageJeuGraphique
+                    affichageJeuGraphique.affichageJoueur();            //On retourne à l'affichage du menu joueur
+                }
+            }
+        });
+        JeuGraphique.fenetreJeu.getIcons().add(new Image("/images/iconNaval.png"));             //On donne l'endroit où se trouve le sticker
         
         
         AffichageJeuGraphique choixJoueur = new AffichageJeuGraphique();
@@ -177,7 +223,7 @@ public class JeuGraphique{
     
 
 
-//**************************************************************************
+    //**************************************************************************
     /**
      * Méhode qui permet à l'utilisateur de bouger un de ses navires.
      * Elle permet de vérifier si toutes les conditions sont réunis pour bouger un navire et le déplace.
@@ -378,38 +424,4 @@ public class JeuGraphique{
             }
         } 
     }
-
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-
-    ////////////////////////////////A RETIRER///////////////////////////////////
-    //**************************************************************************
-    /**
-     * Converti les minuscules en majuscule.
-     * Cette méthode recois une lettre en majuscule ou en misnucule et la transforme
-     * si nécésaire en lettre majuscule.
-     * @param lettre La lettre à convertir
-     * @return La lettre en majuscule
-     */
-    public static char convertirMinuscules(char lettre){
-        if (lettre<65||lettre>90){                  //On vérifie que la lettre est une lettre minuscule
-            return lettre -= 'a'-'A';                   //Si c'est le cas on la convertie en majuscule en lui retirant la différence qu'il y a entre les minuscules et les majucules
-        }
-        return lettre;              //On retourne la lettre en majuscule
-    }
-
-    
 }
