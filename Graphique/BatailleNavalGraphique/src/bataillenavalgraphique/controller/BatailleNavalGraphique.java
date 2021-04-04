@@ -1,16 +1,21 @@
 package bataillenavalgraphique.controller;
 
-
 import bataillenavalgraphique.view.MenuGraphique;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+
 /**
- *
- * @author Théric PHERON
+ * Classe main.
+ * Utilisé pour le lancement du jeu.
+ * @author Théric PHERON and Joé LHUERRE
  */
 public class BatailleNavalGraphique extends Application {
     
+    /**
+     * Méthode qui lance la fenêtre principal.
+     */
     @Override
     public void start(Stage primaryStage) {
         
@@ -19,10 +24,10 @@ public class BatailleNavalGraphique extends Application {
     }
 
     /**
-     * @param args the command line arguments
+     * La main du programme.
      */
     public static void main(String[] args) {
-        launch(args);           //On lance le jeu
+        launch(args);
     }
     
 }

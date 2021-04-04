@@ -1,22 +1,28 @@
 package bataillenavalgraphique.controller;
 
-
+import bataillenavalgraphique.bataillenaval.model.Chrono;
 import bataillenavalgraphique.view.AffichageJeuGraphique;
 import bataillenavalgraphique.bataillenaval.view.Affichage;
 import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
 import bataillenavalgraphique.bataillenaval.model.Plateau;
-import java.util.*;
 
+import java.util.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-        
+   
+
+/**
+ * Classe JeuGraphique.
+ * Toutes les informations et méthodes principales du jeu.
+ * @author Théric PHERON and Joé LHUERRE
+ */
 public class JeuGraphique{
 
-    
+    //**************************************************************************
     public static Plateau plateauDeJeu = new Plateau();             //Variable qui stocke l'ensemble du plateau de jeu 
     public static List <Flotte> flotteJoueur0 ;               //List qui stocke l'ensemble de la flotte du joueur 0
     public static List <Flotte> flotteJoueur1 ;               //List qui stocke l'ensemble de la flotte du joueur 1
@@ -27,11 +33,16 @@ public class JeuGraphique{
     public static boolean premierTour = true;        //Variable utilisé pour savoir si c'est le premier tir
     public static int compteurTourIA;               //Variable qui compte le nombre de tour de l'IA
     public static int compteurTourHumain;           //variable qui compte le nombre de tour du joueur humain
+    public static Chrono chronometre;
     
-    public static Stage fenetreJeu = new Stage();
-    public static boolean selectionJoueur=false;
-    public static boolean partieSauvegarde=false;
+    public static Stage fenetreJeu = new Stage();           //On déclare une nouvelle fenètre 
+    public static boolean selectionJoueur=false;            //Variable qui permet de savoir si le joueur à bien sélectionner un navire
+    public static boolean partieSauvegarde=false;           //Variable qui permet de savoir si une partie est sauvegardé ou pas
+    public static boolean victoire=false;
+    //**************************************************************************
 
+    
+    //**************************************************************************
     /**
      * Constructeur de la classe JeuGraphique qui permt de lancer une partie sauvegarder.
      * On donne en paramètre toutes les informations sauvegardées dans un fichier au constructeur pour relancer une partie sauvegardé.
@@ -44,8 +55,9 @@ public class JeuGraphique{
      * @param flotteJoueur1 La flotte de l'IA
      * @param compteurTourIA Le compteur de tour de l'IA
      * @param compteurTourHumain Le compteur de tour du joueur humain
+     * @param chronometre Le chronomètre
      */
-    public JeuGraphique(int numeroJoueur, int niveauIA,IA ia, boolean premierTour, Plateau plateauDeJeu, List <Flotte> flotteJoueur0, List <Flotte> flotteJoueur1, int compteurTourIA, int compteurTourHumain){
+    public JeuGraphique(int numeroJoueur, int niveauIA,IA ia, boolean premierTour, Plateau plateauDeJeu, List <Flotte> flotteJoueur0, List <Flotte> flotteJoueur1, int compteurTourIA, int compteurTourHumain, Chrono chronometre){
         
         JeuGraphique.numeroJoueur = numeroJoueur;               //On affecte les informations sauvegardé à la partie de jeu
         JeuGraphique.niveauIA= niveauIA;
@@ -53,15 +65,19 @@ public class JeuGraphique{
         JeuGraphique.premierTour= premierTour;
         JeuGraphique.compteurTourHumain =compteurTourHumain;
         JeuGraphique.compteurTourIA = compteurTourIA;
+        JeuGraphique.chronometre = chronometre;
         JeuGraphique.plateauDeJeu = plateauDeJeu;
         JeuGraphique.flotteJoueur0 = flotteJoueur0;
         JeuGraphique.flotteJoueur1 = flotteJoueur1;
         partieSauvegarde=true;
     }
     
+
+    //**************************************************************************
     /**
      * Constructeur de la classe JeuGraphique pour la lancement de nouvelle partie.
      * Ce constructeur est utilisé pour la création d'une nouvelle partie de jeu.
+     * @param niveauIA Le niveau de l'IA, 1 facile, 2 moyen, 3 difficile
      */
     public JeuGraphique(int niveauIA){
         JeuGraphique.niveauIA= niveauIA;                //on créé une nouvelle partie et on met tous les éléments à leurs valeur par défaut
@@ -74,6 +90,7 @@ public class JeuGraphique{
         JeuGraphique.premierTour = true;
         JeuGraphique.compteurTourIA =0;
         JeuGraphique.compteurTourHumain = 0;
+        JeuGraphique.chronometre = new Chrono();
     
         JeuGraphique.fenetreJeu = new Stage();
         JeuGraphique.selectionJoueur=false;
@@ -103,7 +120,10 @@ public class JeuGraphique{
         
             numeroJoueur=0;         //On met le joueur qui joue par défaut à 0
             premierTour=false;
+            
+            chronometre.start();
         }
+        else chronometre.resume();
 
         JeuGraphique.fenetreJeu.setTitle("Bataille Navale - Jeu");          //On donne un titre à la fenètre
         JeuGraphique.fenetreJeu.setWidth(1400);         //On lui donne une dimension
@@ -143,15 +163,13 @@ public class JeuGraphique{
         System.out.println();
         Affichage.afficher(numeroJoueur, 1, JeuGraphique.plateauDeJeu);
 
-        compteurTourIA++;           //On rajoute 1 au compteur de tour de l'IA
-
         ia.jouer();            //On lance la méthode qui permet à l'IA de jouer
 
     }
     
 
     
-        //**************************************************************************
+    //**************************************************************************
     /**
      * Méthode de placement aléatoire d'une flotte de navire.
      * Cette méthode permet de placer aléatoirement une flotte sur la grille de jeu
@@ -187,8 +205,8 @@ public class JeuGraphique{
      * @param x La valeur de l'axe x dans la grille du joueur
      * @param y La valeur de l'axe y dans la grille du joueur
      * @param pListe La position du navire dans la liste flotte
-     * @param numeroJoueur
-     * @param direction 
+     * @param numeroJoueur La numéro du joueur
+     * @param direction La direction du navire
      */
     public void placementNavireGraphique(List<Flotte> flotte,int x, int y,int pListe, int numeroJoueur, int direction){
         
@@ -227,9 +245,9 @@ public class JeuGraphique{
     /**
      * Méhode qui permet à l'utilisateur de bouger un de ses navires.
      * Elle permet de vérifier si toutes les conditions sont réunis pour bouger un navire et le déplace.
-     * @param pListe
-     * @param xBouge
-     * @param yBouge
+     * @param pListe La position dans la liste du navire
+     * @param xBouge La position x de déplacement choisie
+     * @param yBouge La position y de déplacement choisie
      */
     public static void bougerNavire(int pListe, int xBouge, int yBouge){
         
@@ -387,7 +405,7 @@ public class JeuGraphique{
         }
         
     
-        if (flotte.get(pListe).direction==1){
+        if (flotte.get(pListe).direction==1){           //Si le navire est à l'horizontal
             
             if (yBouge==possibilite[3]){         //possibilité de desecendre
                 for (int i=flotte.get(pListe).taille - 1; i>=0;i--){            //On parcourt la taille du navire
@@ -423,5 +441,67 @@ public class JeuGraphique{
                 affichageJoueura.deplacementEffectueNavire();
             }
         } 
+    }
+
+
+    //**************************************************************************
+    /**
+     * Méthode qui permet d'afficher un message si un des joueurs à gagné.
+     * @return true si un joueur à gagné, false, sinon
+     */
+    public static boolean victoire(){
+
+        boolean etat0;          //On initialise un booléen
+        boolean etat0SousMarin=false;           //On initialise un booléen à false pour le sous-marin 
+        for (int i=0; i<10; i++){           //On parcourt la flotte du joueur 
+            etat0 = flotteJoueur0.get(i).etat;          //Pour chaque navire, on regarde si il a coulé ou pas
+            if (etat0==true) i=10;         //Si il est toujours à flot
+            if (i==9 && etat0!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
+                JeuGraphique.chronometre.stop();        //On arrête le chronomètre
+                JeuGraphique.victoire=true ;            //On arrête la boucle de Jeu
+                AffichageJeuGraphique affichageJeuGraphique = new AffichageJeuGraphique(); 
+                affichageJeuGraphique.victoireJoueur();         //On affiche les informations de la victoire
+                return true;
+            } 
+        }
+        
+        for (int i=6; i<10;i++){            //On parcourt les sous-marin
+            if (etat0SousMarin==false) etat0SousMarin=flotteJoueur1.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
+        }
+
+        if (etat0SousMarin==false){         //Si il y a plus aucun sous-marin
+            JeuGraphique.chronometre.stop();        //On arrête le chronomètre
+            JeuGraphique.victoire=true ;            //On arrête la boucle de Jeu
+            AffichageJeuGraphique affichageJeuGraphique = new AffichageJeuGraphique();
+            affichageJeuGraphique.victoireJoueurFofait();              //On affiche les informations de la victoire
+        }
+
+        boolean etat1SousMarin=false;           //On initialise un booléen à false pour le sous-marin
+        boolean etat1;      //On initialise un booléen
+        for (int i=0; i<10; i++){           //On parcourt la flotte de l'IA
+            etat1 = flotteJoueur1.get(i).etat;          //Pour chaque navire, on regarde si il a coulé ou pas
+            if (etat1==true) i=10;         //Si il est toujours à flot
+            if (i==9 && etat1!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
+                JeuGraphique.chronometre.stop();        //On arrête le chronomètre
+                JeuGraphique.victoire=true ;            //On arrête la boucle de Jeu
+                AffichageJeuGraphique affichageJeuGraphique = new AffichageJeuGraphique();
+                affichageJeuGraphique.victoireIA();              //On affiche les informations de la victoire
+                return true;
+            }
+        }
+        
+        for (int i=6; i<10;i++){            //On parcourt les sous-marins
+            if (etat1SousMarin==false) etat1SousMarin=flotteJoueur1.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
+            return true;
+        }
+
+        if (etat1SousMarin==false){         //Si il y a plus aucun sous-marin
+            JeuGraphique.chronometre.stop();        //On arrête le chronomètre
+            JeuGraphique.victoire=true ;            //On arrête la boucle de Jeu
+            AffichageJeuGraphique affichageJeuGraphique = new AffichageJeuGraphique();
+            affichageJeuGraphique.victoireIAFofait();           //On affiche les informations de la victoire
+            return true;
+        }
+        return false;
     }
 }

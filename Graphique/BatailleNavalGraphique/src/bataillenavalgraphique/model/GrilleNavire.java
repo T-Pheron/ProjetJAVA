@@ -2,23 +2,46 @@ package bataillenavalgraphique.model;
 
 import javafx.scene.layout.*;
 
-
-
+/**
+ * Classe JeuGraphique.
+ * Toutes les informations et méthodes principales du jeu.
+ * @author Théric PHERON and Joé LHUERRE
+ */
 public class GrilleNavire{
-    
-    CaseBouton[] grilleBoutons;         //On déclare une case de bouton ?
-    int taille;         //Variable qui stocke la taille du navire
-    
+
+    //**************************************************************************
+    CaseBouton[] grilleBoutons;         //Variable qui stocke les boutons qui représente un navire 
+    int taille;         //Variable qui stock la taille du navire
+    //**************************************************************************
+
+
+    //**************************************************************************
+    /**
+     * Construteur de la classe GrilleNavire.
+     * Il permet de créer un object qui va contenir une ligne de bouton ou une collonne de bouton en fonction de la direction et la taille du navire.
+     * @param taille La taille du navire.
+     */
     public GrilleNavire(int taille){
          grilleBoutons= new CaseBouton[taille];         //On déclare une case de bouton ?
          
          this.taille =taille;           //La taille passé en paramètre devient la taille de ctte méthode
     }
     
+
+    //**************************************************************************
+    /**
+     * Méthode qui renvoie le root qui réprésente le navire.
+     * Elle permet de renvoyer un root avec tous les éléments qui réprésente le navire.
+     * @param direction La direction du navire
+     * @param lRef La lettre de référence 
+     * @param nPlateau Le numéro du navire sur le plateau
+     * @param nTir Le numéro sur la grille de tir
+     * @return Retourne un root contenant le navire
+     */
     public Pane getRoot(int direction, char lRef,int nPlateau, String nTir){
         
         if (direction ==0){         //Si le navire est horizontal
-            HBox rootNavireHorizontale = new HBox();            //On déclare un affichage horizontal
+            HBox rootNavireHorizontale = new HBox();            //On déclare un stockage horizontal
             for (int i=0; i<taille;i++){            //On parcourt la taille du navire
                 grilleBoutons[i]= new CaseBouton('D');          //On déclare un bouton avec ecrit 'D'
                 grilleBoutons[i].setTitle((String)(lRef + String.valueOf(nPlateau)));           //On écrit dans ce bouton la lettre de référence et la valeur du numéro de plateau

@@ -1,27 +1,41 @@
 package bataillenavalgraphique.controller;
 
-
-
+import bataillenavalgraphique.bataillenaval.model.Chrono;
 import bataillenavalgraphique.view.AffichageSauvegardeGraphique;
 import bataillenavalgraphique.bataillenaval.controller.JeuNGraphique;
+
 import java.io.*;
 import java.util.*;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
 import bataillenavalgraphique.bataillenaval.model.Plateau;
 import javafx.stage.Stage;
 
-public class Sauvegarde {
 
+/**
+ * Classe Sauvegarde.
+ * Toutes les méthodes utilisés pour la sauvegarde des informations d'une partie.
+ * @author Théric PHERON and Joé LHUERRE
+ */
+public class Sauvegarde {
     
+    //*************************************************************************
+    /**
+     * Constructeur de la classe sauvegarder
+     * Il permet de créer un object de type Sauvegarder pour effectuer une sauvegarde ou un chargement de partie.
+     */
     public Sauvegarde(){
 
     }
     
-    public void lancementChargement(){
-        
-    }
-    
 
+    //**************************************************************************
+    /**
+     * Méthode qui permet de sauvegarder une partie.
+     * @param nomSauvegarde Le noms du fichier de sauvegarde.
+     * @param nomPartie La nom de la partie donné par l'utilisateur
+     * @param sauvegardeEtQuitter True si il faut quitter le jeu après la sauvegarde
+     * @return 1 si tous c'est bien passé, 0 sinon
+     */
     public int savePartie(String nomSauvegarde, String nomPartie, boolean sauvegardeEtQuitter){
 
  
@@ -42,6 +56,7 @@ public class Sauvegarde {
             out.writeBoolean(JeuGraphique.premierTour);
             out.writeInt(JeuGraphique.compteurTourHumain);
             out.writeInt(JeuGraphique.compteurTourIA);
+            out.writeObject(JeuGraphique.chronometre);
 
 
             //On stock dans le fichier le plateau
@@ -110,6 +125,14 @@ public class Sauvegarde {
         return 2;           //La partie n'a pas été sauvegardé 
     }
 
+
+    //**************************************************************************
+    /**
+     * Méthode qui permet de suprimer une partie.
+     * @param nomSauvegarde Le nom du fichier de sauvegarde
+     * @param stage La fenêtre de jeu
+     * @return 4 si tout c'est bien passé, 2 sinon
+     */
     public int supprimerPartie(String nomSauvegarde, Stage stage){
 
         AffichageSauvegardeGraphique affichageSauvegarde = new AffichageSauvegardeGraphique();
@@ -129,6 +152,14 @@ public class Sauvegarde {
         return 2;           //La partie n'a pas été sauvegardé 
     }
 
+
+    //**************************************************************************
+    /**
+     * Méthode qui permet de charger une partie de jeu.
+     * @param nomSauvegarde Le nom du fichier de la sauvegarde
+     * @throws ClassNotFoundException
+     * @throws InterruptedException
+     */
     public void chargementPartie( String nomSauvegarde) throws ClassNotFoundException, InterruptedException{
         
         //On initialise des variables pour stocker toutes les données du jeu
@@ -138,6 +169,7 @@ public class Sauvegarde {
         boolean premierTour;
         int compteurTourHumain;
         int compteurTourIA;
+        Chrono chronometre;
 
         Plateau plateauDeJeuCopy = new Plateau();
         List<Flotte> flotteJoueur0Copy;
@@ -158,6 +190,7 @@ public class Sauvegarde {
             premierTour = (Boolean) in.readBoolean();
             compteurTourHumain = in.readInt();
             compteurTourIA = in.readInt();
+            chronometre = (Chrono) in.readObject();
 
 
             //On stock dans le fichier le plateau
@@ -183,11 +216,8 @@ public class Sauvegarde {
                 
                 for (int j=0; j<flotteJoueur0Copy.get(i).taille; j++){
                     flotteJoueur0Copy.get(i).coordonnees[j][0] =  in.readInt();
-                    System.out.print(flotteJoueur0Copy.get(i).coordonnees[j][0]+"_");
                     flotteJoueur0Copy.get(i).coordonnees[j][1] =  in.readInt();
-                    System.out.print(flotteJoueur0Copy.get(i).coordonnees[j][1]+"_");
                     flotteJoueur0Copy.get(i).coordonnees[j][2] =  in.readInt();
-                    System.out.println(flotteJoueur0Copy.get(i).coordonnees[j][2]);
                 }
                     
                 flotteJoueur0Copy.get(i).direction = in.readInt();
@@ -214,7 +244,7 @@ public class Sauvegarde {
                 flotteJoueur1Copy.get(i).premierTire = in.readBoolean();
             }
             
-            JeuGraphique jeu = new JeuGraphique(numeroJoueur, niveauIA, ia, premierTour, plateauDeJeuCopy, flotteJoueur0Copy, flotteJoueur1Copy, compteurTourHumain, compteurTourIA);            //On crée un objet de type Jeu a qui on affecte tout ce qu'on lui a donné
+            JeuGraphique jeu = new JeuGraphique(numeroJoueur, niveauIA, ia, premierTour, plateauDeJeuCopy, flotteJoueur0Copy, flotteJoueur1Copy, compteurTourHumain, compteurTourIA, chronometre);            //On crée un objet de type Jeu a qui on affecte tout ce qu'on lui a donné
             
             jeu.lancementJeuGraphique();            //On lance la partie
             

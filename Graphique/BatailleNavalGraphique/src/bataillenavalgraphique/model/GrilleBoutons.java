@@ -1,30 +1,48 @@
 package bataillenavalgraphique.model;
 
 import bataillenavalgraphique.bataillenaval.model.Plateau;
-import java.util.List;
 
+import java.util.List;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+
 /**
- *
- * @author Théric PHERON
+ * Classe GrilleBoutons.
+ * Grille de de bouton qui réprésente la plateau en mode graphique 
+ * @author Théric PHERON and Joé LHUERRE
  */
 public final class GrilleBoutons {
     
-    
+    //**************************************************************************
     CaseBouton[][] grilleBoutons = new CaseBouton[15][15];          //On déclare un grille de bouton de 15*15 cases
     VBox rootGrilleBoutons = new VBox();            //On déclare un affichage vertical
-    
-    
+    //**************************************************************************
+
+
+    //**************************************************************************
+    /**
+     * Constructeur de la clase GrilleBoutons.
+     * Permet d'initialiser une variable qui stock une grille de CaseBouton
+     * @param plateauRef La lettre de référence de la grille
+     * @param listeInformations Liste d'information nécésaire pour effectuer une action
+     */
     public GrilleBoutons(char plateauRef, List<Integer>  listeInformations){
-        rootGrilleBoutons.getChildren().addAll(ligneCoordonnees(plateauRef, 'A'));
+        rootGrilleBoutons.getChildren().addAll(ligneCoordonnees(plateauRef, 'A'));          //On ajoute les bords de la grille
         for (int y=0; y<15; y++){           //On parcourt l'axe des ordonnées
             rootGrilleBoutons.getChildren().add(lignePlateau(y, grilleBoutons, plateauRef, listeInformations));         //On rajoute ces éléments au root de la grille
         }
     }
     
+
+    //**************************************************************************
+    /**
+     * Constructeur de la classe GrilleBoutons.
+     * Permet d'initialiser une variable qui stock une grille de CaseBouton
+     * @param plateauRef La lettre de référence du plateau
+     * @param lRef La lettre de référence d'un navire
+     */
     public GrilleBoutons(char plateauRef, char lRef){
         rootGrilleBoutons.getChildren().addAll(ligneCoordonnees(plateauRef, lRef));
         for (int y=0; y<15; y++){           //On parcourt l'axe des ordonnées
@@ -32,6 +50,14 @@ public final class GrilleBoutons {
         }
     }
     
+
+    //**************************************************************************
+    /**
+     * Méthode qui permet de renvoyer une ligne avec les coordonnées
+     * @param plateauRef La lettre de référence du plateau
+     * @param lRef La lettre de référence d'un navire
+     * @return La ligne de la grille
+     */
     public HBox ligneCoordonnees(char plateauRef, char lRef){
         HBox ligneCoordones = new HBox();
         String couleurDefaut = couleurBord(plateauRef, lRef);         //On change la couleur
@@ -50,6 +76,15 @@ public final class GrilleBoutons {
         return ligneCoordones;
     }
 
+
+    //**************************************************************************
+    /**
+     * Méthode qui permet de renvoyer une case avec le numéro de la coordonées.
+     * @param plateauRef La lettre de référence du plateau
+     * @param numeroLigne Le numéro de la ligne de la grille
+     * @param lRef La lettre de référence du navire
+     * @return Le bouton avec le numéro de la ligne
+     */
     public Button colloneCoordonnees(char plateauRef, int numeroLigne, char lRef){
         String couleurDefaut = couleurBord(plateauRef, lRef);         //On change la couleur
 
@@ -61,16 +96,35 @@ public final class GrilleBoutons {
     }
 
     
-    public HBox lignePlateau(int y,CaseBouton[][] pableauBoutonNavireJoueur, char plateauRef, List<Integer>  listeInformations){
+    //**************************************************************************
+    /**
+     * Méthode qui perme de renvoyer une ligne de la grille.
+     * @param y La coordonnées y des boutons
+     * @param plateauBoutonNavireJoueur Plateau ou est stocké les boutons
+     * @param plateauRef La lettre de référence du plateau
+     * @param listeInformations La liste des informations nécésaire pour un tir
+     * @return Une ligne de la grille
+     */
+    public HBox lignePlateau(int y,CaseBouton[][] plateauBoutonNavireJoueur, char plateauRef, List<Integer>  listeInformations){
         HBox rootAffichagePlateau = new HBox();         //On déclare un affichage horizontal
         rootAffichagePlateau.getChildren().add(colloneCoordonnees(plateauRef, y, 'A'));
         for (int x=0; x<15;x++){            //On parcourt l'axe des abscisses
-            pableauBoutonNavireJoueur[y][x]= new CaseBouton(y, x, plateauRef, listeInformations);           //On déclare des boutons a chaque valeur de x
-            rootAffichagePlateau.getChildren().add(pableauBoutonNavireJoueur[y][x].getButton());            //On rajoute les boutons au root
+            plateauBoutonNavireJoueur[y][x]= new CaseBouton(y, x, plateauRef, listeInformations);           //On déclare des boutons a chaque valeur de x
+            rootAffichagePlateau.getChildren().add(plateauBoutonNavireJoueur[y][x].getButton());            //On rajoute les boutons au root
         }
         return rootAffichagePlateau;            //On return le root
     }
     
+
+    //**************************************************************************
+    /**
+     * Méthode qui perme de renvoyer une ligne de la grille.
+     * @param y La coordonnées y des boutons
+     * @param pableauBoutonNavireJoueur Plateau ou est stocké les boutons
+     * @param plateauRef La lettre de référence du plateau
+     * @param lRef La lettre de référence du navire
+     * @return Une ligne de la grille
+     */
     public HBox lignePlateau(int y,CaseBouton[][] pableauBoutonNavireJoueur, char plateauRef, char lRef){
         HBox rootAffichagePlateau = new HBox();
         rootAffichagePlateau.getChildren().add(colloneCoordonnees(plateauRef, y, lRef));
@@ -82,27 +136,41 @@ public final class GrilleBoutons {
     }
     
     
-    
+    //**************************************************************************
+    /**
+     * Méthode qui renvoie la grille avec les boutons
+     * @return La grille de CaseBoutons
+     */
     public VBox getRoot(){
         return rootGrilleBoutons;           //On return le root
     }
 
+
+    //**************************************************************************
+    /**
+     * Méthode qui permet de mettre à jour les informations d'une grille de navire
+     */
     public void miseAJourAffichageNavire(Plateau plateau){
         
         for (int j=0; j<15; j++){           //On parcourt l'axe des ordonnées
             for (int i=0;i<15;i++){            //On parcourt l'axe des abscisses
-                if (plateau.get(i,j,0,0)!=(Object) '_'){            //Si la case du plateau est different de '_'
-                    grilleBoutons[j][i].setTitle((String) (plateau.get(i,j,0,0).toString() + plateau.get(i,j,0,1).toString()));         //?
+                if (plateau.get(i,j,0,0)!=(Object) '_'){            //Si la case ne contient pas de navire
+                    grilleBoutons[j][i].setTitle((String) (plateau.get(i,j,0,0).toString() + plateau.get(i,j,0,1).toString()));         //Permet de rajouter un texte au bouton
                     grilleBoutons[j][i].setColor((char) plateau.get(i,j,0,0),(int) plateau.get(i,j,0,1), (String) plateau.get(i, j, 3, 0));            //Affiche un couleur sur le bouton suivant ce qui est dedans ?
                 }
                 else{
-                    grilleBoutons[j][i].setTitle("");           //?
+                    grilleBoutons[j][i].setTitle("");           //Permet de rajouter un texte au bouton
                     grilleBoutons[j][i].setColor((char) plateau.get(i,j,0,0),(int) plateau.get(i,j,0,1), (String) plateau.get(i, j, 3, 0));            //Affiche un couleur sur le bouton suivant ce qui est dedans ?
                 }
             }
         }
     }
     
+
+    //**************************************************************************
+    /**
+     * Méthode qui permet de mettre à jour les informations d'une grille de tir
+     */
     public void miseAJourAffichageTirs(Plateau plateau){
         
         for (int j=0; j<15; j++){           //On parcourt l'axe des ordonnées
@@ -118,6 +186,11 @@ public final class GrilleBoutons {
         }
     }
     
+
+    //**************************************************************************
+    /**
+     * Méthode qui permet de mettre à jour les informations d'une grille de navire
+     */
     public void miseAJourAffichageNavire(Plateau plateau, int pListe){
         
         for (int j=0; j<15; j++){           //On parcourt l'axe des ordonnées
@@ -135,6 +208,10 @@ public final class GrilleBoutons {
     }
     
     
+    //**************************************************************************
+    /**
+     * Méthode qui permet de mettre à jour les informations d'une grille pour bouger
+     */
     public void miseAJourAffichageBouger(Plateau plateau, int pListe, char lRef){
         
         for (int j=0; j<15; j++){           //On parcourt l'axe des ordonnées
@@ -151,6 +228,14 @@ public final class GrilleBoutons {
         }
     }
 
+
+    //**************************************************************************
+    /**
+     * Méthode qui permet de mettre la couleur des bords d'une grille
+     * @param plateauRef La lettre de référence de la grille
+     * @param lRef La lettre de référence d'un navire
+     * @return Le code HTML RGV de la couleur
+     */
     public String couleurBord(char plateauRef, char lRef){
         
         if (lRef=='A'){         //Si la lettre de référence est 'A' par défaut

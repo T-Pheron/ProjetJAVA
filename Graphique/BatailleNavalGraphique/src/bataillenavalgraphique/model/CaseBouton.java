@@ -1,19 +1,22 @@
 package bataillenavalgraphique.model;
 
-
 import bataillenavalgraphique.view.AffichageJeuGraphique;
 import bataillenavalgraphique.controller.JeuGraphique;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
+
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 
+
 /**
- *
- * @author Théric PHERON
+ * Classe CaseBouton.
+ * Type utilisé pour créer une case du plateau de Jeu
+ * @author Théric PHERON and Joé LHUERRE
  */
 public class CaseBouton {
-    
+
+    //**************************************************************************
     int x;           //Variable utilisée pour stocker la valeur de l'axe x 
     int y;           //Variable utilisée pour stocker la valeur de l'axe y
     char plateauRef = 'A';          //Variable utilisée pour stocker la référence du plateau qu'on a initialisé à A par défaut
@@ -22,7 +25,15 @@ public class CaseBouton {
     String couleurSurvol = "-fx-background-color: rgba(82,127,143,0.80);";
     String couleurText = "-fx-text-fill: BLACK ;";
     List<Integer>   listeInformations;          //On déclare un liste d'information
-    
+    //**************************************************************************
+
+
+    //**************************************************************************
+    /**
+     * Constructeur de la classe CaseBouton.
+     * Il permet de créer un bouton qui contient différente informations
+     * @param plateauref Le numéro de référence du plateau ou est placé ce bouton
+     */
     public CaseBouton(char plateauref){
         x=0;            //On initialise à 0 la coordonnée de x par défaut
         y=0;            //On initialise à 0 la coordonnée de y par défaut
@@ -30,6 +41,15 @@ public class CaseBouton {
     }
     
     
+    //**************************************************************************
+    /**
+     * Constructeur de la classe CaseBouton.
+     * Il permet de créer un bouton avec des informations nécésaire à des actions
+     * @param y Sa position y dans la grille de bouton
+     * @param x Sa position x dans le grille de bouton
+     * @param plateauRef La lettre de référence du plateau
+     * @param listeInformations Une liste contenant des informations nécésaire pour effectuer des action
+     */
     public CaseBouton(int y, int x, char plateauRef, List<Integer> listeInformations ){
         this.x=x;            //La coordonnée de x passé en paramètre devient la coordonnée de x de cette méthode
         this.y=y;            //La coordonnée de y passé en paramètre devient la coordonnée de y de cette méthode
@@ -43,18 +63,24 @@ public class CaseBouton {
         bouton.setOnMouseEntered (e -> bouton.setStyle (couleurSurvol + couleurText));          //On modifie la couleur du bouton et du text si l'utlilisateur a le curseur sur le bouton
         bouton.setOnMouseExited (e -> bouton.setStyle (couleurDefaut + couleurText));          //On modifie la couleur du bouton et du text si l'utlilisateur enlève le curseur du bouton
 
-        bouton.setOnAction((ActionEvent eventChargementPartie) -> {         //Si l'utilisateur clique on exécute le prgramme 
+        bouton.setOnAction((ActionEvent event) -> {         //Si l'utilisateur clique on exécute le prgramme 
             
             AffichageJeuGraphique affichageJeuGraphique = new AffichageJeuGraphique();          //On déclare un objet de type AffichageJeuGraphique
             
             if (plateauRef=='S'){           //Si la lettre référence du plateau est égale à S
                 if (!JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals('_')){            //Si le bouton qui se trouve au coordonnée x et y est différent de '_'
-                    JeuGraphique.partieSauvegarde=false;
-                    int pListe = Flotte.nPlateauToPListe((char) JeuGraphique.plateauDeJeu.get(x, y, 0, 0), (int) JeuGraphique.plateauDeJeu.get(x, y, 0, 1));
-                    try {
-                        JeuGraphique.flotteJoueur0.get(pListe).tir(listeInformations.get(1), listeInformations.get(2));
-                    } catch (InterruptedException e1) {
-                        System.err.println("Erreur! .Le tir n'a pas pu être effectué");
+                    int pListe = Flotte.nPlateauToPListe((char) JeuGraphique.plateauDeJeu.get(x,y,0,0), (int) JeuGraphique.plateauDeJeu.get(x,y,0,1));          //On déduit la position du bateau dans la liste
+                    if (JeuGraphique.flotteJoueur0.get(pListe).navireVivant()==true){           //On vérifie que le navire n'est pas coulé
+                        JeuGraphique.partieSauvegarde=false;
+                        try {
+                            JeuGraphique.compteurTourHumain++;          //On rajoute 1 au nombre de tour du joueur 
+                            JeuGraphique.flotteJoueur0.get(pListe).tir(listeInformations.get(1), listeInformations.get(2));
+                        } catch (InterruptedException e1) {
+                            System.err.println("Erreur! .Le tir n'a pas pu être effectué");
+                        }
+                    }
+                    else{
+                        affichageJeuGraphique.erreurNavireCoule();          //On affiche un message d'erreur en disant que le navire est coulé
                     }
                 }
                 if (JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals('_')){            //Si le bouton qui se trouve au coordonnée x et y est égal à '_'
@@ -66,6 +92,7 @@ public class CaseBouton {
                 if (!JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals('0')){            //Si le bouton qui se trouve au coordonnée x est différent de '0'
                 JeuGraphique.partieSauvegarde=false;    
                 try {
+                        JeuGraphique.compteurTourHumain++;          //On rajoute 1 au nombre de tour du joueur 
                         JeuGraphique.flotteJoueur0.get(listeInformations.get(0)).tir(x, y);         //On tire et on rajoute dans la liste qu'on a tiré a cet emplacement
                     } catch (InterruptedException ex) {
                         System.err.println("Erreur! La sélection du navire à échoué");
@@ -74,6 +101,7 @@ public class CaseBouton {
             }
             
             if (plateauRef=='C' && nouvellePositionPossible(x,y,listeInformations.get(0))==true){         //Si la lettre référence du plateau est C et qu'il qu'il y a une nouvelle position possible
+                JeuGraphique.compteurTourHumain++;          //On rajoute 1 au nombre de tour du joueur     
                 JeuGraphique.partieSauvegarde=false;    
                 affichageJeuGraphique.bougerNavire(x,y, listeInformations.get(0));          //On bouge le navire et on rajoute ces informations dans la lsite
             }
@@ -101,7 +129,13 @@ public class CaseBouton {
             
             if (plateauRef=='N'){           //Si la lettre référence du plateau est égale à N
                 if (!JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals('_')){            //Si le bouton qui se trouve au coordonnée x et y est différent de '_'
-                    affichageJeuGraphique.selectionNavire(x,y);
+                    int pListe = Flotte.nPlateauToPListe((char) JeuGraphique.plateauDeJeu.get(x,y,0,0), (int) JeuGraphique.plateauDeJeu.get(x,y,0,1));          //On déduit la position du bateau dans la liste
+                    if (JeuGraphique.flotteJoueur0.get(pListe).navireVivant()==true){           //On vérifie que le navire n'est pas coulé
+                        affichageJeuGraphique.selectionNavire(x,y);         //On appelle la méthode pour la sélection de la case de tire
+                    }
+                    else{
+                        affichageJeuGraphique.erreurNavireCoule();          //On affiche un message d'erreur en disant que le navire est coulé
+                    }
                 }
                 if (JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals('_')){            //Si le bouton qui se trouve au coordonnée x et y est égal à '_'
                     affichageJeuGraphique.erreurCaseVideN();
@@ -117,15 +151,33 @@ public class CaseBouton {
     }
     
 
-    
+    //**************************************************************************
+    /**
+     * Méthode qui permet de renvoyer le bouton
+     * @return Retourn un bouton
+     */
     public Button getButton(){
         return bouton;          //On return le bouton
     }
 
+
+    //**************************************************************************
+    /**
+     * La méthode qui permet de mettre une texte dans le bouton
+     * @param titre Le titre à mettre dans le bouton
+     */
     public void setTitle(String titre){
         bouton.setText(titre);          //On return le bouton avec le text renté en paramètre
     }
     
+
+    //**************************************************************************
+    /**
+     * Méthode qui permet de donner une couleur au bouton
+     * @param lRef La lettre de référence d'un navire
+     * @param nPlateau Le numéro du navire sur le plateau 
+     * @param nTir Le numéro présent sur la grille de tir de l'adversaire
+     */
     public void setColor(char lRef, int nPlateau, String nTir){
         switch (plateauRef) {           //Suivant ce que la lettre de référence du plateau est
             case 'D':           //Si la lettre de référence est le D
@@ -237,10 +289,18 @@ public class CaseBouton {
         }
     }
     
+
+    //**************************************************************************
+    /**
+     * Méthode qui permet de donner une couleur au bouton.
+     * @param pListe La position dans la liste du navire
+     * @param nTirAdverse Le numéro compris dans la grille de tir de l'adversaire
+     * @param lRef La lettre de référence du navire
+     */
     public void setColor(int pListe, String nTirAdverse, char lRef ){
-        if (plateauRef=='C'){
+        if (plateauRef=='C'){           //Si le plateau est utilisé pour bouger des navires
                 
-                if(JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals(lRef) && JeuGraphique.plateauDeJeu.get(x, y, 0, 1)==(Object) Flotte.pListeToNPlateau(lRef, pListe)){
+                if(JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals(lRef) && JeuGraphique.plateauDeJeu.get(x, y, 0, 1)==(Object) Flotte.pListeToNPlateau(lRef, pListe)){            //Si c'est un navire qui est à cette coordonnée du plateau
                     switch (lRef) {         
                         case 'U':           //Si la lettre de référence des navires est 'U'
                             couleurDefaut="-fx-background-color: rgba(221,13,13,0.50);";          //On change les couleurs de la case
@@ -270,7 +330,7 @@ public class CaseBouton {
                             break;
                     }
                 }
-                else if (!JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals('_')){
+                else if (!JeuGraphique.plateauDeJeu.get(x, y, 0, 0).equals('_')){           //Si ce n'est pas un navire a cette coordonnée
                     switch ((char) JeuGraphique.plateauDeJeu.get(x, y, 0, 0)) {
                         case 'U':
                             couleurDefaut="-fx-background-color: rgba(175,77,77,0.50);";          //On change les couleurs de la case
@@ -325,6 +385,11 @@ public class CaseBouton {
     }
     
     
+    //**************************************************************************
+    /**
+     * Méthode qui permet de paramétrer la couleur du bouton
+     * @param numeroPlateau Le numéro présent sur la grille de tir de l'adversaire
+     */
     public void setColor(String numeroPlateau){
         if (plateauRef=='D'){           //Si la lettre de référence du plateau est 'D'
             if (numeroPlateau.equals("0")){         //Si il n'y a jamais eu d'impact sur cette case
@@ -392,6 +457,15 @@ public class CaseBouton {
         }
     }
     
+
+    //**************************************************************************
+    /**
+     * Méthode qui permet de savoir si l'emplacement du bouton est une nouvelle position possible pour un navire.
+     * @param x La position x du bouton
+     * @param y La position y du bouton
+     * @param pListe La position du navire dans la flotte
+     * @return True si cette emplacement est possible, false sinon
+     */
     public boolean nouvellePositionPossible(int x, int y, int pListe){
         for(int i=0; i<JeuGraphique.flotteJoueur0.get(pListe).taille; i++){            //Pour une case donner on vérifier si le navire peut etre déplacer dessus
             if (JeuGraphique.flotteJoueur0.get(pListe).coordonnees[i][0]+1==x &&            //Si la case les a cotés d'une case du navire et qu'elle est vide on rentre dans la boucle 
@@ -418,6 +492,16 @@ public class CaseBouton {
         return false;
     }
     
+
+    //**************************************************************************
+    /**
+     * Méthode qui permet de savoir si la placement du navire est possible sur toute une collonne
+     * @param x La position x du bouton
+     * @param y La position y du bouton
+     * @param pListe La position du navire dans la flotte
+     * @param emplacement La position de la colone par rapport au navire
+     * @return True si le positionnement est possible, false sinon
+     */
     public boolean verificationColonne(int x, int y, int pListe, char emplacement){
         
         if (JeuGraphique.flotteJoueur0.get(pListe).direction==0){           //Si le navire est à l'horizontal

@@ -1,6 +1,5 @@
 package bataillenavalgraphique.controller;
 
-
 import bataillenavalgraphique.view.AffichageIA;
 import bataillenavalgraphique.bataillenaval.model.Plateau;
 import bataillenavalgraphique.bataillenaval.model.Flotte;
@@ -9,23 +8,17 @@ import static bataillenavalgraphique.bataillenaval.model.Flotte.nPlateauToPListe
 
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.util.Duration;
+
 
 /**
- *
- * @author Théric PHERON
+ * Classe de l'IA.
+ * Toutes les méthodes qui permette le fonctionnement de l'IA du jeu.
+ * @author Théric PHERON and Joé LHUERRE
  */
 public class IA implements Serializable{
-    
 
-    private static final long serialVersionUID = -8187468013304877808L;
+    //*************************************************************************
+    private static final long serialVersionUID = -8187468013304877808L;        //Runtine définie par le logiciel 
     private int nombreDeTir = 0;            //Variable utilisée pour stocker le nombre de tir
     private boolean premierTire = true;         //Variable utilisée pour stocker 
     private  boolean[] saveCoord = new boolean [20];            //Variable utilisée pour stocker
@@ -40,12 +33,25 @@ public class IA implements Serializable{
     private int nombreDeTirDestroyer=0;
     private final int niveauIA;
 
-    AffichageIA affichageIA = new AffichageIA();
+    AffichageIA affichageIA = new AffichageIA();            //Varirable utilisé pour l'affichage des différents message de l'IA
+    //*************************************************************************
 
+
+    //**************************************************************************
+    /**
+     * Constructeur de la classe IA qui permet d'initialiseer une IA avec son niveau en début de jeu.
+     * @param niveauIA Le niveau de l'IA, 1 facile,2 moyen, 3 difficile
+     */
     public IA(int niveauIA){
         this.niveauIA= niveauIA;
     }
     
+
+    /**
+     * Constructeur qui permet d'initialiser une IA après une sauvegarde.
+     * Ce constrctucteur est utilisé pour initialiser une IA après une sauvegarde.
+     * @param informationsIA Un tableau avec toutes les informations de l'IA
+     */
     public IA(Object[] informationsIA){         //On initialise l'IA avec les informations sauvegardés
         nombreDeTir=(int) informationsIA[0];
         premierTire=(boolean) informationsIA[1];
@@ -119,6 +125,8 @@ public class IA implements Serializable{
         
         System.out.println("\n\n"+GRIS_AR+BLANC+"                    Tour de l'IA                    "+RESET+RESET_AR);         //On affiche que c'est le tour de l'IA
 
+        JeuGraphique.compteurTourIA++;
+
         if (premierTire==true) {            //Si c'est le pemier tir 
             initialiseStockage();           //Toutes les variables sont mis par défaut
             premierTire=false;              //Le premier tir devient faux
@@ -165,6 +173,9 @@ public class IA implements Serializable{
     }
 
     //**************************************************************************
+    /**
+     * Méthode qui permet de mettre tous les emplacement de stockage à leurs valeurs par défaut.
+     */
     public void initialiseStockage(){
         for (int i=0; i<20; i++){
             saveCoord[i]=false;             //On met les états des sauvegardes à false
@@ -181,6 +192,11 @@ public class IA implements Serializable{
     
     
     //**************************************************************************
+    /**
+     * Méthode qui permet à l'IA de bouger un de ses navires.
+     * @return 1 Si la manoeuvre a bien été faite, 2 Sinon.
+     * @throws InterruptedException
+     */
     public int bougerNavireIA() throws InterruptedException{
         
         int pListeBougerNavire;         //Variable qui stocke la position du navire dans la liste
@@ -308,7 +324,8 @@ public class IA implements Serializable{
         }
         
         if (possibilite[0]==90 && possibilite[1]==90 && possibilite[2]==90 && possibilite[3]==90){          //On vérifie qu'il y un moyen de déplacer le navire
-            panneMoteur();
+            AffichageIA affichageIA = new AffichageIA();
+            affichageIA.panneMoteur(); 
             return 3;           //On retourne 2, ce qui signifie qu'on doit relancer le tour du joueur
         }
         
@@ -344,7 +361,7 @@ public class IA implements Serializable{
                     Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);
                     return 1;
                 case 1:
-                    //Posibilité d'aller à gauche
+                    //Posibilité d'aller à droite
                     for (int i=JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille - 1; i>=0;i--){         //On parcour toutes les cases du navire
                         JeuGraphique.plateauDeJeu.deplacement(JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] + 1, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));         //Il déplace le navire
                         JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] ++;         //L'IA corrige les nouvelles coordonnées du navire
@@ -354,7 +371,7 @@ public class IA implements Serializable{
                     Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);
                     return 1;
                 case 0:
-                    //Possibilité d'aller à droite
+                    //Possibilité d'aller à gauche
                     for (int i=0; i<JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille;i++){          //On parcour toutes les cases du navire
                         JeuGraphique.plateauDeJeu.deplacement(JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] - 1,JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));         //Il déplace le navire
                         JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] --;         //L'IA corrige les nouvelles coordonnées du navire
@@ -394,7 +411,7 @@ public class IA implements Serializable{
                     Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);
                     return 1;
                 case 1:
-                    //Possibilité d'aller à gauche
+                    //Possibilité d'aller à droite
                     for (int i=0; i<JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille;i++){          //On parcour toutes les cases du navire
                         JeuGraphique.plateauDeJeu.deplacement(JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0]+1 , JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));          //Il déplace le navire
                         JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] ++;         //L'IA corrige les nouvelles coordonnées du navire
@@ -403,7 +420,7 @@ public class IA implements Serializable{
                     affichageIA.manoeuvreSucces();
                     Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);
                 case 0:
-                    //Possibilité d'aller à droite
+                    //Possibilité d'aller à gauche
                     for (int i=0; i<JeuGraphique.flotteJoueur1.get(pListeBougerNavire).taille;i++){          //On parcour toutes les cases du navire
                         JeuGraphique.plateauDeJeu.deplacement(JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0]-1, JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][1], Plateau.numeroEtage(numeroJoueur, 0));           //Il déplace le navire
                         JeuGraphique.flotteJoueur1.get(pListeBougerNavire).coordonnees[i][0] --;         //L'IA corrige les nouvelles coordonnées du navire
@@ -422,10 +439,15 @@ public class IA implements Serializable{
  
     
 
-
+    //**************************************************************************
+    /**
+     * Méthode qui permet à l'IA de faire un coup qui est de niveau facile
+     * @return 1 Si le coup c'est bien déroulé, 2 sinon
+     * @throws InterruptedException
+     */
     public int niveau1IA() throws InterruptedException{
         
-        System.out.println("Veuillez patienter le temps que j'effectue mon tir");           
+        System.out.println("Veuillez patienter le temps que j'effectue mon tir");                   //On informe le joueur que l'IA est entrain de jouer  
         System.out.print("Je choisis les coordonnées, 4 sec!");
 
 
@@ -511,7 +533,12 @@ public class IA implements Serializable{
     }
 
 
-
+    //**************************************************************************
+    /**
+     * Méthode qui permet à l'IA d'effectuer un coup de niveau moyen.
+     * @return 1 si le coup a bien été effectué, 2 sinon.
+     * @throws InterruptedException
+     */
     public int niveau2IA() throws InterruptedException{
         boolean bougerNavire2=false;
         if (((int) (Math.random()*15))>12) bougerNavire2=true;
@@ -750,7 +777,12 @@ public class IA implements Serializable{
     }
 
     
-
+    //**************************************************************************
+    /**
+     * Méthode utilisé par l'IA pour affectuer un coup de niveau difficile.
+     * @return 1 si tous c'est bien passé, 2 sinon
+     * @throws InterruptedException
+     */
     public int niveau3IA() throws InterruptedException{
         boolean bougerNavire3=false;
         if (((int) (Math.random()*8))>6) bougerNavire3=true;            //Si le nombre aléatoire est supérieur a 6, on bouge le navire 
@@ -1019,6 +1051,13 @@ public class IA implements Serializable{
         return 1;
     }
 
+
+    /**
+     * Méthode qui permet de savoir si une zone du tableau a déjà été exploré par une fussée éclairante ou un tir
+     * @param xTireFusee La coordonées x de tir de la fusée
+     * @param yTireFusee La coordonées y de tir de la fusée
+     * @return True si la zone a déjà été exploré, false sinon
+     */
     public boolean verifDejaExplore (int xTireFusee, int yTireFusee){
         
         for (int i=0; i<4 ; i++){           //On parcourt le carré de coté 4 cases
@@ -1031,29 +1070,6 @@ public class IA implements Serializable{
         return false;
     }
     
-    
-    
-    public void panneMoteur() throws InterruptedException{
-        
-        Timeline timeTourJoueur = new Timeline();                    //Variable qui permet de déclencher une action en décaler par rapport au programme
-        timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(5000),action -> {           //On met un temps d'attente de 5s
-            Label information = new Label("Le navire que j'ai choisis à un porblème moteur");           //On informe au joueur que l'IA relance son tour car il ne peut pas déplacer le navire qu'elle a sélectionné
-            Label information2 = new Label("\nJ'effectus un autre coup");
-
-            VBox rootText = new VBox(25);           //On déclare un affichage vertical où les éléments sont espacés de 25 pixels
-            rootText.getChildren().addAll(information, information2);           //On ajoute les label au root
-            Scene scenePanneMoteur = new Scene(rootText);           //On met le root dans la scène
-            JeuGraphique.fenetreJeu.setScene(scenePanneMoteur);         //On modifie la scène  
-    
-
-            try {
-                jouer();            //On lance le programme jouer 
-            } catch (InterruptedException ex) {
-                System.err.println("Erreur! Le lancement du tour du l'IA n'a pas pu être effectuer");         //On affiche un message d'erreur
-            }
-        }));
-        timeTourJoueur.play();            //On démarre le temps de décalage dès que le programme le lit 
-    }
     
     /**
      * Méthode qui permet de renvoyer les informations de l'IA.
