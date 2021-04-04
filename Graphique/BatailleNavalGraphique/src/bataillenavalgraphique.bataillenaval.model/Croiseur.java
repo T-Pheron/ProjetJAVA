@@ -81,13 +81,13 @@ public class Croiseur extends Flotte {
         if (tirNonInterompue==true ){
            
             VBox rootTexte = new VBox(25);
-            Label informationNavire = new Label("Vous avez décidez d'utiliser un "+nom);
+            Label informationNavire = new Label("Vous avez décidé d'utiliser un "+nom);
             informationNavire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
                     +                "-fx-font-size: 15pt;"
                     +                "-fx-background-color: rgba(120,160,175,0.50);"
                     +                "-fx-font-weight: bold;");
 
-            Label informationCalcul = new Label("Avec les informations fournis, on a calculé comme coordonnées de tir");
+            Label informationCalcul = new Label("Avec les informations fournies, on a calculé comme coordonnées de tir");
             informationCalcul.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
                     +                "-fx-font-size: 13pt;"
                     +                "-fx-font-weight: bold;");
@@ -98,7 +98,7 @@ public class Croiseur extends Flotte {
                     +                "-fx-background-color: rgba(120,160,175,0.50);"
                     +                "-fx-font-weight: bold;");
 
-            Label informationTir = new Label("\n\nOn effectu le tir, patienter...");
+            Label informationTir = new Label("\n\nOn effectue le tir, patientez...");
             informationTir.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
                     +                "-fx-font-size: 13pt;"
                     +                "-fx-font-weight: bold;");

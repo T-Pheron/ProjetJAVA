@@ -34,12 +34,12 @@ public class AffichageIA {
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {           //On met un temps d'attente de 7s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
-            Label information = new Label ("La manoeuvre a été réalisés avec succès");          //On informe l'utilisateur que tout c'est bien passé
+            final Label information = new Label ("La manoeuvre a été réalisée avec succès");          //On informe l'utilisateur que tout c'est bien passé
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
             +                "-fx-font-size: 20pt;"
             +                "-fx-background-color: rgba(120,160,175,0.50);"
             +                "-fx-font-weight: bold;");
-            Label information1 = new Label ("\n\nC'est à votre tour");          //On informe au joueur que c'est à son tour
+            final Label information1 = new Label ("\n\nC'est à votre tour");          //On informe au joueur que c'est à son tour
             information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 15pt;"
             +                "-fx-font-weight: bold;");
@@ -65,16 +65,16 @@ public class AffichageIA {
     public void tirRandomIA(int xTire, int yTire){
         
         VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
-        Label information = new Label ("Tour IA");          //On informe l'utilisateur que c'est le tour de l'IA
+        final Label information = new Label ("Tour IA");          //On informe l'utilisateur que c'est le tour de l'IA
         information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
         +                "-fx-font-size: 30pt;"
         +                "-fx-background-color: rgba(120,160,175,0.50);"
         +                "-fx-font-weight: bold;");
-        Label information0 = new Label ("\n\nJe vais effectuer un tir sur les coordonnées :");          //On informe au joueur que l'IA va effectué un tir 
+        final Label information0 = new Label ("\n\nJe vais effectuer un tir sur les coordonnées :");          //On informe au joueur que l'IA va effectué un tir 
         information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
         +                "-fx-font-size: 15pt;"
         +                "-fx-font-weight: bold;");
-        Label information1 = new Label ("18°05'57."+ yTire +"\"S ; 53°43'30."+ xTire+"\"E");            //A ces coordonnées la (qui sont factice)
+        final Label information1 = new Label ("18°05'57."+ yTire +"\"S ; 53°43'30."+ xTire+"\"E");            //A ces coordonnées la (qui sont factice)
         information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
         +                "-fx-font-size: 18pt;"
         +                "-fx-font-weight: bold;");
@@ -93,16 +93,16 @@ public class AffichageIA {
     public void tirDestroyer(){
         
         VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
-        Label information = new Label ("Tour IA");
+        final Label information = new Label ("Tour IA");
         information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
         +                "-fx-font-size: 30pt;"
         +                "-fx-background-color: rgba(120,160,175,0.50);"
         +                "-fx-font-weight: bold;");
-        Label information0 = new Label ("\n\nJe décide de tirer une fussée avec mon destroyer");
+        final Label information0 = new Label ("\n\nJe décide de tirer une fusée avec mon destroyer");
         information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
         +                "-fx-font-size: 18pt;"
         +                "-fx-font-weight: bold;");
-        Label information1 = new Label ("Veuillez patienter...");
+        final Label information1 = new Label ("Veuillez patienter...");
         information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
         +                "-fx-font-size: 15pt;"
         +                "-fx-font-weight: bold;");
@@ -122,17 +122,17 @@ public class AffichageIA {
         Timeline timeNiveau1TirRandom = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),e -> {
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
-            Label information0 = new Label ("Mes avions m'ont rapportés des informations intéréssants");
+            final Label information0 = new Label ("Mes avions m'ont rapportés des informations intéréssantes");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
             +                "-fx-font-size: 20pt;"
             +                "-fx-font-weight: bold;");
             
-            Label information1 = new Label ("Je prends note");
+            final Label information1 = new Label ("J'en prends note");
             information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
             +                "-fx-font-size: 15pt;"
             +                "-fx-font-weight: bold;");
             
-            Label information2 = new Label ("\n\nA votre tour");
+            final Label information2 = new Label ("\n\nA votre tour");
             information2.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
             +                "-fx-font-size: 20pt;"
             +                "-fx-font-weight: bold;");
@@ -157,12 +157,12 @@ public class AffichageIA {
         Timeline timeNiveau1TirRandom = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),e -> {
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
-            Label information0 = new Label ("Et c'est touché !!");
+            final Label information0 = new Label ("Et c'est touché !!");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
             +                "-fx-font-size: 30pt;"
             +                "-fx-font-weight: bold;");
             
-            Label information1 = new Label ("\n\nA votre tour");
+            final Label information1 = new Label ("\n\nA votre tour");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
             +                "-fx-font-size: 20pt;"
             +                "-fx-font-weight: bold;");
@@ -187,18 +187,18 @@ public class AffichageIA {
         Timeline timeNiveau1TirRandom = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),e -> {
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
-            Label information0 = new Label ("On a touché une structure mais n'avons pas pu la coulé");
+            final Label information0 = new Label ("On a touché une structure mais nous n'avons pas pu la couler");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
             +                "-fx-font-size: 25pt;"
             +                "-fx-font-weight: bold;");
             
-            Label information1 = new Label ("Intéréssant...");
+            final Label information1 = new Label ("Intéréssant...");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
             +                "-fx-font-size: 15pt;"
             +                "-fx-font-weight: bold;");
             
             
-            Label information2 = new Label ("\n\nA votre tour");
+            final Label information2 = new Label ("\n\nA votre tour");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
             +                "-fx-font-size: 18pt;"
             +                "-fx-font-weight: bold;");
@@ -221,16 +221,16 @@ public class AffichageIA {
      */
     public void deplacemmentNavire(){
         VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
-        Label information = new Label ("Tour IA");
+        final Label information = new Label ("Tour IA");
         information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
         +                "-fx-font-size: 30pt;"
         +                "-fx-background-color: rgba(120,160,175,0.50);"
         +                "-fx-font-weight: bold;");
-        Label information0 = new Label ("\n\nJe décide de déplacer mon navire");
+        final Label information0 = new Label ("\n\nJe décide de déplacer mon navire");
         information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
         +                "-fx-font-size: 15pt;"
         +                "-fx-font-weight: bold;");
-        Label information1 = new Label ("Patientez...");
+        final Label information1 = new Label ("Patientez...");
         information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
         +                "-fx-font-size: 18pt;"
         +                "-fx-font-weight: bold;");
@@ -252,12 +252,12 @@ public class AffichageIA {
         timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),action -> {           //On met un temps d'attente de 8s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
             
-            Label information0 = new Label ("\n\n Yes!! J'ai coulé un "+nomNavireCoule);
+            final Label information0 = new Label ("\n\n Yes !! J'ai coulé un "+nomNavireCoule);
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 20pt;"
             +                "-fx-font-weight: bold;");
             
-            Label information1 = new Label ("\n\nA votre tour");
+            final Label information1 = new Label ("\n\nA votre tour");
             information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 15pt;"
             +                "-fx-font-weight: bold;");
@@ -283,15 +283,15 @@ public class AffichageIA {
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         time.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),e -> {           //On met un temps d'attente de 8s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
-            Label information = new Label ("J'ai rien touché aux coordonées de tir");
+            final Label information = new Label ("J'ai rien touché aux coordonées de tir");
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 25pt;"
             +                "-fx-font-weight: bold;");
-            Label information0 = new Label ("Quel échec\n\n");
+            final Label information0 = new Label ("Quel échec\n\n");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 13pt;"
             +                "-fx-font-weight: bold;");
-            Label information1 = new Label ("A votre tour");
+            final Label information1 = new Label ("A votre tour");
             information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 20pt;"
             +                "-fx-background-color: rgba(120,160,175,0.50);"
@@ -321,8 +321,8 @@ public class AffichageIA {
         
         Timeline timeTourJoueur = new Timeline();                    //Variable qui permet de déclencher une action en décaler par rapport au programme
         timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(5000),action -> {           //On met un temps d'attente de 5s
-            Label information = new Label("Le navire que j'ai choisis à un problème moteur");           //On informe au joueur que l'IA relance son tour car il ne peut pas déplacer le navire qu'elle a sélectionné
-            Label information2 = new Label("\nJ'effectus un autre coup");
+            final Label information = new Label("Le navire que j'ai choisi a un problème moteur");           //On informe au joueur que l'IA relance son tour car il ne peut pas déplacer le navire qu'elle a sélectionné
+            final Label information2 = new Label("\nJ'effectue un autre coup");
 
             VBox rootText = new VBox(25);           //On déclare un affichage vertical où les éléments sont espacés de 25 pixels
             rootText.getChildren().addAll(information, information2);           //On ajoute les label au root
@@ -365,12 +365,12 @@ public class AffichageIA {
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         time.getKeyFrames().addAll(new KeyFrame(Duration.millis(3000),action -> {           //On met un temps d'attente de 8s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
-            Label information = new Label ("Erreur IA. "+ erreur);
+            final Label information = new Label ("Erreur IA. "+ erreur);
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 12pt;"
             +                "-fx-background-color: RED;"
             +                "-fx-font-weight: bold;");
-            Label information1 = new Label ("\n\nJe recommance mon tour");
+            final Label information1 = new Label ("\n\nJe recommance mon tour");
             information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 15pt;"
             +                "-fx-font-weight: bold;");

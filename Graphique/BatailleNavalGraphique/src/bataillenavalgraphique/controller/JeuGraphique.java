@@ -134,7 +134,7 @@ public class JeuGraphique{
                 event.consume();            //
                 Alert boiteDeFermetureUrgente = new Alert(AlertType.CONFIRMATION);          //On déclare un pop up qui viendra demander confirmation
                 boiteDeFermetureUrgente.setTitle("Bataille Navale - Fermeture");            //On lui donne un titre
-                boiteDeFermetureUrgente.setHeaderText("La partie n'est pas sauvegardée!");
+                boiteDeFermetureUrgente.setHeaderText("La partie n'est pas sauvegardée !");
                 boiteDeFermetureUrgente.setContentText("Etes vous sûr de vouloir quitter sans sauvegarder ?");
                 ButtonType boutonOui = new ButtonType("Oui");           //On déclare deux boutons qui sont les possibilités du joueur
                 ButtonType boutonNon = new ButtonType("Non");

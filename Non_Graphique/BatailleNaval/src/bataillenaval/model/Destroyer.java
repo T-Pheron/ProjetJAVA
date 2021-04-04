@@ -56,7 +56,7 @@ public class Destroyer extends Flotte{
             int yTireFusee;
             yTireFusee= -1;          //On declare la variable par defaut avec un -1
             System.out.println("Il s'agit du premier tir de ce destroyer");
-            System.out.println("La munition tiré est donc une fusée éclairante");
+            System.out.println("La munition tirée est donc une fusée éclairante");
             /*Récupération des coordonées***********************************************/
             //Coordonées x
             System.out.println("Où voulez vous la vous tirer ?");           //On demande à l'utilisateur de saisir les coordonnées du tire
@@ -89,18 +89,18 @@ public class Destroyer extends Flotte{
                 yTireFusee = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                 scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                 yTireFusee=-1;           //On remet la variable par defaut 
             }
             while ((yTireFusee<0)||(yTireFusee>16)){          //On blinde, en vérifiant que la saisie fait partie des choix
-                System.out.println(ROUGE + "Erreur!"+ RESET +"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur
-                System.out.println("Veuillez entrer le numero de la ligne a laquelle vous voulez tirer : :");           //Et on demande la ressaisie
+                System.out.println(ROUGE + "Erreur!"+ RESET +"\nCe numéro ne fait pas partie des choix.");         //Sinon, on affiche un message d'erreur
+                System.out.println("Veuillez entrer le numero de la ligne où vous voulez tirer : :");           //Et on demande la ressaisie
                 try{
                     yTireFusee = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                     scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                     yTireFusee=-1;           //On remet la variable par defaut
                 }
@@ -110,7 +110,7 @@ public class Destroyer extends Flotte{
             yTireFusee--;            //On retire 1 au yTire
             int xTireFusee = (int) (xTireFuseeChar - 65);             //On convertie la saisie en un entier
             
-            System.out.print("Envoie de la fusée éclairante en cours");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);
+            System.out.print("Envoi de la fusée éclairante en cours");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.print(".");TimeUnit.SECONDS.sleep(1);System.out.println(".");TimeUnit.SECONDS.sleep(1);
             /*Tire de la fusée éclairante***********************************************/
             int surplusX=0;
             int surplusY=0;
@@ -129,7 +129,7 @@ public class Destroyer extends Flotte{
                 }
             }
             
-            System.out.println(VERT+"La fusée à bien été envoyée."+ RESET+ "\nNous envoyons un avion pour la prise d'information");
+            System.out.println(VERT+"La fusée à bien été envoyée."+ RESET+ "\nNous envoyons un avion pour la prise d'informations");
             System.out.println("Vous aurez ces informations dans quelques secondes");TimeUnit.SECONDS.sleep(5);
 
             System.out.println("\n\n    "+GRIS_AR+ "     CARTE ACTUALISÉE    "+RESET_AR);
@@ -179,20 +179,20 @@ public class Destroyer extends Flotte{
                 yTire = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                 scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                 yTire=-1;           //On remet la variable par defaut 
             }
 
 
             while ((yTire<0)||(yTire>16)){          //On blinde, en vérifiant que la saisie fait partie des choix
-                System.out.println(ROUGE + "Erreur!"+ RESET +"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur
-                System.out.println("Veuillez entrer le numero de la ligne a laquelle vous voulez tirer :");           //Et on demande la ressaisie
+                System.out.println(ROUGE + "Erreur!"+ RESET +"\nCe numéro ne fait pas partie des choix.");         //Sinon, on affiche un message d'erreur
+                System.out.println("Veuillez entrer le numero de la ligne où vous voulez tirer :");           //Et on demande la ressaisie
                 try{
                     yTire = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                     scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                     yTire=-1;           //On remet la variable par defaut 
                 }
@@ -210,7 +210,7 @@ public class Destroyer extends Flotte{
                     choix = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                     scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
                 
@@ -220,7 +220,7 @@ public class Destroyer extends Flotte{
                         choix = scDestroyer.nextInt();          //On stock la saisie de l'utilisateur
                     }
                     catch(InputMismatchException e){            //Si ce n'est pas un entier
-                        System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                        System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                         scDestroyer.next();            //On met à la poubelle la saisie de l'utilisateur
                     }
                 }
@@ -249,7 +249,7 @@ public class Destroyer extends Flotte{
 
                 Jeu.flotteJoueur1.get(pListeAdv).coordonnees[0][2]=2;           //On met la coordonées sur 2 pour signifie, ce qui signifie que le sous-marin a été touché sans être coulé (il ne peux plus être déplacé)
 
-                System.out.println("Nous avons détecté une structure mais n'avons pas pu la détruire");TimeUnit.SECONDS.sleep(4);           //Affichage d'un message disant qu'on est tombé sur un sous-marin
+                System.out.println("Nous avons détecté une structure mais nous n'avons pas pu la détruire");TimeUnit.SECONDS.sleep(4);           //Affichage d'un message disant qu'on est tombé sur un sous-marin
            
                 return 1;
             }

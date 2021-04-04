@@ -709,7 +709,7 @@ public class IA implements Serializable{
 
             /*Impacte sur un navire adverse************************************************/
             else {          //Si les coordonées de tir coorespondent à un navire
-                System.out.println("Et  c'est touché!!");
+                System.out.println("Et c'est touché !!");
                 JeuGraphique.flotteJoueur1.get(pListe).impact(xTire, yTire, 1);           //On appel la méthode qui permet de rentrer les différentes informations lors d'un impacte
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
 

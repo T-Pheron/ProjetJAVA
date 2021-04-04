@@ -101,8 +101,8 @@ public class AffichageSauvegardeGraphique {
                 boutonLancementPartie.setOnAction((ActionEvent eventLancementJeu) -> {         //Action si le joueur clique sur le bouton
                     
                     Alert confirmation = new Alert(AlertType.CONFIRMATION);         //On initialise une boite de dialogue pour une confirmation
-                    confirmation.setTitle("Bataille Naval - Confiramation");            //On lui donne un titre
-                    confirmation.setHeaderText("Vous aller supprimer la partie déjà présente.");         //On lui donne un message destiné à l'utilisateur
+                    confirmation.setTitle("Bataille Navale - Confiramation");            //On lui donne un titre
+                    confirmation.setHeaderText("Vous allez supprimer la partie déjà présente.");         //On lui donne un message destiné à l'utilisateur
                     confirmation.setContentText("Etes vous sur de vouloir supprimer la partie déjà présente ?");            //On lui demande ce qu'il veut faire
 
                     ButtonType boutonOui = new ButtonType("Oui");           //On déclare un bouton pour la réponse oui
@@ -172,7 +172,7 @@ public class AffichageSauvegardeGraphique {
         }); 
 
 
-        Button boutonNouveau = new Button ("Nouvelle Emplacement");           //On déclare un bouton pour un nouvelle emplacement
+        Button boutonNouveau = new Button ("Nouvel Emplacement");           //On déclare un bouton pour un nouvelle emplacement
         boutonNouveau.setGraphic(imageNouveau);            //On l'illustre par une petite image
         boutonNouveau.setStyle ("-fx-background-color: rgba(120,160,175,0.50);"          //On change les caractéristiques d'écriture
                 + "-fx-font-police: 'Tw Cen MT Condensed' ;"
@@ -197,7 +197,7 @@ public class AffichageSauvegardeGraphique {
                 Alert boitAlertePlusDemplacement = new Alert(AlertType.ERROR);         //On initialise une boite de dialogue pour une erreur
                 boitAlertePlusDemplacement.setTitle("Bataille Navale - Erreur");            //On lui donne un titre
                 boitAlertePlusDemplacement.setHeaderText("Emplacement de sauvergarde plein");         //On lui donne un message destiné à l'utilisateur
-                boitAlertePlusDemplacement.setContentText("Il n'y a plus d'emplacement de sauvegarde disponible. Veuillez supprimer  des emplacements pour continuer.");         //On lui donne un message destiné à l'utilisateur
+                boitAlertePlusDemplacement.setContentText("Il n'y a plus d'emplacement de sauvegarde disponible. Veuillez supprimer des emplacements pour continuer.");         //On lui donne un message destiné à l'utilisateur
                 boitAlertePlusDemplacement.showAndWait();            //On affiche la boite de dialogue et on attent la réponse de l'utilisateur
             }
             else{
@@ -256,7 +256,7 @@ public class AffichageSauvegardeGraphique {
         +                "-fx-font-size: 30pt;"
         +                "-fx-font-weight: bold;");
 
-        final Label information1 = new Label ("\n\nPatienter...");
+        final Label information1 = new Label ("\n\nPatientez...");
         information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"          //On change les caractéristiques d'écriture
         +                "-fx-font-size: 20pt;"
         +                "-fx-font-weight: bold;");
@@ -278,7 +278,7 @@ public class AffichageSauvegardeGraphique {
         Timeline timeSauvegardeEffectuee= new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         timeSauvegardeEffectuee.getKeyFrames().addAll(new KeyFrame(Duration.millis(4000),e -> {            //On met un temps d'attente de 4s
             VBox rootText = new VBox(25);         //On déclare un affichage vertical où les éléments sont espacé de 25 pixels
-            final Label information0 = new Label ("La sauvegarder a bien eu lieu");
+            final Label information0 = new Label ("La sauvegarde a bien eu lieu");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"          //On change les caractéristiques d'écriture
             +               " -fx-background-color: rgba(120,160,175,0.50);"
             +                "-fx-font-size: 30pt;"
@@ -313,7 +313,7 @@ public class AffichageSauvegardeGraphique {
         Timeline timeSauvegardeEffectuee= new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         timeSauvegardeEffectuee.getKeyFrames().addAll(new KeyFrame(Duration.millis(4000),e -> {            //On met un temps d'attente de 4s
             VBox rootText = new VBox(25);         //On déclare un affichage vertical où les éléments sont espacé de 25 pixels
-            final Label information0 = new Label ("La sauvegarder a bien eu lieu");
+            final Label information0 = new Label ("La sauvegarde a bien eu lieu");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"          //On change les caractéristiques d'écriture
             +               " -fx-background-color: rgba(120,160,175,0.50);"
             +                "-fx-font-size: 30pt;"
@@ -743,8 +743,8 @@ public class AffichageSauvegardeGraphique {
         });
         boutonSupprimer.setOnAction((ActionEvent eventChargementPartie) -> {         //Action si le joueur clique sur le bouton
             Alert alertBox = new Alert(AlertType.CONFIRMATION);         //On initialise une boite de dialogue pour une confirmation
-            alertBox.setTitle("Bataille Navale - Confirmation supression");            //On lui donne un titre
-            alertBox.setHeaderText("La suppresion de cette partie est définitif.");         //On lui donne un message destiné à l'utilisateur
+            alertBox.setTitle("Bataille Navale - Confirmation suppression");            //On lui donne un titre
+            alertBox.setHeaderText("La suppression de cette partie est définitive.");         //On lui donne un message destiné à l'utilisateur
             alertBox.setContentText("Êtes vous sûr de vouloir supprimer cette partie ?");           //On lui demande ce qu'il veut faire
             
             ButtonType boutonOui = new ButtonType("Oui");           //On déclare un bouton pour la réponse oui
@@ -911,8 +911,8 @@ public class AffichageSauvegardeGraphique {
         });
         boutonSupprimer.setOnAction((ActionEvent eventChargementPartie) -> {         //Action si le joueur clique sur le bouton
             Alert alertBox = new Alert(AlertType.CONFIRMATION);         //On initialise une boite de dialogue pour confirmation
-            alertBox.setTitle("Bataille Navale - Confirmation supression");            //On lui donne un titre
-            alertBox.setHeaderText("La suppresion de cette partie est définitif.");         //On lui donne un message destiné à l'utilisateur
+            alertBox.setTitle("Bataille Navale - Confirmation suppression");            //On lui donne un titre
+            alertBox.setHeaderText("La suppression de cette partie est définitive.");         //On lui donne un message destiné à l'utilisateur
             alertBox.setContentText("Êtes vous sûr de vouloir supprimer cette partie ?");           //On lui demande ce qu'il veut faire
             
             ButtonType boutonOui = new ButtonType("Oui");           //On déclare un bouton pour la réponse oui

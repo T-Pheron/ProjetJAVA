@@ -1,4 +1,4 @@
-LES DIFFERENTS SYMBOLES QUI PEUVENT ETRE PRESENT SUR LA GRILLE:"Légende grille de tir"
+LES DIFFERENTS SYMBOLES QUI PEUVENT ETRE PRESENTS SUR LA GRILLE:"Légende grille de tir"
 
 
 Il y a deux grilles qui vont vous etres affichées, la grille des navires et la grille des tirs.
@@ -18,14 +18,14 @@ Couleur des navires :
 
 Sur la grille des navires :
 
-     -La casse d’un bateau toucher devient rouge foncé avec ses identifiants en rouge. 
+     -La case d’un bateau touchée devient rouge foncé avec ses identifiants en rouge. 
      -Un sous-marin touché mais non coulé devient cyan avec ses coordonnées en rouge.
-     -Un emplacement devient bleu vert avec des croix rouge si un adversaire a tiré dessus.
+     -Un emplacement devient bleu vert avec des croix rouges si un adversaire a tiré dessus.
 
 
-Sur la grille des tires :
-     -Un emplacement cyan avec des croix blanche, signifie que le joueur a tiré dessus mais n’a rien touché
-     -Un emplacement cyan, avec des croix rouges, signifie qu’un joueur à tire dessus et à toucher un navire
+Sur la grille des tirs :
+     -Un emplacement cyan avec des croix blanches, signifie que le joueur a tiré dessus mais n’a rien touché
+     -Un emplacement cyan, avec des croix rouges, signifie qu’un joueur a tiré dessus et a touché un navire
      -Un emplacement gris avec des tirets, signifie que le joueur a toucher un sous-marin sans utilisé un sous-marin
 
 Lors du tir de la fusée éclairante :

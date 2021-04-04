@@ -79,7 +79,7 @@ public class Menu {
             choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
-            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
             scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
         }
         
@@ -89,7 +89,7 @@ public class Menu {
                 choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                 scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
             }
         }
@@ -136,7 +136,7 @@ public class Menu {
             choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
-            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
             scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
         }
         
@@ -146,7 +146,7 @@ public class Menu {
                 choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                 scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
             }
         }
@@ -162,7 +162,7 @@ public class Menu {
                     choix2 = scMenu.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                     scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
                 while ((choix2<1)||(choix2>2)){               //On blinde en vérifiant que la saisie fait partie des choix
@@ -171,10 +171,11 @@ public class Menu {
                         choix2 = scMenu.nextInt();          //On stock la saisie de l'utilisateur
                     }
                     catch(InputMismatchException e){            //Si ce n'est pas un entier
-                        System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                        System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                         scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
                     }
                 }
+                
 
                 switch(choix2){
                     case 1:
@@ -189,7 +190,7 @@ public class Menu {
                             choix3 = scMenu.nextInt();          //On stock la saisie de l'utilisateur
                         }
                         catch(InputMismatchException e){            //Si ce n'est pas un entier
-                            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                             scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
                         }
                         while ((choix3<1)||(choix3>2)){               //On blinde en vérifiant que la saisie fait partie des choix
@@ -198,7 +199,7 @@ public class Menu {
                                 choix3 = scMenu.nextInt();          //On stock la saisie de l'utilisateur
                             }
                             catch(InputMismatchException e){            //Si ce n'est pas un entier
-                                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                                 scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
                             }
                         }
@@ -259,7 +260,7 @@ public class Menu {
                 choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                 scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
             }
             
@@ -269,7 +270,7 @@ public class Menu {
                     choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                     scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             }
@@ -285,7 +286,7 @@ public class Menu {
                     choix2 = scMenu.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                     scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
                 while ((choix2<1)||(choix2>2)){               //On blinde en vérifiant que la saisie fait partie des choix
@@ -294,7 +295,7 @@ public class Menu {
                         choix2 = scMenu.nextInt();          //On stock la saisie de l'utilisateur
                     }
                     catch(InputMismatchException e){            //Si ce n'est pas un entier
-                        System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                        System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                         scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
                     }
                 }
@@ -377,7 +378,7 @@ public class Menu {
                 choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                 scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
             }
             
@@ -387,7 +388,7 @@ public class Menu {
                     choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                     scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             }
@@ -396,7 +397,7 @@ public class Menu {
 
             if (choix<4 && nomPartie[choix-1].equals("[VIDE]")){
                 System.out.println(ROUGE+"Erreur !"+RESET +" Cette emplacement ne contient pas de sauvegarde!");
-                System.out.println("Veuillez sélectionnez un autre emplacement ou quitter le menu de chargement\n");
+                System.out.println("Veuillez sélectionner un autre emplacement ou quitter le menu de chargement\n");
                 selectionEmplacement =true;
             }
         }while(selectionEmplacement==true);
@@ -436,13 +437,13 @@ public class Menu {
     public int menuAide(){
         int choix=0;           //Variable qui permet de stocker le choix du joueur
         System.out.println(GRIS_AR +NOIR+ "               MENU AIDE              "+RESET+ RESET_AR);           //On afficher le titre du menu
-        System.out.println("1. Pour débuter \n2. La phase de tir \n3. Flotte et fonctionnalité \n4. Légende des symboles  \n5. Pour gagner et quelques astuces \n6. Retour");           //On affiche les choix possibles
+        System.out.println("1. Pour débuter \n2. La phase de tir \n3. Flotte et fonctionnalités \n4. Légende des symboles  \n5. Pour gagner et quelques astuces \n6. Retour");           //On affiche les choix possibles
         System.out.println("Veuillez saisir votre choix");           //On demande à l'utilisateur de saisir son choix
         try{
             choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
-            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
             scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
         }
         
@@ -452,7 +453,7 @@ public class Menu {
                 choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                 scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
             }
         }
@@ -534,7 +535,7 @@ public class Menu {
             choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
-            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
             scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
         }
         
@@ -544,7 +545,7 @@ public class Menu {
                 choix = scMenu.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                 scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
             }
         }
@@ -613,13 +614,13 @@ public class Menu {
 
 
             while (nPlateau<1||nPlateau>maxNavire){           //On blinde, en vérifiant que la saisie fait partie des choix
-                System.out.println(ROUGE + "Erreur! "+RESET +"Ce numéro ne fait pas parti des choix.");           //Sinon, on affiche un message d'erreur
-                System.out.println("Veuillez entrer le numero du navire avec lequel vous voulez tirer : :");           //Et on demande la ressaisie
+                System.out.println(ROUGE + "Erreur! "+RESET +"Ce numéro ne fait pas partie des choix.");           //Sinon, on affiche un message d'erreur
+                System.out.println("Veuillez entrer le numéro du navire avec lequel vous voulez tirer : :");           //Et on demande la ressaisie
                 try{
                     nPlateau = scMenu.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                     scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             }
@@ -647,19 +648,19 @@ public class Menu {
             niveauIA = scMenu.nextInt();          //On stock la saisie de l'utilisateur
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
-            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
             scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
         }
 
 
         while (niveauIA<1||niveauIA>3){           //On blinde, en vérifiant que la saisie fait partie des choix
-            System.out.println(ROUGE + "Erreur! "+RESET +"Ce numéro ne fait pas parti des choix.");           //Sinon, on affiche un message d'erreur
+            System.out.println(ROUGE + "Erreur! "+RESET +"Ce numéro ne fait pas partie des choix.");           //Sinon, on affiche un message d'erreur
             System.out.println("Veuillez entrer le niveau de l'ordinateur que vous souhaitez :");           //Et on demande la ressaisie
             try{
                 niveauIA = scMenu.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                 scMenu.next();            //On met à la poubelle la saisie de l'utilisateur
             }
         }
@@ -668,18 +669,18 @@ public class Menu {
 
         switch(niveauIA){
             case 1:
-                System.out.println("Vous avez choisie le niveau Facile.");TimeUnit.SECONDS.sleep(2);            //On affiche un message annonçant le niveau choisi
-                System.out.println("Tu as peur ?");TimeUnit.SECONDS.sleep(1);
+                System.out.println("Vous avez choisi le niveau Facile.");TimeUnit.SECONDS.sleep(2);            //On affiche un message annonçant le niveau choisi
+                System.out.println("Avez-vous peur ?");TimeUnit.SECONDS.sleep(1);
                 System.out.println("On peut commencer. Bonne chance !");TimeUnit.SECONDS.sleep(3);
                 break;
             case 2:
-                System.out.println("Vous avez choisie le niveau Moyen.");TimeUnit.SECONDS.sleep(2);
+                System.out.println("Vous avez choisi le niveau Moyen.");TimeUnit.SECONDS.sleep(2);
                 System.out.println("Ok ok");TimeUnit.SECONDS.sleep(1);
                 System.out.println("On peut commencer. Bonne chance !");TimeUnit.SECONDS.sleep(3);
                 break;
             case 3:
-                System.out.println("Vous avez choisie le niveau Difficile.");TimeUnit.SECONDS.sleep(2);
-                System.out.println("Bienn! On est joueur");TimeUnit.SECONDS.sleep(1);
+                System.out.println("Vous avez choisi le niveau Difficile.");TimeUnit.SECONDS.sleep(2);
+                System.out.println("Bien ! On est joueur !");TimeUnit.SECONDS.sleep(1);
                 System.out.println("On peut commencer. Bonne chance !");TimeUnit.SECONDS.sleep(3);
                 break;
             default:

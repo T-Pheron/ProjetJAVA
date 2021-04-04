@@ -76,7 +76,7 @@ public class CaseBouton {
                             JeuGraphique.compteurTourHumain++;          //On rajoute 1 au nombre de tour du joueur 
                             JeuGraphique.flotteJoueur0.get(pListe).tir(listeInformations.get(1), listeInformations.get(2));
                         } catch (InterruptedException e1) {
-                            System.err.println("Erreur! .Le tir n'a pas pu être effectué");
+                            System.err.println("Erreur ! Le tir n'a pas pu être effectué");
                         }
                     }
                     else{
@@ -95,7 +95,7 @@ public class CaseBouton {
                         JeuGraphique.compteurTourHumain++;          //On rajoute 1 au nombre de tour du joueur 
                         JeuGraphique.flotteJoueur0.get(listeInformations.get(0)).tir(x, y);         //On tire et on rajoute dans la liste qu'on a tiré a cet emplacement
                     } catch (InterruptedException ex) {
-                        System.err.println("Erreur! La sélection du navire à échoué");
+                        System.err.println("Erreur ! La sélection du navire a échoué");
                     }
                 }
             }

@@ -1,23 +1,23 @@
-LES DIFFERENTS NAVIRES ET LEURS FONCTIONNALITEES:
+LES DIFFERENTS NAVIRES ET LEURS FONCTIONNALITES:
 
 
 Il y a 4 types de navires:
 
     -Le cuirassé : le plus grand navire de votre flotte (7 cases), il est également le plus puissant. 
-                   Lors de ces tires, il touche 2 cases de part et d'autre du point d'impact que vous avez decidé.
+                   Lors de ses tirs, il touche 2 cases de part et d'autre du point d'impact que vous avez decidé.
                    Il ne peut pas couler les sous-marins.
 
     -Le croiseur : Il est un peu plus petit que le cuirassé (5 cases) mais garde les mêmes fonctionnalitées.
-                   Lors de ces tires, il touche 1 cases de part et d'autre du point d'impact que vous avez decidé.
+                   Lors de ses tirs, il touche 1 cases de part et d'autre du point d'impact que vous avez decidé.
                    Il ne peut pas couler les sous-marins.
 
     -Le destroyer : Il est petit (3 cases) et ne fait des dégats uniquement au point d'impact que vous avez décidé.
                     Il a cependant une capacité spéciale : Son premier tir est en fait une fusée éclairante.
                     Couvrant une surface de 4*4 cases, vous serez capable de voir si il y a des navires dans cette zone.
-                    Le point d'impact de la fusée est tout en haut à gauche de la surface. Puis reprend des tirs normaux 
-                    la où vous le décidez. Il ne peut pas couler les sous-marins.
+                    Le point d'impact de la fusée est tout en haut à gauche de la surface. Puis il reprend des tirs normaux 
+                    là où vous le décidez. Il ne peut pas couler les sous-marins.
                     
-    -Le sous-marin : Il est tout petit (1 case) mais est capable de couler tout les navires sur son chemin.
+    -Le sous-marin : Il est tout petit (1 case) mais est capable de couler tous les navires sur son chemin.
                      Son tir fait également 1 case à l'endroit que vous aurez decidé.
 
 

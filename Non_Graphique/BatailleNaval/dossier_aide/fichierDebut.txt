@@ -1,8 +1,8 @@
 COMMENT COMMENCER UNE PARTIE DE BATAILLE NAVALE ?
 
-Au début du jeu, tout les navires sont placés de manière aléatoire sur la grille.
-Le joueur pourra par la suite les deplacer a sa guise vers le haut ou vers le bas d'une seule case par tour. 
+Au début du jeu, tous les navires sont placés de manière aléatoire sur la grille.
+Le joueur pourra par la suite les deplacer à sa guise vers le haut ou vers le bas d'une seule case par tour. 
 Le but est de détruire tous les navires de l'adversaire.
 Bien entendu, le joueur ne voit pas la grille de son adversaire.
-Un à un, les joueurs se tire dessus pour détruire les navires ennemis.
-Vous pouvez pas jouer deux fois de suite et doivez attendre le tour du joueur adverse.
+Un à un, les joueurs se tirent dessus pour détruire les navires ennemis.
+Vous ne pouvez pas jouer deux fois de suite et doivez attendre le tour du joueur adverse.

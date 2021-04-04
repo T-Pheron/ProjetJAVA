@@ -277,7 +277,7 @@ public class IA implements Serializable{
         }
         
         if (possibilite[0]==90 && possibilite[1]==90 && possibilite[2]==90 && possibilite[3]==90){          //On vérifie qu'il y un moyen de déplacer le navire
-            System.out.println("\nLe navire que j'ai choisie à une panne moteur.");           //Si c'est le cas on affiche un message d'erreur
+            System.out.println("\nLe navire que j'ai choisi a une panne moteur.");           //Si c'est le cas on affiche un message d'erreur
             System.out.println("Le temps de la réparation j'effectue une autre action.");TimeUnit.SECONDS.sleep(3);
             return 3;           //On retourne 2, ce qui signifie qu'on doit relancer le tour du joueur
         }
@@ -432,7 +432,7 @@ public class IA implements Serializable{
                     if (nPlateau==5) nPlateau=0;            //Si le numéros de plateau du navire arrive à 5, on le remet à 0 pour être sûr de parcourir tous les sous-marins
                 }
                 if (tourSousMarin==5){          //Si tous les sous-marins de l'IA a été coulé et qu'il reste un sous-marin à l'autre joueur, il a gagné
-                    System.out.println("Je ne peux plus couler vos sous-marin car vous avez détruit tous mes sous marin");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
+                    System.out.println("Je ne peux plus couler vos sous-marins car vous avez détruit tous mes sous-marins");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
                     return 1;
                 }
                 
@@ -465,7 +465,7 @@ public class IA implements Serializable{
         else {          //Si la case contient un navire
             Jeu.flotteJoueur1.get(pListe).impact(xTire, yTire, 1);           //On appel la méthode qui permet de rentrer les différentes informations lors d'un impacte
             nombreDeTir ++;         //On rajoute 1 au nombre de tir
-            System.out.println("Et  c'est touché"); TimeUnit.SECONDS.sleep(10);
+            System.out.println("Et c'est touché"); TimeUnit.SECONDS.sleep(10);
         }
         return 1;
     }
@@ -508,7 +508,7 @@ public class IA implements Serializable{
                             if (nPlateau==5) nPlateau=0;            //Si le numéros de plateau du navire arrive à 5, on le remet à 0 pour être sûr de parcourir tous les sous-marins
                         }
                         if (tourSousMarin==5){          //Si tous les sous-marins de l'IA a été coulé et qu'il reste un sous-marin à l'autre joueur, il a gagné
-                            System.out.println("Je ne peux plus couler vos sous-marin car vous avez détruit tous mes sous marin");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
+                            System.out.println("Je ne peux plus couler vos sous-marins car vous avez détruit tous mes sous-marins");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
                             return 1;
                         }
                         choixCoordonneesTir = true;         //On autorise la sortie de la boucle, si on a trouvé un sous marin
@@ -636,18 +636,18 @@ public class IA implements Serializable{
                     }
                 }
                 if (stockSaveCoord[0][2]==0){           //Si l'IA n'a plus de sous-marin le joueur adverse à gagner
-                    System.out.println("Je ne peux plus couler vos sous-marin car vous avez détruit tous mes sous marin");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
+                    System.out.println("Je ne peux plus couler vos sous-marins car vous avez détruit tous mes sous-marins");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
                     return 1;           //On retourne 1 pour que le programme confirme la victoire du joueur
                 }
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
                 System.out.println("J'ai touché un objet non identifié");
-                System.out.println("Je retient...");TimeUnit.SECONDS.sleep(5);
+                System.out.println("Je retiens...");TimeUnit.SECONDS.sleep(5);
 
             }
 
             /*Impacte sur un navire adverse************************************************/
             else {          //Si les coordonées de tir coorespondent à un navire
-                System.out.println("Et  c'est touché!!");TimeUnit.SECONDS.sleep(2);
+                System.out.println("Et c'est touché!!");TimeUnit.SECONDS.sleep(2);
                 Jeu.flotteJoueur1.get(pListe).impact(xTire, yTire, 1);           //On appel la méthode qui permet de rentrer les différentes informations lors d'un impacte
                 TimeUnit.SECONDS.sleep(3);
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
@@ -782,7 +782,7 @@ public class IA implements Serializable{
                         }
                     }
 
-                    System.out.println("C'est intérésant ce que mes avions mon rapporté du terrain");           //On affiche un message disant que l'IA a bien effectué le tir de la fusée éclairante
+                    System.out.println("C'est intéréssant ce que mes avions m'ont rapporté du terrain");           //On affiche un message disant que l'IA a bien effectué le tir de la fusée éclairante
                     System.out.println("Je prends note");TimeUnit.SECONDS.sleep(5);
                     Jeu.flotteJoueur1.get(i).premierTire=false;         //le premier tir du destroyer choisi est mis à false
                     nombreDeTirDestroyer++;         //On rajoute 1 au nombre de tir du destroyer
@@ -865,7 +865,7 @@ public class IA implements Serializable{
                             if (nPlateau==5) nPlateau=0;            //Si le numéros de plateau du navire arrive à 5, on le remet à 0 pour être sûr de parcourir tous les sous-marins
                         }
                         if (tourSousMarin==5){          //Si tous les sous-marins de l'IA a été coulé et qu'il reste un sous-marin à l'autre joueur, il a gagné
-                            System.out.println("Je ne peux plus couler vos sous-marin car vous avez détruit tous mes sous marin");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
+                            System.out.println("Je ne peux plus couler vos sous-marins car vous avez détruit tous mes sous-marins");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
                             return 1;
                         }
                         choixCoordonneesTir = true;         //On autorise la sortie de la boucle, si on a trouvé un sous marin
@@ -916,12 +916,12 @@ public class IA implements Serializable{
                     }
                 }
                 if (stockSaveCoord[0][2]==0){           //Si l'IA n'a plus de sous-marin le joueur adverse à gagner
-                    System.out.println("Je ne peux plus couler vos sous-marin car vous avez détruit tous mes sous marin");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
+                    System.out.println("Je ne peux plus couler vos sous-marins car vous avez détruit tous mes sous-marins");TimeUnit.SECONDS.sleep(3);            //On affiche la raison de cette victoire prématurée
                     return 1;           //On retourne 1 pour que le programme confirme la victoire du joueur
                 }
                 nombreDeTir ++;         //On rajoute 1 au nombre de tir
                 System.out.println("J'ai touché un objet non identifié.");
-                System.out.println("Je retient...");TimeUnit.SECONDS.sleep(5);
+                System.out.println("Je retiens...");TimeUnit.SECONDS.sleep(5);
 
             }
 

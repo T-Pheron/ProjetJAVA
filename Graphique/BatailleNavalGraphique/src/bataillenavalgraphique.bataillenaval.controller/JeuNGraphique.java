@@ -159,7 +159,7 @@ public class JeuNGraphique {
                     case 2: retourMenu=2;           //On recommence le tour du joueur
                     case 4: System.out.println("\nFermeture du jeu. \nA bientôt"); break;
                     default:
-                        System.out.println(ROUGE + "Erreur!"+RESET+ "Problème d'appelle du menuJoueur");            //En cas d'erreur on affiche un message d'erreur
+                        System.out.println(ROUGE + "Erreur!"+RESET+ "Problème d'appel du menuJoueur");            //En cas d'erreur on affiche un message d'erreur
                         retourMenu=2;            //On relance le tour du joueur
                         break;
                 }
@@ -316,7 +316,7 @@ public class JeuNGraphique {
             lRef=convertirMinuscules(lRef);            //On convertir la saisie en majuscule
        
             while (lRef!='U'&&lRef!='C'&&lRef!='D'&&lRef!='S'){         //On blinde, en vérifiant que la saisie fait bien parti des choix possibles
-                System.out.println(ROUGE +"Erreur!"+RESET +"\nCette lettre ne fait pas parti des choix.");          //Sinon, on affiche un message d'erreur
+                System.out.println(ROUGE +"Erreur!"+RESET +"\nCette lettre ne fait pas partie des choix.");          //Sinon, on affiche un message d'erreur
                 System.out.println("Veuillez entrer la lette du navire que vous voulez bouger :");          //On demande à l'utilisateur de resaisir
                 try{
                     lRef= scJeu.next().charAt(0);          //On stock la saisie de l'utilisateur
@@ -331,12 +331,12 @@ public class JeuNGraphique {
             if (lRef=='U') nPlateau=1;          //Si le navire choisie est un cuirassé, il n'est pas nécésaire de demander le numéro plateau car il existe qu'un seule
             
             else{           //Si c'est pas la cas
-                System.out.println("Veuillez entrer le numero du navire que vous voulez bouger :");         //On demande le numéro plateau du navire
+                System.out.println("Veuillez entrer le numéro du navire que vous voulez bouger :");         //On demande le numéro plateau du navire
                 try{
                         nPlateau = scJeu.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                     scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
                 
@@ -346,13 +346,13 @@ public class JeuNGraphique {
 
 
                 while (nPlateau<1||nPlateau>nMaxNavire){            //On blinde, en vérifiant que le numéro plateau est non nulle et ne dépasse pas le numéro maximal de navire
-                    System.out.println(ROUGE + "Erreur!"+RESET+"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur 
-                    System.out.println("Veuillez entrer le numero du navire que vous voulez bouger :");             //On demande à l'utilisateur de ressaisir
+                    System.out.println(ROUGE + "Erreur!"+RESET+"\nCe numéro ne fait pas partie des choix.");         //Sinon, on affiche un message d'erreur 
+                    System.out.println("Veuillez entrer le numéro du navire que vous voulez bouger :");             //On demande à l'utilisateur de ressaisir
                     try{
                         nPlateau = scJeu.nextInt();          //On stock la saisie de l'utilisateur
                     }
                     catch(InputMismatchException e){            //Si ce n'est pas un entier
-                        System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                        System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                         scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                     }
                 }
@@ -369,7 +369,7 @@ public class JeuNGraphique {
                         choix = scJeu.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
-                        System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                        System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                         scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
                 
@@ -377,7 +377,7 @@ public class JeuNGraphique {
                     case 1: continue;           //Si oui, on continue ce qui à pour conséquence de recommencer la boucle
                     case 2: return 2;           //Si non; on retourne 2 qui relance le tour de l'utilisateur 
                     
-                    default : System.out.println(ROUGE+"Erreur_bougerNavire! "+ RESET + "\nLe choix rentrer n'est pas disponible."); return 2;           //En cas de mauvaise saisie, on affiche un message d'erreur et on relance le tour de l'utilisateur
+                    default : System.out.println(ROUGE+"Erreur_bougerNavire! "+ RESET + "\nLe choix rentré n'est pas disponible."); return 2;           //En cas de mauvaise saisie, on affiche un message d'erreur et on relance le tour de l'utilisateur
                 }
             }
             else sortieChoixNavire=true;        //Si le navire n'est pas coulé on continue et on autorise la sortie de la boucle de choix
@@ -392,7 +392,7 @@ public class JeuNGraphique {
                         choix = scJeu.nextInt();          //On stock la saisie de l'utilisateur
                     }
                     catch(InputMismatchException e){            //Si ce n'est pas un entier
-                        System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                        System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                         scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                     }
                 
@@ -401,7 +401,7 @@ public class JeuNGraphique {
                                 break;
                         case 2: return 2;           //Si non, on retourne 2 qui a pour conséquence de relancer le tour du joueur
                     
-                        default : System.out.println(ROUGE+"Erreur_bougerNavire! "+ RESET + "\nLe choix rentrer n'est pas disponible."); return 2;          //En cas de mauvaise saisie, on affiche un message d'erreur et on relance le tour de l'utilisateur
+                        default : System.out.println(ROUGE+"Erreur_bougerNavire! "+ RESET + "\nLe choix rentré n'est pas disponible."); return 2;          //En cas de mauvaise saisie, on affiche un message d'erreur et on relance le tour de l'utilisateur
                     }
                 } 
             }    
@@ -520,7 +520,7 @@ public class JeuNGraphique {
         }
         
         
-        System.out.println("Entrer la colonne ou la ligne du nouvelle emplacement du navire");          //On demande à l'utilisateur de saisie le nouvelle emplacement
+        System.out.println("Entrez la colonne ou la ligne du nouvel emplacement du navire");          //On demande à l'utilisateur de saisie le nouvelle emplacement
         saisie = scJeuLine.nextLine();            //On récupère ça saisie qui peut etre de n'importe quelle type
         char saisieChar='Z';                //Variable qui permet de stocker la saisie si elle est un charactère
         int saisieInt=0;                    //Variable qui permet de stocker la saisie si elle est un entier
@@ -544,8 +544,8 @@ public class JeuNGraphique {
         }
         
         while(verif==false){            //On blinde, si la saisie ne fait pas partie des choix possibles
-            System.out.println(B_JAUNE + "Echec !"+RESET+"\nLa saisie ne fait pas parti des choix possibles");          //On affiche un message d'échec
-            System.out.println("Veuillez resaisir la ligne ou la colonne où vous voulez déplacer le navire");           //On à l'utilisateur de ressaisir
+            System.out.println(B_JAUNE + "Echec !"+RESET+"\nLa saisie ne fait pas partie des choix possibles");          //On affiche un message d'échec
+            System.out.println("Veuillez ressaisir la ligne ou la colonne où vous voulez déplacer le navire");           //On à l'utilisateur de ressaisir
             saisie = scJeuLine.nextLine();         //On stocke la saisie de l'utilisateur
             
             if (saisie.equals("A") || saisie.equals("B") || saisie.equals("C") || saisie.equals("D") || saisie.equals("E")|| saisie.equals("F") || saisie.equals("G") || saisie.equals("H") || saisie.equals("I") || saisie.equals("J") || saisie.equals("K") || saisie.equals("L") || saisie.equals("M") || saisie.equals("N") || saisie.equals("O")) {            //On vérif que la saisie est une majuscule qui fait partie des choix
@@ -576,7 +576,7 @@ public class JeuNGraphique {
             saisieChar = convertirMinuscules(saisieChar);          //On convertie cette saisie en majuscule
             
             while(saisieChar<'A'||saisieChar>'O'){          //Si la saisie ne fait pas partie des choix
-                System.out.println(ROUGE+"Erreur!"+RESET+ "\nLa saisie ne fait pas partie des choix. Veuillez resaisir :");         //On demande à l'utilisateur de ressaisir
+                System.out.println(ROUGE+"Erreur!"+RESET+ "\nLa saisie ne fait pas partie des choix. Veuillez ressaisir :");         //On demande à l'utilisateur de ressaisir
                 try{
                     saisieChar = scJeu.next().charAt(0);          //On stock la saisie de l'utilisateur
                 }
@@ -596,16 +596,16 @@ public class JeuNGraphique {
                 saisieInt = scJeu.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombe entier");            //On affiche un message d'erreur
                 scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
             }
             while(saisieChar<65||saisieChar>79){
-                System.out.println(ROUGE+"Erreur!"+RESET+ "\nLa saisie ne fait pas partie des choix. Veuillez resaisir :");
+                System.out.println(ROUGE+"Erreur!"+RESET+ "\nLa saisie ne fait pas partie des choix. Veuillez ressaisir :");
                 try{
                     saisieInt = scJeu.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                     scJeu.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             }
@@ -743,9 +743,9 @@ public class JeuNGraphique {
             if (i==9 && etat0!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
                 System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);            //On affiche un message 
                 System.out.println("\nInformations sur la partie : ");
-                System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
-                System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
-                System.out.println("Nombre de tour de l'IA : "+compteurTourIA);
+                System.out.println("Nombre de tours : "+(compteurTourHumain+compteurTourIA));
+                System.out.println("Nombre de tours du joueur : "+ compteurTourHumain);
+                System.out.println("Nombre de tours de l'IA : "+compteurTourIA);
                 return true;            //On renvoie true si l'IA a gagné
             } 
         }
@@ -757,11 +757,11 @@ public class JeuNGraphique {
         if (etat0SousMarin==false){         //Si il y a plus aucun sous-marin
             System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);          //On affiche un message de victoire de l'IA
             System.out.println("Vous n'avez plus de sous-marin");
-            System.out.println("L'ordinateur gagne par fofait de votre part");
+            System.out.println("L'ordinateur gagne par forfait de votre part");
             System.out.println("\nInformations sur la partie : ");
-            System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
-            System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
-            System.out.println("Nombre de tour de l'IA : "+compteurTourIA);
+            System.out.println("Nombre de tours : "+(compteurTourHumain+compteurTourIA));
+            System.out.println("Nombre de tours du joueur : "+ compteurTourHumain);
+            System.out.println("Nombre de tours de l'IA : "+compteurTourIA);
             return true;            //Renvoie true si l'un des deux joueurs a gagné
         }
 
@@ -773,9 +773,9 @@ public class JeuNGraphique {
             if (i==9 && etat1!=true){           //Si c'est le dernier navire et qu'il vient d'etre coulé
                 System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);           //On affiche un message
                 System.out.println("\nInformations sur la partie : ");
-                System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
-                System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
-                System.out.println("Nombre de tour de l'IA : "+compteurTourIA); 
+                System.out.println("Nombre de tours : "+(compteurTourHumain+compteurTourIA));
+                System.out.println("Nombre de tours du joueur : "+ compteurTourHumain);
+                System.out.println("Nombre de tours de l'IA : "+compteurTourIA); 
                 return true;            //On renvoie true si le joueur a gagné
             }
         }
@@ -786,12 +786,12 @@ public class JeuNGraphique {
 
         if (etat1SousMarin==false){         //Si il y a plus aucun sous-marin
             System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);            //On affiche un message de victoire du joueur
-            System.out.println("Vous avez détruit tout les sous-marin de l'ordinateur");
+            System.out.println("Vous avez détruit tous les sous-marins de l'ordinateur");
             System.out.println("Vous gagnez par forfait");
             System.out.println("\nInformations sur la partie : ");
-            System.out.println("Nombre de tour : "+(compteurTourHumain+compteurTourIA));
-            System.out.println("Nombre de tour du joueur : "+ compteurTourHumain);
-            System.out.println("Nombre de tour de l'IA : "+compteurTourIA);
+            System.out.println("Nombre de tours : "+(compteurTourHumain+compteurTourIA));
+            System.out.println("Nombre de tousr du joueur : "+ compteurTourHumain);
+            System.out.println("Nombre de tousr de l'IA : "+compteurTourIA);
             return true;            //Renvoie true si l'un des deux joueurs a gagné
         }
         return false;           //Si aucun des joueurs a gagné

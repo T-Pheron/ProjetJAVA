@@ -214,7 +214,7 @@ public class MenuGraphique{
             }
         });
         
-        Button boutonDificile = new Button("Dificile");            //On déclare le bouton pour le niveau difficile
+        Button boutonDificile = new Button("Difficile");            //On déclare le bouton pour le niveau difficile
         boutonDificile.setStyle ("-fx-background-color: rgba(120,160,175,0.50)");          //On change les caractéristiques d'écriture
         boutonDificile.setOnMouseEntered (e-> boutonDificile.setStyle ("-fx-background-color: rgba(82,127,143,0.50)"));          //On change les caractéristiques d'écriture si le joueur met son curseur sur le bouton
         boutonDificile.setOnMouseExited (e-> boutonDificile.setStyle ("-fx-background-color: rgba(120,160,175,0.50)"));          //On change les caractéristiques d'écriture si le joueur enlève son curseur du bouton
@@ -235,7 +235,7 @@ public class MenuGraphique{
         rootChoixNiveauIA.setPadding(new Insets(20));          //On donne les dimensions entre les rebords de la fenètre et le root
         rootChoixNiveauIA.setVgap(25);
         
-        final Label titreNiveauIA = new Label("Veuillez chosir le niveau de l'IA :");         //On demande au joueur de choisir le niveau de difficulté de l'IA
+        final Label titreNiveauIA = new Label("Veuillez choisir le niveau de l'IA :");         //On demande au joueur de choisir le niveau de difficulté de l'IA
         titreNiveauIA.setStyle (
                   "-fx-font-police: 'Tw Cen MT Condensed' ;"          //On change les caractéristiques d'écriture
                 + " -fx-font-size: 15pt; "
@@ -302,7 +302,7 @@ public class MenuGraphique{
         //On déclare les bouton pour aller dans les différentes parties de l'aide
         Button boutonPourCommencer = new Button ("Pour commencer");
         Button boutonFase2Tir = new Button ("La phase de tir");
-        Button boutonFlotteFct = new Button ("Flotte et fonctionnalité");
+        Button boutonFlotteFct = new Button ("Flotte et fonctionnalités");
         Button boutonLegendSymb = new Button ("Légende des symboles");
         Button boutonGagnerAstuce = new Button ("Pour gagner et astuces");
 
@@ -491,12 +491,12 @@ public class MenuGraphique{
                 + "-fx-text-fill: BLACK; "
                 + "-fx-font-weight: bold; ");
 
-                final Label labelPourCommencer = new Label ("COMMENT COMMENCER UNE PARTIE DE BATAILLE NAVALE ?\n Au début du jeu, tout les navires sont placés de manière aléatoire sur la grille.\n"
-            +   "Le joueur pourra par la suite les deplacer a sa guise vers le haut ou vers le bas d'une seule case par tour. "
+                final Label labelPourCommencer = new Label ("COMMENT COMMENCER UNE PARTIE DE BATAILLE NAVALE ?\n Au début du jeu, tous les navires sont placés de manière aléatoire sur la grille.\n"
+            +   "Le joueur pourra par la suite les deplacer à sa guise vers le haut ou vers le bas d'une seule case par tour. "
             +   "Le but est de détruire tous les navires de l'adversaire.\n"
             +   "Bien entendu, le joueur ne voit pas la grille de son adversaire.\n"
-            +   "Un à un, les joueurs se tire dessus pour détruire les navires ennemis.\n"
-            +   "Vous pouvez pas jouer deux fois de suite et doivez attendre le tour du joueur adverse.\n");            //On affiche les règles du jeu
+            +   "Un à un, les joueurs se tirent dessus pour détruire les navires ennemis.\n"
+            +   "Vous ne pouvez pas jouer deux fois de suite et devez attendre le tour du joueur adverse.\n");            //On affiche les règles du jeu
             labelPourCommencer.setStyle (
                 "-fx-font-police: 'Tw Cen MT Condensed' ;"          //On change les caractéristiques d'écriture
               + " -fx-font-size: 13pt; "
@@ -551,12 +551,12 @@ public class MenuGraphique{
                 + "-fx-text-fill: BLACK; "
                 + "-fx-font-weight: bold; ");
 
-                final Label labelFaz2Tir = new Label ("LA PHASE DE TIRE:\n"
-            + "le joueur indique la case où il souhaite tirer, par exemple: H7 qui correspond à la case au\n"
+                final Label labelFaz2Tir = new Label ("LA PHASE DE TIR:\n"
+            + "Le joueur indique la case où il souhaite tirer, par exemple: H7 qui correspond à la case au\n"
             + "croisement de la colonne H et de la ligne 7 sur les côtés des grilles.\n"
             + "Si vous tirez sur un navire ennemi, le jeu vous indiquera si vous l'avez touché.\n"
             + "Si vous ne touchez pas de navire, le jeu vous indiquera si vous l'avez raté.\n"
-            + "Si un des navire est entièrement touché, le jeu vous indiquera que vous avez coulé un navire.");            //On affiche les règles du jeu
+            + "Si un des navires est entièrement touché, le jeu vous indiquera que vous avez coulé un navire.");            //On affiche les règles du jeu
             labelFaz2Tir.setStyle (
                 "-fx-font-police: 'Tw Cen MT Condensed' ;"          //On change les caractéristiques d'écriture
               + " -fx-font-size: 13pt; "
@@ -612,24 +612,24 @@ public class MenuGraphique{
                 + "-fx-text-fill: BLACK; "
                 + "-fx-font-weight: bold; ");
 
-                final Label labelFlotteFct = new Label ("LES DIFFERENTS NAVIRES ET LEURS FONCTIONNALITEES:"
+                final Label labelFlotteFct = new Label ("LES DIFFERENTS NAVIRES ET LEURS FONCTIONNALITES:"
 
 
         +"Il y a 4 types de navires:\n"
         +"\n"
         +"    -Le cuirassé : le plus grand navire de votre flotte (7 cases), il est également le plus puissant.\n" 
-        +"                   Lors de ces tires, il touche 2 cases de part et d'autre du point d'impact que vous avez decidé.\n"
-        +"                 Il ne peut pas couler les sous-marins.\n"
+        +"                   Lors de ses tirs, il touche 2 cases de part et d'autre du point d'impact que vous avez decidé.\n"
+        +"                   Il ne peut pas couler les sous-marins.\n"
         +"\n"
-        +"    -Le croiseur : Il est un peu plus petit que le cuirassé (5 cases) mais garde les mêmes fonctionnalitées.\n"
-        +"                  Lors de ces tires, il touche 1 cases de part et d'autre du point d'impact que vous avez decidé.\n"
+        +"    -Le croiseur : Il est un peu plus petit que le cuirassé (5 cases) mais garde les mêmes fonctionnalités.\n"
+        +"                  Lors de ses tirs, il touche 1 case de part et d'autre du point d'impact que vous avez decidé.\n"
         +"                   Il ne peut pas couler les sous-marins.\n"
         +"\n"
         +"    -Le destroyer : Il est petit (3 cases) et ne fait des dégats uniquement au point d'impact que vous avez décidé.\n"
         +"                    Il a cependant une capacité spéciale : Son premier tir est en fait une fusée éclairante.\n"
         +"                    Couvrant une surface de 4*4 cases, vous serez capable de voir si il y a des navires dans cette zone.\n"
-        +"                    Le point d'impact de la fusée est tout en haut à gauche de la surface. Puis reprend des tirs normaux \n"
-        +"                    la où vous le décidez. Il ne peut pas couler les sous-marins.\n"
+        +"                    Le point d'impact de la fusée est tout en haut à gauche de la surface. Puis il reprend des tirs normaux \n"
+        +"                    là où vous le décidez. Il ne peut pas couler les sous-marins.\n"
         +"\n"                    
         +"    -Le sous-marin : Il est tout petit (1 case) mais est capable de couler tout les navires sur son chemin.\n"
         +"                     Son tir fait également 1 case à l'endroit que vous aurez decidé.\n"
@@ -692,7 +692,7 @@ public class MenuGraphique{
                 + "-fx-text-fill: BLACK; "
                 + "-fx-font-weight: bold; ");
 
-                final Label labelLegendSymb = new Label ("LES DIFFERENTS SYMBOLES QUI PEUVENT ETRE PRESENT SUR LA GRILLE:\n"
+                final Label labelLegendSymb = new Label ("LES DIFFERENTS SYMBOLES QUI PEUVENT ETRE PRESENTS SUR LA GRILLE:\n"
         +"Légende grille de tir\n"
         + "Il y a deux grilles qui vont vous etres affichées, la grille des navires et la grille des tirs.\n"
         + "Couleur des grilles :\n"
@@ -711,15 +711,15 @@ public class MenuGraphique{
         
         + "Sur la grille des navires :\n"
         
-        + "     -La casse d’un bateau toucher devient rouge foncé avec ses identifiants en rouge.\n"
+        + "     -La case d’un bateau touché devient rouge foncé avec ses identifiants en rouge.\n"
         + "     -Un sous-marin touché mais non coulé devient cyan avec ses coordonnées en rouge.\n"
-        + "     -Un emplacement devient bleu vert avec des croix rouge si un adversaire a tiré dessus.\n"
+        + "     -Un emplacement devient bleu vert avec des croix rouges si un adversaire a tiré dessus.\n"
         + "\n"
         
-        + "Sur la grille des tires :\n"
-        + "     -Un emplacement cyan avec des croix blanche, signifie que le joueur a tiré dessus mais n’a rien touché\n"
-        + "     -Un emplacement cyan, avec des croix rouges, signifie qu’un joueur à tire dessus et à toucher un navire\n"
-        + "     -Un emplacement gris avec des tirets, signifie que le joueur a toucher un sous-marin sans utilisé un sous-marin\n"
+        + "Sur la grille des tirs :\n"
+        + "     -Un emplacement cyan avec des croix blanches, signifie que le joueur a tiré dessus mais n’a rien touché\n"
+        + "     -Un emplacement cyan, avec des croix rouges, signifie qu’un joueur a tiré dessus et a touché un navire\n"
+        + "     -Un emplacement gris avec des tirets, signifie que le joueur a touché un sous-marin sans utiliser un sous-marin\n"
         + "\n"
         + "Lors du tir de la fusée éclairante :\n"
         + "    -Un emplacement jaune signifie qu’il n’y a rien dessus\n"

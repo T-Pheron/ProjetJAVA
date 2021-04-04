@@ -1,7 +1,8 @@
-LA PHASE DE TIRE:
+LA PHASE DE TIR:
 
 
-le joueur indique la case où il souhaite tirer, par exemple: H7 qui correspond à la case au croisement de la colonne H et de la ligne 7 sur les côtés des grilles.
+le joueur indique la case où il souhaite tirer, par exemple: H7 qui correspond à la case 
+au croisement de la colonne H et de la ligne 7 sur les côtés des grilles.
 Si vous tirez sur un navire ennemi, le jeu vous indiquera si vous l'avez touché.
 Si vous ne touchez pas de navire, le jeu vous indiquera si vous l'avez raté.
-Si un des navire est entièrement touché, le jeu vous indiquera que vous avez coulé un navire.
+Si un des navires est entièrement touché, le jeu vous indiquera que vous avez coulé un navire.

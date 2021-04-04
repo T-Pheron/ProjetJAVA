@@ -83,14 +83,14 @@ public class Croiseur extends Flotte {
             yTire = scCroiseur.nextInt();          //On stock la saisie de l'utilisateur
         }
         catch(InputMismatchException e){            //Si ce n'est pas un entier
-            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+            System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
             scCroiseur.next();            //On met à la poubelle la saisie de l'utilisateur
             yTire=-1;           //On remet la variable par defaut 
         }
 
 
         while ((yTire<0)||(yTire>16)){          //On blinde, en vérifiant que la saisie fait partie des choix
-            System.out.println(ROUGE + "Erreur!"+ RESET +"\nCe numéro ne fait pas parti des choix.");         //Sinon, on affiche un message d'erreur
+            System.out.println(ROUGE + "Erreur!"+ RESET +"\nCe numéro ne fait pas partie des choix.");         //Sinon, on affiche un message d'erreur
             System.out.println("Veuillez entrer le numero de la ligne a laquelle vous voulez tirer :");           //Et on demande la ressaisie
             try{
                 yTire = scCroiseur.nextInt();          //On stock la saisie de l'utilisateur
@@ -108,13 +108,13 @@ public class Croiseur extends Flotte {
         int xTire = (int) (xTireChar - 65);             //On convertie la saisie en un entier
         if ( Jeu.plateauDeJeu.get(xTire,yTire,1,0).equals("1")){            //Si la case choisie a deja ete touche
             int choix=0;            //On declare une variable qui stock le choix du joueur 
-            System.out.println("Voulez vous vraiment tirer sur cette case ? Elle à deja été bombardée");            //On lui demande si il veut vraiment tirer sur cette case
+            System.out.println("Voulez vous vraiment tirer sur cette case ? Elle a deja été bombardée");            //On lui demande si il veut vraiment tirer sur cette case
             System.out.println("1.OUI \n2.NON");           //On affiche les choix du joueur 
             try{
                 choix = scCroiseur.nextInt();          //On stock la saisie de l'utilisateur
             }
             catch(InputMismatchException e){            //Si ce n'est pas un entier
-                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                 scCroiseur.next();            //On met à la poubelle la saisie de l'utilisateur
             }
             
@@ -124,7 +124,7 @@ public class Croiseur extends Flotte {
                     choix = scCroiseur.nextInt();          //On stock la saisie de l'utilisateur
                 }
                 catch(InputMismatchException e){            //Si ce n'est pas un entier
-                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un entier");            //On affiche un message d'erreur
+                    System.out.println(ROUGE +"Erreur! "+RESET+ "La saisie n'est pas un nombre entier");            //On affiche un message d'erreur
                     scCroiseur.next();            //On met à la poubelle la saisie de l'utilisateur
                 }
             }
@@ -153,7 +153,7 @@ public class Croiseur extends Flotte {
 
             Jeu.flotteJoueur1.get(pListeAdv).coordonnees[0][2]=2;           //On met la coordonées sur 2 pour signifie, ce qui signifie que le sous-marin a été touché sans être coulé (il ne peux plus être déplacé)
 
-            System.out.println("Nous avons détecté une structure mais n'avons pas pu la détruire");TimeUnit.SECONDS.sleep(4);           //Affichage d'un message disant qu'on est tombé sur un sous-marin
+            System.out.println("Nous avons détecté une structure mais nous n'avons pas pu la détruire");TimeUnit.SECONDS.sleep(4);           //Affichage d'un message disant qu'on est tombé sur un sous-marin
             return 1;
         }
         else if (Jeu.plateauDeJeu.get(xTire,yTire,2,0) != (Object) '_'){             //Si la case contient un navire
