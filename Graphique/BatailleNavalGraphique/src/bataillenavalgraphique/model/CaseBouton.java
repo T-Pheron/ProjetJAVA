@@ -17,14 +17,14 @@ import javafx.scene.control.Button;
 public class CaseBouton {
 
     //**************************************************************************
-    int x;           //Variable utilisée pour stocker la valeur de l'axe x 
-    int y;           //Variable utilisée pour stocker la valeur de l'axe y
-    char plateauRef = 'A';          //Variable utilisée pour stocker la référence du plateau qu'on a initialisé à A par défaut
-    Button bouton = new Button();           //On déclare un bouton
-    String couleurDefaut = "-fx-background-color: rgba(120,160,175,0.50);";         //On change la couleur
-    String couleurSurvol = "-fx-background-color: rgba(82,127,143,0.80);";
-    String couleurText = "-fx-text-fill: BLACK ;";
-    List<Integer>   listeInformations;          //On déclare un liste d'information
+    protected int x;           //Variable utilisée pour stocker la valeur de l'axe x 
+    protected int y;           //Variable utilisée pour stocker la valeur de l'axe y
+    private char plateauRef = 'A';          //Variable utilisée pour stocker la référence du plateau qu'on a initialisé à A par défaut
+    private Button bouton = new Button();           //On déclare un bouton
+    private String couleurDefaut = "-fx-background-color: rgba(120,160,175,0.50);";         //On change la couleur
+    private String couleurSurvol = "-fx-background-color: rgba(82,127,143,0.80);";
+    private String couleurText = "-fx-text-fill: BLACK ;";
+    protected List<Integer>   listeInformations;          //On déclare un liste d'information
     //**************************************************************************
 
 

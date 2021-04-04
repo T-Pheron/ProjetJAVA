@@ -59,7 +59,7 @@ public class AffichageSauvegardeGraphique {
         String [] nomPartie = new String [10];          //Variable qui est utilser pour stocker les différents nom de partie
         VBox vBoxBouton = new VBox(2);          //Variable qui stoke les éléments pour l'affichage
 
-        Label informationEmplacmentSauvegarde = new Label ("Sauvegardes déjà présentes :");         //On informe le joueur du contenu des sauvegardes présentes
+        final Label informationEmplacmentSauvegarde = new Label ("Sauvegardes déjà présentes :");         //On informe le joueur du contenu des sauvegardes présentes
         informationEmplacmentSauvegarde.setStyle (
                   "-fx-font-police: 'Tw Cen MT Condensed' ;"          //On change les caractéristiques d'écriture
                 + " -fx-font-size: 16pt; ");
@@ -140,7 +140,7 @@ public class AffichageSauvegardeGraphique {
         VBox vBoxScrollBarBouton = new VBox(scrollBarBouton);           //On met la scrollBar dans une affichage vertical
         vBoxScrollBarBouton.setAlignment(Pos.BOTTOM_LEFT);            //On positionne la scroolBar en bas à gauche de la scène
         
-        Label titre = new Label ("Sauvegarde");         //On indique qu'on se trouve dans la sauvegarde
+        final Label titre = new Label ("Sauvegarde");         //On indique qu'on se trouve dans la sauvegarde
         titre.setStyle (
                   "-fx-font-police: 'Tw Cen MT Condensed' ;"          //On change les caractéristiques d'écriture
                 + " -fx-font-size: 30pt; "
@@ -149,10 +149,10 @@ public class AffichageSauvegardeGraphique {
                 + "-fx-background-color: rgba(120,160,175,0.50);");
         
         
-        ImageView imageRetour = new ImageView ("/images/retourImage.png");          //On donne l'endroit où sont stocker les images
-        ImageView imageRetourHover = new ImageView ("/images/retourImageHover.png");
-        ImageView imageNouveau = new ImageView ("/images/new.png");
-        ImageView imageNouveauHover = new ImageView ("/images/newHover.png"); 
+        final ImageView imageRetour = new ImageView ("/images/retourImage.png");          //On donne l'endroit où sont stocker les images
+        final ImageView imageRetourHover = new ImageView ("/images/retourImageHover.png");
+        final ImageView imageNouveau = new ImageView ("/images/new.png");
+        final ImageView imageNouveauHover = new ImageView ("/images/newHover.png"); 
         
         Button boutonRetour = new Button ("Retour");           //On déclare un bouton pour le retour
         boutonRetour.setGraphic(imageRetour);            //On l'illustre par une petite image
@@ -250,13 +250,13 @@ public class AffichageSauvegardeGraphique {
     public void sauvegardeEnCours(){
 
         VBox rootText = new VBox(25);         //On déclare un affichage vertical où les éléments sont espacé de 25 pixels
-        Label information0 = new Label ("La sauvegarde est en cours");
+        final Label information0 = new Label ("La sauvegarde est en cours");
         information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"          //On change les caractéristiques d'écriture
         +               " -fx-background-color: rgba(120,160,175,0.50);"
         +                "-fx-font-size: 30pt;"
         +                "-fx-font-weight: bold;");
 
-        Label information1 = new Label ("\n\nPatienter...");
+        final Label information1 = new Label ("\n\nPatienter...");
         information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"          //On change les caractéristiques d'écriture
         +                "-fx-font-size: 20pt;"
         +                "-fx-font-weight: bold;");
@@ -278,13 +278,13 @@ public class AffichageSauvegardeGraphique {
         Timeline timeSauvegardeEffectuee= new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         timeSauvegardeEffectuee.getKeyFrames().addAll(new KeyFrame(Duration.millis(4000),e -> {            //On met un temps d'attente de 4s
             VBox rootText = new VBox(25);         //On déclare un affichage vertical où les éléments sont espacé de 25 pixels
-            Label information0 = new Label ("La sauvegarder a bien eu lieu");
+            final Label information0 = new Label ("La sauvegarder a bien eu lieu");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"          //On change les caractéristiques d'écriture
             +               " -fx-background-color: rgba(120,160,175,0.50);"
             +                "-fx-font-size: 30pt;"
             +                "-fx-font-weight: bold;");
             
-            Label information1 = new Label ("\n\nRetour au Menu Principal");
+            final Label information1 = new Label ("\n\nRetour au Menu Principal");
             information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"          //On change les caractéristiques d'écriture
             +                "-fx-font-size: 20pt;"
             +                "-fx-font-weight: bold;");
@@ -313,13 +313,13 @@ public class AffichageSauvegardeGraphique {
         Timeline timeSauvegardeEffectuee= new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         timeSauvegardeEffectuee.getKeyFrames().addAll(new KeyFrame(Duration.millis(4000),e -> {            //On met un temps d'attente de 4s
             VBox rootText = new VBox(25);         //On déclare un affichage vertical où les éléments sont espacé de 25 pixels
-            Label information0 = new Label ("La sauvegarder a bien eu lieu");
+            final Label information0 = new Label ("La sauvegarder a bien eu lieu");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"          //On change les caractéristiques d'écriture
             +               " -fx-background-color: rgba(120,160,175,0.50);"
             +                "-fx-font-size: 30pt;"
             +                "-fx-font-weight: bold;");
             
-            Label information1 = new Label ("\n\nRetour au plateau de Jeu");
+            final Label information1 = new Label ("\n\nRetour au plateau de Jeu");
             information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"          //On change les caractéristiques d'écriture
             +                "-fx-font-size: 20pt;"
             +                "-fx-font-weight: bold;");
@@ -351,13 +351,13 @@ public class AffichageSauvegardeGraphique {
     public void suppressionEffectue(Stage stage){
 
         VBox rootText = new VBox(25);         //On déclare un affichage vertical où les éléments sont espacé de 25 pixels
-        Label information0 = new Label ("La suppresion de la partie a bien eu lieu");
+        final Label information0 = new Label ("La suppresion de la partie a bien eu lieu");
         information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"          //On change les caractéristiques d'écriture
         +               " -fx-background-color: rgba(120,160,175,0.50);"
         +                "-fx-font-size: 20pt;"
         +                "-fx-font-weight: bold;");
 
-        Label information1 = new Label ("\n\nRetour au Menu de Chargement");
+        final Label information1 = new Label ("\n\nRetour au Menu de Chargement");
         information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"          //On change les caractéristiques d'écriture
         +                "-fx-font-size: 15pt;"
         +                "-fx-font-weight: bold;");
@@ -447,7 +447,7 @@ public class AffichageSauvegardeGraphique {
         vBoxScrollBarBouton.setAlignment(Pos.BOTTOM_LEFT);            //On positionne l'élément en bas à gauche
         
         
-        Label titre = new Label ("Chargement");
+        final Label titre = new Label ("Chargement");
         titre.setStyle (
                   "-fx-font-police: 'Tw Cen MT Condensed' ;"          //On change les caractéristiques d'écriture
                 + " -fx-font-size: 35pt; "
@@ -455,8 +455,8 @@ public class AffichageSauvegardeGraphique {
                 + "-fx-font-weight: bold; ");
         
         
-        ImageView retourHome = new ImageView ("/images/retourHome.png");            //On donne l'emplacement de l'image
-        ImageView retourHomeHover = new ImageView ("/images/retourHomeHover.png"); 
+        final ImageView retourHome = new ImageView ("/images/retourHome.png");            //On donne l'emplacement de l'image
+        final ImageView retourHomeHover = new ImageView ("/images/retourHomeHover.png"); 
         
         Button boutonHome = new Button ("Menu Principal");           //On déclare un bouton pour aller dans le menu principal
         boutonHome.setGraphic(retourHome);            //On l'illustre par une petite image
@@ -502,7 +502,7 @@ public class AffichageSauvegardeGraphique {
         String [] nomPartie = new String [10];
         VBox vBoxBouton = new VBox(2);         //On déclare un affichage vertical où les éléments sont espacé de 2 pixels
         
-        Label informationEmplacmentSauvegarde = new Label ("Sauvegardes présentes :");
+        final Label informationEmplacmentSauvegarde = new Label ("Sauvegardes présentes :");
         informationEmplacmentSauvegarde.setStyle (
                   "-fx-font-police: 'Tw Cen MT Condensed' ;"          //On change les caractéristiques d'écriture
                 + " -fx-font-size: 16pt; ");
@@ -561,7 +561,7 @@ public class AffichageSauvegardeGraphique {
         vBoxScrollBarBouton.setAlignment(Pos.BOTTOM_LEFT);            //On positionne l'élément en bas à gauche
         
         
-        Label titre = new Label ("Chargement");         //On informe dans quel endroit on se trouve
+        final Label titre = new Label ("Chargement");         //On informe dans quel endroit on se trouve
         titre.setStyle (
                   "-fx-font-police: 'Tw Cen MT Condensed' ;"          //On change les caractéristiques d'écriture
                 + " -fx-font-size: 35pt; "
@@ -569,8 +569,8 @@ public class AffichageSauvegardeGraphique {
                 + "-fx-background-color: rgba(120,160,175,0.50);");
         
         
-        ImageView retourImage = new ImageView ("/images/retourImage.png");            //On donne l'emplacement de l'image
-        ImageView retourImageHover = new ImageView ("/images/retourImageHover.png"); 
+        final ImageView retourImage = new ImageView ("/images/retourImage.png");            //On donne l'emplacement de l'image
+        final ImageView retourImageHover = new ImageView ("/images/retourImageHover.png"); 
         
         Button boutonHome = new Button ();           //On déclare un bouton pour retourner au menu principal
         boutonHome.setGraphic(retourImage);            //On l'illustre par une petite image
@@ -649,12 +649,12 @@ public class AffichageSauvegardeGraphique {
         
         Affichage.afficher(0,0,plateauDeJeuCopy);
         
-        ImageView imageSupprimer=new ImageView(getClass().getResource("/images/poubelle.png").toString());            //On donne l'emplacement de l'image
-        ImageView imageSupprimerHover =new ImageView(getClass().getResource("/images/poubelleHover.png").toString());
-        ImageView imageCharger =new ImageView(getClass().getResource("/images/charger.png").toString());
-        ImageView imageChargerHover =new ImageView(getClass().getResource("/images/chargerHover.png").toString());
-        ImageView imageRetour = new ImageView ("/images/retourImage.png");
-        ImageView imageRetourHover = new ImageView ("/images/retourImageHover.png");
+        final ImageView imageSupprimer=new ImageView(getClass().getResource("/images/poubelle.png").toString());            //On donne l'emplacement de l'image
+        final ImageView imageSupprimerHover =new ImageView(getClass().getResource("/images/poubelleHover.png").toString());
+        final ImageView imageCharger =new ImageView(getClass().getResource("/images/charger.png").toString());
+        final ImageView imageChargerHover =new ImageView(getClass().getResource("/images/chargerHover.png").toString());
+        final ImageView imageRetour = new ImageView ("/images/retourImage.png");
+        final ImageView imageRetourHover = new ImageView ("/images/retourImageHover.png");
         
         
         GrilleBoutons grilleBoutonNavire = new GrilleBoutons('D', 'A');          //On déclare la grille des boutons pour les navires 
@@ -674,7 +674,7 @@ public class AffichageSauvegardeGraphique {
         rootNavire.add(grilleBoutonNavire.getRoot(),0,0);           //On place la grille des navires à gauche
         rootNavire.add(grilleBoutonTirs.getRoot(),1,0);            //On place la grille des tirs à droite 
         
-        Label instructionsJoueur = new Label("Que souhaitez vous faire ?");            //On informe le joueur des instructions à suivre
+        final Label instructionsJoueur = new Label("Que souhaitez vous faire ?");            //On informe le joueur des instructions à suivre
         instructionsJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"          //On change les caractéristiques d'écriture
         +                "-fx-font-size: 14pt;"
         +                "-fx-background-color: rgba(120,160,175,0.50);"
@@ -815,12 +815,12 @@ public class AffichageSauvegardeGraphique {
         
         Affichage.afficher(0,0,plateauDeJeuCopy);
         
-        ImageView imageSupprimer=new ImageView(getClass().getResource("/images/poubelle.png").toString());            //On donne l'emplacement de l'image
-        ImageView imageSupprimerHover =new ImageView(getClass().getResource("/images/poubelleHover.png").toString());
-        ImageView imageCharger =new ImageView(getClass().getResource("/images/charger.png").toString());
-        ImageView imageChargerHover =new ImageView(getClass().getResource("/images/chargerHover.png").toString());
-        ImageView imageRetour = new ImageView ("/images/retourImage.png");
-        ImageView imageRetourHover = new ImageView ("/images/retourImageHover.png");
+        final ImageView imageSupprimer=new ImageView(getClass().getResource("/images/poubelle.png").toString());            //On donne l'emplacement de l'image
+        final ImageView imageSupprimerHover =new ImageView(getClass().getResource("/images/poubelleHover.png").toString());
+        final ImageView imageCharger =new ImageView(getClass().getResource("/images/charger.png").toString());
+        final ImageView imageChargerHover =new ImageView(getClass().getResource("/images/chargerHover.png").toString());
+        final ImageView imageRetour = new ImageView ("/images/retourImage.png");
+        final ImageView imageRetourHover = new ImageView ("/images/retourImageHover.png");
         
         
         GrilleBoutons grilleBoutonNavire = new GrilleBoutons('D', 'A');          //On déclare la grille des boutons pour les navires 
@@ -840,7 +840,7 @@ public class AffichageSauvegardeGraphique {
         rootNavire.add(grilleBoutonNavire.getRoot(),0,0);           //On place la grille des navires à gauche
         rootNavire.add(grilleBoutonTirs.getRoot(),2,0);            //On place la grille des tirs à droite 
         
-        Label instructionsJoueur = new Label("Que souhaitez vous faire ?");            //On informe le joueur des instructions à suivre
+        final Label instructionsJoueur = new Label("Que souhaitez vous faire ?");            //On informe le joueur des instructions à suivre
         instructionsJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
         +                "-fx-font-size: 14pt;"
         +                "-fx-background-color: rgba(120,160,175,0.50);"
@@ -948,12 +948,12 @@ public class AffichageSauvegardeGraphique {
      */
     public void ecranChargement(String nomSauvegarde, Stage stage){
         VBox rootText = new VBox(25);         //On déclare un affichage vertical où les éléments sont espacé de 25 pixels
-        Label information = new Label ("Nous chargons la partie sélectionnée");
+        final Label information = new Label ("Nous chargons la partie sélectionnée");
         information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"          //On change les caractéristiques d'écriture
         +                "-fx-font-size: 20pt;"
         +                "-fx-background-color: rgba(120,160,175,0.50);"
         +                "-fx-font-weight: bold;");
-        Label information1 = new Label ("\n\nVeuillez patientez...");
+        final Label information1 = new Label ("\n\nVeuillez patientez...");
         information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"          //On change les caractéristiques d'écriture
         +                "-fx-font-size: 15pt;"
         +                "-fx-font-weight: bold;");

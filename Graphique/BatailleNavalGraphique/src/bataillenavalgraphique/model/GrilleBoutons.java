@@ -16,8 +16,8 @@ import javafx.scene.layout.VBox;
 public final class GrilleBoutons {
     
     //**************************************************************************
-    CaseBouton[][] grilleBoutons = new CaseBouton[15][15];          //On déclare un grille de bouton de 15*15 cases
-    VBox rootGrilleBoutons = new VBox();            //On déclare un affichage vertical
+    private CaseBouton[][] grilleBoutons = new CaseBouton[15][15];          //On déclare un grille de bouton de 15*15 cases
+    private VBox rootGrilleBoutons = new VBox();            //On déclare un affichage vertical
     //**************************************************************************
 
 

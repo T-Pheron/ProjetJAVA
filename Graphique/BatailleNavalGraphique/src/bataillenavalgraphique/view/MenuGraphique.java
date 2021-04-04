@@ -60,15 +60,15 @@ public class MenuGraphique{
     public Scene sceneLancementMenuPrincipal(Stage stage){
         
         //On donne l'emplacement de l'image
-        ImageView bateauImage = new ImageView(getClass().getResource("/images/bateau.png").toString());
-        ImageView bateauImageHover = new ImageView(getClass().getResource("/images/bateauHover.png").toString());
-        ImageView chargerImage = new ImageView(getClass().getResource("/images/loading.png").toString());
-        ImageView chargerImageHover = new ImageView(getClass().getResource("/images/loadingHover.png").toString());
-        ImageView helpImage = new ImageView(getClass().getResource("/images/help.png").toString());
-        ImageView helpImageHover = new ImageView(getClass().getResource("/images/helpHove.png").toString());
-        ImageView quitterImage  =new ImageView(getClass().getResource("/images/quitter.png").toString());
-        ImageView quitterImageHover =new ImageView(getClass().getResource("/images/quitterHover.png").toString());
-        Image imageEcranMenuPrincipal =new Image("/images/fondMenuPrincipal.png");
+        final ImageView bateauImage = new ImageView(getClass().getResource("/images/bateau.png").toString());
+        final ImageView bateauImageHover = new ImageView(getClass().getResource("/images/bateauHover.png").toString());
+        final ImageView chargerImage = new ImageView(getClass().getResource("/images/loading.png").toString());
+        final ImageView chargerImageHover = new ImageView(getClass().getResource("/images/loadingHover.png").toString());
+        final ImageView helpImage = new ImageView(getClass().getResource("/images/help.png").toString());
+        final ImageView helpImageHover = new ImageView(getClass().getResource("/images/helpHove.png").toString());
+        final ImageView quitterImage  =new ImageView(getClass().getResource("/images/quitter.png").toString());
+        final ImageView quitterImageHover =new ImageView(getClass().getResource("/images/quitterHover.png").toString());
+        final Image imageEcranMenuPrincipal =new Image("/images/fondMenuPrincipal.png");
 
 
         
@@ -235,7 +235,7 @@ public class MenuGraphique{
         rootChoixNiveauIA.setPadding(new Insets(20));          //On donne les dimensions entre les rebords de la fenètre et le root
         rootChoixNiveauIA.setVgap(25);
         
-        Label titreNiveauIA = new Label("Veuillez chosir le niveau de l'IA :");         //On demande au joueur de choisir le niveau de difficulté de l'IA
+        final Label titreNiveauIA = new Label("Veuillez chosir le niveau de l'IA :");         //On demande au joueur de choisir le niveau de difficulté de l'IA
         titreNiveauIA.setStyle (
                   "-fx-font-police: 'Tw Cen MT Condensed' ;"          //On change les caractéristiques d'écriture
                 + " -fx-font-size: 15pt; "
@@ -253,11 +253,11 @@ public class MenuGraphique{
         lancementChoixNiveauIA.setScene(sceneNiveauIA);           //On modifie et affiche la scène
     }
     
-    ImageView retourImage = new ImageView ("/images/retourImage.png");            //On donne l'emplacement de l'image
-    ImageView retourImageHover = new ImageView ("/images/retourImageHover.png");
-    ImageView retourHome = new ImageView ("/images/retourHome.png");
-    ImageView retourHomeHover = new ImageView ("/images/retourHomeHover.png");
-    BackgroundImage fondEcranMenuPrincipal = new BackgroundImage(new Image("/images/fondAide.png"), 
+    final ImageView retourImage = new ImageView ("/images/retourImage.png");            //On donne l'emplacement de l'image
+    final ImageView retourImageHover = new ImageView ("/images/retourImageHover.png");
+    final ImageView retourHome = new ImageView ("/images/retourHome.png");
+    final ImageView retourHomeHover = new ImageView ("/images/retourHomeHover.png");
+    final BackgroundImage fondEcranMenuPrincipal = new BackgroundImage(new Image("/images/fondAide.png"), 
             BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);           //On met en arriere plan une image
 
 
@@ -435,7 +435,7 @@ public class MenuGraphique{
         
         boutonAide.getChildren().addAll(boutonPourCommencer,boutonFase2Tir,boutonFlotteFct,boutonLegendSymb,boutonGagnerAstuce);             //On rajoute des éléments a ce root
 
-        Label titre = new Label ("Aide");         //On informe dans quel endroit on se trouve
+        final Label titre = new Label ("Aide");         //On informe dans quel endroit on se trouve
         titre.setStyle (
                   "-fx-font-police: 'Tw Cen MT Condensed' ;"          //On change les caractéristiques d'écriture
                 + " -fx-font-size: 35pt; "
@@ -484,14 +484,14 @@ public class MenuGraphique{
             stage.setScene(sceneLancementMenuPrincipal(stage));           //On modifie et affiche la scène
         }); 
 
-        Label labelTitrePourCommencer = new Label ("Pour Commencer");         //On informe dans quel endroit on se trouve
+        final Label labelTitrePourCommencer = new Label ("Pour Commencer");         //On informe dans quel endroit on se trouve
         labelTitrePourCommencer.setStyle (
                   "-fx-font-police: 'Tw Cen MT Condensed' ;"          //On change les caractéristiques d'écriture
                 + " -fx-font-size: 30pt; "
                 + "-fx-text-fill: BLACK; "
                 + "-fx-font-weight: bold; ");
 
-        Label labelPourCommencer = new Label ("COMMENT COMMENCER UNE PARTIE DE BATAILLE NAVALE ?\n Au début du jeu, tout les navires sont placés de manière aléatoire sur la grille.\n"
+                final Label labelPourCommencer = new Label ("COMMENT COMMENCER UNE PARTIE DE BATAILLE NAVALE ?\n Au début du jeu, tout les navires sont placés de manière aléatoire sur la grille.\n"
             +   "Le joueur pourra par la suite les deplacer a sa guise vers le haut ou vers le bas d'une seule case par tour. "
             +   "Le but est de détruire tous les navires de l'adversaire.\n"
             +   "Bien entendu, le joueur ne voit pas la grille de son adversaire.\n"
@@ -544,14 +544,14 @@ public class MenuGraphique{
             stage.setScene(sceneLancementMenuPrincipal(stage));           //On modifie et affiche la scène
         }); 
 
-        Label labelTitreFaz2tir = new Label ("Pour tirer");         //On informe dans quel endroit on se trouve
+        final Label labelTitreFaz2tir = new Label ("Pour tirer");         //On informe dans quel endroit on se trouve
         labelTitreFaz2tir.setStyle (
                   "-fx-font-police: 'Tw Cen MT Condensed' ;"          //On change les caractéristiques d'écriture
                 + " -fx-font-size: 30pt; "
                 + "-fx-text-fill: BLACK; "
                 + "-fx-font-weight: bold; ");
 
-        Label labelFaz2Tir = new Label ("LA PHASE DE TIRE:\n"
+                final Label labelFaz2Tir = new Label ("LA PHASE DE TIRE:\n"
             + "le joueur indique la case où il souhaite tirer, par exemple: H7 qui correspond à la case au\n"
             + "croisement de la colonne H et de la ligne 7 sur les côtés des grilles.\n"
             + "Si vous tirez sur un navire ennemi, le jeu vous indiquera si vous l'avez touché.\n"
@@ -605,14 +605,14 @@ public class MenuGraphique{
             stage.setScene(sceneLancementMenuPrincipal(stage));           //On modifie et affiche la scène
         }); 
 
-        Label labelTitreFlotteFct = new Label ("Pour les navires");         //On informe dans quel endroit on se trouve
+        final Label labelTitreFlotteFct = new Label ("Pour les navires");         //On informe dans quel endroit on se trouve
         labelTitreFlotteFct.setStyle (
                   "-fx-font-police: 'Tw Cen MT Condensed' ;"          //On change les caractéristiques d'écriture
                 + " -fx-font-size: 30pt; "
                 + "-fx-text-fill: BLACK; "
                 + "-fx-font-weight: bold; ");
 
-        Label labelFlotteFct = new Label ("LES DIFFERENTS NAVIRES ET LEURS FONCTIONNALITEES:"
+                final Label labelFlotteFct = new Label ("LES DIFFERENTS NAVIRES ET LEURS FONCTIONNALITEES:"
 
 
         +"Il y a 4 types de navires:\n"
@@ -685,14 +685,14 @@ public class MenuGraphique{
             stage.setScene(sceneLancementMenuPrincipal(stage));           //On modifie et affiche la scène
         }); 
 
-        Label labelTitreLegendSymb = new Label ("Pour les symboles");         //On informe dans quel endroit on se trouve
+        final Label labelTitreLegendSymb = new Label ("Pour les symboles");         //On informe dans quel endroit on se trouve
         labelTitreLegendSymb.setStyle (
                   "-fx-font-police: 'Tw Cen MT Condensed' ;"          //On change les caractéristiques d'écriture
                 + " -fx-font-size: 30pt; "
                 + "-fx-text-fill: BLACK; "
                 + "-fx-font-weight: bold; ");
 
-        Label labelLegendSymb = new Label ("LES DIFFERENTS SYMBOLES QUI PEUVENT ETRE PRESENT SUR LA GRILLE:\n"
+                final Label labelLegendSymb = new Label ("LES DIFFERENTS SYMBOLES QUI PEUVENT ETRE PRESENT SUR LA GRILLE:\n"
         +"Légende grille de tir\n"
         + "Il y a deux grilles qui vont vous etres affichées, la grille des navires et la grille des tirs.\n"
         + "Couleur des grilles :\n"
@@ -772,14 +772,14 @@ public class MenuGraphique{
             stage.setScene(sceneLancementMenuPrincipal(stage));           //On modifie et affiche la scène
         }); 
 
-        Label labelTitreGagnerAstuce = new Label ("Pour gagner");         //On informe dans quel endroit on se trouve
+        final Label labelTitreGagnerAstuce = new Label ("Pour gagner");         //On informe dans quel endroit on se trouve
         labelTitreGagnerAstuce.setStyle (
                   "-fx-font-police: 'Tw Cen MT Condensed' ;"          //On change les caractéristiques d'écriture
                 + " -fx-font-size: 30pt; "
                 + "-fx-text-fill: BLACK; "
                 + "-fx-font-weight: bold; ");
 
-        Label labelGagnerAstuce = new Label ("COMMENT GAGNER:\n"
+        final Label labelGagnerAstuce = new Label ("COMMENT GAGNER:\n"
         + "Une partie de bataille navale se termine lorsque l’un des joueurs n’a plus de navires ou quand il ne lui reste plus de sous-marin.\n"
         + "\n"
         

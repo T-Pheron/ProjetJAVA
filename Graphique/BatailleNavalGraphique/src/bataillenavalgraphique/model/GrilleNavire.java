@@ -10,8 +10,8 @@ import javafx.scene.layout.*;
 public class GrilleNavire{
 
     //**************************************************************************
-    CaseBouton[] grilleBoutons;         //Variable qui stocke les boutons qui représente un navire 
-    int taille;         //Variable qui stock la taille du navire
+    private CaseBouton[] grilleBoutons;         //Variable qui stocke les boutons qui représente un navire 
+    private int taille;         //Variable qui stock la taille du navire
     //**************************************************************************
 
 

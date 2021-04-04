@@ -17,7 +17,7 @@ import javafx.stage.Stage;
  * @author Théric PHERON and Joé LHUERRE
  */
 public class Sauvegarde {
-    
+
     //*************************************************************************
     /**
      * Constructeur de la classe sauvegarder

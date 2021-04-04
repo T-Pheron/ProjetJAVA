@@ -62,14 +62,14 @@ public class AffichageJeuGraphique {
             rootJeu.setHgap(30);            //On modifie l'écart horizontal
             rootJeu.setVgap(20);            //On modifie l'écart vertical
 
-            ImageView imageNouvellePartie =new ImageView(getClass().getResource("/images/imageNouvellePartie.png").toString());            //On donne l'emplacement de l'image
-            ImageView imageNouvellePartieHover =new ImageView(getClass().getResource("/images/imageNouvellePartieHover.png").toString());
-            ImageView imageSauvegarder =new ImageView(getClass().getResource("/images/imageSauvegarde.png").toString());
-            ImageView imageSauvegarderHover =new ImageView(getClass().getResource("/images/imageSauvegardeHover.png").toString());
-            ImageView imageChargerPartie =new ImageView(getClass().getResource("/images/chargerPetit.png").toString());            
-            ImageView imageChargerPartieHover =new ImageView(getClass().getResource("/images/chargerPetitHover.png").toString());
-            ImageView imageQuitter =new ImageView(getClass().getResource("/images/imageQuitter.png").toString());
-            ImageView imageQuitterHover =new ImageView(getClass().getResource("/images/imageQuitterHover.png").toString());
+            final ImageView imageNouvellePartie =new ImageView(getClass().getResource("/images/imageNouvellePartie.png").toString());            //On donne l'emplacement de l'image
+            final ImageView imageNouvellePartieHover =new ImageView(getClass().getResource("/images/imageNouvellePartieHover.png").toString());
+            final ImageView imageSauvegarder =new ImageView(getClass().getResource("/images/imageSauvegarde.png").toString());
+            final ImageView imageSauvegarderHover =new ImageView(getClass().getResource("/images/imageSauvegardeHover.png").toString());
+            final ImageView imageChargerPartie =new ImageView(getClass().getResource("/images/chargerPetit.png").toString());            
+            final ImageView imageChargerPartieHover =new ImageView(getClass().getResource("/images/chargerPetitHover.png").toString());
+            final ImageView imageQuitter =new ImageView(getClass().getResource("/images/imageQuitter.png").toString());
+            final ImageView imageQuitterHover =new ImageView(getClass().getResource("/images/imageQuitterHover.png").toString());
 
 
 
@@ -210,16 +210,16 @@ public class AffichageJeuGraphique {
             rootJeu.add(grilleBoutonNavire.getRoot(),0,6,3,5);           //On place la grille des navires à gauche
             rootJeu.add(grilleBoutonTirs.getRoot(),3,6,3,5);            //On place la grille des tirs à droite 
             
-            Label instructionsJoueur = new Label("Veuillez sélectionner un navire ou une case");            //On informe le joueur des instructions à suivre
+            final Label instructionsJoueur = new Label("Veuillez sélectionner un navire ou une case");            //On informe le joueur des instructions à suivre
             instructionsJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
             +                "-fx-font-size: 18pt;"
             +                "-fx-background-color: rgba(120,160,175,0.50);"
             +                "-fx-font-weight: bold;");
-            Label titreGrilleNavire = new Label("Voici la grille de vos navires :");            //On informe le joueur que c'est la grille de ses navires
+            final Label titreGrilleNavire = new Label("Voici la grille de vos navires :");            //On informe le joueur que c'est la grille de ses navires
             titreGrilleNavire.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
             +                "-fx-font-size: 15pt;");
             rootJeu.add(titreGrilleNavire,0,5,3,1);         //On place les instructions
-            Label titreGrilleTirs = new Label("Voici la grille de vos tirs :");             //On informe le joueur que c'est la grille des tirs
+            final Label titreGrilleTirs = new Label("Voici la grille de vos tirs :");             //On informe le joueur que c'est la grille des tirs
             titreGrilleTirs.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
             +                "-fx-font-size: 15pt;");
             rootJeu.add(titreGrilleTirs,3,5,3,1);           //On place les instructions
@@ -247,14 +247,14 @@ public class AffichageJeuGraphique {
     public void quiiterJeu(){
 
         if (JeuGraphique.partieSauvegarde==false){
-            ImageView imageOui=new ImageView(getClass().getResource("/images/yes.png").toString());            //On donne l'emplacement de l'image
-            ImageView imageOuiHover =new ImageView(getClass().getResource("/images/yesHover.png").toString());
-            ImageView imageNon =new ImageView(getClass().getResource("/images/no.png").toString());
-            ImageView imageNonHover =new ImageView(getClass().getResource("/images/noHover.png").toString());
+            final ImageView imageOui=new ImageView(getClass().getResource("/images/yes.png").toString());            //On donne l'emplacement de l'image
+            final ImageView imageOuiHover =new ImageView(getClass().getResource("/images/yesHover.png").toString());
+            final ImageView imageNon =new ImageView(getClass().getResource("/images/no.png").toString());
+            final ImageView imageNonHover =new ImageView(getClass().getResource("/images/noHover.png").toString());
 
 
             VBox rootText = new VBox(25);         //On déclare un affichage vertical où les éléments sont espacé de 25 pixels
-            Label information = new Label ("Voulez vous quitter sans sauvegarder ?");             //On demande au joueur ce qu'il veut faire
+            final Label information = new Label ("Voulez vous quitter sans sauvegarder ?");             //On demande au joueur ce qu'il veut faire
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
             +                "-fx-font-size: 20pt;"
             +                "-fx-background-color: rgba(120,160,175,0.50);"
@@ -338,12 +338,12 @@ public class AffichageJeuGraphique {
         GrilleBoutons grilleBoutonNavire = new GrilleBoutons('D', lRef);          //On déclare une grille de bouton pour la grille des navires
         grilleBoutonNavire.miseAJourAffichageNavire(JeuGraphique.plateauDeJeu);         //On le met à jour
         
-        ImageView imageTir =new ImageView(getClass().getResource("/images/tir.png").toString());            //On donne l'emplacement de l'image
-        ImageView imageTirHover =new ImageView(getClass().getResource("/images/tirHover.png").toString());
-        ImageView imageBouger =new ImageView(getClass().getResource("/images/bouger.png").toString());
-        ImageView imageBougerHover =new ImageView(getClass().getResource("/images/bougerHover.png").toString());
-        ImageView retourImage = new ImageView ("/images/retourImage.png");
-        ImageView retourImageHover = new ImageView ("/images/retourImageHover.png");
+        final ImageView imageTir =new ImageView(getClass().getResource("/images/tir.png").toString());            //On donne l'emplacement de l'image
+        final ImageView imageTirHover =new ImageView(getClass().getResource("/images/tirHover.png").toString());
+        final ImageView imageBouger =new ImageView(getClass().getResource("/images/bouger.png").toString());
+        final ImageView imageBougerHover =new ImageView(getClass().getResource("/images/bougerHover.png").toString());
+        final ImageView retourImage = new ImageView ("/images/retourImage.png");
+        final ImageView retourImageHover = new ImageView ("/images/retourImageHover.png");
 
         VBox rootselectionNavire = new VBox(40);            //On déclare un affichage vertical avec des éléments espacés de 40 pixels
         
@@ -384,7 +384,7 @@ public class AffichageJeuGraphique {
         rootAffichagePlateau.add(grilleBoutonNavire.getRoot(),0,1);         //On place la grille des boutons dans le root
         rootAffichagePlateau.add(affichageNavire.getRoot(directionNavire, lRef, nPlateau,(String) JeuGraphique.plateauDeJeu.get(xPlateau, yPlateau, 3, 0)),1,1);            //On place le navire dans le root
         
-        Label instruction = new Label ("Que souhaiter vous faire ?");           //On demande au joueur ce qu'il veut faire
+        final Label instruction = new Label ("Que souhaiter vous faire ?");           //On demande au joueur ce qu'il veut faire
         instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"      //On change les caractéristiques d'écriture   
                 + "-fx-font-weight: bold;");
         
@@ -476,15 +476,15 @@ public class AffichageJeuGraphique {
             VBox rootselectionCaseTir = new VBox(20);           //On crée un root de stockage vertival pour stocker les tirs
             rootselectionCaseTir.setPadding(new Insets(20,300,20,300));           //On donne les dimensions entre les rebords de la fenètre et le root
 
-            Label instruction = new Label ("Il s'agit du premier du de ce Destroyer !");             //On informe le joueur que c'est le premier tir du destroyer
+            final Label instruction = new Label ("Il s'agit du premier du de ce Destroyer !");             //On informe le joueur que c'est le premier tir du destroyer
             instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"
                     + "-fx-font-weight: bold;");
             
-            Label instruction2 = new Label ("Il s'agit donc d'une fussée éclairante ?");
+                    final Label instruction2 = new Label ("Il s'agit donc d'une fussée éclairante ?");
             instruction2.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 15pt;"
                     + "-fx-font-weight: bold;");
             
-            Label instruction3 = new Label ("Où souhaitez vous la tirer ?");
+                    final Label instruction3 = new Label ("Où souhaitez vous la tirer ?");
             instruction3.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 15;"
                     + "-fx-font-weight: bold;");
 
@@ -503,7 +503,7 @@ public class AffichageJeuGraphique {
             VBox rootselectionCaseTir = new VBox(40);           //On crée un root de stockage vertival pour stocker les navires
             rootselectionCaseTir.setPadding(new Insets(90,300,20,300));           //On donne les dimensions entre les rebords de la fenètre et le root
 
-            Label instruction = new Label ("Où souhaitez vous tirer ?");            //On affiche les instruction
+            final Label instruction = new Label ("Où souhaitez vous tirer ?");            //On affiche les instruction
             instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"         //On donner le style au instruction
                     + "-fx-font-weight: bold;");
 
@@ -532,7 +532,7 @@ public class AffichageJeuGraphique {
         VBox rootselectionCaseTir = new VBox(40);           //On crée un root de stockage vertival pour stocker les tirs
         rootselectionCaseTir.setPadding(new Insets(90,300,20,300));           //On donne les dimensions entre les rebords de la fenètre et le root
 
-        Label instruction = new Label ("Où souhaitez vous bougez votre navire ?");             //On demande au joueur où il veut bouger son navire
+        final Label instruction = new Label ("Où souhaitez vous bougez votre navire ?");             //On demande au joueur où il veut bouger son navire
         instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"
                 + "-fx-font-weight: bold;");
 
@@ -556,12 +556,12 @@ public class AffichageJeuGraphique {
         
         
         VBox rootText = new VBox(25);         //On déclare un affichage vertical où les éléments sont espacé de 25 pixels
-        Label information = new Label ("La manoeuvre est en cours");             //On informe le joueur que le déplacment de son navire a été pris en compte
+        final Label information = new Label ("La manoeuvre est en cours");             //On informe le joueur que le déplacment de son navire a été pris en compte
         information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
         +                "-fx-font-size: 20pt;"
         +                "-fx-background-color: rgba(120,160,175,0.50);"
         +                "-fx-font-weight: bold;");
-        Label information1 = new Label ("Veuillez patientez");
+        final Label information1 = new Label ("Veuillez patientez");
         information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
         +                "-fx-font-size: 15pt;"
         +                "-fx-font-weight: bold;");
@@ -588,7 +588,7 @@ public class AffichageJeuGraphique {
             
             VBox rootText = new VBox(25);         //On déclare un affichage vertical où les éléments sont espacé de 25 pixels
             rootText.setPadding(new Insets(5,300,20,300));           //On donne les dimensions entre les rebords de la fenètre et le root
-            Label information = new Label ("La manoeuvre a bien été effectuée");             //On informe le joueur que la manoeuvre est réussite
+            final Label information = new Label ("La manoeuvre a bien été effectuée");             //On informe le joueur que la manoeuvre est réussite
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"
             +                "-fx-font-size: 20pt;"
             +                "-fx-background-color: rgba(120,160,175,0.50);"
@@ -619,12 +619,12 @@ public class AffichageJeuGraphique {
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {           //On met un temps d'attente de 7s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
-            Label information = new Label ("Nous avons rien touché à ces coordonées");             //On informe le joueur qu'il a rien touché
+            final Label information = new Label ("Nous avons rien touché à ces coordonées");             //On informe le joueur qu'il a rien touché
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 20pt;"
             +                "-fx-background-color: rgba(120,160,175,0.50);"
             +                "-fx-font-weight: bold;");
-            Label information1 = new Label ("C'est au tour de l'IA");             //On informe le joueur que c'est au tour de l'IA de jouer
+            final Label information1 = new Label ("C'est au tour de l'IA");             //On informe le joueur que c'est au tour de l'IA de jouer
             information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 15pt;"
             +                "-fx-font-weight: bold;");
@@ -654,12 +654,12 @@ public class AffichageJeuGraphique {
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {           //On met un temps d'attente de 7s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
-            Label information = new Label ("Nous avons détecté une structure mais n'avons pas pu la détruire");             //On informe le joueur qu'il a touché un sous-marin mais qu'il ne la pas coulé
+            final Label information = new Label ("Nous avons détecté une structure mais n'avons pas pu la détruire");             //On informe le joueur qu'il a touché un sous-marin mais qu'il ne la pas coulé
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 20pt;"
             +                "-fx-background-color: rgba(120,160,175,0.50);"
             +                "-fx-font-weight: bold;");
-            Label information1 = new Label ("C'est au tour de l'IA");             //On informe le joueur que c'est au tour de l'IA
+            final Label information1 = new Label ("C'est au tour de l'IA");             //On informe le joueur que c'est au tour de l'IA
             information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 15pt;"
             +                "-fx-font-weight: bold;");
@@ -688,12 +688,12 @@ public class AffichageJeuGraphique {
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {           //On met un temps d'attente de 7s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
-            Label information = new Label ("C'est touché, bien joué");             //On informe le joueur qu'il a touché un navire adverse
+            final Label information = new Label ("C'est touché, bien joué");             //On informe le joueur qu'il a touché un navire adverse
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 25pt; "
             +                "-fx-background-color: rgba(120,160,175,0.50);"
             +                "-fx-font-weight: bold;");
-            Label information1 = new Label ("\n\n Au tour de l'IA");             //On informe le joueur que c'est au tour de l'IA
+            final Label information1 = new Label ("\n\n Au tour de l'IA");             //On informe le joueur que c'est au tour de l'IA
             information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 15pt;"
             +                "-fx-font-weight: bold;");
@@ -723,17 +723,17 @@ public class AffichageJeuGraphique {
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
         time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {           //On met un temps d'attente de 7s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
-            Label information = new Label ("C'est touché, bien joué");             //On informe le joueur qu'il a touché un navire adverse
+            final Label information = new Label ("C'est touché, bien joué");             //On informe le joueur qu'il a touché un navire adverse
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 25pt; "
             +                "-fx-background-color: rgba(120,160,175,0.50);"
             +                "-fx-font-weight: bold;");
-            Label information1 = new Label ("Vous avez coulé un "+nomNavireCoule);             //On informe le joueur du nom du navire qu'il a coulé
+            final Label information1 = new Label ("Vous avez coulé un "+nomNavireCoule);             //On informe le joueur du nom du navire qu'il a coulé
             information1.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 18pt;"
             +                "-fx-font-weight: bold;");
             
-            Label information2 = new Label ("\n\n Au tour de l'IA");
+            final Label information2 = new Label ("\n\n Au tour de l'IA");
             information2.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
             +                "-fx-font-size: 15pt;"
             +                "-fx-font-weight: bold;");
@@ -792,7 +792,7 @@ public class AffichageJeuGraphique {
             VBox rootselectionCaseTir = new VBox(40);           //On crée un root de stockage vertival pour stocker les navires
             rootselectionCaseTir.setPadding(new Insets(90,300,20,300));           //On donne les dimensions entre les rebords de la fenètre et le root
 
-            Label instruction2 = new Label ("Voici les informations qui ont été rapporté");
+            final Label instruction2 = new Label ("Voici les informations qui ont été rapporté");
             instruction2.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"
                     + "-fx-font-weight: bold;");
 
@@ -946,13 +946,13 @@ public class AffichageJeuGraphique {
         VBox rootselectionTir = new VBox(40);           //On crée un root de stockage vertival pour stocker les navires
         rootselectionTir.setPadding(new Insets(10,300,20,300));           //On donne les dimensions entre les rebords de la fenètre et le root
 
-        Label instruction = new Label ("Avec quel navire souhaitez vous tirer?");            //On affiche les instruction
+        final Label instruction = new Label ("Avec quel navire souhaitez vous tirer?");            //On affiche les instruction
         instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"         //On donner le style au instruction
                 + "-fx-font-weight: bold;");
 
 
-        ImageView retourImage = new ImageView ("/images/retourImage.png");            //On donne l'emplacement de l'image
-        ImageView retourImageHover = new ImageView ("/images/retourImageHover.png");
+        final ImageView retourImage = new ImageView ("/images/retourImage.png");            //On donne l'emplacement de l'image
+        final ImageView retourImageHover = new ImageView ("/images/retourImageHover.png");
 
         Button boutonRetour = new Button("Retour");            //On déclare un bouton tirer
         boutonRetour.setGraphic(retourImage);            //On l'illustre par une petite image
@@ -1038,18 +1038,18 @@ public class AffichageJeuGraphique {
         fenetreVictoire.getIcons().add(new Image("/images/iconNaval.png")); 
         
         
-        ImageView victoireGif =new ImageView(getClass().getResource("/images/victoire.gif").toString());         //On indique la position de l'image 
+        final ImageView victoireGif =new ImageView(getClass().getResource("/images/victoire.gif").toString());         //On indique la position de l'image 
         
         VBox rootVictoire = new VBox(25);         //On déclare un affichage vertical où les éléments sont espacé de 25 pixels
         rootVictoire.setAlignment(Pos.CENTER);          //On positionne les éléments du root au centre
         rootVictoire.setPadding(new Insets (20,30,10,30));           //On donne les dimensions entre les rebords de la fenètre et le root
 
-        Label labelAffichageVictoireJoueur = new Label ("VICTOIRE DU JOUEUR !!");           //On informe le joueur qu'il a gagné
+        final Label labelAffichageVictoireJoueur = new Label ("VICTOIRE DU JOUEUR !!");           //On informe le joueur qu'il a gagné
         labelAffichageVictoireJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
                     +                           "-fx-font-size: 20pt;"
                     +                           "-fx-background-color: rgba(120,160,175,0.50);");
 
-        Label labelAffichageInfoPartie = new Label ("\nInformations sur la partie : "            //On donne les caractéristiques de la partie
+        final Label labelAffichageInfoPartie = new Label ("\nInformations sur la partie : "            //On donne les caractéristiques de la partie
             +"\nNombre de tour : "+ (JeuGraphique.compteurTourHumain+ JeuGraphique.compteurTourIA)            //Le nombre de tour que l'IA a effecuté
             +"\nNombre de tour du joueur : "+ JeuGraphique.compteurTourHumain            //Le nombre de tour que le joueur a effectué
             +"\nNombre de tour de l'IA : "+ JeuGraphique.compteurTourIA
@@ -1101,22 +1101,22 @@ public class AffichageJeuGraphique {
         fenetreVictoire.getIcons().add(new Image("/images/iconNaval.png")); 
 
 
-        ImageView victoireGif =new ImageView(getClass().getResource("/images/victoire.gif").toString());         //On indique la position de l'image 
+        final ImageView victoireGif =new ImageView(getClass().getResource("/images/victoire.gif").toString());         //On indique la position de l'image 
         
         VBox rootVictoireForfait = new VBox(25);         //On déclare un affichage vertical où les éléments sont espacé de 25 pixels
         rootVictoireForfait.setAlignment(Pos.CENTER);          //On positionne les éléments du root au centre
         rootVictoireForfait.setPadding(new Insets (20,30,10,30));           //On donne les dimensions entre les rebords de la fenètre et le root
 
-        Label labelAffichageVictoireJoueur = new Label ("VICTOIRE DU JOUEUR !!");           //On informe le joueur qu'il a gagné
+        final Label labelAffichageVictoireJoueur = new Label ("VICTOIRE DU JOUEUR !!");           //On informe le joueur qu'il a gagné
         labelAffichageVictoireJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
                     +                           "-fx-font-size: 20pt;"
                     +                           "-fx-background-color: rgba(120,160,175,0.50);");
-        Label labelForfaitDeLIA = new Label ("Vous avez coulé tous \nles sous marin de l'ordinateur\n"         //On informe le joueur qu'il a perdu car il a plus de sous-marin
+        final Label labelForfaitDeLIA = new Label ("Vous avez coulé tous \nles sous marin de l'ordinateur\n"         //On informe le joueur qu'il a perdu car il a plus de sous-marin
                     +                                       "Vous gagnez par fofait");
         labelForfaitDeLIA.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
                     +                           "-fx-font-size: 15pt;");
 
-        Label labelAffichageInfoPartie = new Label ("\nInformations sur la partie : "            //On donne les caractéristiques de la partie
+        final Label labelAffichageInfoPartie = new Label ("\nInformations sur la partie : "            //On donne les caractéristiques de la partie
             +"\nNombre de tour : "+ (JeuGraphique.compteurTourHumain+ JeuGraphique.compteurTourIA)            //Le nombre de tour que l'IA a effecuté
             +"\nNombre de tour du joueur : "+ JeuGraphique.compteurTourHumain            //Le nombre de tour que le joueur a effectué
             +"\nNombre de tour de l'IA : "+ JeuGraphique.compteurTourIA
@@ -1169,12 +1169,12 @@ public class AffichageJeuGraphique {
         rootVictoire.setAlignment(Pos.CENTER);          //On positionne les éléments du root au centre
         rootVictoire.setPadding(new Insets (20,30,10,30));           //On donne les dimensions entre les rebords de la fenètre et le root
 
-        Label labelAffichageVictoireIA = new Label ("VICTOIRE DE L'ORDINATEUR !!");         //On informe le joueur que l'IA a gagné
+        final Label labelAffichageVictoireIA = new Label ("VICTOIRE DE L'ORDINATEUR !!");         //On informe le joueur que l'IA a gagné
         labelAffichageVictoireIA.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
                     +                "-fx-font-size: 20pt;"
                     +                "-fx-background-color: rgba(120,160,175,0.50);");
 
-        Label labelAffichageInfoPartie = new Label ("\nInformations sur la partie : "            //On donne les caractéristiques de la partie
+        final Label labelAffichageInfoPartie = new Label ("\nInformations sur la partie : "            //On donne les caractéristiques de la partie
             +"\nNombre de tour : "+ (JeuGraphique.compteurTourHumain+ JeuGraphique.compteurTourIA)            //Le nombre de tour que l'IA a effecuté
             +"\nNombre de tour du joueur : "+ JeuGraphique.compteurTourHumain            //Le nombre de tour que le joueur a effectué
             +"\nNombre de tour de l'IA : "+ JeuGraphique.compteurTourIA
@@ -1227,18 +1227,18 @@ public class AffichageJeuGraphique {
         rootVictoireForfait.setAlignment(Pos.CENTER);          //On positionne les éléments du root au centre
         rootVictoireForfait.setPadding(new Insets (20,30,10,30));           //On donne les dimensions entre les rebords de la fenètre et le root
 
-        Label labelAffichageVictoireIA = new Label ("VICTOIRE DE L'ORDINATEUR !!");         //On informe le joueur que l'IA a gagné
+        final Label labelAffichageVictoireIA = new Label ("VICTOIRE DE L'ORDINATEUR !!");         //On informe le joueur que l'IA a gagné
         labelAffichageVictoireIA.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
                     +                "-fx-font-size: 20pt;"
                     +                "-fx-background-color: rgba(120,160,175,0.50);");
         
-        Label labelForfaitDuJoueur = new Label ("Vous n'avez plus de sous-marin\n"         //On informe le joueur qu'il a perdu car il a plus de sous-marin
+        final Label labelForfaitDuJoueur = new Label ("Vous n'avez plus de sous-marin\n"         //On informe le joueur qu'il a perdu car il a plus de sous-marin
                     +                           "L'ordinateur gagne par \nfofait de votre part");
         labelForfaitDuJoueur.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
                         +                "-fx-font-size: 15pt;");
 
 
-        Label labelAffichageInfoPartie = new Label ("\nInformations sur la partie : "            //On donne les caractéristiques de la partie
+        final Label labelAffichageInfoPartie = new Label ("\nInformations sur la partie : "            //On donne les caractéristiques de la partie
             +"\nNombre de tour : "+ (JeuGraphique.compteurTourHumain+JeuGraphique.compteurTourIA)            //Le nombre de tour que l'IA a effecuté
             +"\nNombre de tour du joueur : "+ JeuGraphique.compteurTourHumain            //Le nombre de tour que le joueur a effectué
             +"\nNombre de tour de l'IA : "+ JeuGraphique.compteurTourIA
