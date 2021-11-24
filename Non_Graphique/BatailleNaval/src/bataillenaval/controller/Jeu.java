@@ -160,6 +160,8 @@ public class Jeu {
 
                         break;
                     case 2: retourMenu=2;           //On recommence le tour du joueur
+                            break;
+                    case 3: retourMenu=3;           //On relance le tour du joueur
                     case 4: System.out.println("\nFermeture du jeu. \nA bientôt"); break;
                     default:
                         System.out.println(ROUGE + "Erreur!"+RESET+ "Problème d'appel du menuJoueur");            //En cas d'erreur on affiche un message d'erreur
@@ -745,7 +747,7 @@ public class Jeu {
                 chrono.stop();          //On arrête le chronomètre
                 System.out.println(ROUGE+"VICTOIRE DE L'ORDINATEUR !!"+RESET);            //On affiche un message 
                 System.out.println("\nInformations sur la partie : ");
-                System.out.println("Nombre de tours : "+(compteurTourHumain+compteurTourIA));
+                System.out.println("Nombre de tours total : "+(compteurTourHumain+compteurTourIA));
                 System.out.println("Nombre de tours du joueur : "+ compteurTourHumain);
                 System.out.println("Nombre de tours de l'IA : "+compteurTourIA);
                 System.out.println("Durée de la partie : "+chrono.getDureeTxt());
@@ -763,7 +765,7 @@ public class Jeu {
             System.out.println("Vous n'avez plus de sous-marin");
             System.out.println("L'ordinateur gagne par fofait de votre part");
             System.out.println("\nInformations sur la partie : ");
-            System.out.println("Nombre de tours : "+(compteurTourHumain+compteurTourIA));
+            System.out.println("Nombre de tours total : "+(compteurTourHumain+compteurTourIA));
             System.out.println("Nombre de tours du joueur : "+ compteurTourHumain);
             System.out.println("Nombre de tours de l'IA : "+compteurTourIA);
             System.out.println("Durée de la partie : "+chrono.getDureeTxt());
@@ -779,7 +781,7 @@ public class Jeu {
                 chrono.stop();          //On arrête le chronomètre
                 System.out.println(ROUGE+"VICTOIRE DU JOUEUR !!"+RESET);           //On affiche un message
                 System.out.println("\nInformations sur la partie : ");
-                System.out.println("Nombre de tours : "+(compteurTourHumain+compteurTourIA));
+                System.out.println("Nombre de tours total : "+(compteurTourHumain+compteurTourIA));
                 System.out.println("Nombre de tours du joueur : "+ compteurTourHumain);
                 System.out.println("Nombre de tours de l'IA : "+compteurTourIA);
                 System.out.println("Durée de la partie : "+chrono.getDureeTxt());
@@ -797,7 +799,7 @@ public class Jeu {
             System.out.println("Vous avez détruit tous les sous-marins de l'ordinateur");
             System.out.println("Vous gagnez par forfait");
             System.out.println("\nInformations sur la partie : ");
-            System.out.println("Nombre de tours : "+(compteurTourHumain+compteurTourIA));
+            System.out.println("Nombre de tours total: "+(compteurTourHumain+compteurTourIA));
             System.out.println("Nombre de tours du joueur : "+ compteurTourHumain);
             System.out.println("Nombre de tours de l'IA : "+compteurTourIA);
             System.out.println("Durée de la partie : "+chrono.getDureeTxt());

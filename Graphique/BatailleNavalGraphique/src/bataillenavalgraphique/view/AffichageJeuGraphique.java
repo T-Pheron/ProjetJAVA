@@ -32,6 +32,9 @@ import javafx.util.Duration;
  */
 public class AffichageJeuGraphique {
 
+    private final int TIME1 = 4000;
+    private final int TIME2 = 6000;
+    
     //**************************************************************************
     /**
      * Constructeur de la classe AffichageGraphique.
@@ -52,7 +55,7 @@ public class AffichageJeuGraphique {
         JeuGraphique.victoire();
 
         if (JeuGraphique.victoire==false){
-            
+
             GrilleBoutons grilleBoutonNavire = new GrilleBoutons('N','A');          //On déclare la grille des boutons pour les navires 
             GrilleBoutons grilleBoutonTirs = new GrilleBoutons('T', 'A');            //On déclare la grille des boutons pour les tirs
             
@@ -480,7 +483,7 @@ public class AffichageJeuGraphique {
             instruction.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 20pt;"
                     + "-fx-font-weight: bold;");
             
-                    final Label instruction2 = new Label ("Il s'agit donc d'une fusée éclairante ?");
+                    final Label instruction2 = new Label ("Il s'agit donc d'une fusée éclairante !");
             instruction2.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';-fx-font-size: 15pt;"
                     + "-fx-font-weight: bold;");
             
@@ -582,7 +585,7 @@ public class AffichageJeuGraphique {
     public void deplacementEffectueNavire(){
         
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {            //On met un temps d'attente de 7s
+        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(TIME1),action -> {            //On met un temps d'attente de 7s
             GrilleBoutons grilleBoutonNavire = new GrilleBoutons('D', 'V');
             grilleBoutonNavire.miseAJourAffichageNavire(JeuGraphique.plateauDeJeu);
             
@@ -617,7 +620,7 @@ public class AffichageJeuGraphique {
     public void tirEchec() throws InterruptedException{
         
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {           //On met un temps d'attente de 7s
+        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(TIME1),action -> {           //On met un temps d'attente de 7s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
             final Label information = new Label ("Nous n'avons rien touché à ces coordonées");             //On informe le joueur qu'il a rien touché
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
@@ -652,7 +655,7 @@ public class AffichageJeuGraphique {
     public void tirSurSousMarin() throws InterruptedException{
         
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {           //On met un temps d'attente de 7s
+        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(TIME1),action -> {           //On met un temps d'attente de 7s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
             final Label information = new Label ("Nous avons détecté une structure mais nous n'avons pas pu la détruire");             //On informe le joueur qu'il a touché un sous-marin mais qu'il ne la pas coulé
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
@@ -682,11 +685,12 @@ public class AffichageJeuGraphique {
     //**************************************************************************
     /**
      * Méthode qui permet d'indiquer à l'utilisateur qu'il a touché un navire.
+     * @throws java.lang.InterruptedException
      */
     public void tirToucherNavire() throws InterruptedException{
         
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {           //On met un temps d'attente de 7s
+        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(TIME1),action -> {           //On met un temps d'attente de 7s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
             final Label information = new Label ("C'est touché, bien joué");             //On informe le joueur qu'il a touché un navire adverse
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
@@ -717,11 +721,12 @@ public class AffichageJeuGraphique {
     /**
      * Méthode qui permet d'indiquer à l'utilisateur qu'il a coulé un navire.
      * @param nomNavireCoule Le nom du navire qui a été coulé
+     * @throws java.lang.InterruptedException
      */
     public void tirCoulerNavire(String nomNavireCoule) throws InterruptedException{
         
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {           //On met un temps d'attente de 7s
+        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(TIME1),action -> {           //On met un temps d'attente de 7s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
             final Label information = new Label ("C'est touché, bien joué");             //On informe le joueur qu'il a touché un navire adverse
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
@@ -764,7 +769,7 @@ public class AffichageJeuGraphique {
 
         if (JeuGraphique.victoire==false){
             Timeline timeTourJoueur = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-            timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(12000),action -> {            //On met un temps d'attente de 12s
+            timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(TIME2),action -> {            //On met un temps d'attente de 12s
                 try {
                     JeuGraphique.ia.jouer();            //On essaye de lancer le tour de l'IA
                 } catch (InterruptedException ex){}
@@ -785,7 +790,7 @@ public class AffichageJeuGraphique {
     public void zoneTirFusee(int xTire, int yTire, int surplusX, int surplusY){
         
         Timeline timeZoneTirFusee = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        timeZoneTirFusee.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {            //On met un temps d'attente de 7s
+        timeZoneTirFusee.getKeyFrames().addAll(new KeyFrame(Duration.millis(3000),action -> {            //On met un temps d'attente de 7s
             GrilleBoutons grilleBoutonTirs = new GrilleBoutons('D', 'F');
             grilleBoutonTirs.miseAJourAffichageTirs(JeuGraphique.plateauDeJeu);
 
@@ -804,7 +809,7 @@ public class AffichageJeuGraphique {
             
             
             Timeline timeTourJoueur = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-            timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(12000),e -> {            //On met un temps d'attente de 12s
+            timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(TIME2),e -> {            //On met un temps d'attente de 12s
                 
                 for (int i=0; i<4-surplusX ; i++){
                     for (int j=0; j<4-surplusY; j++){

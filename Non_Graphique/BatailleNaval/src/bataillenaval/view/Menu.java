@@ -325,7 +325,7 @@ public class Menu {
 
             case 3:  return sauvegarde.savePartie(3, nomPartie[2]);
 
-            case 4:  return 1;
+            case 4:  return 3;
 
             default : System.out.println(ROUGE +"Erreur_menuSauvegarde! "+RESET);         //Message renvoyé en cas de probleme majeur
                 break;

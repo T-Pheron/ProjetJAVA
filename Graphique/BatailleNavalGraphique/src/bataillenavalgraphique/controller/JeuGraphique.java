@@ -125,6 +125,10 @@ public class JeuGraphique{
         }
         else chronometre.resume();
 
+        Affichage.afficher(1, 0, JeuGraphique.plateauDeJeu);         //Pour les test on affiche les plateaux de l'IA
+        System.out.println();
+        Affichage.afficher(1, 1, JeuGraphique.plateauDeJeu);
+        
         JeuGraphique.fenetreJeu.setTitle("Bataille Navale - Jeu");          //On donne un titre à la fenètre
         JeuGraphique.fenetreJeu.setWidth(1400);         //On lui donne une dimension
         JeuGraphique.fenetreJeu.setHeight(900);
@@ -159,9 +163,9 @@ public class JeuGraphique{
         
     public void tourIA() throws InterruptedException{
         
-        Affichage.afficher(numeroJoueur, 0, JeuGraphique.plateauDeJeu);         //Pour les test on affiche les plateaux de l'IA
+        Affichage.afficher(1, 0, JeuGraphique.plateauDeJeu);         //Pour les test on affiche les plateaux de l'IA
         System.out.println();
-        Affichage.afficher(numeroJoueur, 1, JeuGraphique.plateauDeJeu);
+        Affichage.afficher(1, 1, JeuGraphique.plateauDeJeu);
 
         ia.jouer();            //On lance la méthode qui permet à l'IA de jouer
 
@@ -460,22 +464,22 @@ public class JeuGraphique{
                 JeuGraphique.chronometre.stop();        //On arrête le chronomètre
                 JeuGraphique.victoire=true ;            //On arrête la boucle de Jeu
                 AffichageJeuGraphique affichageJeuGraphique = new AffichageJeuGraphique(); 
-                affichageJeuGraphique.victoireJoueur();         //On affiche les informations de la victoire
+                affichageJeuGraphique.victoireIA();         //On affiche les informations de la victoire
                 return true;
             } 
         }
         
         for (int i=6; i<10;i++){            //On parcourt les sous-marin
-            if (etat0SousMarin==false) etat0SousMarin=flotteJoueur1.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
+            if (etat0SousMarin==false) etat0SousMarin=flotteJoueur0.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
         }
 
         if (etat0SousMarin==false){         //Si il y a plus aucun sous-marin
             JeuGraphique.chronometre.stop();        //On arrête le chronomètre
             JeuGraphique.victoire=true ;            //On arrête la boucle de Jeu
             AffichageJeuGraphique affichageJeuGraphique = new AffichageJeuGraphique();
-            affichageJeuGraphique.victoireJoueurFofait();              //On affiche les informations de la victoire
+            affichageJeuGraphique.victoireIAFofait();              //On affiche les informations de la victoire
         }
-
+        
         boolean etat1SousMarin=false;           //On initialise un booléen à false pour le sous-marin
         boolean etat1;      //On initialise un booléen
         for (int i=0; i<10; i++){           //On parcourt la flotte de l'IA
@@ -485,23 +489,23 @@ public class JeuGraphique{
                 JeuGraphique.chronometre.stop();        //On arrête le chronomètre
                 JeuGraphique.victoire=true ;            //On arrête la boucle de Jeu
                 AffichageJeuGraphique affichageJeuGraphique = new AffichageJeuGraphique();
-                affichageJeuGraphique.victoireIA();              //On affiche les informations de la victoire
+                affichageJeuGraphique.victoireJoueur();              //On affiche les informations de la victoire
                 return true;
             }
         }
         
         for (int i=6; i<10;i++){            //On parcourt les sous-marins
             if (etat1SousMarin==false) etat1SousMarin=flotteJoueur1.get(i).etat;            //Si le sous marin n'a pas coulé, on prend l'état du sous-marin
-            return true;
         }
 
         if (etat1SousMarin==false){         //Si il y a plus aucun sous-marin
             JeuGraphique.chronometre.stop();        //On arrête le chronomètre
             JeuGraphique.victoire=true ;            //On arrête la boucle de Jeu
             AffichageJeuGraphique affichageJeuGraphique = new AffichageJeuGraphique();
-            affichageJeuGraphique.victoireIAFofait();           //On affiche les informations de la victoire
+            affichageJeuGraphique.victoireJoueurFofait();           //On affiche les informations de la victoire
             return true;
         }
+        JeuGraphique.victoire=false ;
         return false;
     }
 }

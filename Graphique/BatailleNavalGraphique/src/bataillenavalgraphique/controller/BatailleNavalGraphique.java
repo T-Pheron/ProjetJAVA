@@ -25,9 +25,9 @@ public class BatailleNavalGraphique extends Application {
 
     /**
      * La main du programme.
+     * @param args
      */
     public static void main(String[] args) {
         launch(args);
     }
-    
 }

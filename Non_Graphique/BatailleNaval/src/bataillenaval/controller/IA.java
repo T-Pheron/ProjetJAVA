@@ -167,7 +167,7 @@ public class IA implements Serializable{
                    sortieChoix=false;
                }
            }
-       }while (Jeu.flotteJoueur1.get(pListeBougerNavire).etat==false && sortieChoix==true);         //Tant que l'IA n'a pas trouvé un navire qui n'a pas coulé
+       }while (Jeu.flotteJoueur1.get(pListeBougerNavire).etat==false && sortieChoix==false);         //Tant que l'IA n'a pas trouvé un navire qui n'a pas coulé
 
         /*Trouver toutes les posibilités de placement du navire****************/
         int  [] possibilite = new int[4];            //Tableau utilisé pour stocker les 4 posibilitées de placement du navire 

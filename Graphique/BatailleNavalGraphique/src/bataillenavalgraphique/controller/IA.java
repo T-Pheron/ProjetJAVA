@@ -212,7 +212,7 @@ public class IA implements Serializable{
                         sortieChoix=false;
                     }
                 }
-            }while (JeuGraphique.flotteJoueur1.get(pListeBougerNavire).etat==false && sortieChoix==true);         //Tant que l'IA n'a pas trouvé un navire qui n'a pas coulé
+            }while (JeuGraphique.flotteJoueur1.get(pListeBougerNavire).etat==false && sortieChoix==false);         //Tant que l'IA n'a pas trouvé un navire qui n'a pas coulé
         
 
         

@@ -17,6 +17,8 @@ import javafx.util.Duration;
  */
 public class AffichageIA {
     
+    private final int TIME1 = 4000;
+    
     //**************************************************************************
     /**
      * Constructeur de la classe Affichage IA.
@@ -32,7 +34,7 @@ public class AffichageIA {
      */
     public void manoeuvreSucces(){
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(7000),action -> {           //On met un temps d'attente de 7s
+        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(TIME1),action -> {           //On met un temps d'attente de 7s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
             final Label information = new Label ("La manoeuvre a été réalisée avec succès");          //On informe l'utilisateur que tout c'est bien passé
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
@@ -120,7 +122,7 @@ public class AffichageIA {
      */
     public void tirEffectueDestroyer(){
         Timeline timeNiveau1TirRandom = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),e -> {
+        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(TIME1),e -> {
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
             final Label information0 = new Label ("Mes avions m'ont rapportés des informations intéréssantes");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
@@ -155,7 +157,7 @@ public class AffichageIA {
      */
     public void toucherNavire(){
         Timeline timeNiveau1TirRandom = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),e -> {
+        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(TIME1),e -> {
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
             final Label information0 = new Label ("Et c'est touché !!");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
@@ -185,7 +187,7 @@ public class AffichageIA {
      */
     public void toucherSousMarin(){
         Timeline timeNiveau1TirRandom = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),e -> {
+        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(TIME1),e -> {
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
             final Label information0 = new Label ("On a touché une structure mais nous n'avons pas pu la couler");
             information0.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"         //On change les caractéristiques d'écriture
@@ -249,7 +251,7 @@ public class AffichageIA {
      */
     public void coulerNavire(String nomNavireCoule){
         Timeline timeNiveau1TirRandom = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),action -> {           //On met un temps d'attente de 8s
+        timeNiveau1TirRandom.getKeyFrames().addAll(new KeyFrame(Duration.millis(TIME1),action -> {           //On met un temps d'attente de 8s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
             
             final Label information0 = new Label ("\n\n Yes !! J'ai coulé un "+nomNavireCoule);
@@ -281,7 +283,7 @@ public class AffichageIA {
      */
     public void tirRate(){
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(8000),e -> {           //On met un temps d'attente de 8s
+        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(TIME1),e -> {           //On met un temps d'attente de 8s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
             final Label information = new Label ("J'ai rien touché aux coordonées de tir");
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
@@ -320,7 +322,7 @@ public class AffichageIA {
     public void panneMoteur() throws InterruptedException{
         
         Timeline timeTourJoueur = new Timeline();                    //Variable qui permet de déclencher une action en décaler par rapport au programme
-        timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(5000),action -> {           //On met un temps d'attente de 5s
+        timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(2000),action -> {           //On met un temps d'attente de 5s
             final Label information = new Label("Le navire que j'ai choisi a un problème moteur");           //On informe au joueur que l'IA relance son tour car il ne peut pas déplacer le navire qu'elle a sélectionné
             final Label information2 = new Label("\nJ'effectue un autre coup");
 
@@ -348,7 +350,7 @@ public class AffichageIA {
      */
     public void tourJoueur(){
         Timeline timeTourJoueur = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(5000),action -> {           //On met un temps d'attente de 5s
+        timeTourJoueur.getKeyFrames().addAll(new KeyFrame(Duration.millis(3000),action -> {           //On met un temps d'attente de 5s
             AffichageJeuGraphique affichage = new AffichageJeuGraphique();          //On déclare un objet de type AffichageJeuGraphique
             affichage.affichageJoueur();            //On affiche le menu principal du joueur 
         }));
@@ -363,7 +365,7 @@ public class AffichageIA {
      */
     public void erreurIA(String erreur){
         Timeline time = new Timeline();         //Variable qui permet de déclencher une action en décaler par rapport au programme
-        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(3000),action -> {           //On met un temps d'attente de 8s
+        time.getKeyFrames().addAll(new KeyFrame(Duration.millis(2000),action -> {           //On met un temps d'attente de 8s
             VBox rootText = new VBox(25);           //On déclare un affichage vertical avec des éléments espacés de 25 pixels
             final Label information = new Label ("Erreur IA. "+ erreur);
             information.setStyle ("-fx-font-police: 'Tw Cen MT Condensed';"            //On change les caractéristiques d'écriture
